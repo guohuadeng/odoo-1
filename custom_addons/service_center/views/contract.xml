@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="contract_form_extend" model="ir.ui.view">
+            <field name="name">contract form extend view</field>
+            <field name="model">contract.sale_contract</field>
+            <field name="inherit_id" ref="sale_contract.contract_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//header" position="inside">
+                    <button name="create_work_sheet" type="object" string="Create Work Sheet"
+                        context="{'default_customer':customer,'default_contract_no':active_id}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="internation_port_form_view" model="ir.ui.view">
+            <field name="name">internation port form</field>
+            <field name="model">basedata.internation_port</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name_cn"/>
+                                <field name="name_en"/>
+                                <field name="city_name_cn"/>
+                                <field name="city_name_en"/>
+                            </group>
+                            <group>
+                                <field name="code"/>
+                                <field name="city_code"/>
+                                <field name="port_type"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="internation_port_tree_view" model="ir.ui.view">
+            <field name="name">internation port list</field>
+            <field name="model">basedata.internation_port</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name_cn"/>
+                    <field name="name_en"/>
+                    <field name="code"/>
+                    <field name="port_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="internation_port_action" model="ir.actions.act_window">
+            <field name="name">Internation Port</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">basedata.internation_port</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

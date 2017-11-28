@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="work_sheet_goods_form" model="ir.ui.view">
+        <field name="name">work sheet good form</field>
+        <field name="model">work_sheet_good</field>
+        <field name="arch" type="xml">
+            <form string="work sheet goods">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name=""/>
+                            <field name=""/>
+                            <field name=""/>
+                            <field name=""/>
+                        </group>
+                        <group>
+                            <field name=""/>
+                            <field name=""/>
+                            <field name=""/>
+                            <field name=""/>
+                            <field name=""/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_certificate_management" model="ir.actions.act_window">
+        <field name="name">Certificate Management</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">certificate_management</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem
+        id= "menu_certificate_management_config"
+        parent= "sales_team.menu_sales"
+        sequence= "3"
+        name= "客户证书"
+        action="action_certificate_management"/>
+
+    <record id="view_certificate_management_tree" model="ir.ui.view">
+        <field name="name">certificate management tree</field>
+        <field name="model">certificate_management</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+
+            <tree string="certificate lists" default_order="create_date desc">
+                <field name="customer"/>
+                <field name="certificate_type"/>
+                <field name="certificate_no"/>
+                <field name="authorization_date" widget="date"/>
+                <field name="expiration_date" widget="date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_certificate_management_form" model="ir.ui.view">
+        <field name="name">certificate management Form</field>
+        <field name="model">certificate_management</field>
+        <field name="arch" type="xml">
+
+            <form string="certificate edit">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="new,pending,cancel"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="certificate_no" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer"/>
+                            <field name="certificate_type"/>
+                            <field name="certificate_level" domain="[('certificate_type', '=', certificate_type)]" />
+                            <field name="certificate_no" />
+                            <field name="state" />
+                        </group>
+                        <group>
+                            <field name="issuing_authority" />
+                            <field name="authorization_date" widget="date"/>
+                            <field name="expiration_date" widget="date"/>
+                            <field name="remark" />
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"
+                           widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- 服务器动作 设置证书为即将过期-->
+    <record model="ir.actions.server" id="action_setting_certificate_expiration">
+        <field name="name">设置证书为即将过期</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_certificate_management"/>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = records.setting_certificate_expiration()
+        </field>
+    </record>
+
+    <record model="ir.values" id="setting_certificate_expiration">
+        <field name="name">设置证书为即将过期</field>
+        <field name="model_id" ref="model_certificate_management" />
+        <field name="model">certificate_management</field>
+        <field name="key2">client_action_multi</field>
+        <field eval="'ir.actions.server,%d'%action_setting_certificate_expiration" name="value"/>
+    </record>
+
+
+    <record id="view_certificate_management_search" model="ir.ui.view">
+       <field name="name">certificate management search</field>
+       <field name="model">certificate_management</field>
+        <field name="arch" type="xml">
+            <search string="certificate management search">
+                <field name="customer" string="客户" domain="[('customer.name', '=', self)]"/>
+            </search>
+       </field>
+    </record>
+
+    <record id="certificate_type_aciton" model="ir.actions.act_window">
+        <field name="name">Certificate Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">certificate_type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="certificate_type_tree" model="ir.ui.view">
+        <field name="name">Certificate Type List</field>
+        <field name="model">certificate_type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="level"/>
+                <field name="certificate_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="certificate_type_form" model="ir.ui.view">
+        <field name="name">Certificate Type Form</field>
+        <field name="model">certificate_type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="certificate_type"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Level">
+                            <field name="level">
+                                <tree editable="bottom" string="level">
+                                    <field name="certificate_level"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="certificate_level_form" model="ir.ui.view">
+        <field name="name">certificate level form</field>
+        <field name="model">certificate_level</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="certificate_level"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

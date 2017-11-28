@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_order_form_inherited" model="ir.ui.view">
+        <field name="name">order form - custom extension</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="contract" readonly="1"/>
+                <field name="business_type" attrs="{'readonly': [('state', 'not in', ('draft', 'sent'))]}"
+                       options="{'no_open': True, 'no_create_edit': 1}"/>
+                <field name="contact" widget="many2many_tags" options="{'no_create_edit': 1}" domain="[('parent_id', '=', partner_id)]"
+                 context="{'default_is_company': False, 'default_parent_id': partner_id}"/>
+            </xpath>
+
+            <xpath expr="//group[@name='sales_person']/field[@name='user_id']" position="after">
+                <field name="customer_service" options="{'no_create_edit': 1}"/>
+                <field name="work_sheet_id" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//header/field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,sent,signed,sale,sheet</attribute>
+            </xpath>
+
+            <!--加入签订合同,生成工作单按钮-->
+            <xpath expr="//header/button[@name='action_quotation_send']" position="before">
+                <button name="%(boyue_sale_extend.action_order_contract_wizard)d" string="Signed Contract"
+                        type="action" class="btn-primary"
+                        attrs="{'invisible': ['|', ('state', 'not in', ('draft', 'sent')), ('contract', '!=', False)]}"
+                        context="{'sale_order': active_id, 'default_customer': partner_id}"/>
+                <button name="create_work_sheet" type="object" string="Create Work Sheet"
+                    class="btn-primary" states="sale,sheet"/>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_cancel']" position="attributes">
+                <attribute name="states">draft,sent,signed,sale,sheet</attribute>
+            </xpath>
+
+            <!--隐藏开票按钮-->
+            <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='date_order']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ('draft', 'sent'))]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='validity_date']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ('draft', 'sent'))]}</attribute>
+            </xpath>
+
+            <!--加入对应工作单、合同的smart按钮-->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="pop_work_sheet_action"
+                        type="object"
+                        class="oe_stat_button"
+                        attrs="{'invisible': [('state', 'not in', ('sale', 'sheet'))]}"
+                        icon="fa-pencil-square-o">
+                    <field name="work_sheet_count" widget="statinfo" string="Work Sheet"/>
+                </button>
+
+                <button name="pop_contract_action"
+                        type="object"
+                        string="Contract"
+                        class="oe_stat_button"
+                        attrs="{'invisible': [('contract', '=', False)]}"
+                        icon="fa-file-text">
+                </button>
+            </xpath>
+
+            <!--当合同为空时，隐藏确认销售按钮-->
+            <xpath expr="//header/button[@class='o_sale_confirm']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('contract', '=', False)]}</attribute>
+            </xpath>
+
+            <!--当合同为空时，隐藏确认销售按钮-->
+            <xpath expr="//header/button[@class='btn-primary o_sale_confirm']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('contract', '=', False)]}</attribute>
+            </xpath>
+
+            <!--当状态为签订合同时，加入确认按钮-->
+            <xpath expr="//header/button[@name='print_quotation']" position="before">
+                <button name="action_confirm" type="object" states="signed" class="btn-primary o_sale_confirm"
+                        string="Confirm Sale"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('customer','=',True), ('is_company', '=', True)]</attribute>
+            </xpath>
+
+            <page position="after">
+                <page string="Trade Info">
+                    <group>
+                        <group>
+                            <field name="customs" widget="many2many_tags" options="{'no_create_edit': 1}"/>                 <!-- 进出口岸 -->
+                            <field name="incoterm" options="{'no_create_edit': 1}"/>              <!-- 成交方式 -->
+                            <field name="trade_country" options="{'no_create_edit': 1}"/>           <!-- 贸易国别 -->
+                            <field name="port" options="{'no_create_edit': 1}"/>                    <!-- 装货/指运港 -->
+                            <field name="num"/>                     <!-- 件数 -->
+                            <field name="goods_name"/>
+                            <field name="remarks"/>
+
+                            <!--<field name="import_and_export"/>       &lt;!&ndash; 进出口类型 &ndash;&gt;-->
+                            <!--<field name="transport"/>               &lt;!&ndash; 运输方式 &ndash;&gt;-->
+                            <!--<field name="exemption"/>               &lt;!&ndash; 征免性质 &ndash;&gt;-->
+                            <!--<field name="trade_term"/>              &lt;!&ndash; 成交方式 &ndash;&gt;-->
+                            <!--<field name="port"/>                    &lt;!&ndash; 装货/指运港 &ndash;&gt;-->
+                            <!--<field name="num"/>                     &lt;!&ndash; 件数 &ndash;&gt;-->
+                            <!--<field name="gross_weight"/>            &lt;!&ndash; 毛重 &ndash;&gt;-->
+                            <!--<field name="mark_code"/>               &lt;!&ndash; 标记唛码 &ndash;&gt;-->
+                        </group>
+                        <group>
+                            <field name="trade_mode" options="{'no_create_edit': 1}"/>              <!-- 监管方式 -->
+                            <field name="origin_arrival_country" options="{'no_create_edit': 1}"/>  <!-- 启运/抵达国 -->
+                            <field name="region" options="{'no_create_edit': 1}"/>                  <!-- 境内目的/货源地 -->
+                            <field name="packing" options="{'no_create_edit': 1}"/>                 <!-- 包装方式 -->
+
+                            <!--<field name="customs"/>                 &lt;!&ndash; 进出口岸 &ndash;&gt;-->
+                            <!--<field name="trade_mode"/>              &lt;!&ndash; 监管方式 &ndash;&gt;-->
+                            <!--<field name="trade_country"/>           &lt;!&ndash; 贸易国别 &ndash;&gt;-->
+                            <!--<field name="origin_arrival_country"/>  &lt;!&ndash; 启运/抵达国 &ndash;&gt;-->
+                            <!--<field name="region"/>                  &lt;!&ndash; 境内目的/货源地 &ndash;&gt;-->
+                            <!--<field name="packing"/>                 &lt;!&ndash; 包装方式 &ndash;&gt;-->
+                            <!--<field name="net_weight"/>              &lt;!&ndash; 净重 &ndash;&gt;-->
+                            <!--<field name="remarks"/>                 &lt;!&ndash; 备注 &ndash;&gt;-->
+                        </group>
+                        <field name="delivery_info" nolabel="1">
+                            <tree string="Delivery Info" editable="bottom">
+                                <field name="type_id"/>
+                                <field name="name"/>
+                                <field name="address"/>
+                                <field name="qty"/>
+                                <field name="wrap_type"/>
+                                <field name="gross_weight"/>
+                                <field name="remark"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </page>
+            <!--quotes.xml 视图需求修改 暂时保留 没引用 待删除-->
+            <xpath expr="//page/field[@name='order_line']/form//field[@name='price_unit']" position="before">
+                <field name="quote_price_unit"/>
+                <field name="quote_currency_id"/>
+                <field name="rate" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom']" position="after">
+                <field name="quote_price_unit"/>
+                <field name="quote_currency_id"/>
+                <field name="rate" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_order_form_inherit_sale_stock_extend" model="ir.ui.view">
+        <field name="name">order invisible incoterm</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='sale_shipping']/field[@name='incoterm']" position="replace">
+            </xpath>
+
+        </field>
+    </record>
+
+    <delete id="sale.menu_sale_order" model="ir.ui.menu"/>
+
+    <!-- 向公司中添加公司代码 -->
+    <record id="view_company_form_extend" model="ir.ui.view">
+        <field name="name">res_company_form_extend</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//h1" position="after">
+                <label for="company_code" class="oe_edit_only"/>
+                <h3>
+                    <field name="company_code" required="1"/>
+                </h3>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="action_consignor_nee_type" model="ir.actions.act_window">
+        <field name="name">Consignor Consignee Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">boyue_sale_extend.consignor_nee_type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="consignor_nee_type_tree" model="ir.ui.view">
+        <field name="name">consignor consignee type list</field>
+        <field name="model">boyue_sale_extend.consignor_nee_type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="consignor_nee_type_form" model="ir.ui.view">
+        <field name="name">consignor consignee type form</field>
+        <field name="model">boyue_sale_extend.consignor_nee_type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="menu_consignor_nee_type" name="Consignor Consignee Type" parent="sales_team.menu_sale_config" action="boyue_sale_extend.action_consignor_nee_type" sequence="24"/>
+    <menuitem id="menu_incoterm" name="Trade Term" parent="sales_team.menu_sale_config" action="stock.action_incoterms_tree" sequence="25"/>
+
+</odoo>

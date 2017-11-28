@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <record id="action_current_state" model="ir.actions.act_window">
+           <field name="name">Current State</field>
+           <field name="type">ir.actions.act_window</field>
+           <field name="res_model">service_center.current_state</field>
+           <field name="view_mode">tree,form</field>
+           <field name="target">current</field>
+       </record>
+
+        <record id="current_state_tree" model="ir.ui.view">
+            <field name="name">current state tree</field>
+            <field name="model">service_center.current_state</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="sequence"/>
+                    <field name="business_stage_id"/>
+                    <field name="business_status_id"/>
+                    <field name="write_date"/>
+                    <field name="write_uid"/>
+                    <field name="active" string="enable/disable"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="current_state_search" model="ir.ui.view">
+           <field name="name">current state search</field>
+           <field name="model">service_center.current_state</field>
+            <field name="arch" type="xml">
+                <search string="search current state">
+                    <field name="work_sheet_id" string="work sheet" domain="[('work_sheet_id.name', '=', self)]"/>
+                    <filter string="show all state" name="show_all_state" domain="['|',('active','=',False),('active','=',True)]"/>
+                </search>
+           </field>
+        </record>
+
+        <record id="current_state_form" model="ir.ui.view">
+            <field name="name">current state form</field>
+            <field name="model">service_center.current_state</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="business_status_id" domain="[('business_stage_id.id','=',business_stage_id)]"/>
+                                <field name="write_uid" string="Operator" readonly="True"/>
+                                <field name="write_date" string="OperateDate" readonly="True"/>
+                                <field name="business_stage_id" invisible="True"/>
+                            </group>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--<record id="action_disable_current_state" model="ir.actions.server">-->
+            <!--<field name="name">enable/disable</field>-->
+            <!--<field name="model_id" ref="service_center.model_service_center_current_state"/>-->
+            <!--<field name="condition">True</field>-->
+            <!--<field name="type">ir.actions.server</field>-->
+            <!--<field name="state">code</field>-->
+            <!--<field name="code">-->
+<!--if object.active:-->
+    <!--object.write({'active': False})-->
+<!--else:-->
+    <!--object.write({'active': True})-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="action_disable_current_state_test_more_item" model="ir.values">-->
+            <!--<field eval="'client_action_multi'" name="key2"/>-->
+            <!--<field name="key">action</field>-->
+            <!--<field name="model">service_center.current_state</field>-->
+            <!--<field name="name">enable/disable</field>-->
+            <!--<field eval="'ir.actions.server,%d'%action_disable_current_state" name="value"/>-->
+        <!--</record>-->
+
+        <record id="action_business_stage" model="ir.actions.act_window">
+            <field name="name">Business Stage</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">service_center.business_stage</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'group_by': 'business_type'}</field>
+        </record>
+
+        <record id="business_stage_tree" model="ir.ui.view">
+            <field name="name">business stage tree</field>
+            <field name="model">service_center.business_stage</field>
+            <field name="arch" type="xml">
+                <tree default_order="sequence">
+                    <field name="business_type"/>
+                    <field name="sequence"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_stage_form" model="ir.ui.view">
+            <field name="name">business stage form</field>
+            <field name="model">service_center.business_stage</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1 class="o_row">
+                                <field name="name" placeholder="Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="business_type"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="remark"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Business State">
+                                <field name="business_status_id" mode="tree">
+                                    <tree editable="bottom" default_order="sequence, name">
+                                        <field name="sequence"/>
+                                        <field name="name"/>
+                                        <field name="state_type"/>
+                                        <field name="remark"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

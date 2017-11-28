@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="custom_declaration_draft_tree" model="ir.ui.view">
+        <field name="name">custom_declararion_tree</field>
+        <field name="model">custom_declaration_draft</field>
+        <field name="arch" type="xml">
+            <tree string="Custom Declaration Draft">
+                <field name="name"/>
+                <field name="work_sheet"/>
+                <field name="customer"/>
+                <field name="business_company"/>
+                <field name="input_company"/>
+                <field name="business_type"/>
+                <field name="in_out"/>
+                <field name="port_code"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="custom_declaration_draft_form" model="ir.ui.view">
+        <field name="name">custom_declararion_form</field>
+        <field name="model">custom_declaration_draft</field>
+        <field name="arch" type="xml">
+            <form string="Custom Declaration Draft">
+                <header>
+                    <button name="send" string="Send" class="oe_highlight" states="u" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="u,s" statusbar_colors="{'KEY_IS_STATE':'VALUE_IS_COLOR'}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="work_sheet"/>
+                            <field name="customs_declaration_num"/>
+                        </group>
+                        <group>
+                            <field name="customer"/>
+                            <field name="creater"/>
+                            <field name="create_time"/>
+                        </group>
+                    </group>
+                    <newline/>
+                    <group string="Custom Information">
+                        <group>
+                            <field name="in_out"/>
+                            <field name="business_company"/>
+                            <field name="transport_mode"/>
+                            <field name="duty"/>
+                            <field name="deal_type"/>
+                            <field name="haven"/>
+                            <field name="qty"/>
+                            <field name="gross_weight"/>
+                            <field name="marks"/>
+                            <field name="remark"/>
+                        </group>
+                        <group>
+                            <field name="port_code"/>
+                            <field name="input_company"/>
+                            <field name="trade_mode"/>
+                            <field name="trade_country"/>
+                            <field name="nation"/>
+                            <field name="region"/>
+                            <field name="wrap_type"/>
+                            <field name="net_weight"/>
+                        </group>
+                    </group>
+                    <field name="work_sheet_goods" mode="tree">
+                        <tree string="Goods List" editable="bottom">
+                            <field name="hs_code"/>
+                            <field name="cn_name"/>
+                            <field name="en_name"/>
+                            <field name="model"/>
+                            <field name="deal_qty"/>
+                            <field name="deal_unit"/>
+                            <field name="deal_unit_price"/>
+                            <field name="deal_amount"/>
+                            <field name="currency"/>
+                            <field name="origin_country"/>
+                        </tree>
+                    </field>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="custom_declaration_draft_action" model="ir.actions.act_window">
+        <field name="name">custom declaration draft</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">custom_declaration_draft</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            <!-- Add Text Here -->
+          </p><p>
+            <!-- More details about what a user can do with this object will be OK -->
+          </p>
+        </field>
+    </record>
+</odoo>

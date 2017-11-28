@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- 浮点数精度 保留1位置 -->
+        <record id="decimal_precision_charge_weight" model="decimal.precision">
+            <field name="name">charge weight</field>
+            <field name="digits">1</field>
+        </record>
+    </data>
+</odoo>

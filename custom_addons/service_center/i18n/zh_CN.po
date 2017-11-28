@@ -1,0 +1,1052 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* service_center
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-13 07:06+0000\n"
+"PO-Revision-Date: 2017-10-13 15:22+0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: zh\n"
+"X-Generator: Poedit 2.0.3\n"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_active
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_active
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_active
+msgid "Active"
+msgstr "有效"
+
+#. module: service_center
+#: model:ir.actions.act_window,name:service_center.work_sheet_air_export
+#: model:ir.ui.menu,name:service_center.menu_work_sheet_air_import
+msgid "Air Export"
+msgstr "空运出口"
+
+#. module: service_center
+#: model:ir.actions.act_window,name:service_center.work_sheet_air_import
+#: model:ir.ui.menu,name:service_center.menu_work_sheet_air_export
+msgid "Air Import"
+msgstr "空运进口"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_air_company
+msgid "AirlineCompany"
+msgstr "航空公司"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_arrive_date
+msgid "Arrival Port Date"
+msgstr "到港日期"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Base Info"
+msgstr "基本信息"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_booking
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+#: selection:service_center.business_stage,type:0
+msgid "Booking"
+msgstr "订舱"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_book_agent
+msgid "Booking Agent"
+msgstr "订舱代理"
+
+#. module: service_center
+#: selection:service_center.business_stage,type:0
+msgid "Boxing"
+msgstr "Boxing"
+
+#. module: service_center
+#: model:ir.actions.act_window,name:service_center.action_business_stage
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_business_stage_id
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_business_stage_id
+#: model:ir.ui.menu,name:service_center.menu_business_stage
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Business Stage"
+msgstr "业务阶段"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.business_stage_form
+msgid "Business State"
+msgstr "业务状态"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_business_status_id
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_business_status_id
+msgid "Business Status"
+msgstr "业务状态"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_business_type
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_business_type
+msgid "Business Type"
+msgstr "业务类型"
+
+#. module: service_center
+#: selection:work_sheet,packing_mode:0
+msgid "CFS"
+msgstr "CFS"
+
+#. module: service_center
+#: selection:work_sheet,state:0
+msgid "Cancel"
+msgstr "取消"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_actual_charge_weight
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_book_cargo_charge_weight
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_charge_weight
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Charge Weight"
+msgstr "计费重量"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_cn_name
+msgid "Chinese Name"
+msgstr "中文名称"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_company
+msgid "Company"
+msgstr "入账公司"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Confirm"
+msgstr "确认"
+
+#. module: service_center
+#: selection:work_sheet,state:0
+msgid "Confirmed"
+msgstr "已确认"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_business_type_confirmed_sheet_no
+msgid "Confirmed Sheet nums"
+msgstr "Confirmed Sheet nums"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_consignee
+msgid "Consignee"
+msgstr "收货人"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_consignor
+msgid "Consignor"
+msgstr "发货人"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_contact
+msgid "Contact"
+msgstr "联系人"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Container Info"
+msgstr "箱货信息"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_packing_description
+msgid "Container Load Note"
+msgstr "装箱说明"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_packing_mode
+msgid "Container Load Type"
+msgstr "装箱方式"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_container_qty
+msgid "Container Qty"
+msgstr "箱量"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_container_type_id
+msgid "Container Type"
+msgstr "箱型"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_container_no
+msgid "ContainerNo"
+msgstr "箱号"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_containers_size
+msgid "Containers Size"
+msgstr "箱型箱量"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_contract_no
+msgid "Contract No"
+msgstr "合同号"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.contract_form_extend
+msgid "Create Work Sheet"
+msgstr "创建工作单"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_create_uid
+#: model:ir.model.fields,field_description:service_center.field_containers_list_create_uid
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_create_uid
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_create_uid
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_create_uid
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_create_uid
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_create_date
+#: model:ir.model.fields,field_description:service_center.field_containers_list_create_date
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_create_date
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_create_date
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_create_date
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_create_date
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Current"
+msgstr "当前的"
+
+#. module: service_center
+#: model:ir.actions.act_window,name:service_center.action_current_state
+#: model:ir.model,name:service_center.model_service_center_current_state
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_current_state
+msgid "Current State"
+msgstr "状态"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_custom
+msgid "Custom"
+msgstr "报关"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_custom_count
+msgid "Custom Declaration"
+msgstr "报关"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_customer
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_search_sea
+msgid "Customer"
+msgstr "客户"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_customer_contract_no
+msgid "Customer Contract NO"
+msgstr "客户合同号"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_customer_service
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_search_sea
+msgid "Customer Service"
+msgstr "客服"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Customs Clearance"
+msgstr "报关"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Customs Inspection"
+msgstr "报检"
+
+#. module: service_center
+#: model:ir.ui.menu,name:service_center.menu_board
+msgid "Dashboard"
+msgstr "仪表板"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_deal_type
+msgid "Deal Type"
+msgstr "贸易条款"
+
+#. module: service_center
+#: selection:service_center.business_stage,type:0
+msgid "Delegate"
+msgstr "Delegate"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_leave_date
+msgid "Departure Port Date"
+msgstr "离港日期"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_destination_port
+msgid "DestinationPort"
+msgstr "目的港"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_display_name
+#: model:ir.model.fields,field_description:service_center.field_containers_list_display_name
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_display_name
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_display_name
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_display_name
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_display_name
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: service_center
+#: selection:service_center.business_status,state_type:0
+msgid "Doing"
+msgstr "进行中"
+
+#. module: service_center
+#: selection:service_center.business_status,state_type:0
+#: selection:work_sheet,state:0
+msgid "Done"
+msgstr "完成"
+
+#. module: service_center
+#: selection:work_sheet,state:0
+msgid "Draft"
+msgstr "草稿"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_business_type_draft_sheet_no
+msgid "Draft Sheet nums"
+msgstr "Draft Sheet nums"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_en_name
+msgid "English Name"
+msgstr "英文名称"
+
+#. module: service_center
+#: selection:service_center.business_status,state_type:0
+msgid "Exception"
+msgstr "异常"
+
+#. module: service_center
+#: selection:work_sheet,packing_mode:0
+msgid "FCL"
+msgstr "FCL"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_destination
+msgid "Final Destination"
+msgstr "最终目的地"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_flight
+msgid "Flight"
+msgstr "航班"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_freight_clause
+msgid "Freight Clause"
+msgstr "运输条款"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_cabin_space
+msgid "FreightSpace"
+msgstr "舱位"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Fumigate"
+msgstr "熏蒸"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_fumigation
+msgid "Fumigation"
+msgstr "熏蒸"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_goods_currency_id
+msgid "Goods Currency"
+msgstr "Goods Currency"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_goods_size_ids
+msgid "Goods Size"
+msgstr "货物尺寸（CM）"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_goods_source
+msgid "Goods Source"
+msgstr "揽货类型"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_goodsValue
+msgid "Goods Value"
+msgstr "货值"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Gross Weight"
+msgstr "毛重(KGS)"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Gross Weight(d/b/c)"
+msgstr "毛重(委/订/实)"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_containers_list_gross_weight
+msgid "Gross weight"
+msgstr "毛重"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_actual_gross_weight
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_book_cargo_gross_weight
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_gross_weight
+msgid "GrossWeight"
+msgstr "毛重"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_search_sea
+msgid "Group By"
+msgstr "分组"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_hawb
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree_air
+msgid "HAWB"
+msgstr "HAWB"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_hbl_no
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree_sea
+msgid "HBL No"
+msgstr "HBL No"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_height
+msgid "Height"
+msgstr "高"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_house_no
+msgid "House NO"
+msgstr "分单号"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_id
+#: model:ir.model.fields,field_description:service_center.field_containers_list_id
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_id
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_id
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_id
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_id
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_id
+msgid "ID"
+msgstr "ID"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_in_out
+msgid "InOut"
+msgstr "进出口"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_input_company
+msgid "Input Company"
+msgstr "通知人"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_inspection
+msgid "Inspection"
+msgstr "报检"
+
+#. module: service_center
+#: selection:work_sheet,packing_mode:0
+msgid "LCL"
+msgstr "LCL"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_land_trans
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Land Transportation"
+msgstr "陆运"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty___last_update
+#: model:ir.model.fields,field_description:service_center.field_containers_list___last_update
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage___last_update
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status___last_update
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state___last_update
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size___last_update
+#: model:ir.model.fields,field_description:service_center.field_work_sheet___last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_write_uid
+#: model:ir.model.fields,field_description:service_center.field_containers_list_write_uid
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_write_uid
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_write_uid
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_write_uid
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_write_uid
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_write_uid
+msgid "Last Updated by"
+msgstr "最后更新人"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_write_date
+#: model:ir.model.fields,field_description:service_center.field_containers_list_write_date
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_write_date
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_write_date
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_write_date
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_write_date
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_length
+msgid "Length"
+msgstr "长"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_loading_port
+msgid "LoadingPort"
+msgstr "起运港"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree_air
+msgid "MAWB"
+msgstr "MAWB"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_mawb
+msgid "MAWB "
+msgstr "MAWB "
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_mbl_no
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree_sea
+msgid "MBL No"
+msgstr "MBL No"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_marks
+msgid "Marks"
+msgstr "标记唛码"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_master_no
+msgid "Master NO"
+msgstr "主单号"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_search_sea
+msgid "My Work Sheet"
+msgstr "我的工作单"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_name
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_name
+#: model:ir.ui.view,arch_db:service_center.business_stage_form
+msgid "Name"
+msgstr "名字"
+
+#. module: service_center
+#: code:addons/service_center/models/work_sheet.py:18
+#: code:addons/service_center/models/work_sheet.py:254
+#, python-format
+msgid "New"
+msgstr "新建"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.work_sheet_kanban_view
+msgid "New work sheet"
+msgstr "新建"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_open_date
+msgid "Open Port Date"
+msgstr "开港日期"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.current_state_form
+msgid "OperateDate"
+msgstr "操作时间"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_operation_requirements
+msgid "Operation Requirements"
+msgstr "操作要求"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.current_state_form
+msgid "Operator"
+msgstr "操作人"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_search_sea
+msgid "Order Month"
+msgstr "订单月份"
+
+#. module: service_center
+#: selection:service_center.business_stage,type:0
+msgid "Other"
+msgstr "其它"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Other Info"
+msgstr "其他信息"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_OverseaAgent
+msgid "OverseaAgent"
+msgstr "海外代理"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_overseas_agent
+msgid "Overseas Agent"
+msgstr "海外代理"
+
+#. module: service_center
+#: selection:work_sheet,goods_source:0
+msgid "Pointed"
+msgstr "指定"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Print"
+msgstr "打印"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_qty
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_actual_qty
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_book_cargo_qty
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_qty
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Qty"
+msgstr "件数"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_remark
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_remark
+msgid "Remark"
+msgstr "Remark"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_route
+msgid "Route"
+msgstr "路线"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_soc
+msgid "SOC"
+msgstr "货主箱"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_start_date
+msgid "SailingDate"
+msgstr "开航日期"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_search_sea
+msgid "Sale Man"
+msgstr "销售员"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_sale_order_no
+msgid "SaleOrder No"
+msgstr "报价单号"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_sale_man
+msgid "Saleman"
+msgstr "销售员"
+
+#. module: service_center
+#: model:ir.actions.act_window,name:service_center.work_sheet_sea_export
+#: model:ir.ui.menu,name:service_center.menu_work_sheet_sea_export
+msgid "Sea Export"
+msgstr "海运出口"
+
+#. module: service_center
+#: model:ir.actions.act_window,name:service_center.work_sheet_sea_import
+#: model:ir.ui.menu,name:service_center.menu_work_sheet_sea_import
+msgid "Sea Import"
+msgstr "海运进口"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_seal_no
+msgid "SealNo"
+msgstr "封号"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_search_sea
+msgid "Search Work Sheet"
+msgstr "搜索工作单"
+
+#. module: service_center
+#: selection:work_sheet,goods_source:0
+msgid "Seize"
+msgstr "自揽"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Send Email"
+msgstr "发送邮件"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_sequence
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_sequence
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_sequence
+msgid "Sequence"
+msgstr "序号"
+
+#. module: service_center
+#: model:ir.ui.menu,name:service_center.service_center_menu
+msgid "Service Center"
+msgstr "服务中心"
+
+#. module: service_center
+#: model:ir.actions.act_window,name:service_center.open_service_center_dashboard_kanban
+msgid "Service Center dashboard"
+msgstr "仪表盘"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_settlement_object
+msgid "Settlement Object"
+msgstr "结算单位"
+
+#. module: service_center
+#: selection:service_center.business_stage,type:0
+msgid "Sheeting"
+msgstr "Sheeting"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_ship_company
+msgid "ShippingCompany"
+msgstr "船公司"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_switch_bill
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Switch Bill"
+msgstr "换单"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_switch_bill_address
+msgid "Switch Bill Address"
+msgstr "换单地址"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_switch_bill_company
+msgid "Switch Bill Company"
+msgstr "换单公司"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_switch_bill_contact
+msgid "Switch Bill Contact"
+msgstr "换单联系方式"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_switch_bill_estimated_date
+msgid "Switch Bill Estimated Date"
+msgstr "预计换单时间"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Switch Bill Info"
+msgstr "换单信息"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_switch_bill_real_date
+msgid "Switch Bill Real Date"
+msgstr "实际换单时间"
+
+#. module: service_center
+#: code:addons/service_center/models/work_sheet.py:277
+#, python-format
+msgid "The last four num of order occur wrong, please make sure it is numbers"
+msgstr "The last four num of order occur wrong, please make sure it is numbers"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.report_work_sheet_air_export_template
+#: model:ir.ui.view,arch_db:service_center.report_work_sheet_air_import_template
+#: model:ir.ui.view,arch_db:service_center.report_work_sheet_sea_export_template
+#: model:ir.ui.view,arch_db:service_center.report_work_sheet_sea_import_template
+msgid "This document's name is"
+msgstr "This document's name is"
+
+#. module: service_center
+#: selection:service_center.business_status,state_type:0
+msgid "ToDo"
+msgstr "未开始"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_trade_mode_id
+msgid "Trade Mode"
+msgstr "监管方式"
+
+#. module: service_center
+#: selection:service_center.business_stage,type:0
+msgid "Transform"
+msgstr "Transform"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Transport Info"
+msgstr "发运信息"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_trans_mode_code
+msgid "Transport Mode"
+msgstr "运输方式"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_transport_item
+msgid "Transportation Term"
+msgstr "运费条款"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_transition_port
+msgid "TransshipmentPort"
+msgstr "中转港"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_stage_type
+#: model:ir.model.fields,field_description:service_center.field_service_center_business_status_state_type
+msgid "Type"
+msgstr "类型"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_ship_name
+msgid "Vessel"
+msgstr "船名"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_actual_volume
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_book_cargo_volume
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_volume
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Volume"
+msgstr "体积"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_ship_count
+msgid "Voyage"
+msgstr "船名"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.report_work_sheet_air_export_template
+msgid "WORK SHEET AIR EXPORT"
+msgstr "空运出口"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.report_work_sheet_air_import_template
+msgid "WORK SHEET AIR IMPORT"
+msgstr "空运进口"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.report_work_sheet_sea_export_template
+msgid "WORK SHEET SEA EXPORT"
+msgstr "海运出口"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.report_work_sheet_sea_import_template
+msgid "WORK SHEET SEA IMPORT"
+msgstr "海运进口"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_warehouse
+#: selection:service_center.business_stage,type:0
+msgid "Warehouse"
+msgstr "仓库"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "Warehousing"
+msgstr "仓储"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_width
+msgid "Width"
+msgstr "宽"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_container_type_and_qty_work_order_id
+msgid "Work Order"
+msgstr "工作单"
+
+#. module: service_center
+#: code:addons/service_center/models/business_type.py:53
+#: code:addons/service_center/models/contract.py:13
+#: model:ir.model.fields,field_description:service_center.field_service_center_current_state_work_sheet_id
+#: model:ir.model.fields,field_description:service_center.field_service_center_goods_size_work_sheet_id
+#: model:ir.ui.menu,name:service_center.menu_work_sheet
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+#: model:ir.ui.view,arch_db:service_center.work_sheet_kanban_view
+#, python-format
+msgid "Work Sheet"
+msgstr "工作单"
+
+#. module: service_center
+#: model:ir.actions.report.xml,name:service_center.report_work_sheet_air_export
+msgid "Work Sheet Air Export"
+msgstr "空运出口"
+
+#. module: service_center
+#: model:ir.actions.report.xml,name:service_center.report_work_sheet_air_import
+msgid "Work Sheet Air Import"
+msgstr "空运进口"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_name
+msgid "Work Sheet ID"
+msgstr "工作单号"
+
+#. module: service_center
+#: model:ir.actions.report.xml,name:service_center.report_work_sheet_sea_export
+msgid "Work Sheet Sea Export"
+msgstr "海运出口"
+
+#. module: service_center
+#: model:ir.actions.report.xml,name:service_center.report_work_sheet_sea_import
+msgid "Work Sheet Sea Import"
+msgstr "海运进口"
+
+#. module: service_center
+#: model:ir.model,name:service_center.model_work_sheet
+msgid "Work Sheet model extend auto Expense Statement"
+msgstr "工作单"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_wrap_type
+msgid "Wrap Type"
+msgstr "包装方式"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_goods_attribute
+msgid "attribute name"
+msgstr "货物属性"
+
+#. module: service_center
+#: model:ir.model,name:service_center.model_containers_list
+msgid "box containers list"
+msgstr "装箱明细"
+
+#. module: service_center
+#: code:addons/service_center/models/work_sheet.py:281
+#, python-format
+msgid "business type context occur error!"
+msgstr "business type context occur error!"
+
+#. module: service_center
+#: model:ir.model,name:service_center.model_business_type
+msgid "business type for work sheet"
+msgstr "工作单业务类型"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "cancel"
+msgstr "取消"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "complete worksheet"
+msgstr "完成工作单"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.work_sheet_kanban_view
+msgid "confirmed Work Sheet"
+msgstr "已确认_跟进中"
+
+#. module: service_center
+#: model:ir.model,name:service_center.model_container_type_and_qty
+msgid "container type and qty"
+msgstr "箱型箱量"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_customer_project_no
+msgid "customer project no"
+msgstr "客户项目号"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.work_sheet_kanban_view
+msgid "draft Work Sheet"
+msgstr "草稿_待确认"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.current_state_tree
+msgid "enable/disable"
+msgstr "enable/disable"
+
+#. module: service_center
+#: model:ir.model,name:service_center.model_contract_sale_contract
+msgid "sale contract manage model"
+msgstr "sale contract manage model"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.current_state_search
+msgid "search current state"
+msgstr "search current state"
+
+#. module: service_center
+#: model:ir.model,name:service_center.model_service_center_business_stage
+msgid "service_center.business_stage"
+msgstr "service_center.business_stage"
+
+#. module: service_center
+#: model:ir.model,name:service_center.model_service_center_business_status
+msgid "service_center.business_status"
+msgstr "service_center.business_status"
+
+#. module: service_center
+#: model:ir.model,name:service_center.model_service_center_goods_size
+msgid "service_center.goods_size"
+msgstr "service_center.goods_size"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.current_state_search
+msgid "show all state"
+msgstr "显示所有状态"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_work_sheet_state
+msgid "status"
+msgstr "状态"
+
+#. module: service_center
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_form
+msgid "transfer worksheet"
+msgstr "转换为工作单"
+
+#. module: service_center
+#: code:addons/service_center/models/work_sheet.py:356
+#, python-format
+msgid "transport type error!"
+msgstr "transport type error!"
+
+#. module: service_center
+#: model:ir.model.fields,field_description:service_center.field_business_type_work_sheet_ids
+#: model:ir.ui.view,arch_db:service_center.current_state_search
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree_air
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree_sea
+#: model:ir.ui.view,arch_db:service_center.view_work_sheet_tree_total
+msgid "work sheet"
+msgstr "工作单"
+
+#. module: service_center
+#: model:ir.model,name:service_center.model_work_sheet_good
+msgid "work sheet goods for work sheet and custom declaration"
+msgstr "work sheet goods for work sheet and custom declaration"

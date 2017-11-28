@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--报关单序号-->
+        <record id="seq_custom_declaration_draft" model="ir.sequence">
+            <field name="name">Custom Declaration Draft</field>
+            <field name="code">declaration_draft</field>
+            <field name="prefix">YS%(year)s%(month)s</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

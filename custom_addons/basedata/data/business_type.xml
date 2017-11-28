@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="business_type_for_sea_import" model="business_type">
+        <field name="name">海运进口</field>
+        <field name="in_out">i</field>
+        <field name="transport_mode" ref="basedata.delegate_transport_mode_2"/>
+        <field name="code">SI</field>
+    </record>
+
+    <record id="business_type_for_sea_export" model="business_type">
+        <field name="name">海运出口</field>
+        <field name="in_out">e</field>
+        <field name="transport_mode" ref="basedata.delegate_transport_mode_2"/>
+        <field name="code">SE</field>
+    </record>
+
+    <record id="business_type_for_air_import" model="business_type">
+        <field name="name">空运进口</field>
+        <field name="in_out">i</field>
+        <field name="transport_mode" ref="basedata.delegate_transport_mode_5"/>
+        <field name="code">AI</field>
+    </record>
+
+    <record id="business_type_for_air_export" model="business_type">
+        <field name="name">空运出口</field>
+        <field name="in_out">e</field>
+        <field name="transport_mode" ref="basedata.delegate_transport_mode_5"/>
+        <field name="code">AE</field>
+    </record>
+</odoo>

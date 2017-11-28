@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="delegation_cus_register_company" model="ir.actions.act_window">
+            <field name="name">customs register company</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">basedata.cus_register_company</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="cus_register_company_form" model="ir.ui.view">
+            <field name="name">customs register company form</field>
+            <field name="model">basedata.cus_register_company</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="register_code" string="register code"/>
+                            </group>
+                            <group>
+                                <field name="unified_social_credit_code" string="unified social credit code"/>
+                            </group>
+                            <group>
+                                <field name="register_name_cn" string="register name cn"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="cus_register_company_tree" model="ir.ui.view">
+            <field name="name">customs register company</field>
+            <field name="model">basedata.cus_register_company</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="register_code" string="register code"/>
+                    <field name="unified_social_credit_code" string="unified social credit code"/>
+                    <field name="register_name_cn" string="register name cn"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

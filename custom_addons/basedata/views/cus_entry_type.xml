@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="delegation_cus_entry_type" model="ir.actions.act_window">
+            <field name="name">Customs EntryType</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">basedata.cus_entry_type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="cus_entry_type_form" model="ir.ui.view">
+            <field name="name">Customs EntryType form</field>
+            <field name="model">basedata.cus_entry_type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="Code" string="EntryType Code"/>
+                            </group>
+                            <group>
+                                <field name="NameCN" string="Chinese Name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="cus_entry_type_tree" model="ir.ui.view">
+            <field name="name">Customs EntryType tree</field>
+            <field name="model">basedata.cus_entry_type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="Code" string="EntryType Code"/>
+                    <field name="NameCN" string="Chinese Name"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

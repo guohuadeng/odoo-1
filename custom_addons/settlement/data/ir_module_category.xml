@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record model="ir.module.category" id="module_category_settlement">
+    <field name="name">settlement</field>
+    <field name="description">Manage settlement applications</field>
+    <field name="sequence">33</field>
+  </record>
+
+</odoo>

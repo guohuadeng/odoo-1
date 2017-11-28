@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_payment_application_sheet" model="ir.actions.act_window">
+            <field name="name">付款申请单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">settlement.pay_apply_sheet</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--付款申请单 列表视图  -->
+        <record id="view_pay_apply_sheet_tree" model="ir.ui.view">
+            <field name="name">settlement.pay_apply_sheet_tree</field>
+            <field name="model">settlement.pay_apply_sheet</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="customer bill lists" default_order="create_date desc">
+                    <field name="payment_application_no" string="付款申请号"/>
+                    <field name="payment_method" string="付款类型"/>
+                    <field name="payment_company_name" string="付款单位"/>
+                    <field name="supplier_invoice_no" string="供应商发票号"/>
+                    <field name="state" string="状态"/>
+                    <field name="create_uid" string="创建人" readonly="1"/>
+                    <field name="create_date" string="创建时间" readonly="1"/>
+                    <!--<field name="" string="公司"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <!--付款申请单 创建-编辑 form视图-->
+            <record id="view_pay_apply_sheet_form" model="ir.ui.view">
+                <field name="name">pay_apply_sheet_form</field>
+                <field name="model">settlement.pay_apply_sheet</field>
+                <field name="arch" type="xml">
+                    <form string="payment application sheet">
+                        <header>
+                            <!--<button name="btn_submit_audit" string="提交审核" type="object" states="draft" class="btn-primary"/>-->
+                            <!--<button name="btn_audited" string="审核" type="object" states="submitted" class="btn-primary"/>-->
+                             <button name="%(settlement.action_submit_audit_wizard)d" string="提交审核"
+                                        type="action" class="btn-primary"
+                                        states="draft"
+                                        context="{'payment_application_no': active_id}"/>
+                            <button name="btn_cancel_submit_audit" string="撤销提交审核" type="object" states="submitted" class="btn-primary"/>
+                            <button name="%(settlement.action_pass_audit_wizard)d" string="通过审核"
+                                        type="action" class="btn-primary"
+                                        states="submitted"
+                                        context="{'payment_application_no': active_id}"/>
+                            <button name="btn_cancel_audited" string="撤销审核" type="object" states="reviewed" class="btn-primary"/>
+                            <button name="%(settlement.action_confirm_payment_wizard)d" string="确认付款"
+                                        type="action" class="btn-primary"
+                                        states="reviewed"
+                                        context="{'payment_application_no': active_id}"/>
+                            <button name="btn_cancel_payment" string="撤销支付" type="object" states="paid" class="btn-primary"/>
+                            <field name="state" widget="statusbar" statusbar_visible="draft,submitted,reviewed,paid"/>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box" name="button_box">
+                                <!--<button name="%(settlement.action_customer_bill)d" type="action" string="附件上传" class="oe_stat_button" icon="fa-book" />-->
+                                <button name="action_get_attachment_view" class="oe_stat_button" icon="fa-book" type="object">
+                                    <field name="attachment_number" widget="statinfo" string="Documents"/>
+                                </button>
+                            </div>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="payment_application_no" readonly="1"/>
+                                </h1>
+                            </div>
+
+                            <group col="2" colspan="1">
+                                <group>
+                                    <field name="payment_company_name" string="付款单位" options="{'no_create_edit': 1}"/>
+                                    <field name="payment_method" string="付款方式"/>
+                                    <field name="supplier_invoice_no" string="供应商发票号"/>
+                                    <field name="pay_base_money_currency_id" string="本位币" readonly="1" invisible="1"/>
+                                    <field name="base_money_payment_amount" string="付款金额" readonly="1" widget="monetary" options="{'currency_field': 'pay_base_money_currency_id'}"/>
+                                </group>
+
+                                <group>
+                                    <field name="application_remark" string="提交审核备注" readonly="1"/>
+                                    <field name="review_remark" string="审核备注" readonly="1"/>
+                                    <field name="payment_remark" string="支付备注" readonly="1"/>
+                                    <field name="create_uid" string="创建人" readonly="1"/>
+                                    <field name="create_date" string="创建时间" widget="date" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <notebook>
+                                 <page string="应付费用列表">
+                                    <field name="expense_payable_no" widget="many2many" mode="tree" context="{'search_default_payment_company_name': payment_company_name}" options="{'not_delete': True}">
+                                        <!--<form string="settlement receivable expense Lines">-->
+                                            <!--<group>-->
+                                                <!--<group>-->
+                                                    <!--<field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}" attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"/>-->
+                                                    <!--<field name="layout_category_id" groups="sale.group_sale_layout"/>-->
+                                                    <!--<field name="invoice_status" invisible="1"/>-->
+                                                    <!--<field name="qty_to_invoice" invisible="1"/>-->
+                                                    <!--<field name="qty_delivered_updateable" invisible="1"/>-->
+                                                    <!--<field name="procurement_ids" invisible="1"/>-->
+                                                    <!--<field name="price_subtotal" invisible="1"/>-->
+                                                    <!--<label for="product_uom_qty" string="Ordered Quantity"/>-->
+                                                <!--</group>-->
+                                                <!--<group>-->
+                                                    <!--<field name="tax_id" widget="many2many_tags" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]" attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>-->
+                                                    <!--<label for="customer_lead"/>-->
+                                                <!--</group>-->
+                                            <!--</group>-->
+                                            <!--<label for="name"/>-->
+                                            <!--<field name="name"/>-->
+                                            <!--<div groups="base.group_no_one">-->
+                                                <!--<label for="invoice_lines"/>-->
+                                                <!--<field name="invoice_lines"/>-->
+                                            <!--</div>-->
+                                            <!--<field name="state" invisible="1"/>-->
+                                        <!--</form>-->
+                                        <tree string="应付费用列表" editable="bottom">
+                                            <field name="product_id" string="费用"/>
+                                            <field name="qty" string="数量"/>
+                                            <field name="unit_price" string="单价"/>
+                                            <field name="currency_id" string="币种"/>
+                                            <field name="rate" string="汇率"/>
+                                            <field name="base_money_currency_id" string="本位币币种" invisible="1"/>
+                                            <field name="base_money_unit_price" string="本位币单价" widget="monetary" options="{'currency_field': 'base_money_currency_id'}"/>
+                                            <field name="payment_company_name" string="付款单位"/>
+                                            <field name="payment_application_no" string="付款申请单号"/>
+                                            <field name="create_uid" string="创建人" readonly="1"/>
+                                            <field name="create_date" string="创建时间" widget="date" readonly="1"/>
+                                        </tree>
+                                    </field>
+                                     <group class="oe_subtotal_footer oe_right" colspan="5" name="sum_receivable_expense_total">
+                                        <field name="expense_payable_usd_total" string="美元总价" readonly="1" widget="monetary" options="{'currency_field': 'pay_currency_id'}"/>
+                                        <field name="expense_payable_eur_total" string="欧元总价" readonly="1" widget="monetary" options="{'currency_field': 'pay_currency_id'}"/>
+                                        <field name="expense_payable_cny_total" string="人民币总价" readonly="1" widget="monetary" options="{'currency_field': 'pay_currency_id'}"/>
+                                        <field name="expense_payable_total" string="折合人民币总价" class="oe_subtotal_footer_separator" readonly="1" widget="monetary" options="{'currency_field': 'pay_base_money_currency_id'}"/>
+                                    </group>
+                                </page>
+                            </notebook>
+
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids"
+                                   widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </form>
+                </field>
+            </record>
+
+            <!--搜索视图  按付款申请单号搜索-->
+            <record id="view_pay_apply_sheet_search" model="ir.ui.view">
+               <field name="name">pay apply sheet search</field>
+               <field name="model">settlement.pay_apply_sheet</field>
+                <field name="arch" type="xml">
+                    <search string="pay apply sheet search">
+                        <field name="payment_application_no" string="付款申请单号" domain="[('settlement.pay_apply_sheet.payment_application_no', '=', self)]"/>
+                    </search>
+               </field>
+            </record>
+
+
+
+    </data>
+</odoo>

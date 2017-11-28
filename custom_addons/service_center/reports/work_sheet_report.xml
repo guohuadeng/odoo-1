@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- QWeb Reports -->
+        <!-- NAME & FILE_NAME should be the same -->
+        <report
+            id="report_work_sheet_sea_import"
+            model="work_sheet"
+            report_type="qweb-pdf"
+            string="Work Sheet Sea Import"
+            name="service_center.report_work_sheet_sea_import_template"
+            file="service_center.report_work_sheet_sea_import_template"
+        />
+
+        <report
+            id="report_work_sheet_sea_export"
+            model="work_sheet"
+            report_type="qweb-pdf"
+            string="Work Sheet Sea Export"
+            name="service_center.report_work_sheet_sea_export_template"
+            file="service_center.report_work_sheet_sea_export_template"
+        />
+
+        <report
+            id="report_work_sheet_air_import"
+            model="work_sheet"
+            report_type="qweb-html"
+            string="Work Sheet Air Import"
+            name="service_center.report_work_sheet_air_import_template"
+            file="service_center.report_work_sheet_air_import_template"
+        />
+
+        <report
+            id="report_work_sheet_air_export"
+            model="work_sheet"
+            report_type="qweb-html"
+            string="Work Sheet Air Export"
+            name="service_center.report_work_sheet_air_export_template"
+            file="service_center.report_work_sheet_air_export_template"
+        />
+
+    </data>
+</odoo>

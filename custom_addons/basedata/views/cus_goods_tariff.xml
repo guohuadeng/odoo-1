@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="delegation_cus_goods_tariff" model="ir.actions.act_window">
+            <field name="name">customs goods tariff</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">basedata.cus_goods_tariff</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="cus_goods_tariff_form" model="ir.ui.view">
+            <field name="name">customs goods tariff form</field>
+            <field name="model">basedata.cus_goods_tariff</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="Code_t" string="tax regulations Code"/>
+                            </group>
+                            <group>
+                                <field name="Code_s" string="Attach Code"/>
+                            </group>
+                            <group>
+                                <field name="Code_ts" string="goods Code"/>
+                            </group>
+                            <group>
+                                <field name="NameCN" string="Chinese Name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="cus_goods_tariff_tree" model="ir.ui.view">
+            <field name="name">customs goods tariff tree</field>
+            <field name="model">basedata.cus_goods_tariff</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="Code_t" string="tax regulations Code"/>
+                    <field name="Code_s" string="Attach Code"/>
+                    <field name="Code_ts" string="goods Code"/>
+                    <field name="NameCN" string="Chinese Name"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

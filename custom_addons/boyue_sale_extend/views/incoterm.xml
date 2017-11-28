@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_incoterm_list_extend" model="ir.ui.view">
+            <field name="name">Incoterm list extend</field>
+            <field name="model">stock.incoterms</field>
+            <field name="inherit_id" ref="stock.view_incoterms_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="trade_term_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+         <!--扩展贸易条款form -->
+        <record id="view_incoterm_form_extend" model="ir.ui.view">
+            <field name="name">Incoterm form extend</field>
+            <field name="model">stock.incoterms</field>
+            <field name="inherit_id" ref="stock.stock_incoterms_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="trade_term_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

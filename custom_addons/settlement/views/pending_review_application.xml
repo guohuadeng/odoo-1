@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_pending_review_application" model="ir.actions.act_window">
+            <field name="name">待审核付款申请单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">settlement.pay_apply_sheet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'submitted')]</field>
+        </record>
+
+        <!--付款申请单 列表视图  -->
+        <record id="view_pending_review_application_tree" model="ir.ui.view">
+            <field name="name">settlement.pending_review_application_tree</field>
+            <field name="model">settlement.pay_apply_sheet</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="customer bill lists" default_order="create_date desc">
+                    <field name="payment_application_no" string="付款申请号"/>
+                    <field name="payment_method" string="付款类型"/>
+                    <field name="payment_company_name" string="付款单位"/>
+                    <field name="supplier_invoice_no" string="供应商发票号"/>
+                    <field name="state" string="状态"/>
+                    <field name="create_uid" string="创建人" readonly="1"/>
+                    <field name="create_date" string="创建时间" readonly="1"/>
+                    <!--<field name="" string="公司"/>-->
+                </tree>
+            </field>
+        </record>
+
+
+        <!--&lt;!&ndash;搜索视图  按付款申请单号搜索&ndash;&gt;-->
+        <!--<record id="view_pending_review_application_search" model="ir.ui.view">-->
+           <!--<field name="name">pending review application search</field>-->
+           <!--<field name="model">settlement.pay_apply_sheet</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<search string="pay apply sheet search">-->
+                    <!--<field name="state" string="待审核付款申请单" domain="[('settlement.pay_apply_sheet.state', '=', 'review')]"/>-->
+                <!--</search>-->
+           <!--</field>-->
+        <!--</record>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="basedata.delegate_transport_mode_0" model="delegate_transport_mode">
+            <field name="name_cn">非保税区</field>
+            <field name="code">0</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_1" model="delegate_transport_mode">
+            <field name="name_cn">监管仓库</field>
+            <field name="code">1</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_2" model="delegate_transport_mode">
+            <field name="name_cn">水路运输</field>
+            <field name="code">2</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_3" model="delegate_transport_mode">
+            <field name="name_cn">铁路运输</field>
+            <field name="code">3</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_4" model="delegate_transport_mode">
+            <field name="name_cn">公路运输</field>
+            <field name="code">4</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_5" model="delegate_transport_mode">
+            <field name="name_cn">航空运输</field>
+            <field name="code">5</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_6" model="delegate_transport_mode">
+            <field name="name_cn">邮件运输</field>
+            <field name="code">6</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_7" model="delegate_transport_mode">
+            <field name="name_cn">保税区</field>
+            <field name="code">7</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_8" model="delegate_transport_mode">
+            <field name="name_cn">保税仓库</field>
+            <field name="code">8</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_9" model="delegate_transport_mode">
+            <field name="name_cn">其它运输</field>
+            <field name="code">9</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_A" model="delegate_transport_mode">
+            <field name="name_cn">全部运输方式</field>
+            <field name="code">A</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_H" model="delegate_transport_mode">
+            <field name="name_cn">边境特殊海关作业区</field>
+            <field name="code">H</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_W" model="delegate_transport_mode">
+            <field name="name_cn">物流中心</field>
+            <field name="code">W</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_X" model="delegate_transport_mode">
+            <field name="name_cn">物流园区</field>
+            <field name="code">X</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_Y" model="delegate_transport_mode">
+            <field name="name_cn">保税港区</field>
+            <field name="code">Y</field>
+        </record>
+
+        <record id="basedata.delegate_transport_mode_Z" model="delegate_transport_mode">
+            <field name="name_cn">出口加工区</field>
+            <field name="code">Z</field>
+        </record>
+
+    </data>
+</odoo>

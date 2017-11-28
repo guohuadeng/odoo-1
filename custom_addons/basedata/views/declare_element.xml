@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delegate_declare_element_form" model="ir.ui.view">
+        <field name="name">申报要素</field>         <!--自定义-->
+        <field name="model">declare_element</field>   <!--固定格式-->
+        <field name="arch" type="xml">            <!--固定格式-->
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="HSCode_TS"/>
+                            <field name="Orders"/>
+                        </group>
+                        <group>
+                            <field name="CriterionName"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_delegate_declare_element_list" model="ir.ui.view">
+        <field name="name">申报要素</field>                       <!--自定义-->
+        <field name="model">declare_element</field>    <!--固定格式-->
+        <field name="arch" type="xml">                        <!--固定格式-->
+            <tree>
+                <field name="id"/>
+                <field name="HSCode_TS"/>
+                <field name="Orders" style="text-align:center !important;"/>
+                <field name="CriterionName"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action to open To-do Task list -->
+    <act_window id="delegation_declare_element"
+                name="申报要素"
+                res_model="declare_element"
+                view_mode="tree,form"/>
+</odoo>

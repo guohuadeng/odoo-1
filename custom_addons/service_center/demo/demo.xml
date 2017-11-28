@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+
+        <record id="work_sheet_partner_1" model="res.partner">
+            <field name="is_company" eval="True"/>
+            <field name="name">customer_1</field>
+            <field name="en_name">c_1</field>
+        </record>
+
+        <record id="work_sheet_partner_2" model="res.partner">
+            <field name="is_company" eval="True"/>
+            <field name="name">customer_2</field>
+            <field name="en_name">c_2</field>
+        </record>
+
+    </data>
+</odoo>

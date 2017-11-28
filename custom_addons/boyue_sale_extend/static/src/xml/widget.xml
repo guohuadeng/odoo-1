@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="FieldMany2ManyTagRows">
+        <t t-foreach="elements" t-as="el">
+            <span t-attf-class="badge dropdown o_tag_color_#{el.color || 10}" t-att-data-color="el.color || 10" t-att-data-index="el_index" t-att-data-id="el.id">
+                <span style="display: initial; white-space: pre-wrap; overflow: visible" class="o_badge_text" t-attf-title="#{el['display_name']}"><t t-raw="el['display_name']"/></span>
+                <span t-if="!readonly" class="fa fa-times o_delete"/>
+                <br/>
+            </span>
+            <br/>
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_business_status" model="ir.actions.act_window">
+            <field name="name">Business status</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">service_center.business_status</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="business_status_tree" model="ir.ui.view">
+            <field name="name">business status tree view</field>
+            <field name="model">service_center.business_status</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="name"/>
+                    <field name="state_type"/>
+                    <field name="business_stage"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_status_form" model="ir.ui.view">
+            <field name="name">business status form view</field>
+            <field name="model">service_center.business_status</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="state_type"/>
+                            </group>
+                            <group>
+                                <field name="business_stage"/>
+                                <field name="remark"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_business_stage" model="ir.actions.act_window">
+            <field name="name">Business Stage</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">service_center.business_stage</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'default_is_template': True}</field>
+            <!--<field name="demain">[('is_template', '=', True)]</field>-->
+        </record>
+
+        <record id="business_stage_tree" model="ir.ui.view">
+            <field name="name">business stage tree view</field>
+            <field name="model">service_center.business_stage</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence"/>
+                    <field name="name"/>
+                    <field name="stage_type"/>
+                    <field name="is_template"/>
+                    <field name="status" attrs="{'invisible': [('is_template', '=', True)]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_stage_form" model="ir.ui.view">
+            <field name="name">business stage form</field>
+            <field name="model">service_center.business_stage</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1 class="o_row">
+                                <field name="name" placeholder="Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="stage_type"/>
+                                <field name="status" domain="[('business_stage', '=', active_id)]"
+                                    attrs="{'invisible': [('is_template', '=', True)]}"/>
+                                <field name="is_template" readonly="True"/>
+                                <field name="business_status" invisible="True"/>
+                            </group>
+                            <group>
+                                <field name="sequence"/>
+                                <field name="remark"/>
+                            </group>
+                        </group>
+                            <notebook>
+                                <page string="Business status">
+                                    <field name="business_status" mode="tree">
+                                        <tree>
+                                            <field name="name"/>
+                                            <field name="state_type"/>
+                                            <field name="remark"/>
+                                        </tree>
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="name"/>
+                                                    <field name="state_type"/>
+                                                </group>
+                                                <group>
+                                                    <field name="remark"/>
+                                                </group>
+                                            </group>
+                                        </form>
+                                    </field>
+                                </page>
+                            </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

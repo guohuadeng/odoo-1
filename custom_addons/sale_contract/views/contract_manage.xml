@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_sale_contract" model="ir.actions.act_window">
+        <field name="name">Sale Contract</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">contract.sale_contract</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="view_contract_management_search" model="ir.ui.view">
+       <field name="name">contract management search</field>
+       <field name="model">contract.sale_contract</field>
+        <field name="arch" type="xml">
+            <search string="contract management search">
+                <field name="customer" domain="[('customer.name', '=', self)]"/>
+            </search>
+       </field>
+    </record>
+
+
+    <record id="contract_list" model="ir.ui.view">
+        <field name="name">contract tree view</field>
+        <field name="model">contract.sale_contract</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="name"/>
+                <field name="customer"/>
+                <field name="contract_effective_date" widget="date"/>
+                <field name="contract_failure_date" widget="date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="contract_form" model="ir.ui.view">
+        <field name="name">Contract Form View</field>
+        <field name="model">contract.sale_contract</field>
+        <field name="arch" type="xml">
+            <form string="Sales contract">
+               <header>
+                    <button name="create_sale_order" string="Create Salse Order" type="object" class="btn-primary"
+                    context="{'default_contract':active_id, 'default_partner_id':customer}"/>
+
+                    <!--<button name="sent_email_custom" string="sent email custom" type="object" class="btn-primary"/>-->
+                </header>
+            <sheet>
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" placeholder="Contract NO"/>
+                    </h1>
+                </div>
+                <group>
+                    <group>
+                        <field name="contract_type"/>
+                        <field name="our_signatory"/>
+                        <field name="inner_num"/>
+                        <field name="create_date" string="Submit Time" widget="date"/>
+                    </group>
+                    <group>
+                        <field name="customer" domain="[('customer', '=', True), ('is_company', '=', True)]"/>
+                        <!--<field name="id" string="客户ID" invisible="1"/>-->
+                        <field name="customer_signatory" domain="[('parent_id', '=', customer)]"/>
+                        <field name="contract_effective_date" widget="date"/>
+                        <field name="contract_failure_date" widget="date"/>
+                        <field name="note" />
+                    </group>
+                </group>
+
+            </sheet>
+
+            <!--创建合同完成之后 在form表单下显示 发送消息的标签页面    -->
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_contract_type" model="ir.actions.act_window">
+        <field name="name">Contract Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">contract.contract_type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="contract_type_tree" model="ir.ui.view">
+        <field name="name">contract type tree view</field>
+        <field name="model">contract.contract_type</field>
+        <field name="arch" type="xml">
+            <tree string="Contract">
+                <field name="name"/>
+                <field name="remark"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="contract_type_form" model="ir.ui.view">
+        <field name="name">contract type form view</field>
+        <field name="model">contract.contract_type</field>
+        <field name="arch" type="xml">
+            <form string="Contract Type">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="remark"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--将合同入口加到报价单后面-->
+    <menuitem id="menu_contract" name="Contract" parent="sales_team.menu_sales" action="action_sale_contract" sequence="12"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_contract_type" name="Contract Type" parent="sales_team.menu_sale_config" action="action_contract_type" sequence="20"/>
+
+</odoo>

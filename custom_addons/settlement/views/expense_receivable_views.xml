@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_expense_receivable" model="ir.actions.act_window">
+            <field name="name">应收费用</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">settlement.receivable_expense</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!--应收费用 列表视图  -->
+        <record id="view_expense_receivable_tree" model="ir.ui.view">
+            <field name="name">settlement.expense_receivable_tree</field>
+            <field name="model">settlement.receivable_expense</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="expense receivable lists" default_order="create_date desc">
+                    <field name="work_sheet_no" string="工作单号"/>
+                    <field name="customer_id" string="客户"/>
+                    <!--<field name="receivable_expense_status" string="是否已生成账单" invisible="1"/>-->
+                    <field name="receivable_expense_status" string="是否已生成账单" invisible="1"/>
+                    <field name="customer_bill_id" string="账单号"/>
+                    <field name="bill_state" string="账单状态"/>
+                    <field name="settlement_object" string="结算单位"/>
+                    <field name="product_id" string="费用"/>
+                    <field name="qty" string="数量"/>
+                    <field name="unit_price" string="单价"/>
+                    <field name="currency_id" string="币种"/>
+                    <field name="base_money_currency_id" string="本位币币种" invisible="1"/>
+                    <field name="rate" string="汇率"/>
+                    <field name="base_money_unit_price" string="本位币单价" widget="monetary" options="{'currency_field': 'base_money_currency_id'}"/>
+                    <field name="base_money_currency_id" string="本位币币种"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--1 批量生成账单服务器动作-->
+        <record model="ir.actions.server" id="action_batch_generate_account_bill">
+            <field name="name">生成账单</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_settlement_receivable_expense"/>
+            <field name="state">code</field>
+            <field name="code">
+if records:
+    action = records.generate_account_bill()
+            </field>
+        </record>
+
+        <record model="ir.values" id="batch_generate_account_bill">
+            <field name="name">生成账单</field>
+            <field name="model_id" ref="model_settlement_receivable_expense" />
+            <field name="model">settlement.receivable_expense</field>
+            <!--<field name="key">action</field>-->
+            <field name="key2">client_action_multi</field>
+            <field eval="'ir.actions.server,%d'%action_batch_generate_account_bill" name="value"/>
+        </record>
+
+
+        <!-- ************************* 添加至已有账单 暂时取消该功能 后续再开发实现  PS:后台方法暂时保留 没有删除 ****************************************-->
+        <!--2 添加至已有账单服务器动作-->
+        <!--<record model="ir.actions.server" id="action_batch_add_account_bill">-->
+            <!--<field name="name">添加至已有账单</field>-->
+            <!--<field name="type">ir.actions.server</field>-->
+            <!--<field name="model_id" ref="model_settlement_receivable_expense"/>-->
+
+            <!--&lt;!&ndash;<field name="customer_bill_id" widget="one2many_list" mode="tree">&ndash;&gt;-->
+                <!--&lt;!&ndash;<tree string="账单列表" editable="bottom">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="customer_bill_no" string="账单号"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="bill_type" string="账单类型"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="settlement_object" string="结算单位"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="invoice_title" string="开票抬头"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="invoice_demand" string="开票备注"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="invoice_no" string="发票号码"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="state" string="状态"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="create_uid" string="创建人"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="create_date" string="创建时间" widget="date"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<field name="" string="公司"/>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;</tree>&ndash;&gt;-->
+            <!--&lt;!&ndash;</field>&ndash;&gt;-->
+
+            <!--<field name="state">code</field>-->
+            <!--<field name="code">-->
+<!--if records:-->
+    <!--action = records.add_account_bill()-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.values" id="batch_add_account_bill">-->
+            <!--<field name="name">添加至已有账单</field>-->
+            <!--<field name="model_id" ref="model_settlement_receivable_expense" />-->
+            <!--<field name="model">settlement.receivable_expense</field>-->
+            <!--&lt;!&ndash;<field name="key">action</field>&ndash;&gt;-->
+            <!--<field name="key2">client_action_multi</field>-->
+            <!--<field eval="'ir.actions.server,%d'%action_batch_add_account_bill" name="value"/>-->
+        <!--</record>-->
+
+
+        <!-- ************************* ################################# ****************************************-->
+
+
+            <!--应收费用 form视图-->
+            <record id="view_expense_receivable_form" model="ir.ui.view">
+                <field name="name">expense_receivable_form</field>
+                <field name="model">settlement.receivable_expense</field>
+                <field name="arch" type="xml">
+                    <form string="receivable expense">
+                        <sheet>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="expense_statement_no" readonly="1" string="应收费用ID"/>
+                                </h1>
+                            </div>
+
+                            <group col="2" colspan="1">
+                                <group>
+                                    <field name="settlement_object" string="结算单位" options="{'no_create_edit': 1}"/>
+                                    <field name="product_id" string="产品" options="{'no_create_edit': 1}"/>
+                                    <field name="qty" string="数量"/>
+                                    <field name="unit_price" string="单价"/>
+                                    <field name="currency_id" string="币种" options="{'no_create_edit': 1}"/>
+                                    <field name="original_amount_total" string="原币种总价" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="customer_id" string="客户" options="{'no_create_edit': 1}"/>
+                                    <!--<field name="work_sheet_no" string="工作单号" readonly="1"/>-->
+                                    <field name="receivable_expense_status" string="应收费用状态"/>
+                                    <field name="rate" string="汇率" readonly="1"/>
+                                    <field name="base_money_unit_price" string="本位币单价" readonly="1"/>
+                                    <field name="base_money_currency_id" string="本位币币种" readonly="1"/>
+                                    <field name="base_money_amount_total" string="本位币总价" readonly="1"/>
+                                </group>
+                            </group>
+
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids"
+                                   widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </form>
+                </field>
+            </record>
+
+
+
+
+
+        <!--搜索视图  按工作单号搜索-->
+        <record id="view_expense_receivable_search" model="ir.ui.view">
+           <field name="name">expense receivable search</field>
+           <field name="model">settlement.receivable_expense</field>
+            <field name="arch" type="xml">
+                <search string="expense receivable search">
+                    <field name="work_sheet_no" string="工作单" domain="[('settlement.receivable_expense.work_sheet_no', '=', self)]"/>
+                    <field name="customer_id" string="客户" domain="[('settlement.receivable_expense.customer_id', '=', self)]"/>
+                    <field name="customer_bill_id" string="账单号" domain="[('settlement.receivable_expense.customer_bill_id', '=', self)]" invisible="1"/>
+                    <field name="settlement_object" string="结算单位" domain="[('settlement.receivable_expense.settlement_object', 'ilike', self),('customer.is_company','=','True')]"/>
+
+                    <!--<field name="receivable_expense_status" string="是否已生成账单" domain="[('settlement.receivable_expense.receivable_expense_status', '=', self)]"/>-->
+                    <!--<filter string="未生成账单测试" name="receivable_expense_status"-->
+                            <!--domain="[('receivable_expense_status','=?','')]"/>-->
+
+                    <filter string="未生成账单" name="receivable_expense_status"
+                            domain="[('customer_bill_id','=',False)]"/>
+
+                    <!--<filter string="未生成账单" name="receivable_expense_status"-->
+                            <!--domain="[('qty','=','2')]"/>-->
+
+                </search>
+           </field>
+        </record>
+
+
+
+    </data>
+</odoo>

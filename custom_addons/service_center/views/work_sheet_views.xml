@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--工作单列表视图-->
+    <record id="view_work_sheet_tree" model="ir.ui.view">
+            <field name="name">work_sheet_tree</field>
+            <field name="model">work_sheet</field>
+            <field name="arch" type="xml">
+                <tree string="work sheet" default_order="create_date desc">
+                    <field name="business_type" invisible="1"/>
+                    <field name="trans_mode_code" invisible="1"/>
+                    <field name="name"/>
+                    <field name="customer"/>
+                    <field name="mbl_no" string="MBL No"
+                           attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)]}"/>
+                    <field name="hbl_no" string="HBL No"
+                           attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)]}"/>
+                    <field name="mawb" string="MAWB"
+                            attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_5)d)]}"/>
+                    <field name="hawb" string="HAWB"
+                            attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_5)d)]}"/>
+                    <field name="loading_port"/>
+                    <field name="transition_port"/>
+                    <field name="destination_port"/>
+                    <field name="start_date"/>
+                    <field name="arrive_date"/>
+                    <field name="sale_man"/>
+                    <field name="customer_service"/>
+                    <field name="create_date" />
+                    <!--<field name="create_date" invisible="1"/>-->
+                    <field name="state"/>
+                </tree>
+            </field>
+    </record>
+
+    <record id="view_work_sheet_tree_total" model="ir.ui.view">
+            <field name="name">work_sheet_tree_total</field>
+            <field name="model">work_sheet</field>
+            <field name="arch" type="xml">
+                <tree string="work sheet" default_order="create_date desc">
+                    <field name="business_type" invisible="1"/>
+                    <field name="trans_mode_code" invisible="1"/>
+                    <field name="name"/>
+                    <field name="customer"/>
+                    <field name="master_no"/>
+                    <field name="house_no"/>
+                    <field name="loading_port"/>
+                    <field name="transition_port"/>
+                    <field name="destination_port"/>
+                    <field name="start_date"/>
+                    <field name="arrive_date"/>
+                    <field name="sale_man"/>
+                    <field name="customer_service"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+    </record>
+
+    <record id="view_work_sheet_tree_sea" model="ir.ui.view">
+            <field name="name">work_sheet_tree_sea</field>
+            <field name="model">work_sheet</field>
+            <field name="arch" type="xml">
+                <tree string="work sheet" default_order="create_date desc">
+                    <field name="business_type" invisible="1"/>
+                    <field name="name"/>
+                    <field name="customer"/>
+                    <field name="mbl_no" string="MBL No"/>
+                    <field name="hbl_no" string="HBL No"/>
+                    <field name="loading_port"/>
+                    <field name="transition_port"/>
+                    <field name="destination_port"/>
+                    <field name="start_date"/>
+                    <field name="arrive_date"/>
+                    <field name="sale_man"/>
+                    <field name="customer_service"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+    </record>
+
+    <record id="view_work_sheet_tree_air" model="ir.ui.view">
+            <field name="name">work_sheet_tree_air</field>
+            <field name="model">work_sheet</field>
+            <field name="arch" type="xml">
+                <tree string="work sheet" default_order="create_date desc">
+                    <field name="business_type" invisible="1"/>
+                    <field name="name"/>
+                    <field name="customer"/>
+                    <field name="mawb" string="MAWB"/>
+                    <field name="hawb" string="HAWB"/>
+                    <field name="loading_port"/>
+                    <field name="transition_port"/>
+                    <field name="destination_port"/>
+                    <field name="start_date"/>
+                    <field name="arrive_date"/>
+                    <field name="sale_man"/>
+                    <field name="customer_service"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+    </record>
+
+
+
+    <!--工作单form视图-->
+    <record id="view_work_sheet_form" model="ir.ui.view">
+        <field name="name">work_sheet_form</field>
+        <field name="model">work_sheet</field>
+        <field name="arch" type="xml">
+            <form string="Work Sheet">
+                <header>
+                    <button name="confirm" type="object" class="btn-primary" states="draft" string="Confirm"/>
+                    <button name="complete" string="complete worksheet" type="object" states="confirmed" class="btn-primary"/>
+                    <button name="canceld" string="cancel" type="object" states="draft,confirmed,done"/>
+                    <button name="recover" string="transfer worksheet" type="object" states="cancel"/>
+                    <!--<button name="alert_business_stage" type="object" string="Business Stage"/>-->
+                    <button name="%(service_center.action_current_state)d" type="action" string="Business Stage"
+                            context="{'search_default_work_sheet_id': active_id}"/>
+                    <button name="action_work_sheet_send" type="object" string="Send Email"/>
+                    <button name="print_work_sheet" type="object" string="Print"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="custom_book" type="object" string="Booking" class="oe_stat_button" icon="fa-globe"
+                            attrs="{'invisible': [('in_out', '!=', 'e')]}"/>
+
+                        <button name="custom_book" type="object" string="Land Transportation" class="oe_stat_button" icon="fa-truck"
+                            attrs="{'invisible': [('land_trans', '=', False)]}"/>
+
+                        <button name="custom_book" c_name="warehouse" type="object" string="Warehousing"
+                                class="oe_stat_button" icon="fa-building-o"
+                            attrs="{'invisible': [('warehouse', '=', False)]}"/>
+
+
+                        <button name="action_get_attachment_view" class="oe_stat_button" icon="fa-book" type="object">
+                            <field name="attachment_number" widget="statinfo" string="附件上传"/>
+                        </button>
+
+                        <!--<button name="custom_book" type="object" class="oe_stat_button"-->
+                                <!--attrs="{'invisible': [('custom','=',False)]}" icon="fa-plane">-->
+                            <!--<field name="custom_count" widget="statinfo" string="Customs Clearance"/>-->
+                        <!--</button>-->
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" invisible="1"/>
+                        </h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" attrs="{'invisible': [('in_out', '!=', 'e')]}">
+                            <field name="booking" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <label for="booking" string="Booking"/>
+                        </div>
+                        <div class="col-md-1">
+                            <field name="land_trans" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <label for="land_trans" string="Land Transportation"/>
+                        </div>
+                        <div class="col-md-1">
+                            <field name="warehouse" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <label for="warehouse" string="Warehousing"/>
+                        </div>
+                        <div class="col-md-1" attrs="{'invisible': [('state', '=', 'cancel')]}">
+                            <field name="custom" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <label for="custom" string="Customs Clearance"/>
+                        </div>
+                        <div class="col-md-1">
+                            <field name="inspection" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <label for="inspection" string="Customs Inspection"/>
+                        </div>
+                        <div class="col-md-1" attrs="{'invisible': [('business_type', '!=', %(basedata.business_type_for_sea_export)d)],
+                                'readonly': [('state', '=', 'confirmed')]}">
+                            <field name="fumigation"/>
+                            <label for="fumigation" string="Fumigate"/>
+                        </div>
+                        <div class="col-md-1" attrs="{'invisible': [('in_out', '!=', 'i')],
+                                'readonly': [('state', '=', 'confirmed')]}">
+                            <field name="switch_bill"/>
+                            <label for="switch_bill" string="Switch Bill"/>
+                        </div>
+                    </div>
+                    <group col="3" colspan="1">
+                        <field name="business_type" invisible="1"/>
+                        <field name="in_out" invisible="1" />
+                        <field name="trans_mode_code" invisible="1"/>
+                        <group>
+                            <field name="customer" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="contact" required="1" domain="[('parent_id', '=', customer), ('is_company', '=', False)]"/>
+                            <field name="settlement_object" domain="[('customer', '=', True), ('is_company', '=', True)]"/>
+                        </group>
+                        <group>
+                            <field name="sale_order_no" required="1" domain="[('partner_id', '=', customer)]" context="{'hide_sale': True}"/>
+                            <field name="contract_no" domain="[('customer', '=', customer)]"/>
+                            <field name="customer_project_no"/>
+                            <field name="inner_protocol_no" string="内部协议号"/>
+                        </group>
+                        <group col="4">
+                            <field name="company" required="1" colspan="4"/>
+                            <!--<label for="goods_source" colspan="1"/>-->
+                            <!--<field name="goods_source" nolabel="1" colspan="1"/>-->
+                            <!--<field name="sale_man" nolabel="1" colspan="1"/>-->
+                            <!--<div/>-->
+                            <field name="goods_source" required="1" colspan="4" string="揽货类型"/>
+                            <field name="sale_man" colspan="4" required="1" string="销售员"/>
+                            <field name="customer_service" required="1" colspan="4"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Base Info">
+                            <group col="3">
+                                <group string="Transport Info">
+                                    <field name="consignor" required="1" domain="[('is_company', '=', True),('customer', '=', True)]"/>
+                                    <field name="consignee" required="1" domain="[('is_company', '=', True),('customer', '=', True)]"/>
+                                    <field name="input_company" domain="[('is_company', '=', True),('customer', '=', True)]"/>
+                                    <field name="loading_port" required="1"/>
+                                    <field name="transition_port"/>
+                                    <field name="destination_port" required="1"/>
+                                    <field name="destination"/>
+                                    <field name="route"/>
+                                    <field name="air_company"
+                                        attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)],
+                                                'required':[('trans_mode_code','=',%(basedata.delegate_transport_mode_5)d)]}"
+                                        domain="[('is_company','=','True'),('supplier','=',True)]"/>
+                                    <field name="flight"
+                                        attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)]}"/>
+                                    <field name="cabin_space"
+                                        attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)]}"/>
+                                    <field name="ship_company"
+                                        attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_5)d)]}"
+                                        domain="[('is_company','=','True'),('supplier','=',True)]"/>
+                                    <field name="ship_name"
+                                        attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_5)d)]}"/>
+                                    <field name="ship_count"
+                                        attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_5)d)]}"/>
+                                    <field name="start_date" widget="date"/>
+                                    <field name="arrive_date" widget="date"/>
+                                    <!--进口时显示-->
+                                    <field name="leave_date" widget="date" attrs="{'invisible': [('in_out', '=', 'e')]}" />
+                                    <!--出口时候显示-->
+                                    <field name="open_date" widget="date" attrs="{'invisible': [('in_out', '=', 'i')]}" />
+                                    <field name="overseas_agent" domain="[('customer', '=', True)]" attrs="{'invisible': [('in_out', '=', 'i')]}"/>
+                                    <field name="book_agent" domain="[('is_company','=','True'),('supplier','=',True)]"/>
+                                </group>
+                                <group string="Other Info" col="4">
+                                    <field name="mbl_no" colspan="4"
+                                           attrs="{'invisible':[('trans_mode_code','!=',%(basedata.delegate_transport_mode_2)d)],
+                                                  'required':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)]}"/>
+                                    <field name="hbl_no" colspan="4"
+                                           attrs="{'invisible':[('trans_mode_code','!=',%(basedata.delegate_transport_mode_2)d)]}"/>
+                                    <field name="mawb" colspan="4"
+                                           attrs="{'invisible':[('trans_mode_code','!=',%(basedata.delegate_transport_mode_5)d)],
+                                                   'required':[('trans_mode_code','=',%(basedata.delegate_transport_mode_5)d)]}"/>
+                                    <field name="hawb" colspan="4"
+                                           attrs="{'invisible':[('trans_mode_code','!=',%(basedata.delegate_transport_mode_5)d)]}"/>
+                                    <field name="customer_contract_no" colspan="4"/>
+                                    <field name="deal_type" colspan="4" required="1"/>
+                                    <field name="trade_mode_id" colspan="4"/>
+                                    <field name="transport_item" colspan="4" required="1"/>
+                                    <field name="freight_clause" colspan="4"
+                                           attrs="{'required':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)]}"/>
+                                    <field name="goodsValue" colspan="4"/>
+                                    <field name="goods_currency_id"  colspan="4" string="币种"/>
+                                    <!--<field name="goods_currency_id" nolabel="1" colspan="1"/>-->
+                                    <!--<div/>-->
+                                    <field name="operation_requirements" colspan="4" required="1"/>
+                                    <field name="goods_size_ids" mode="tree" colspan="4">
+                                        <tree editable="bottom">
+                                            <field name="length"/>
+                                            <field name="width"/>
+                                            <field name="height"/>
+                                            <field name="qty"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group string="Container Info" name="container_list" col="4">
+                                        <field name="cn_name" colspan="4" required="1"/>
+                                        <field name="hs_code" colspan="4"/>
+                                        <field name="en_name" colspan="4"/>
+                                        <field name="marks" colspan="4"/>
+                                        <field name="wrap_type" colspan="4"/>
+                                        <field name="goods_attribute" colspan="4"/>
+                                        <!--<field name="qty"-->
+                                            <!--attrs="{'invisible':[('business_type','=',%(basedata.business_type_for_air_export)d)]}" colspan="4"/>-->
+                                        <!--<field name="gross_weight"-->
+                                            <!--attrs="{'invisible':[('business_type','=',%(basedata.business_type_for_air_export)d)]}" colspan="4"/>-->
+                                        <!--<field name="volume"-->
+                                            <!--attrs="{'invisible':[('business_type','=',%(basedata.business_type_for_air_export)d)]}" colspan="4"/>-->
+                                        <!--<field name="charge_weight"-->
+                                            <!--attrs="{'invisible':[('business_type','=',%(basedata.business_type_for_air_export)d)]}" colspan="4"/>-->
+
+                                        <field name="qty" colspan="4" required="1"/>
+                                        <field name="gross_weight" colspan="4" required="1"/>
+                                        <field name="volume" colspan="4"/>
+                                        <field name="charge_weight" colspan="4" attrs="{'required':[('trans_mode_code','=',%(basedata.delegate_transport_mode_5)d)]}"/>
+
+                                        <!--以下代码用于件数、毛重、体积、计费重量（委/订/实），需求变更，暂不显示（委/订/实），只显示委托件数、毛重、体积、计费重量-->
+                                        <!--<label string="Qty" colspan="1"/>-->
+                                        <!--<field name="qty" colspan="1" nolabel="1"/>  &lt;!&ndash;件数(委/订/实)&ndash;&gt;-->
+                                        <!--<field name="book_cargo_qty" colspan="1" nolabel="1" placeholder="Booking"-->
+                                            <!--attrs="{'invisible':[('business_type','!=',%(basedata.business_type_for_air_export)d)]}"/>-->
+                                        <!--<field name="actual_qty" colspan="1" nolabel="1" placeholder="Current"-->
+                                            <!--attrs="{'invisible':[('business_type','!=',%(basedata.business_type_for_air_export)d)]}"/>-->
+
+                                        <!--<label string="Gross Weight" colspan="1"/>-->
+                                        <!--<field name="gross_weight" string="Gross Weight(d/b/c)" colspan="1" nolabel="1"/>  &lt;!&ndash;毛重(委/订/实)&ndash;&gt;-->
+                                        <!--<field name="book_cargo_gross_weight" colspan="1" nolabel="1"-->
+                                            <!--attrs="{'invisible':[('business_type','!=',%(basedata.business_type_for_air_export)d)]}"/>-->
+                                        <!--<field name="actual_gross_weight" colspan="1" nolabel="1"-->
+                                            <!--attrs="{'invisible':[('business_type','!=',%(basedata.business_type_for_air_export)d)]}"/>-->
+
+                                        <!--<label string="Volume" colspan="1"/>-->
+                                        <!--<field name="volume" colspan="1" nolabel="1"/>  &lt;!&ndash;体积(委/订/实)&ndash;&gt;-->
+                                        <!--<field name="book_cargo_volume" colspan="1" nolabel="1"-->
+                                            <!--attrs="{'invisible':[('business_type','!=',%(basedata.business_type_for_air_export)d)]}"/>-->
+                                        <!--<field name="actual_volume" colspan="1" nolabel="1"-->
+                                            <!--attrs="{'invisible':[('business_type','!=',%(basedata.business_type_for_air_export)d)]}"/>-->
+
+                                        <!--<label string="Charge Weight" colspan="1"/>-->
+                                        <!--<field name="charge_weight" string="Charge Weight" colspan="1" nolabel="1"/>&lt;!&ndash;计费重量(委/订/实)&ndash;&gt;-->
+                                        <!--<field name="book_cargo_charge_weight" colspan="1" nolabel="1"-->
+                                            <!--attrs="{'invisible':[('business_type','!=',%(basedata.business_type_for_air_export)d)]}"/>-->
+                                        <!--<field name="actual_charge_weight" colspan="1" nolabel="1"-->
+                                            <!--attrs="{'invisible':[('business_type','!=',%(basedata.business_type_for_air_export)d)]}"/>-->
+                                        <!---->
+
+                                        <field name="packing_mode"
+                                               attrs="{'invisible':[('trans_mode_code','!=',%(basedata.delegate_transport_mode_2)d)],
+                                                      'required':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)]}" colspan="4"/>
+                                        <field name="containers_size" mode="tree" nolabel="1"
+                                                attrs="{'invisible':[('trans_mode_code','!=',%(basedata.delegate_transport_mode_2)d)]}" colspan="4">
+                                            <tree editable="bottom">
+                                                <field name="container_type_id"/>
+                                                <field name="container_qty"/>
+                                                <field name="container_no"/>
+                                                <field name="seal_no"/>
+                                                <field name="soc"/>
+                                            </tree>
+                                            <form>
+                                                <group>
+                                                    <group>
+                                                        <field name="container_type_id"/>
+                                                        <field name="container_qty"/>
+                                                        <field name="container_no"/>
+                                                    </group>
+                                                    <group>
+                                                        <field name="seal_no"/>
+                                                        <field name="soc"/>
+                                                    </group>
+                                                </group>
+                                            </form>
+                                        </field>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Switch Bill Info" attrs="{'invisible': [('switch_bill', '=', False)]}">
+                            <group>
+                                <group>
+                                    <field name="switch_bill_company" domain="[('is_company','=','True'),('supplier','=',True)]"/>
+                                    <field name="switch_bill_address"/>
+                                    <field name="switch_bill_contact"/>
+                                    <field name="switch_bill_estimated_date" widget="date"/>
+                                    <field name="switch_bill_real_date" widget="date"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"
+                           widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--工作单搜索视图-->
+    <record id="view_work_sheet_search_sea" model="ir.ui.view">
+        <field name="name">work sheet search</field>
+        <field name="model">work_sheet</field>
+        <field name="arch" type="xml">
+            <search string="Search Work Sheet">
+                <field name="name"/>
+                <field name="customer" string="Customer" filter_domain="[('customer.name','ilike',self),('customer.is_company','=','True')]"/>
+                <field name="mbl_no"/>
+                <field name="hbl_no"/>
+                <field name="mawb"/>
+                <field name="hawb"/>
+                <field name="loading_port"/>
+                <field name="transition_port"/>
+                <field name="destination_port"/>
+                <field name="sale_man"/>
+                <field name="customer_service"/>
+                <field name="state"/>
+                <filter string="My Work Sheet" name="my_work_sheet_filter" domain="[('customer_service','=',uid)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Sale Man" domain="[]" context="{'group_by':'sale_man'}"/>
+                    <filter string="Customer Service" domain="[]" context="{'group_by':'customer_service'}"/>
+                    <filter string="Order Month" domain="[]" context="{'group_by':'creat_time'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="work_sheet_sea_import" model="ir.actions.act_window">
+        <field name="name">Sea Import</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">work_sheet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context" eval="{
+                'default_business_type': ref('basedata.business_type_for_sea_import')}"/>
+        <field name="domain" eval="[('business_type', '=', ref('basedata.business_type_for_sea_import'))]"/>
+    </record>
+
+    <record id="work_sheet_sea_import_tree_ids" model="ir.actions.act_window.view">
+                <field name="view_mode">tree</field>
+                <field name="sequence">1</field>
+               <field name="view_id" ref="service_center.view_work_sheet_tree_sea" />
+               <field name="act_window_id" ref="service_center.work_sheet_sea_import" />
+    </record>
+
+    <record id="work_sheet_sea_import_form_ids" model="ir.actions.act_window.view">
+                <field name="view_mode">form</field>
+                <field name="sequence">2</field>
+               <field name="view_id" ref="service_center.view_work_sheet_form" />
+               <field name="act_window_id" ref="service_center.work_sheet_sea_import" />
+    </record>
+
+
+    <record id="work_sheet_sea_export" model="ir.actions.act_window">
+        <field name="name">Sea Export</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">work_sheet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context" eval="{
+                        'default_business_type': ref('basedata.business_type_for_sea_export')}"/>
+        <field name="domain" eval="[('business_type', '=', ref('basedata.business_type_for_sea_export'))]"/>
+    </record>
+
+    <record id="work_sheet_sea_export_tree_ids" model="ir.actions.act_window.view">
+                <field name="view_mode">tree</field>
+                <field name="sequence">1</field>
+               <field name="view_id" ref="service_center.view_work_sheet_tree_sea" />
+               <field name="act_window_id" ref="service_center.work_sheet_sea_export" />
+    </record>
+
+    <record id="work_sheet_sea_export_form_ids" model="ir.actions.act_window.view">
+                <field name="view_mode">form</field>
+                <field name="sequence">2</field>
+               <field name="view_id" ref="service_center.view_work_sheet_form" />
+               <field name="act_window_id" ref="service_center.work_sheet_sea_export" />
+    </record>
+
+    <record id="work_sheet_air_import" model="ir.actions.act_window">
+        <field name="name">Air Import</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">work_sheet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context" eval="{
+                    'default_business_type': ref('basedata.business_type_for_air_import')}"/>
+        <field name="domain" eval="[('business_type', '=', ref('basedata.business_type_for_air_import'))]"/>
+    </record>
+
+    <record id="work_sheet_air_import_tree_ids" model="ir.actions.act_window.view">
+                <field name="view_mode">tree</field>
+                <field name="sequence">1</field>
+               <field name="view_id" ref="service_center.view_work_sheet_tree_air" />
+               <field name="act_window_id" ref="service_center.work_sheet_air_import" />
+    </record>
+
+    <record id="work_sheet_air_import_form_ids" model="ir.actions.act_window.view">
+                <field name="view_mode">form</field>
+                <field name="sequence">2</field>
+               <field name="view_id" ref="service_center.view_work_sheet_form" />
+               <field name="act_window_id" ref="service_center.work_sheet_air_import" />
+    </record>
+
+    <record id="work_sheet_air_export" model="ir.actions.act_window">
+        <field name="name">Air Export</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">work_sheet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context" eval="{
+                    'default_business_type': ref('basedata.business_type_for_air_export')}"/>
+        <field name="domain" eval="[('business_type', '=', ref('basedata.business_type_for_air_export'))]"/>
+    </record>
+
+    <record id="work_sheet_air_export_tree_ids" model="ir.actions.act_window.view">
+                <field name="view_mode">tree</field>
+                <field name="sequence">1</field>
+               <field name="view_id" ref="service_center.view_work_sheet_tree_air" />
+               <field name="act_window_id" ref="service_center.work_sheet_air_export" />
+    </record>
+
+    <record id="work_sheet_air_export_form_ids" model="ir.actions.act_window.view">
+                <field name="view_mode">form</field>
+                <field name="sequence">2</field>
+               <field name="view_id" ref="service_center.view_work_sheet_form" />
+               <field name="act_window_id" ref="service_center.work_sheet_air_export" />
+    </record>
+
+</odoo>

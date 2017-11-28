@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delegate_Currency_system_form" model="ir.ui.view">
+        <field name="name">currency_form</field>         <!--自定义-->
+        <field name="model">currency_system</field>   <!--固定格式  以models中定义的'_name'为准 并且和下方<act_window中的res_model名称一样-->
+        <field name="arch" type="xml">            <!--固定格式-->
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="Code"/>
+                        </group>
+                        <group>
+                            <field name="NameCN"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_delegate_Currency_system_list" model="ir.ui.view">
+        <field name="name">currency_tree</field>                <!--自定义-->
+        <field name="model">currency_system</field>    <!--固定格式  以models中定义的'_name'为准 并且和下方<act_window中的res_model名称一样-->
+        <field name="arch" type="xml">                 <!--固定格式-->
+            <tree>
+                <field name="id"/>
+				<field name="Code"/>
+				<field name="NameCN"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action to open To-do Task list -->
+    <act_window id="delegation_Currency_system"
+                name="Currency"
+                res_model="currency_system"
+                view_mode="tree,form"/>
+</odoo>

@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="service_center.report_work_sheet_air_export_template">
+            <t t-call="report.html_container">
+                <t t-call="report.internal_layout">
+                    <div class="page">
+                        <style type="text/css">
+                            .table-bordered th,
+                            .table-bordered td {
+                            border: 1px solid #000 !important;
+                            }
+                        </style>
+                        <div style="width: 100%;">
+                            <div class="row">
+                                <span class="col-xs-4">接单日期：<span t-field="docs.create_date" t-options="{'widget':'date'}"></span> </span>
+                                <span class="col-xs-4">部门：</span>
+                                <span class="col-xs-4">编号： <span t-field="docs.name"></span></span>
+                            </div>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-4">主运单号： <span t-field="docs.mawb"></span> </span>
+                                            <span class="col-xs-4">品名： <span t-field="docs.cn_name"></span></span>
+                                            <span class="col-xs-2">件数： <span t-field="docs.qty"></span></span>
+                                            <span class="col-xs-2">重量： <span t-field="docs.gross_weight"></span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-4">分运单号： <span t-field="docs.hawb"></span> </span>
+                                            <span class="col-xs-4">货值：
+                                                <span t-field="docs.goodsValue" t-field-options='{"widget": "text"}' ></span>
+                                                <span t-field="docs.goods_currency_id"></span>
+                                            </span>
+                                            <span class="col-xs-4">计费重量：<span t-field="docs.charge_weight"></span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-4">开航日期：<span t-field="docs.start_date"></span>  </span>
+                                            <span class="col-xs-4">贸易方式：<span t-field="docs.trade_mode_id"></span>  </span>
+                                            <span class="col-xs-4">合同号：<span t-field="docs.customer_contract_no"></span> </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">委托单位：<span t-field="docs.customer"> </span> </span><span
+                                                class="col-xs-6">结算单位： <span t-field="docs.settlement_object"> </span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-12">订舱代理：<span t-field="docs.book_agent"> </span>  </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6"> </span>
+                                            <span class="col-xs-3">出发地：  <span t-field="docs.loading_port"> </span></span>
+                                            <span class="col-xs-3">目的地：   <span t-field="docs.destination_port"> </span></span>
+                                        </div>
+                                        <br/>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" padding="5">
+                                        <div class="row">
+                                            <span class="col-xs-12">客户提供文件： </span>
+
+                                            <br/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        客户要求
+                                    </td>
+                                    <td width="40%">
+                                        <span t-field="docs.operation_requirements"> </span>
+                                    </td>
+                                    <td width="10%">送货地址：</td>
+                                    <td width="40%"><span t-field="docs.consignee"> </span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">特殊要求：  </span><span
+                                                class="col-xs-6">司机姓名及电话： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">退客户文件：  </span><span
+                                                class="col-xs-6">业务员签收： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        成本费用:
+                                    </td>
+                                    <td width="90%" colspan="3">
+                                        <div class="row">
+                                            <span class="col-xs-6">空运费：  </span>
+                                            <span class="col-xs-6">报关费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-6">文件费：  </span>
+                                            <span class="col-xs-6">制单费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-6">鉴定费：  </span>
+                                            <span class="col-xs-6">提货费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-6">检疫费：  </span>
+                                            <span class="col-xs-6">送货费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-6">查验费：  </span>
+                                            <span class="col-xs-6">包装费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-6">退库费：  </span>
+                                            <span class="col-xs-6">理货费： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        结账情况:
+                                    </td>
+                                    <td width="90%" colspan="3">
+                                        <div class="row">
+                                            <span class="col-xs-4">空运费：  </span>
+                                            <span class="col-xs-4">报关费： </span>
+                                            <span class="col-xs-4">贸易代理费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">文件费：  </span>
+                                            <span class="col-xs-4">制单费： </span>
+                                            <span class="col-xs-4">服务费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">鉴定费：  </span>
+                                            <span class="col-xs-4">提货费： </span>
+                                            <span class="col-xs-4"> </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">检疫费：  </span>
+                                            <span class="col-xs-4">送货费： </span>
+                                            <span class="col-xs-4"> </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">查验费：  </span>
+                                            <span class="col-xs-4">包装费： </span>
+                                            <span class="col-xs-4"> </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">退库费：  </span>
+                                            <span class="col-xs-4">理货费：  </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-4">结账合计：  </span>
+                                            <span class="col-xs-4">成本合计： </span>
+                                            <span class="col-xs-4">毛利润： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+
+                                        <div class="row">
+                                            <span class="col-xs-12">备注：  </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <span class="col-xs-4">业务员： <span t-field="docs.sale_man"> </span> </span>
+                                <span class="col-xs-4">制单人： <span t-field="docs.create_uid"> </span></span>
+                                <span class="col-xs-4">部门经理： </span>
+                            </div>
+                            <div class="row">
+                                <span class="col-xs-4">开单日期： </span><span class="col-xs-4"></span><span class="col-xs-4">结账日期： </span>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+
+                </t>
+            </t>
+        </template>
+
+        <template id="service_center.report_work_sheet_air_import_template">
+            <t t-call="report.html_container">
+                <t t-call="report.internal_layout">
+                    <div class="page">
+                        <style type="text/css">
+                            .table-bordered th,
+                            .table-bordered td {
+                            border: 1px solid #000 !important;
+                            }
+                        </style>
+                        <div style="width: 100%;">
+                            <div class="row">
+                                <span class="col-xs-4">接单日期：<span t-field="docs.create_date" t-options="{'widget':'date'}"></span> </span>
+                                <span class="col-xs-4">部门：</span>
+                                <span class="col-xs-4">编号： <span t-field="docs.name"></span></span>
+                            </div>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-4">主运单号： <span t-field="docs.mawb"></span> </span>
+                                            <span class="col-xs-4">品名： <span t-field="docs.cn_name"></span></span>
+                                            <span class="col-xs-2">件数： <span t-field="docs.qty"></span></span>
+                                            <span class="col-xs-2">重量： <span t-field="docs.gross_weight"></span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-4">分运单号： <span t-field="docs.hawb"></span> </span>
+                                            <span class="col-xs-4">货值：
+                                                <span t-field="docs.goodsValue" t-field-options='{"widget": "text"}' ></span>
+                                                <span t-field="docs.goods_currency_id"></span>
+                                            </span>
+                                            <span class="col-xs-4"> 计费重量： <span t-field="docs.charge_weight"></span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-4">预计到达日期：<span t-field="docs.arrive_date"></span>  </span>
+                                            <span class="col-xs-4">贸易方式：<span t-field="docs.trade_mode_id"></span>   </span>
+                                            <span class="col-xs-4"> 合同号：<span t-field="docs.customer_contract_no"></span> </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">委托单位： <span t-field="docs.customer"> </span></span>
+                                            <span class="col-xs-6">结算单位： <span t-field="docs.settlement_object"></span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-12">订舱代理： <span t-field="docs.book_agent"> </span> </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">报关单号： </span>
+                                            <span class="col-xs-3">出发地：  <span t-field="docs.loading_port"> </span></span>
+                                            <span class="col-xs-3">目的地：   <span t-field="docs.destination_port"> </span></span>
+                                        </div>
+                                        <br/>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" padding="5">
+                                        <div class="row">
+                                            <span class="col-xs-12">客户提供文件： </span>
+
+                                            <br/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        客户要求
+                                    </td>
+                                    <td width="40%">
+                                        <span t-field="docs.operation_requirements"> </span>
+                                    </td>
+                                    <td width="10%">送货地址：</td>
+                                    <td width="40%"><span t-field="docs.consignee"> </span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">特殊要求：  </span><span
+                                                class="col-xs-6">司机姓名及电话： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">退客户文件：  </span><span
+                                                class="col-xs-6">业务员签收： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        成本费用:
+                                    </td>
+                                    <td width="90%" colspan="3">
+                                        <div class="row">
+                                            <span class="col-xs-4">关税：  </span>
+                                            <span class="col-xs-4">仓储费： </span>
+                                            <span class="col-xs-4">报关费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">增值税：  </span>
+                                            <span class="col-xs-4">调单费： </span>
+                                            <span class="col-xs-4">三检费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">消费税：  </span>
+                                            <span class="col-xs-4">查验费： </span>
+                                            <span class="col-xs-4">制单费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">保证金：  </span>
+                                            <span class="col-xs-4">包装费： </span>
+                                            <span class="col-xs-4">陆运费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">滞报金：  </span>
+                                            <span class="col-xs-4">人工费： </span>
+                                            <span class="col-xs-4">贴签费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">空运费：  </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        结账情况:
+                                    </td>
+                                    <td width="90%" colspan="3">
+                                        <div class="row">
+                                            <span class="col-xs-4">关税：  </span>
+                                            <span class="col-xs-4">仓储费： </span>
+                                            <span class="col-xs-4">报关费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">增值税：  </span>
+                                            <span class="col-xs-4">三检费： </span>
+                                            <span class="col-xs-4">制单费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">消费税：  </span>
+                                            <span class="col-xs-4">调单费： </span>
+                                            <span class="col-xs-4">陆运费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">保证金：  </span>
+                                            <span class="col-xs-4">包装费： </span>
+                                            <span class="col-xs-4">贸易代理费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">滞报金：  </span>
+                                            <span class="col-xs-4">贴签费： </span>
+                                            <span class="col-xs-4">服务费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">空运费：  </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-4">结账合计：  </span>
+                                            <span class="col-xs-4">成本合计： </span>
+                                            <span class="col-xs-4">毛利润： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+
+                                        <div class="row">
+                                            <span class="col-xs-12">备注：  </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <span class="col-xs-4">业务员： <span t-field="docs.sale_man"> </span> </span><span class="col-xs-4">制单人： <span
+                                    t-field="docs.create_uid"> </span></span><span
+                                    class="col-xs-4">部门经理： </span>
+                            </div>
+                            <div class="row">
+                                <span class="col-xs-4">开单日期： </span><span class="col-xs-4"></span><span class="col-xs-4">结账日期： </span>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+
+                </t>
+            </t>
+        </template>
+
+        <template id="service_center.report_work_sheet_sea_export_template">
+            <t t-call="report.html_container">
+                <t t-call="report.internal_layout">
+                    <div class="page">
+                        <style type="text/css">
+                            .table-bordered th,
+                            .table-bordered td {
+                            border: 1px solid #000 !important;
+                            }
+                        </style>
+                        <div style="width: 100%;">
+                            <div class="row">
+                                <span class="col-xs-4">接单日期：<span t-field="docs.create_date" t-options="{'widget':'date'}"></span> </span>
+                                <span class="col-xs-4">部门：</span><span class="col-xs-4">编号： <span t-field="docs.name"></span></span>
+                            </div>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-4">主运单号：  <span t-field="docs.mbl_no"></span>  </span>
+                                            <span class="col-xs-4">品名： <span t-field="docs.cn_name"></span></span>
+                                            <span class="col-xs-2">件数： <span t-field="docs.qty"></span></span>
+                                            <span class="col-xs-2">重量： <span t-field="docs.gross_weight"></span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-4">分运单号： <span t-field="docs.hbl_no"></span> </span>
+                                            <span class="col-xs-4">货值：
+                                                <span t-field="docs.goodsValue" t-field-options='{"widget": "text"}' ></span>
+                                                <span t-field="docs.goods_currency_id"></span>
+                                            </span>
+                                            <span class="col-xs-4"> 集装箱数量：
+                                                <t t-foreach="docs.containers_size" t-as="i" t_index="index">
+                                                    <span t-field="i.container_type_id"></span> X
+                                                    <span t-field="i.container_qty"></span>,
+                                                </t>
+                                            </span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-4">开航日期：<span t-field="docs.start_date"></span>  </span>
+                                            <span class="col-xs-4">贸易方式：<span t-field="docs.trade_mode_id"></span>  </span>
+                                            <span class="col-xs-4">合同号：<span t-field="docs.customer_contract_no"></span> </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">委托单位： <span t-field="docs.customer"> </span> </span>
+                                            <span class="col-xs-6">结算单位： <span t-field="docs.settlement_object"></span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-12">订舱代理：<span t-field="docs.book_agent"> </span>  </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">报关单号: </span>
+                                            <span class="col-xs-3">出发地：  <span t-field="docs.loading_port"> </span></span>
+                                            <span class="col-xs-3">目的地：   <span t-field="docs.destination_port"> </span></span>
+                                        </div>
+                                        <br/>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" padding="5">
+                                        <div class="row">
+                                            <span class="col-xs-12">客户提供文件： </span>
+
+                                            <br/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        客户要求
+                                    </td>
+                                    <td width="40%">
+                                        <span t-field="docs.operation_requirements"> </span>
+                                    </td>
+                                    <td width="10%">送货地址：</td>
+                                    <td width="40%"><span t-field="docs.consignee"> </span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">特殊要求：  </span><span
+                                                class="col-xs-6">司机姓名及电话： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">退客户文件：  </span><span
+                                                class="col-xs-6">业务员签收： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        成本费用:
+                                    </td>
+                                    <td width="90%" colspan="3">
+                                        <div class="row">
+                                            <span class="col-xs-3">海运费：  </span>
+                                            <span class="col-xs-3">港口附件费： </span>
+                                            <span class="col-xs-3">陆运费： </span>
+                                            <span class="col-xs-3">报关费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">港杂费：  </span>
+                                            <span class="col-xs-3">旺季附加费： </span>
+                                            <span class="col-xs-3">运抵报告： </span>
+                                            <span class="col-xs-3">制单费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">码头费：  </span>
+                                            <span class="col-xs-3">紧急燃油附加费： </span>
+                                            <span class="col-xs-3">装箱费： </span>
+                                            <span class="col-xs-3"> </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">船公司文件费：  </span>
+                                            <span class="col-xs-3">亏仓费： </span>
+                                            <span class="col-xs-3">提货费： </span>
+                                            <span class="col-xs-3"> </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">安保费：  </span>
+                                            <span class="col-xs-3">退关转船： </span>
+                                            <span class="col-xs-3">出口商检费： </span>
+                                            <span class="col-xs-3"> </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">仓单录入：  </span>
+                                            <span class="col-xs-3">滞箱费： </span>
+                                            <span class="col-xs-3">查验费： </span>
+                                            <span class="col-xs-3"> </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        结账情况:
+                                    </td>
+                                    <td width="90%" colspan="3">
+                                        <div class="row">
+                                            <span class="col-xs-3">海运费：  </span>
+                                            <span class="col-xs-3">港口附件费： </span>
+                                            <span class="col-xs-3">陆运费： </span>
+                                            <span class="col-xs-3">报关费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">港杂费：  </span>
+                                            <span class="col-xs-3">旺季附加费： </span>
+                                            <span class="col-xs-3">运抵报告： </span>
+                                            <span class="col-xs-3">制单费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">码头费：  </span>
+                                            <span class="col-xs-3">紧急燃油附加费： </span>
+                                            <span class="col-xs-3">装箱费： </span>
+                                            <span class="col-xs-3"> ATA代办费：</span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">船公司文件费：  </span>
+                                            <span class="col-xs-3">亏仓费： </span>
+                                            <span class="col-xs-3">提货费： </span>
+                                            <span class="col-xs-3"> 贸易代理费：</span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">安保费：  </span>
+                                            <span class="col-xs-3">退关转船： </span>
+                                            <span class="col-xs-3">出口商检费： </span>
+                                            <span class="col-xs-3"> 服务费</span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-3">仓单录入：  </span>
+                                            <span class="col-xs-3">滞箱费： </span>
+                                            <span class="col-xs-3">查验费： </span>
+                                            <span class="col-xs-3"> </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-4">结账合计：  </span>
+                                            <span class="col-xs-4">成本合计： </span>
+                                            <span class="col-xs-4">毛利润： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+
+                                        <div class="row">
+                                            <span class="col-xs-12">备注：  </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <span class="col-xs-4">业务员： <span t-field="docs.sale_man"> </span> </span>
+                                <span class="col-xs-4">制单人： <span t-field="docs.create_uid"> </span></span>
+                                <span class="col-xs-4">部门经理： </span>
+                            </div>
+                            <div class="row">
+                                <span class="col-xs-4">开单日期： </span><span class="col-xs-4"></span><span class="col-xs-4">结账日期： </span>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+
+                </t>
+            </t>
+        </template>
+
+        <template id="service_center.report_work_sheet_sea_import_template">
+            <t t-call="report.html_container">
+                <t t-call="report.internal_layout">
+
+                    <div class="page">
+                        <style type="text/css">
+                            .table-bordered th,
+                            .table-bordered td {
+                            border: 1px solid #000 !important;
+                            }
+                        </style>
+                        <div style="width: 100%;">
+                            <div class="row">
+                                <span class="col-xs-4">接单日期：<span t-field="docs.create_date" t-options="{'widget':'date'}"></span> </span>
+                                <span class="col-xs-4">部门：</span><span class="col-xs-4">编号： <span t-field="docs.name"></span></span>
+                            </div>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-4">主运单号： <span t-field="docs.mbl_no"></span> </span>
+                                            <span class="col-xs-4">品名： <span t-field="docs.cn_name"></span></span>
+                                            <span class="col-xs-2">件数： <span t-field="docs.qty"></span></span>
+                                            <span class="col-xs-2">重量： <span t-field="docs.gross_weight"></span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-4">分运单号： <span t-field="docs.hbl_no"></span> </span>
+                                            <span class="col-xs-4">货值：
+                                                <span t-field="docs.goodsValue" t-field-options='{"widget": "text"}' ></span>
+                                                <span t-field="docs.goods_currency_id"></span>
+                                            </span>
+                                            <span class="col-xs-4"> 集装箱数量：
+                                                <t t-foreach="docs.containers_size" t-as="i" t_index="index">
+                                                    <span t-field="i.container_type_id"></span> X
+                                                    <span t-field="i.container_qty"></span>,
+                                                </t>
+                                            </span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-4">预计到港日期：<span t-field="docs.arrive_date"
+                                                                                t-options="{'widget':'date'}"></span> </span>
+                                            <span class="col-xs-4">贸易方式：<span t-field="docs.trade_mode_id"></span>  </span>
+                                            <span class="col-xs-4">合同号：<span t-field="docs.customer_contract_no"></span> </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">委托单位： <span t-field="docs.customer"> </span>  </span><span
+                                                class="col-xs-6">结算单位： <span t-field="docs.settlement_object"></span></span>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <span class="col-xs-12">订舱代理：<span t-field="docs.book_agent"> </span>  </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">报关单号: </span>
+                                            <span class="col-xs-3">出发地：  <span t-field="docs.loading_port"> </span></span>
+                                            <span class="col-xs-3">目的地：   <span t-field="docs.destination_port"> </span></span>
+                                        </div>
+                                        <br/>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" padding="5">
+                                        <div class="row">
+                                            <span class="col-xs-12">客户提供文件： </span>
+
+                                            <br/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        客户要求
+                                    </td>
+                                    <td width="40%">
+                                        <span t-field="docs.operation_requirements"> </span>
+                                    </td>
+                                    <td width="10%">送货地址：</td>
+                                    <td width="40%"><span t-field="docs.consignee"> </span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">特殊要求：  </span><span
+                                                class="col-xs-6">司机姓名及电话： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-6">退客户文件：  </span><span
+                                                class="col-xs-6">业务员签收： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        成本费用:
+                                    </td>
+                                    <td width="90%" colspan="3">
+                                        <div class="row">
+                                            <span class="col-xs-4">关税：  </span>
+                                            <span class="col-xs-4">调单费： </span>
+                                            <span class="col-xs-4">报关费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">增值税：  </span>
+                                            <span class="col-xs-4">港杂费： </span>
+                                            <span class="col-xs-4">三检费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">消费税：  </span>
+                                            <span class="col-xs-4">转栈费： </span>
+                                            <span class="col-xs-4">制单费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">保证金：  </span>
+                                            <span class="col-xs-4">出库费： </span>
+                                            <span class="col-xs-4">陆运费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">滞报金：  </span>
+                                            <span class="col-xs-4">查验费： </span>
+                                            <span class="col-xs-4">掏箱费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">卫生费：  </span>
+                                            <span class="col-xs-4">滞箱费： </span>
+                                            <span class="col-xs-4">海运费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">机检费：  </span>
+                                            <span class="col-xs-4">吊箱费： </span>
+                                            <span class="col-xs-4">贴签费： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%">
+                                        结账情况:
+                                    </td>
+                                    <td width="90%" colspan="3">
+                                        <div class="row">
+                                            <span class="col-xs-4">关税：  </span>
+                                            <span class="col-xs-4">调单费： </span>
+                                            <span class="col-xs-4">报关费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">增值税：  </span>
+                                            <span class="col-xs-4">港杂费： </span>
+                                            <span class="col-xs-4">三检费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">消费税：  </span>
+                                            <span class="col-xs-4">转栈费： </span>
+                                            <span class="col-xs-4">制单费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">保证金：  </span>
+                                            <span class="col-xs-4">海运费： </span>
+                                            <span class="col-xs-4">陆运费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">滞报金：  </span>
+                                            <span class="col-xs-4">查验费： </span>
+                                            <span class="col-xs-4">贸易代理费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">卫生费：  </span>
+                                            <span class="col-xs-4">滞箱费： </span>
+                                            <span class="col-xs-4">服务费： </span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-xs-4">通道费：  </span>
+                                            <span class="col-xs-4">掏箱费： </span>
+                                            <span class="col-xs-4">机检费： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="row">
+                                            <span class="col-xs-4">结账合计：  </span>
+                                            <span class="col-xs-4">成本合计： </span>
+                                            <span class="col-xs-4">毛利润： </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+
+                                        <div class="row">
+                                            <span class="col-xs-12">备注：  </span>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <span class="col-xs-4">业务员： <span t-field="docs.sale_man"> </span> </span>
+                                <span class="col-xs-4">制单人： <span t-field="docs.create_uid"> </span></span>
+                                <span class="col-xs-4">部门经理： </span>
+                            </div>
+                            <div class="row">
+                                <span class="col-xs-4">开单日期： </span><span class="col-xs-4"></span><span class="col-xs-4">结账日期： </span>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
+

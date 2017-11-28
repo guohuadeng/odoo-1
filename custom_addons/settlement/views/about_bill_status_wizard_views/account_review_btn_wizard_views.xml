@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_account_review_wizard" model="ir.actions.act_window">
+            <field name="name">添加审核备注</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">settlement.account_review_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+        <record id="account_review_wizard" model="ir.ui.view">
+            <field name="name">account check wizard</field>
+            <field name="model">settlement.account_review_wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="review_remark" string="审核备注"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="confirm_account_review" type="object" class="oe_highlight" string="Create" />
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

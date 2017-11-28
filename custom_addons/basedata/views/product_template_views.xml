@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--使服务产品按照分类排序-->
+    <record id="product.product_template_tree_view_extend" model="ir.ui.view">
+        <field name="name">material and service fee tree view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">categ_id</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+        <!--服务费用、辅材搜索视图-->
+    <record id="product_template_search_view_service" model="ir.ui.view">
+       <field name="name">product template search extend</field>
+       <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Service" filter_domain="['|','|',('default_code','ilike',self),('name','ilike',self),('barcode','ilike',self)]"/>
+                <separator/>
+                <filter string="Active" name="filter_active" domain="[('active', '=', True)]" />
+            </search>
+       </field>
+    </record>
+
+    <record id="product_template_search_view_materials" model="ir.ui.view">
+       <field name="name">product template search extend</field>
+       <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Materials" filter_domain="['|','|',('default_code','ilike',self),('name','ilike',self),('barcode','ilike',self)]"/>
+                <separator/>
+                <filter string="Active" name="filter_active" domain="[('active', '=', True)]" />
+            </search>
+       </field>
+    </record>
+
+    <!--服务费用窗口视图-->
+    <record id="product_template_action_extend_service" model="ir.actions.act_window">
+        <field name="name">Service</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="mode">primary</field>
+        <field name="view_mode">tree,kanba,form</field>
+        <field name="view_type">form</field>
+        <field name="search_view_id" ref="basedata.product_template_search_view_service"/>
+        <field name="domain" eval="[('categ_id', 'child_of', ref('basedata.product_category_service_fees')), ('sale_ok','=',1)]"/>
+        <field name="context">{"default_type":'service'}</field>
+        <field name="context" eval="{'default_type':'service','default_categ_id': False}"/>
+    </record>
+
+    <!--辅材窗口视图-->
+    <record id="product_template_action_extend_materials" model="ir.actions.act_window">
+        <field name="name">Materials</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="mode">primary</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_type">form</field>
+        <field name="search_view_id" ref="basedata.product_template_search_view_materials"/>
+        <field name="domain" eval="[('categ_id', 'child_of', ref('basedata.product_category_materials')), ('sale_ok','=',1)]"/>
+        <field name="context" eval="{'default_type':'consu','default_categ_id': False}"/>
+    </record>
+
+    <!--服务费用分类form扩展视图-->
+    <record id="product_category_form_view_service_fees" model="ir.ui.view">
+        <field name="name">service_fees category</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//h1/field[@name='name']" position="attributes">
+                <attribute name="placeholder">e.g. document fees</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name="domain">
+                    ['|',('parent_id', '=', %(basedata.product_category_service_fees)d),
+                    ('id', '=', %(basedata.product_category_service_fees)d)]
+                </attribute>
+                <attribute name="widget">selection</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name="options">{'create': false,'create_edit': false}</attribute>
+            </xpath>
+
+            <xpath expr="//button[@icon='fa-th-list']" position="attributes">
+                <attribute name="name">%(product_template_action_extend_service)s</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--<delete id="product_category_action_form_extend" model="ir.actions.act_window"/>-->
+    <!--服务类别窗口视图-->
+    <record id="product_category_action_form_extend" model="ir.actions.act_window">
+            <field name="name">Service Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="product.product_category_list_view"/>
+            <field name="domain" eval="[('id','child_of',ref('basedata.product_category_service_fees'))]"/>
+            <field  name="context" eval="{'default_parent_id': ref('basedata.product_category_service_fees')}"/>
+    </record>
+
+    <record id="product_category_action_specific_tree" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="product_category_action_form_extend" />
+        <field name="view_id" ref="product.product_category_list_view" />
+        <field name="view_mode">tree</field>
+        <field name="sequence">9</field>
+    </record>
+
+    <record id="product_category_action_specific_form" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="product_category_action_form_extend" />
+        <field name="view_id" ref="product_category_form_view_service_fees" />
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!--辅材分类分类form扩展视图-->
+    <record id="product_category_form_view_material" model="ir.ui.view">
+        <field name="name">material category</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//h1/field[@name='name']" position="attributes">
+                <attribute name="placeholder">e.g. wood wrap matrial</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name="domain">
+                    ['|',('parent_id', '=', %(basedata.product_category_materials)d),
+                    ('id', '=', %(basedata.product_category_materials)d)]
+                </attribute>
+                <attribute name="options">{'create': false,'create_edit': false}</attribute>
+            </xpath>
+
+            <xpath expr="//button[@icon='fa-th-list']" position="attributes">
+                <attribute name="name">%(product_template_action_extend_materials)s</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--辅材分类管理窗口视图-->
+    <record id="product_category_action_form_extend_material" model="ir.actions.act_window">
+            <field name="name">material category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="product.product_category_list_view"/>
+            <field name="domain" eval="[('id','child_of',ref('basedata.product_category_materials'))]"/>
+            <field name="context" eval="{'default_parent_id': ref('basedata.product_category_materials')}"/>
+    </record>
+
+    <record id="product_category_action_specific_tree_material" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="product_category_action_form_extend_material" />
+        <field name="view_id" ref="product.product_category_list_view" />
+        <field name="view_mode">tree</field>
+        <field name="sequence">9</field>
+    </record>
+
+    <record id="product_category_action_specific_form_material" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="product_category_action_form_extend_material" />
+        <field name="view_id" ref="product_category_form_view_material" />
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!--服务费用、辅材搜索视图-->
+    <!--<record id="product_template_search_view_extend" model="ir.ui.view" >-->
+        <!--<field name="name">product template search extend</field>-->
+        <!--<field name="model">product.template</field>-->
+        <!--<field name="inherit_id" ref="product.product_template_search_view" />-->
+        <!--<field name="mode">primary</field>-->
+        <!--<field name="arch" type="xml">-->
+                <!--<filter name="filter_to_purchase" position="after">-->
+                    <!--<separator/>-->
+                    <!--<filter string="Service Category" name="filter_service_category"-->
+                            <!--domain="[('categ_id', 'child_of', %(basedata.product_category_service_fees)s)]" />-->
+                    <!--<separator/>-->
+                    <!--<filter string="Materials Category" name="filter_materials_category"-->
+                            <!--domain="[('categ_id', 'child_of', %(basedata.product_category_materials)s)]" />-->
+                <!--</filter>-->
+        <!--</field>-->
+    <!--</record>-->
+
+    <!--服务费用form视图-->
+    <record id="product_template_only_form_view_service_fees" model="ir.ui.view">
+        <field name="name">product.template.product.form.service.fees</field>
+        <field name="model">product.template</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <label for="name" position="attributes">
+                <attribute name="string">Service name</attribute>
+            </label>
+            <field name="name" position="attributes">
+                <attribute name="placeholder">Service</attribute>
+            </field>
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <field name="categ_id" position="attributes">
+                <attribute name="domain">
+                    [('id', 'child_of', %(basedata.product_category_service_fees)s),
+                     ('id', '!=', %(basedata.product_category_service_fees)s)]
+                </attribute>
+                <attribute name="string">Category</attribute>
+                <attribute name="options">{'no_create_edit': 1}</attribute>
+            </field>
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="business_type" widget="many2many_checkboxes"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--为服务费用窗口指定form视图-->
+    <!--<delete id="product_template_action_extend_service_form" model="ir.actions.act_window.view"/>-->
+    <record id="product_template_action_extend_service_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="product_template_only_form_view_service_fees"/>
+        <field name="act_window_id" ref="product_template_action_extend_service"/>
+    </record>
+
+    <!--为服务费用窗口指定kanban窗口-->
+    <record id="product_template_action_extend_service_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="product.product_template_kanban_view"/>
+        <field name="act_window_id" ref="product_template_action_extend_service"/>
+    </record>
+
+    <!--为服务费用窗口指定列表窗口-->
+    <record id="product_template_action_extend_service_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="product.product_template_tree_view"/>
+        <field name="act_window_id" ref="product_template_action_extend_service"/>
+    </record>
+
+    <!--辅材form视图-->
+    <record id="product_template_only_form_view_materials" model="ir.ui.view">
+        <field name="name">product.template.product.form.materials</field>
+        <field name="model">product.template</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <label for="name" position="attributes">
+                <attribute name="string">Materials Name</attribute>
+            </label>
+            <field name="name" position="attributes">
+                <attribute name="placeholder">Materials</attribute>
+            </field>
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <field name="categ_id" position="attributes">
+                <attribute name="domain">
+                    [('id', 'child_of', %(basedata.product_category_materials)s),
+                     ('id', '!=', %(basedata.product_category_materials)s)]</attribute>
+                <attribute name="string">Category</attribute>
+                <attribute name="options">{'no_create_edit': 1}</attribute>
+            </field>
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="business_type" widget="many2many_checkboxes"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--为辅材窗口指定form视图-->
+    <record id="product_template_action_extend_materials_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="product_template_only_form_view_materials"/>
+        <field name="act_window_id" ref="product_template_action_extend_materials"/>
+    </record>
+
+    <!--为辅材窗口指定kanban视图-->
+    <record id="product_template_action_extend_materials_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="product.product_template_kanban_view"/>
+        <field name="act_window_id" ref="product_template_action_extend_materials"/>
+    </record>
+
+    <!--为辅材窗口指定list视图-->
+    <record id="product_template_action_extend_materials_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="product.product_template_tree_view"/>
+        <field name="act_window_id" ref="product_template_action_extend_materials"/>
+    </record>
+
+</odoo>

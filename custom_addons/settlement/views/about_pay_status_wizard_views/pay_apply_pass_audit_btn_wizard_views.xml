@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_pass_audit_wizard" model="ir.actions.act_window">
+            <field name="name">添加提交审核备注</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">settlement.pass_audit_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+        <record id="pass_audit_wizard" model="ir.ui.view">
+            <field name="name">pass audit wizard</field>
+            <field name="model">settlement.pass_audit_wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="review_remark" string="通过审核备注"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="confirm_pass_audit" type="object" class="oe_highlight" string="Create" />
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,620 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* basedata
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-13 10:14+0000\n"
+"PO-Revision-Date: 2017-10-13 10:14+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: basedata
+#: model:ir.ui.view,arch_db:basedata.product_template_search_view_materials
+#: model:ir.ui.view,arch_db:basedata.product_template_search_view_service
+msgid "Active"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_attribute_name
+#: model:ir.ui.view,arch_db:basedata.goods_attribute_form
+#: model:ir.ui.view,arch_db:basedata.goods_attribute_tree
+msgid "Attribute Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.basedata_menu
+#: model:ir.ui.menu,name:basedata.delegate_list_menu
+msgid "Base Data"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_product_product_business_type
+#: model:ir.model.fields,field_description:basedata.field_product_template_business_type
+msgid "Business Type"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_freight_clause_cn_name
+#: model:ir.model.fields,field_description:basedata.field_transportation_term_cn_name
+msgid "CNName"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.view,arch_db:basedata.product_template_only_form_view_materials
+#: model:ir.ui.view,arch_db:basedata.product_template_only_form_view_service_fees
+msgid "Category"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_NameCN
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_NameCN
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_NameCN
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_NameCN
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_NameCN
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_name_cn
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_NameCN
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_NameCN
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_name_cn
+#: model:ir.model.fields,field_description:basedata.field_route_NameCN
+#: model:ir.ui.view,arch_db:basedata.freight_clause_form
+#: model:ir.ui.view,arch_db:basedata.freight_clause_tree
+#: model:ir.ui.view,arch_db:basedata.route_form
+#: model:ir.ui.view,arch_db:basedata.route_tree
+#: model:ir.ui.view,arch_db:basedata.transportation_term_form
+#: model:ir.ui.view,arch_db:basedata.transportation_term_tree
+msgid "Chinese Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_code
+#: model:ir.model.fields,field_description:basedata.field_business_type_code
+msgid "Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.contact_person_menu
+msgid "Contact Person"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.contact_person_tag_menu
+msgid "Contact Person Tag"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.contact_person_title_menu
+msgid "Contact Person Title"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.container_type_action
+#: model:ir.ui.menu,name:basedata.menu_container_type
+msgid "Container Type"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_Country
+#: model:ir.ui.menu,name:basedata.local_setting_country_menu
+msgid "Country"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_Code
+msgid "Country Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.country_list_menu
+msgid "Country District"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_create_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_create_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_create_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_create_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_create_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_create_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_create_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_create_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_create_uid
+#: model:ir.model.fields,field_description:basedata.field_business_type_create_uid
+#: model:ir.model.fields,field_description:basedata.field_container_type_create_uid
+#: model:ir.model.fields,field_description:basedata.field_freight_clause_create_uid
+#: model:ir.model.fields,field_description:basedata.field_route_create_uid
+#: model:ir.model.fields,field_description:basedata.field_transportation_term_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_create_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_create_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_create_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_create_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_create_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_create_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_create_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_create_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_create_date
+#: model:ir.model.fields,field_description:basedata.field_business_type_create_date
+#: model:ir.model.fields,field_description:basedata.field_container_type_create_date
+#: model:ir.model.fields,field_description:basedata.field_freight_clause_create_date
+#: model:ir.model.fields,field_description:basedata.field_route_create_date
+#: model:ir.model.fields,field_description:basedata.field_transportation_term_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.local_setting_currency_menu
+msgid "Currency"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_Code
+msgid "Custom Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.custom_args_menu
+msgid "Custom args"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_customs
+#: model:ir.ui.menu,name:basedata.customs_list_menu
+msgid "Customs"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_display_name
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_display_name
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_display_name
+#: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_display_name
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_display_name
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_display_name
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_display_name
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_display_name
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_display_name
+#: model:ir.model.fields,field_description:basedata.field_business_type_display_name
+#: model:ir.model.fields,field_description:basedata.field_container_type_display_name
+#: model:ir.model.fields,field_description:basedata.field_freight_clause_display_name
+#: model:ir.model.fields,field_description:basedata.field_route_display_name
+#: model:ir.model.fields,field_description:basedata.field_transportation_term_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_freight_clause_en_name
+#: model:ir.model.fields,field_description:basedata.field_transportation_term_en_name
+msgid "ENName"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_name_en
+#: model:ir.model.fields,field_description:basedata.field_route_NameEN
+#: model:ir.ui.view,arch_db:basedata.freight_clause_form
+#: model:ir.ui.view,arch_db:basedata.freight_clause_tree
+#: model:ir.ui.view,arch_db:basedata.route_form
+#: model:ir.ui.view,arch_db:basedata.route_tree
+#: model:ir.ui.view,arch_db:basedata.transportation_term_form
+#: model:ir.ui.view,arch_db:basedata.transportation_term_tree
+msgid "English Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.freight_clause_action
+#: model:ir.model,name:basedata.model_freight_clause
+#: model:ir.ui.menu,name:basedata.menu_freight_clause
+msgid "Freight Clause"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.goods_attribute_action
+#: model:ir.ui.menu,name:basedata.menu_goods_type
+msgid "Goods Type"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.local_setting_groups_menu
+msgid "Groups"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_id
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_id
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_id
+#: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_id
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_id
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_id
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_id
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_id
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_id
+#: model:ir.model.fields,field_description:basedata.field_business_type_id
+#: model:ir.model.fields,field_description:basedata.field_container_type_id
+#: model:ir.model.fields,field_description:basedata.field_freight_clause_id
+#: model:ir.model.fields,field_description:basedata.field_route_id
+#: model:ir.model.fields,field_description:basedata.field_transportation_term_id
+msgid "ID"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_business_type_in_out
+msgid "InOut"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.internation_port_action
+#: model:ir.ui.menu,name:basedata.menu_internation_port
+msgid "Internation Port"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_basedata_internation_port
+msgid "International Port"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country___last_update
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs___last_update
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code___last_update
+#: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute___last_update
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port___last_update
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode___last_update
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode___last_update
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode___last_update
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port___last_update
+#: model:ir.model.fields,field_description:basedata.field_business_type___last_update
+#: model:ir.model.fields,field_description:basedata.field_container_type___last_update
+#: model:ir.model.fields,field_description:basedata.field_freight_clause___last_update
+#: model:ir.model.fields,field_description:basedata.field_route___last_update
+#: model:ir.model.fields,field_description:basedata.field_transportation_term___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_write_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_write_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_write_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_write_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_write_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_write_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_write_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_write_uid
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_write_uid
+#: model:ir.model.fields,field_description:basedata.field_business_type_write_uid
+#: model:ir.model.fields,field_description:basedata.field_container_type_write_uid
+#: model:ir.model.fields,field_description:basedata.field_freight_clause_write_uid
+#: model:ir.model.fields,field_description:basedata.field_route_write_uid
+#: model:ir.model.fields,field_description:basedata.field_transportation_term_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_write_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_write_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_write_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_write_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_write_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_write_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_write_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_write_date
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_write_date
+#: model:ir.model.fields,field_description:basedata.field_business_type_write_date
+#: model:ir.model.fields,field_description:basedata.field_container_type_write_date
+#: model:ir.model.fields,field_description:basedata.field_freight_clause_write_date
+#: model:ir.model.fields,field_description:basedata.field_route_write_date
+#: model:ir.model.fields,field_description:basedata.field_transportation_term_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.local_setting_menu
+msgid "Local Setting"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.product_template_action_extend_materials
+#: model:ir.ui.menu,name:basedata.materials_manage_menu
+#: model:ir.ui.menu,name:basedata.materials_menu
+#: model:ir.ui.view,arch_db:basedata.product_template_only_form_view_materials
+#: model:ir.ui.view,arch_db:basedata.product_template_search_view_materials
+#: model:product.category,name:basedata.product_category_materials
+msgid "Materials"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.materials_category_menu
+msgid "Materials Category"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.view,arch_db:basedata.product_template_only_form_view_materials
+msgid "Materials Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_delegate_transport_mode
+msgid "Mode of transport"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_business_type_name
+#: model:ir.model.fields,field_description:basedata.field_container_type_name
+#: model:ir.ui.view,arch_db:basedata.container_type_form
+#: model:ir.ui.view,arch_db:basedata.container_type_tree
+msgid "Name"
+msgstr ""
+
+#. module: basedata
+#: model:product.uom,name:basedata.product_custom_order
+msgid "Order"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.menu_other
+msgid "Other"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_packing
+#: model:ir.ui.menu,name:basedata.wrap_type_list_menu
+msgid "Pack"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_Code
+msgid "Pack Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_port
+#: model:ir.ui.menu,name:basedata.post_list_menu
+msgid "Port"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_Code
+msgid "Port Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_product_category
+msgid "Product Category"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_region
+#: model:ir.ui.menu,name:basedata.district_list_menu
+msgid "Region"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_Code
+msgid "Region Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.route_action
+#: model:ir.ui.menu,name:basedata.menu_route
+#: model:ir.ui.view,arch_db:basedata.route_search
+msgid "Route"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.product_template_action_extend_service
+#: model:ir.ui.menu,name:basedata.fees_and_materials_menu
+#: model:ir.ui.menu,name:basedata.menu_service_fees
+#: model:ir.ui.view,arch_db:basedata.product_template_only_form_view_service_fees
+#: model:ir.ui.view,arch_db:basedata.product_template_search_view_service
+msgid "Service"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.product_category_action_form_extend
+#: model:ir.ui.menu,name:basedata.menu_service_category
+msgid "Service Category"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.view,arch_db:basedata.product_template_only_form_view_service_fees
+msgid "Service name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.local_setting_states_menu
+msgid "States"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_trade_mode
+#: model:ir.ui.menu,name:basedata.trade_mode_list_menu
+msgid "Trade Mode"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_Code
+msgid "Trade Mode Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_trade_terms
+#: model:ir.ui.menu,name:basedata.trans_mode_list_menu
+msgid "Trade Terms"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_Code
+msgid "Trade Terms Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_transport_mode
+#: model:ir.model.fields,field_description:basedata.field_business_type_transport_mode
+#: model:ir.ui.menu,name:basedata.traf_mode_list_menu
+msgid "Transport Mode"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_code
+msgid "Transport Mode Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.transportation_term_action
+#: model:ir.model,name:basedata.model_transportation_term
+#: model:ir.ui.menu,name:basedata.menu_transportation_term
+#: model:ir.ui.view,arch_db:basedata.transportation_term_search
+msgid "Transportation Term"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_declare_element
+msgid "add declare element to delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_currency_system
+msgid "add special currency system for delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_goods_attribute
+msgid "add special goods attribute for delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_turnover_unit
+msgid "add special unit for delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_delegate_country
+#: model:ir.model,name:basedata.model_product_hs_code
+msgid "add the Country of originOrCountry of destination"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_route
+msgid "air line route"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_container_type
+msgid "box container type"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_business_type
+msgid "business type for work sheet"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.view,arch_db:basedata.route_form
+#: model:ir.ui.view,arch_db:basedata.route_tree
+msgid "code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_delegate_customs
+msgid "customs of delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_description
+#: model:ir.model.fields,field_description:basedata.field_container_type_description
+#: model:ir.model.fields,field_description:basedata.field_freight_clause_description
+#: model:ir.model.fields,field_description:basedata.field_route_description
+#: model:ir.model.fields,field_description:basedata.field_transportation_term_description
+msgid "description"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.view,arch_db:basedata.product_category_form_view_service_fees
+msgid "e.g. document fees"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.view,arch_db:basedata.product_category_form_view_material
+msgid "e.g. wood wrap matrial"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_container_type_active
+msgid "enable/diable"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_delegate_exemption
+msgid "exemption nature of delegation"
+msgstr ""
+
+#. module: basedata
+#: selection:business_type,in_out:0
+msgid "export"
+msgstr ""
+
+#. module: basedata
+#: selection:business_type,in_out:0
+msgid "import"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.product_category_action_form_extend_material
+msgid "material category"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_delegate_packing
+msgid "packing of delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_delegate_port
+msgid "ports of delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_delegate_region
+msgid "region of delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_delegate_trade_mode
+msgid "trade mode of delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_delegate_trade_terms
+msgid "trade terms of delegation"
+msgstr ""
+
+#. module: basedata
+#: code:addons/basedata/models/product_category.py:16
+#, python-format
+msgid "you can't delete this root category"
+msgstr ""
+
+#. module: basedata
+#: code:addons/basedata/models/product_category.py:26
+#, python-format
+msgid "you can't modify this root category"
+msgstr ""

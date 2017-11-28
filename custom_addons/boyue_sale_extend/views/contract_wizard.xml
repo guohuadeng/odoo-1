@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_order_contract_wizard" model="ir.actions.act_window">
+            <field name="name">Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">boyue_sale_extend.contract_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+        <record id="order_contract_wizard" model="ir.ui.view">
+            <field name="name">Sale Order Contract</field>
+            <field name="model">boyue_sale_extend.contract_wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="choose_type" widget="radio" options="{'horizontal': 1}"/>
+                        <group attrs="{'invisible': [('choose_type','=','select')]}">
+                            <field name="contract_type"/>
+                            <field name="our_signatory"/>
+                            <field name="contract_name"/>
+                        </group>
+                        <group attrs="{'invisible': [('choose_type','=','select')]}">
+                            <field name="customer" domain="[('customer', '=', True), ('is_company', '=', True)]"/>
+                            <field name="customer_signatory" domain="[('parent_id', '=', customer)]" options="{'no_create_edit': 1}"/>
+                            <field name="contract_effective_date" widget="date"/>
+                            <field name="contract_failure_date" widget="date"/>
+                        </group>
+                        <group attrs="{'invisible': [('choose_type','!=','select')]}">
+                            <field name="selected_contract" options="{'no_create': 1, 'no_create_edit': 1}"
+                                domain="[('customer', '=', customer)]"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="create_contract" type="object" class="oe_highlight" string="Create" attrs="{'invisible': [('choose_type','=','select')]}"/>
+                        <button name="choose_contract" type="object" class="oe_highlight" string="Choose" attrs="{'invisible': [('choose_type','!=','select')]}"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

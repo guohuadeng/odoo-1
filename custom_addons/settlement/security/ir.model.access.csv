@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_settlement_expense_settlement,settlement.expense_statement,model_settlement_expense_statement,,1,1,1,1
+access_settlement_receivable_expense,settlement.receivable_expense,model_settlement_receivable_expense,,1,1,1,1
+access_settlement_customer_bill,settlement.customer_bill,model_settlement_customer_bill,,1,1,1,1
+access_settlement_bill_type,settlement.bill_type,model_settlement_bill_type,,1,1,1,1
+access_settlement_bill_amount,settlement.bill_amount,model_settlement_bill_amount,,1,1,1,1
+access_settlement_expense_payable,settlement.expense_payable,model_settlement_expense_payable,,1,1,1,1
+access_settlement_pay_apply_sheet,settlement.pay_apply_sheet,model_settlement_pay_apply_sheet,,1,1,1,1
+access_settlement_payment_method,settlement.payment_method,model_settlement_payment_method,,1,1,1,1
+access_settlement_payment_amount,settlement.payment_amount,model_settlement_payment_amount,,1,1,1,1
+
+
+

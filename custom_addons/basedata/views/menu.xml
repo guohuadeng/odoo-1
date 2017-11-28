@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="basedata_menu" name="Base Data" web_icon="basedata,static/description/icon.png" />
+    <!--费用和辅材-->
+    <menuitem id="fees_and_materials_menu" name="Service" parent="basedata_menu" sequence="10" />
+    <menuitem id="menu_service_category" name="Service Category" parent="fees_and_materials_menu" sequence="99" action="product_category_action_form_extend" />
+    <menuitem id="menu_service_fees" name="Service" parent="fees_and_materials_menu" sequence="100"
+              action="product_template_action_extend_service"/>
+    <!--<delete id="hr_expense.menu_hr_product" model="ir.ui.menu"/>-->
+    <!--<menuitem id="menu_reimbursement_fees" name="Reimbursement Fees" parent="fees_and_materials_menu" sequence="101"-->
+                <!--action="hr_expense.hr_expense_product" groups="hr_expense.group_hr_expense_manager"/>-->
+
+    <!--辅材管理-->
+    <menuitem id="materials_manage_menu" name="Materials" parent="basedata_menu" sequence="20" />
+    <menuitem id="materials_category_menu" name="Materials Category" parent="materials_manage_menu" action="product_category_action_form_extend_material" />
+    <menuitem id="materials_menu" name="Materials" parent="materials_manage_menu" action="product_template_action_extend_materials" />
+    <!--联系人-->
+    <menuitem id="contact_person_menu" name="Contact Person" parent="basedata_menu" sequence="30" />
+    <menuitem id="contact_person_tag_menu" name="Contact Person Tag" parent="contact_person_menu" action="base.action_partner_category_form" />
+    <menuitem id="contact_person_title_menu" name="Contact Person Title" parent="contact_person_menu" action="base.action_partner_title_contact" />
+    <!--本地化-->
+    <menuitem id="local_setting_menu" name="Local Setting" parent="basedata_menu" sequence="40" />
+    <menuitem id="local_setting_country_menu" name="Country" parent="local_setting_menu" action="base.action_country" />
+    <menuitem id="local_setting_states_menu" name="States" parent="local_setting_menu" action="base.action_country_state" />
+    <menuitem id="local_setting_groups_menu" name="Groups" parent="local_setting_menu" action="base.action_country_group" />
+    <menuitem id="local_setting_currency_menu" name="Currency" parent="local_setting_menu" action="base.action_currency_form" />
+    <!--海关参数-->
+    <menuitem id="custom_args_menu" name="Custom args" parent="basedata_menu" sequence="50" />
+    <menuitem id="delegate_list_menu" name="Base Data" parent="custom_args_menu" sequence="120" />
+    <menuitem id="traf_mode_list_menu" name="Transport Mode" parent="delegate_list_menu" action="delegation_transport_mode" />
+    <menuitem id="trans_mode_list_menu" name="Trade Terms" parent="delegate_list_menu" action="delegation_trade_terms" />
+    <menuitem id="post_list_menu" name="Port" parent="delegate_list_menu" action="delegation_port" />
+    <menuitem id="customs_list_menu" name="Customs" parent="delegate_list_menu" action="delegation_customs" />
+    <menuitem id="trade_mode_list_menu" name="Trade Mode" parent="delegate_list_menu" action="delegation_trade_mode" />
+    <menuitem id="district_list_menu" name="Region" parent="delegate_list_menu" action="delegation_region" />
+    <menuitem id="wrap_type_list_menu" name="Pack" parent="delegate_list_menu" action="delegation_packing" />
+    <menuitem id="country_list_menu" name="Country District" parent="delegate_list_menu" action="delegation_Country" />
+    <menuitem id="cus_cut_mode_menu" name="征免性质" parent="delegate_list_menu" action="delegation_cus_cut_mode" />
+    <menuitem id="cus_duty_mode_menu" name="征免方式" parent="delegate_list_menu" action="delegation_cus_duty_mode" />
+    <menuitem id="cus_unit_menu" name="单位表" parent="delegate_list_menu" action="delegation_cus_unit" />
+    <menuitem id="cus_currency_menu" name="币制" parent="delegate_list_menu" action="delegation_cus_currency" />
+    <menuitem id="cus_entry_type_menu" name="报关单类型表" parent="delegate_list_menu" action="delegation_cus_entry_type" />
+    <menuitem id="cus_filing_bill_type_menu" name="备案清单类型表" parent="delegate_list_menu" action="delegation_filing_bill_type" />
+    <menuitem id="cus_register_company_menu" name="企业库表" parent="delegate_list_menu" action="delegation_cus_register_company" />
+    <menuitem id="cus_goods_tariff_menu" name="海关税则" parent="delegate_list_menu" action="delegation_cus_goods_tariff" />
+    <menuitem id="dec_license_doc_type_menu" name="随附单证类型" parent="delegate_list_menu" action="delegation_dec_license_doc_type" />
+
+    <!--其它-->
+    <menuitem id="menu_other" name="Other" parent="basedata_menu" sequence="60"/>
+    <menuitem id="menu_transportation_term" name="Transportation Term" parent="menu_other" sequence="10" action="transportation_term_action"/>
+    <menuitem id="menu_freight_clause" name="Freight Clause" parent="menu_other" sequence="20" action="freight_clause_action"/>
+    <menuitem id="menu_goods_type" name="Goods Type" parent="menu_other" sequence="30" action="goods_attribute_action"/>
+    <menuitem id="menu_route" name="Route" parent="menu_other" sequence="40" action="route_action"/>
+    <menuitem id="menu_container_type" name="Container Type" parent="menu_other" sequence="50" action="container_type_action"/>
+    <menuitem id="menu_internation_port" name="Internation Port" parent="menu_other" action="internation_port_action" sequence="60"/>
+</odoo>

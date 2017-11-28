@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_customer_bill" model="ir.actions.act_window">
+            <field name="name">账单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">settlement.customer_bill</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--账单 列表视图  -->
+        <record id="view_customer_bill_tree" model="ir.ui.view">
+            <field name="name">settlement.customer_bill_tree</field>
+            <field name="model">settlement.customer_bill</field>
+            <field name="arch" type="xml">
+                <tree string="customer bill lists" default_order="create_date desc">
+                    <field name="customer_bill_no" string="账单号"/>
+                    <field name="settlement_object" string="结算单位"/>
+                    <field name="bill_type" string="账单类型"/>
+                    <field name="invoice_title" string="开票抬头"/>
+                    <field name="invoice_demand" string="开票备注"/>
+                    <field name="invoice_no" string="发票号码"/>
+                    <field name="state" string="状态"/>
+                    <field name="create_uid" string="创建人" readonly="1"/>
+                    <field name="create_date" string="创建时间" widget="date" readonly="1"/>
+                    <!--<field name="" string="公司"/>-->
+                </tree>
+            </field>
+        </record>
+
+
+        <!--账单 创建-编辑 form视图-->
+            <record id="view_customer_bill_form" model="ir.ui.view">
+                <field name="name">customer_bill_form</field>
+                <field name="model">settlement.customer_bill</field>
+                <field name="arch" type="xml">
+                    <form string="payment application sheet">
+                        <header>
+                            <!--<button name="print_quotation" string="打印" type="object" attrs="{'invisible': [('state', 'in', ['test'])]}" class="btn-primary"/>-->
+                            <button name="action_quotation_send" string="发送客户邮件" type="object"
+                                    states="approve"  class="btn-primary"/>
+
+                            <button name="action_submit_check" string="提交审核"
+                                    type="object" class="btn-primary" states="draft"
+                                    context="{'customer_bill_no': active_id}"/>
+
+                            <button name="action_approve_bill" string="审核通过" type="object" states="submit" class="btn-primary"/>
+                            <button name="%(settlement.action_submit_refused_wizard)d" string="审核拒绝" type="action"
+                                    context="{'customer_bill_no': active_id}" states="submit" class="btn-primary"/>
+
+                             <button name="action_resubmit_check" string="重新提交"
+                                type="object" class="btn-primary" attrs="{'invisible': [('state', 'not in', ['cancel','abnormal'])]}"
+                                context="{'customer_bill_no': active_id}"/>
+
+                            <button name="action_checked_bill" string="对账完成" type="object" states="sent" class="btn-primary"/>
+                            <button name="%(settlement.action_checked_bill_abnormal_wizard)d" string="对账异常" type="action"
+                                    context="{'customer_bill_no': active_id}" states="sent" class="btn-primary"/>
+
+                            <button name="action_paid_bill" string="付款" type="object" states="checked" class="btn-primary"/>
+
+                            <button name="action_make_out_bill" string="开票" type="object" states="paid" class="btn-primary"/>
+
+                            <!--<button name="action_write_off_bill" string="销帐" type="object" states="make-out" class="btn-primary"/>-->
+                            <button name="%(settlement.action_account_write_off_wizard)d" string="销帐"
+                                    type="action" states="make-out" class="btn-primary"
+                                    context="{'customer_bill_no': active_id}"/>
+
+                            <button name="action_cancel_write_off" string="取消销帐" type="object" states="write-off" class="btn-primary"/>
+
+                            <button name="action_quotation_default_send" string="发送客户邮件" type="object"
+                                    attrs="{'invisible': [('state', 'in', ['draft','submit'])]}"  class="btn btn-sm btn-default"/>
+
+                            <!--<field name="state" widget="statusbar" statusbar_visible="draft,submit,cancel,approve,sent,-->
+                                <!--abnormal,checked,paid,make-out,write-off"/>-->
+                            <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve,sent,
+                                checked,paid,make-out,write-off"/>
+                        </header>
+                        <sheet>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="customer_bill_no" readonly="1"/>
+                                </h1>
+                            </div>
+
+                            <group col="2" colspan="1">
+                                <group>
+                                    <field name="bill_type" string="账单类型" options="{'no_create_edit': 1}"/>
+                                    <!--<field name="state" invisible="1"/>-->
+                                    <field name="settlement_object" string="结算对象" options="{'no_create_edit': 1}"/>
+                                    <field name="customer_id" string="客户" options="{'no_create_edit': 1}"/>
+                                    <field name="invoice_title" string="开票抬头" states="paid" />
+                                    <field name="invoice_demand" string="开票要求" states="paid" />
+                                    <field name="create_uid" string="创建人" readonly="1"/>
+                                    <field name="create_date" string="创建时间" widget="date" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="review_remark" string="审核拒绝备注" states="cancel" readonly="1"/>
+                                    <field name="account_checking_remark" string="对账异常备注" readonly="1"/>
+                                    <field name="invoice_no" string="发票号码"  states="paid" />
+                                    <field name="base_money_invoice_amount" string="发票金额" />
+                                    <field name="write_off_amount" string="销帐金额" readonly="1"/>
+                                    <field name="write_off_remark" string="销帐备注" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <notebook>
+                                 <page string="应收费用列表">
+                                     <!--后续需要加上 草稿状态费用显示的效果-->
+                                    <!--<field name="expense_receivable_no" widget="many2many" mode="tree" domain="[('state', '=', 'draft')]" options="{'not_delete': True}">-->
+                                    <field name="receivable_expense_no" widget="many2many" mode="tree" context="{'search_default_settlement_object': settlement_object}" options="{'not_delete': True}">
+                                        <!--<form string="settlement receivable expense Lines">-->
+                                            <!--<group>-->
+                                                <!--<group>-->
+                                                    <!--<field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}" attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"/>-->
+                                                    <!--<field name="layout_category_id" groups="sale.group_sale_layout"/>-->
+                                                    <!--<field name="invoice_status" invisible="1"/>-->
+                                                    <!--<field name="qty_to_invoice" invisible="1"/>-->
+                                                    <!--<field name="qty_delivered_updateable" invisible="1"/>-->
+                                                    <!--<field name="procurement_ids" invisible="1"/>-->
+                                                    <!--<field name="price_subtotal" invisible="1"/>-->
+                                                    <!--<label for="product_uom_qty" string="Ordered Quantity"/>-->
+                                                <!--</group>-->
+                                                <!--<group>-->
+                                                    <!--<field name="tax_id" widget="many2many_tags" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]" attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>-->
+                                                    <!--<label for="customer_lead"/>-->
+                                                <!--</group>-->
+                                            <!--</group>-->
+                                            <!--<label for="name"/>-->
+                                            <!--<field name="name"/>-->
+                                            <!--<div groups="base.group_no_one">-->
+                                                <!--<label for="invoice_lines"/>-->
+                                                <!--<field name="invoice_lines"/>-->
+                                            <!--</div>-->
+                                            <!--<field name="state" invisible="1"/>-->
+                                        <!--</form>-->
+                                        <tree string="应收费用列表" editable="bottom">
+                                            <field name="product_id" string="费用"/>
+                                            <field name="qty" string="数量"/>
+                                            <field name="unit_price" string="单价"/>
+                                            <field name="currency_id" string="币种"/>
+                                            <field name="rate" string="汇率"/>
+                                            <field name="base_money_currency_id" string="本位币币种" invisible="1"/>
+                                            <field name="base_money_unit_price" string="本位币单价" widget="monetary" options="{'currency_field': 'base_money_currency_id'}"/>
+                                            <field name="settlement_object" string="结算对象"/>
+                                            <field name="customer_bill_id" string="账单号"/>
+                                            <field name="create_uid" string="创建人" readonly="1"/>
+                                            <field name="create_date" string="创建时间" widget="date" readonly="1"/>
+                                        </tree>
+                                    </field>
+                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sum_receivable_expense_total">
+                                        <field name="receivable_expense_usd_total" string="美元总价" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="receivable_expense_eur_total" string="欧元总价" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="receivable_expense_cny_total" string="人民币总价" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="receivable_expense_total" string="折合人民币总价" class="oe_subtotal_footer_separator" readonly="1" widget="monetary" options="{'currency_field': 'base_money_currency_id'}"/>
+                                    </group>
+                                </page>
+                            </notebook>
+
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </form>
+                </field>
+            </record>
+
+
+            <!--搜索视图  按账单号搜索-->
+            <record id="view_customer_bill_search" model="ir.ui.view">
+               <field name="name">customer bill search</field>
+               <field name="model">settlement.customer_bill</field>
+                <field name="arch" type="xml">
+                    <search string="customer bill search">
+                        <field name="customer_bill_no" string="账单号" domain="[('settlement.customer_bill.customer_bill_no', '=', self)]"/>
+                    </search>
+               </field>
+            </record>
+
+    </data>
+</odoo>

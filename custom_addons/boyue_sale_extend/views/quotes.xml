@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="action_quotations_new" model="ir.actions.act_window">
+        <field name="name">报价单</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.quotes</field>
+        <field name="view_type">form</field>
+        <!--<field name="view_id" ref="view_quotation_tree_new"/>-->
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a Quotation, the first step of a new sale.
+            </p>
+            <p>
+                Your next actions should flow efficiently: confirm the Quotation
+                to a Sale Order, then create the Invoice and collect the Payment.
+            </p>
+            <p>
+                Note that once a Quotation becomes a Sale Order, it will be moved
+                from the Quotations list to the Sales Order list.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree_new" model="ir.ui.view">
+        <field name="name">sale.quotes.tree</field>
+        <field name="model">sale.quotes</field>
+        <field name="priority">4</field>
+        <field name="arch" type="xml">
+            <tree string="Quotation" class="o_sale_order" decoration-bf="message_needaction==True"
+                  decoration-muted="state=='cancel'" default_order="create_date desc">
+                <field name="message_needaction" invisible="1"/>
+                <field name="name" string="Quotation Number"/>
+                <field name="date_order"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+     <record id="view_order_quotes_form" model="ir.ui.view">
+            <field name="name">sale.quotes.form</field>
+            <field name="model">sale.quotes</field>
+            <field name="arch" type="xml">
+                <form string="Sales Quotations" class="o_sale_order">
+                <header>
+                    <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="btn-primary"/>
+                    <button name="print_quotation" string="Print" type="object" states="draft" class="btn-primary"/>
+                    <button name="action_confirm" states="sent" string="Confirm Sale" class="btn-primary o_sale_confirm" type="object" />
+                    <button name="action_confirm" states="draft" string="Confirm Sale" class="o_sale_confirm" type="object" />
+                    <button name="print_quotation" string="Print" type="object" states="sent,sale"/>
+                    <button name="action_quotation_send" string="Send by Email" type="object" states="sent,sale"/>
+                    <button name="action_cancel" states="draft,sent,sale" type="object" string="Cancel"/>
+                    <button name="action_draft" states="cancel" type="object" string="Set to Quotation"/>
+                    <button name="action_done" type="object" string="Lock" states="sale"
+                        help="If the sale is locked, you can not modify it anymore. However, you will still be able to invoice or deliver."/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}'/>
+                            <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}"/>
+                            <field name="partner_shipping_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'delivery'}"/>
+                        </group>
+                        <group>
+                            <field name="date_order" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+                            <field name="validity_date" attrs="{'invisible': [('state', 'in', ['sale', 'done'])]}"/>
+                            <field name="confirmation_date" attrs="{'invisible': [('state', 'in', ['draft', 'sent', 'cancel'])]}"/>
+                            <field name="pricelist_id" groups="product.group_sale_pricelist"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="payment_term_id" options="{'no_create': True}"/>
+                            <field name="multi_currency" widget="radio" options="{'horizontal': true}" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Custom">
+                            <group>
+                                <group>
+                                    <field name="import_and_export"/>       <!-- 进出口类型 -->
+                                    <field name="transport"/>               <!-- 运输方式 -->
+                                    <field name="exemption"/>               <!-- 征免性质 -->
+                                    <field name="trade_term"/>              <!-- 成交方式 -->
+                                    <field name="port"/>                    <!-- 装货/指运港 -->
+                                    <field name="num"/>                     <!-- 件数 -->
+                                    <field name="gross_weight"/>            <!-- 毛重 -->
+                                    <field name="mark_code"/>               <!-- 标记唛码 -->
+                                </group>
+                                <group>
+                                    <field name="customs"/>                 <!-- 进出口岸 -->
+                                    <field name="trade_mode"/>              <!-- 监管方式 -->
+                                    <field name="trade_country"/>           <!-- 贸易国别 -->
+                                    <field name="origin_arrival_country"/>  <!-- 启运/抵达国 -->
+                                    <field name="region"/>                  <!-- 境内目的/货源地 -->
+                                    <field name="packing"/>                 <!-- 包装方式 -->
+                                    <field name="net_weight"/>              <!-- 净重 -->
+                                    <field name="remarks"/>                 <!-- 备注 -->
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Order Lines">
+                            <field name="order_line" mode="tree"
+                                attrs="{'readonly': [('state', 'in', ('done','cancel'))]}">
+                                <tree string="Sales Order Lines" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"
+                                        attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"
+                                        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                                       />
+                                    <field name="layout_category_id" groups="sale.group_sale_layout"/>
+                                    <field name="name"/>
+                                    <field name="product_uom_qty"
+                                        string="Ordered Qty"
+                                        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                                    />
+                                    <field name="qty_invoiced"
+                                        invisible="True"/>
+                                    <field name="product_uom"
+                                        attrs="{'readonly': [('state', 'in', ('sale','done', 'cancel'))]}"
+                                        context="{'company_id': parent.company_id}"
+                                        groups="product.group_uom" options='{"no_open": True}'/>
+                                    <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags"/>
+                                    <field name="price_unit"
+                                        attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>
+                                    <field name="tax_id" widget="many2many_tags" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
+                                        attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>
+                                    <field name="discount" groups="sale.group_discount_per_so_line"/>
+                                    <field name="price_subtotal" widget="monetary" groups="sale.group_show_price_subtotal"/>
+                                    <field name="price_total" widget="monetary" groups="sale.group_show_price_total"/>
+                                    <field name="qty_delivered_updateable" invisible="1"/>
+                                    <field name="procurement_ids" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="invoice_status" invisible="1"/>
+                                    <field name="customer_lead" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="amount_total" />
+                                    <button name="button_dummy"
+                                        states="draft,sent" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                                </div>
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <field name="note" class="oe_inline" placeholder="Setup default terms and conditions in your company settings."/>
+                            <div class="oe_clear"/>
+                        </page>
+                        <page string="Other Information">
+                            <group>
+                                <group string="Sales Information" name="sales_person">
+                                    <field name="user_id"/>
+                                    <field name="team_id" options="{'no_create': True}"/>
+                                    <field name="client_order_ref"/>
+                                    <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                                </group>
+                                <!--<group name="sale_pay" string="Invoicing">-->
+                                    <!--<field name="fiscal_position_id" options="{'no_create': True}"/>-->
+                                    <!--<field name="invoice_status"-->
+                                        <!--attrs="{'invisible': [('state', 'not in', ('sale','done'))]}"/>-->
+                                <!--</group>-->
+                                <group string="Reporting" name="technical" groups="base.group_no_one">
+                                    <field groups="base.group_no_one" name="origin"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+    <!--<menuitem id="sale.menu_sale_quotations"-->
+              <!--action="action_quotations_new"-->
+              <!--parent="sales_team.menu_sales"-->
+              <!--sequence="11"-->
+              <!--name="询价单"-->
+    />
+</odoo>

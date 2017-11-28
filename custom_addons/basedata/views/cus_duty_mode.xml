@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="delegation_cus_duty_mode" model="ir.actions.act_window">
+            <field name="name">Customs Duty Mode</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">basedata.cus_duty_mode</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="cus_duty_mode_form" model="ir.ui.view">
+            <field name="name">Customs Duty Mode form</field>
+            <field name="model">basedata.cus_duty_mode</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="Code" string="DutyMode Code"/>
+                            </group>
+                            <group>
+                                <field name="NameCN" string="Chinese Name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="cus_duty_mode_tree" model="ir.ui.view">
+            <field name="name">Customs Duty Mode tree</field>
+            <field name="model">basedata.cus_duty_mode</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="Code" string="DutyMode Code"/>
+                    <field name="NameCN" string="Chinese Name"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

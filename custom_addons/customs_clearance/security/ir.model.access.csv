@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_customs_clearance_clearance_draft,customs_clearance.clearance_draft,model_customs_clearance_clearance_draft,,1,1,1,1
+access_customs_clearance_declaration_record,customs_clearance.declaration_record,model_customs_clearance_declaration_record,,1,1,1,1

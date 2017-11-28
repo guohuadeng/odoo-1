@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--<delete id="menu_service_center" model="ir.ui.menu" />-->
+    <menuitem id="service_center_menu" name="Service Center" web_icon="service_center,static/description/icon.png" />
+
+    <menuitem id="menu_board" name="Dashboard" parent="service_center_menu" action="open_service_center_dashboard_kanban" sequence="90"/>
+    <menuitem id="menu_work_sheet" name="Work Sheet" parent="service_center_menu" sequence="100" />
+    <menuitem id="menu_work_sheet_air_export" name="Air Import" parent="menu_work_sheet" sequence="100" action="work_sheet_air_import" />
+    <menuitem id="menu_work_sheet_air_import" name="Air Export" parent="menu_work_sheet" sequence="101" action="work_sheet_air_export" />
+    <menuitem id="menu_work_sheet_sea_import" name="Sea Import" parent="menu_work_sheet" sequence="102" action="work_sheet_sea_import" />
+    <menuitem id="menu_work_sheet_sea_export" name="Sea Export" parent="menu_work_sheet" sequence="103" action="work_sheet_sea_export" />
+
+
+    <!--配置阶段模板-->
+    <menuitem id="menu_business_stage" name="Business Stage" parent="base.menu_custom" action="action_business_stage" sequence="40"/>
+    <!-- 原始清单菜单 -->
+    <!--<menuitem id="custom_clearance_menu" name="报关" parent="service_center_menu" sequence="101"/>-->
+    <!--<menuitem id="custom_declaration_draft_menu" name="原始清单"-->
+              <!--parent="custom_clearance_menu" action="custom_declaration_draft_action" sequence="100"/>-->
+
+
+</odoo>

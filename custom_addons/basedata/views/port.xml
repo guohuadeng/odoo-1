@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delegate_port_form" model="ir.ui.view">
+        <!--自定义-->
+        <field name="name">port_form</field>
+        <!--固定格式-->
+        <field name="model">delegate_port</field>
+        <!--固定格式-->
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="NameCN"/>
+                        </group>
+                        <group>
+                            <field name="Code"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_delegate_port_list" model="ir.ui.view">
+        <!--自定义-->
+        <field name="name">port_list</field>
+        <!--固定格式-->
+        <field name="model">delegate_port</field>
+        <!--固定格式-->
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id"/>
+                <field name="NameCN"/>
+                <field name="Code"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action to open To-do Task list -->
+    <act_window id="delegation_port"
+                name="Port"
+                res_model="delegate_port"
+                view_mode="tree,form"/>
+</odoo>

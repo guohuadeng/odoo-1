@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_boyue_sale_extend_certificate_type,boyue_sale_extend.certificate_type,model_certificate_type,,1,1,1,1
+access_boyue_sale_extend_certificate_level,boyue_sale_extend.certificate_level,model_certificate_level,,1,1,1,1
+access_boyue_sale_extend_certificate_management,boyue_sale_extend.certificate_management,model_certificate_management,,1,1,1,1
+access_boyue_sale_extend_special_requirement,boyue_sale_extend.special_requirement,model_special_requirement,,1,1,1,1
+access_boyue_sale_extend_delivery_info,boyue_sale_extend.delivery_info,model_boyue_sale_extend_delivery_info,,1,1,1,1
+access_boyue_sale_extend_consignor_nee_type,boyue_sale_extend.consignor_nee_type,model_boyue_sale_extend_consignor_nee_type,,1,1,1,1

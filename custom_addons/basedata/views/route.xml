@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="route_action" model="ir.actions.act_window">
+            <field name="name">Route</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">route</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="route_tree" model="ir.ui.view">
+            <field name="name">route tree</field>
+            <field name="model">route</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" string="code"/>
+                    <field name="NameCN" string="Chinese Name"/>
+                    <field name="NameEN" string="English Name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="route_search" model="ir.ui.view">
+           <field name="name">route search view</field>
+           <field name="model">route</field>
+            <field name="arch" type="xml">
+                <search string="Route">
+                  <field name="NameCN"/>
+                  <field name="NameEN"/>
+                </search>
+           </field>
+        </record>
+
+        <record id="route_form" model="ir.ui.view">
+            <field name="name">route form</field>
+            <field name="model">route</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code" string="code"/>
+                                <field name="NameCN" string="Chinese Name"/>
+                            </group>
+                            <group>
+                                <field name="NameEN" string="English Name"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

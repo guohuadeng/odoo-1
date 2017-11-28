@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--<delete id="product.product_category_service_fees" model="product.category"/>-->
+        <record id="basedata.product_category_service_fees" model="product.category" >
+            <field name="name">服务费用</field>
+        </record>
+
+        <record id="basedata.product_category_materials" model="product.category" >
+            <field name="name">辅材</field>
+        </record>
+
+        <record id="product_custom_order" model="product.uom">
+            <field name="category_id" ref="product.product_uom_categ_unit"/>
+            <field name="name">Order</field>
+            <field name="factor_inv" eval="13"/>
+            <field name="uom_type">reference</field>
+        </record>
+    </data>
+</odoo>

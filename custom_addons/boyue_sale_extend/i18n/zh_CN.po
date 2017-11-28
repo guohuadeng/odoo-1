@@ -1,0 +1,903 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* boyue_sale_extend
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-13 07:05+0000\n"
+"PO-Revision-Date: 2017-10-13 07:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_trade_country
+msgid " Country"
+msgstr "贸易国别"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_address_info
+msgid "(edit)"
+msgstr "(编辑)"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_s_account_period
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_s_account_period
+msgid "Account Period"
+msgstr "帐期"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_s_account_period_type
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_s_account_period_type
+msgid "Account Period Type"
+msgstr "帐期类型"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_address
+msgid "Address"
+msgstr "地址"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_authorization_date
+msgid "AuthorizationDate"
+msgstr "认证日期"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_way:0
+msgid "Bank Credit"
+msgstr "银行账款"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_birthday
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_birthday
+msgid "Birthday"
+msgstr "生日"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_date_type:0
+msgid "Business Date"
+msgstr "业务日期"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_business_type
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_business_type
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_business_type
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_business_type
+msgid "Business Type"
+msgstr "业务类型"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_CIQ_register_code
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_CIQ_register_code
+msgid "CIQ Code"
+msgstr "检验检疫注册编码"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,help:boyue_sale_extend.field_res_partner_CIQ_register_code
+#: model:ir.model.fields,help:boyue_sale_extend.field_res_users_CIQ_register_code
+msgid "CIQ register code"
+msgstr "检验检疫注册编码"
+
+#. module: boyue_sale_extend
+#: code:addons/boyue_sale_extend/models/order.py:124
+#, python-format
+msgid "Can't find related contract"
+msgstr "Can't find related contract"
+
+#. module: boyue_sale_extend
+#: code:addons/boyue_sale_extend/models/order.py:144
+#, python-format
+msgid "Can't find related work sheet"
+msgstr "Can't find related work sheet"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.order_contract_wizard
+msgid "Cancel"
+msgstr "取消"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_way:0
+msgid "Cash"
+msgstr "现金"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_certificate_count
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_certificate_count
+msgid "Certificate Count"
+msgstr "证书数量"
+
+#. module: boyue_sale_extend
+#: model:ir.actions.act_window,name:boyue_sale_extend.action_certificate_management
+msgid "Certificate Management"
+msgstr "证件管理"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_certificate_manager
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_certificate_manager
+msgid "Certificate Manager"
+msgstr "证件管理"
+
+#. module: boyue_sale_extend
+#: model:ir.actions.act_window,name:boyue_sale_extend.certificate_type_aciton
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_level_certificate_type
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_type_certificate_type
+msgid "Certificate Type"
+msgstr "证件类型"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_way:0
+msgid "Check"
+msgstr "支票"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_short_name
+msgid "Chinese Name"
+msgstr "中文名称"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.order_contract_wizard
+msgid "Choose"
+msgstr "选择"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_choose_type
+msgid "Choose Type"
+msgstr "Choose Type"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_address_info
+msgid "City"
+msgstr "城市"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_certificate_no
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_company_company_code
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_company_code
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_company_code
+msgid "Code"
+msgstr "代码"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_way:0
+msgid "Collection And Payment"
+msgstr "代收代付"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_way:0
+msgid "Telegraphic Transfer"
+msgstr "电汇"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_res_company
+msgid "Companies"
+msgstr "公司"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_short_name
+msgid "Company Name"
+msgstr "公司名称"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+msgid "Compliance Certification"
+msgstr "合规认证"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_order_form_inherited
+msgid "Confirm Sale"
+msgstr "确认销售"
+
+#. module: boyue_sale_extend
+#: model:ir.actions.act_window,name:boyue_sale_extend.action_consignor_nee_type
+#: model:ir.model,name:boyue_sale_extend.model_boyue_sale_extend_consignor_nee_type
+#: model:ir.ui.menu,name:boyue_sale_extend.menu_consignor_nee_type
+msgid "Consignor Consignee Type"
+msgstr "收发货人类型"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_contact
+msgid "Contact"
+msgstr "联系人"
+
+#. module: boyue_sale_extend
+#: code:addons/boyue_sale_extend/models/order.py:128
+#: model:ir.actions.act_window,name:boyue_sale_extend.action_order_contract_wizard
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_selected_contract
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_contract
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_contract
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_contract
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_order_form_inherited
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_partners_form_button
+#, python-format
+msgid "Contract"
+msgstr "合同"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_contract_num
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_contract_num
+msgid "Contract Count"
+msgstr "合同数"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_contract_type
+msgid "Contract type"
+msgstr "合同类型"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_address_info
+msgid "Country"
+msgstr "国家"
+
+#. module: boyue_sale_extend
+#: selection:boyue_sale_extend.contract_wizard,choose_type:0
+#: model:ir.ui.view,arch_db:boyue_sale_extend.order_contract_wizard
+msgid "Create"
+msgstr "创建"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_order_form_inherited
+msgid "Create Work Sheet"
+msgstr "创建工作单"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_short_name
+msgid "Create company"
+msgstr "创建公司"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_consignor_nee_type_create_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_create_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_create_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_level_create_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_create_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_type_create_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_consignor_nee_type_create_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_create_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_create_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_level_create_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_create_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_type_create_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+msgid "Credentials"
+msgstr "证书"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_s_credit_limit
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_s_credit_limit
+msgid "Credit"
+msgstr "Credit"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+msgid "Credit Account"
+msgstr "信用帐款"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_s_currency
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_s_currency
+msgid "Credit Currency"
+msgstr "额度币种"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+msgid "Currency"
+msgstr "币种"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_customs
+msgid "Custom"
+msgstr "报关"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_customer
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_customer
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_customer
+msgid "Customer"
+msgstr "客户"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_customer_service_ids
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_customer_service_ids
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_customer_service
+msgid "Customer Service"
+msgstr "客户服务"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_customer_signatory
+msgid "Customer signatory"
+msgstr "客户签约人"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_account_period_type:0
+msgid "Day"
+msgstr "天"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_boyue_sale_extend_delivery_info
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_delivery_info
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_order_form_inherited
+msgid "Delivery Info"
+msgstr "交货信息"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_department
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_department
+msgid "Department"
+msgstr "部门"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_period:0
+msgid "Depend Month"
+msgstr "按月"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_period:0
+msgid "Depend Week"
+msgstr "按周"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_consignor_nee_type_description
+msgid "Description"
+msgstr "说明"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_consignor_nee_type_display_name
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_display_name
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_display_name
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_level_display_name
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_display_name
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_type_display_name
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_date_type:0
+msgid "ETA"
+msgstr "ETA"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_date_type:0
+msgid "ETD"
+msgstr "ETD"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_contract_effective_date
+msgid "Effective Time"
+msgstr "生效时间"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_en_name
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_en_name
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_short_name
+msgid "English Name"
+msgstr "英文名称"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_expiration_date
+msgid "ExpirationDate"
+msgstr "有效日期"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_contract_failure_date
+msgid "Failure time"
+msgstr "失效时间"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_goods_name
+msgid "Goods Name"
+msgstr "货物名称"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_seize_goods_type
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_seize_goods_type
+msgid "Goods Source"
+msgstr "揽货类型"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_gross_weight
+msgid "Gross Quantity"
+msgstr "毛重"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_gross_weight
+msgid "Gross Weight"
+msgstr "毛重"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_HS_Code
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_HS_Code
+msgid "HS Code"
+msgstr "海关编码"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,help:boyue_sale_extend.field_res_partner_HS_Code
+#: model:ir.model.fields,help:boyue_sale_extend.field_res_users_HS_Code
+msgid "Harmonized System Code"
+msgstr "海关编码"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_consignor_nee_type_id
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_id
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_id
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_level_id
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_id
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_type_id
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_id
+msgid "ID"
+msgstr "ID"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_stock_incoterms
+msgid "Incoterms"
+msgstr "贸易术语"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_contract_name
+msgid "Inner Num"
+msgstr "客户内部合同号"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_date_type:0
+#: selection:res.partner,s_period:0
+msgid "Invoice Date"
+msgstr "开票日期"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_issuing_authority
+msgid "Issuing Authority"
+msgstr "发证机关"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_consignor_nee_type___last_update
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard___last_update
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info___last_update
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_level___last_update
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management___last_update
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_type___last_update
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement___last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_consignor_nee_type_write_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_write_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_write_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_level_write_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_write_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_type_write_uid
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_write_uid
+msgid "Last Updated by"
+msgstr "最后更新人"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_consignor_nee_type_write_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_write_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_write_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_level_write_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_write_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_type_write_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_level_certificate_level
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_certificate_level
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_type_level
+#: model:ir.ui.view,arch_db:boyue_sale_extend.certificate_type_form
+msgid "Level"
+msgstr "等级"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_account_period_type:0
+msgid "Month"
+msgstr "月"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_consignor_nee_type_name
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_name
+msgid "Name"
+msgstr "名字"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_origin_arrival_country
+msgid "Nation"
+msgstr "启运/抵达国"
+
+#. module: boyue_sale_extend
+#: code:addons/boyue_sale_extend/models/customer_field_extend.py:189
+#: code:addons/boyue_sale_extend/models/oder.py:37
+#: code:addons/boyue_sale_extend/models/order.py:60
+#: code:addons/boyue_sale_extend/models/quotes.py:57
+#: code:addons/boyue_sale_extend/models/quotes.py:223
+#, python-format
+msgid "New"
+msgstr "新建"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_r_note
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_r_note
+msgid "Note"
+msgstr "备注"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_num
+msgid "Num"
+msgstr "件数"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_order
+msgid "Order"
+msgstr "票"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_our_signatory
+msgid "Our signatory"
+msgstr "我方签约人"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+msgid "Pay And Receive"
+msgstr "收付款"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_type:0
+msgid "Payment"
+msgstr "付款"
+
+#. module: boyue_sale_extend
+#: code:addons/boyue_sale_extend/models/order.py:79
+#, python-format
+msgid "Please check your company code firstly"
+msgstr "请先设置公司代码（设置—用户—公司）"
+
+#. module: boyue_sale_extend
+#: code:addons/boyue_sale_extend/models/order.py:360
+#, python-format
+msgid "Please select contract"
+msgstr "Please select contract"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,seize_goods_type:0
+msgid "Pointed"
+msgstr "指定"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_port
+msgid "Port"
+msgstr "装货/指运港"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_way:0
+msgid "Promissory"
+msgstr "本票"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_address_info
+msgid "Province"
+msgstr "省"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_qty
+msgid "Qty"
+msgstr "件数"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_line_quote_currency_id
+msgid "Quote Currency"
+msgstr "报价币种"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_line_quote_price_unit
+msgid "Quoto Price Unit"
+msgstr "报价单价"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_line_rate
+msgid "Rate"
+msgstr "汇率"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_type:0
+msgid "Receipt"
+msgstr "收款"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_type:0
+msgid "Receipt And Payment"
+msgstr "收付款"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_r_receipt_payment_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_r_receipt_payment_date
+msgid "Receipt Payment Date"
+msgstr "收付款日期"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_r_receipt_payment_way
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_r_receipt_payment_way
+msgid "Receipt Payment Mode"
+msgstr "收付款方式"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_r_receipt_payment_type
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_r_receipt_payment_type
+msgid "Receipt Payment Type"
+msgstr "收付款类型"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_region
+msgid "Region"
+msgstr "境内货源/目的地"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_remark
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_remark
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_remark
+msgid "Remark"
+msgstr "Remark"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_contract_wizard_note
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_remarks
+msgid "Remarks"
+msgstr "备注"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "销售订单行"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_sale_quotes
+msgid "Sales Quotes"
+msgstr "Sales Quotes"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,seize_goods_type:0
+msgid "Seize"
+msgstr "自揽"
+
+#. module: boyue_sale_extend
+#: selection:boyue_sale_extend.contract_wizard,choose_type:0
+msgid "Select"
+msgstr "选择已有合同"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_servicer
+msgid "Servicer"
+msgstr "客服"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+msgid "Settlement"
+msgstr "结算"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_s_date
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_s_date
+msgid "Settlement Date"
+msgstr "结算日期"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_s_date_type
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_s_date_type
+msgid "Settlement Date Type"
+msgstr "结算日期类型"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_s_period
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_s_period
+msgid "Settlement Period"
+msgstr "结算周期"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_short_name
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_short_name
+msgid "Short Name"
+msgstr "简称"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_order_form_inherited
+msgid "Signed Contract"
+msgstr "签订合同"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_special_requirement
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_special_requirement
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+msgid "Special Requirement"
+msgstr "特殊要求"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_special_requirement_name
+msgid "Special Requirement Name"
+msgstr "特殊要求"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_period:0
+msgid "Specify Date"
+msgstr "指定日期"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_address_info
+msgid "Street"
+msgstr "街道"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_address_info
+msgid "Street2"
+msgstr "街道2"
+
+#. module: boyue_sale_extend
+#: code:addons/boyue_sale_extend/models/order.py:92
+#, python-format
+msgid "The last four num of order occur wrong, please make sure it is numbers"
+msgstr "The last four num of order occur wrong, please make sure it is numbers"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,help:boyue_sale_extend.field_sale_order_line_rate
+msgid "The rate of the currency to the currency of rate 1."
+msgstr "币别到其他币别的比率为 1"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_order_form_inherited
+msgid "Trade Info"
+msgstr "贸易信息"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_trade_mode
+msgid "Trade Mode"
+msgstr "监管方式"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_stock_incoterms_trade_term_id
+#: model:ir.ui.menu,name:boyue_sale_extend.menu_incoterm
+msgid "Trade Term"
+msgstr "贸易条款"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,r_receipt_payment_way:0
+msgid "Transfer"
+msgstr "转账"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_type_id
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_certificate_management_certificate_type
+msgid "Type"
+msgstr "类型"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_partner_unify_social_credit_code
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_res_users_unify_social_credit_code
+msgid "USCI"
+msgstr "统一社会信用代码"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,help:boyue_sale_extend.field_res_partner_unify_social_credit_code
+#: model:ir.model.fields,help:boyue_sale_extend.field_res_users_unify_social_credit_code
+msgid "Unified Social Credit Identifier"
+msgstr "统一社会信用编码"
+
+#. module: boyue_sale_extend
+#: code:addons/boyue_sale_extend/models/order.py:308
+#, python-format
+msgid "Warning for %s"
+msgstr "Warning for %s"
+
+#. module: boyue_sale_extend
+#: selection:res.partner,s_account_period_type:0
+msgid "Week"
+msgstr "周"
+
+#. module: boyue_sale_extend
+#: code:addons/boyue_sale_extend/models/order.py:150
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_work_sheet_id
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_order_form_inherited
+#, python-format
+msgid "Work Sheet"
+msgstr "工作单"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_work_sheet_count
+msgid "Work Sheet Count"
+msgstr "Work Sheet Count"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_boyue_sale_extend_delivery_info_wrap_type
+#: model:ir.model.fields,field_description:boyue_sale_extend.field_sale_order_packing
+msgid "Wrap Type"
+msgstr "包装方式"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_address_info
+msgid "Zip Code"
+msgstr "邮编"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_res_partner
+msgid "add partner fields model"
+msgstr "add partner fields model"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_certificate_management_form
+msgid "certificate edit"
+msgstr "证件编辑"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_certificate_level
+msgid "certificate level"
+msgstr "证件等级"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_certificate_management_tree
+msgid "certificate lists"
+msgstr "certificate lists"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_certificate_management
+msgid "certificate management"
+msgstr "证件管理"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.view_certificate_management_search
+msgid "certificate management search"
+msgstr "certificate management search"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_certificate_type
+msgid "certificate type"
+msgstr "证件类型"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_boyue_sale_extend_contract_wizard
+msgid "choose or create contract"
+msgstr "choose or create contract"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.certificate_type_form
+msgid "level"
+msgstr "level"
+
+#. module: boyue_sale_extend
+#: model:ir.ui.view,arch_db:boyue_sale_extend.customer_add_birthday
+msgid "please input 1~30 integer"
+msgstr "请输入1到30 的整数"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_sale_order
+msgid "quote order"
+msgstr "quote order"
+
+#. module: boyue_sale_extend
+#: model:ir.model.fields,help:boyue_sale_extend.field_res_partner_s_date
+#: model:ir.model.fields,help:boyue_sale_extend.field_res_users_s_date
+msgid "settlement date for every date"
+msgstr "每月__号为结算日期"
+
+#. module: boyue_sale_extend
+#: model:ir.model,name:boyue_sale_extend.model_special_requirement
+msgid "special requirement"
+msgstr "特殊要求"

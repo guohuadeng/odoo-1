@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delegate_Unit_form" model="ir.ui.view">
+        <field name="name">unit_form</field>         <!--自定义-->
+        <field name="model">turnover_unit</field>   <!--固定格式-->
+        <field name="arch" type="xml">            <!--固定格式-->
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="Code"/>
+                        </group>
+                        <group>
+                            <field name="NameCN"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_delegate_Unit_list" model="ir.ui.view">
+        <field name="name">unit_tree</field>                       <!--自定义-->
+        <field name="model">turnover_unit</field>    <!--固定格式-->
+        <field name="arch" type="xml">                        <!--固定格式-->
+            <tree>
+                <field name="id"/>
+				<field name="Code"/>
+				<field name="NameCN"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action to open To-do Task list -->
+    <act_window id="delegation_Unit"
+                name="Unit"
+                res_model="turnover_unit"
+                view_mode="tree,form"/>
+</odoo>

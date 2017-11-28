@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_customs_declaration" model="ir.actions.act_window">
+            <field name="name">Customs Declaration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.customs_dec</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="customs_declaration_tree" model="ir.ui.view">
+            <field name="name">Customs Declaration tree view</field>
+            <field name="model">customs_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="name"/>
+                    <!--<field name="work_sheet_id"/>-->
+                    <field name="customer_id"/>
+                    <field name="transport_mode_id"/>
+                    <field name="customs_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="customs_declaration_form" model="ir.ui.view">
+            <field name="name">Customs Declaration Form</field>
+            <field name="model">customs_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"  type="object" />
+                        <!--<button name="send_message" string="Resend Message" class="oe_highlight" states="failure" type="object"-->
+                            <!--attrs="{'invisible': ['|',('state', '=', 'cancel')]}"/>-->
+                        <!--<field name="state" widget="statusbar" statusbar_visible="draft,succeed"-->
+                               <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
+                    </header>
+                    <sheet>
+                        <!--************关务模块测试 新加生成XML报文按钮*****************-->
+                        <!--<div class="oe_button_box" name="button_box">-->
+                            <!--<button name="generate_and_sent_xml" type="object" string="生成并发送XML报文" class="oe_stat_button" icon="fa-align-justify" />-->
+                        <!--</div>-->
+                        <!--************ +++++++++++++++++++++++  *****************-->
+                        <group col="4" colspan="1">
+                            <group>
+                                <field name="inout"  string="进出口类型"/>
+                            </group>
+                            <group>
+                                <field name="custom_master_id"  string="申报地海关"/>
+                            </group>
+                            <group>
+                                <field name="customs_declaration_state"  string="报关状态"/>
+                                <!--<field name="create_date" readonly="1"/>-->
+                            </group>
+                            <group>
+                                <field name="cus_ciq_No"  string="关检关联号"/>
+                            </group>
+                            <!--<group>-->
+                                <!--<field name="et_dec_catalog_ids"/>-->
+                                <!--<field name="et_dec_catalog_name"/>-->
+                            <!--</group>-->
+
+                        </group>
+                        <notebook>
+                                <page string="Customs Declaration">
+                                    <group>
+                                        <group>
+                                            <field name="dec_seq_no" string="统一编号"/>
+                                            <field name="entry_id" string="海关编号"/>
+                                            <field name="ManualNo" string="备案号"/>
+                                            <field name="in_out_date" string="进出口日期" widget="date"/>
+                                        </group>
+                                        <group>
+                                            <field name="pre_entry_id" string="预录入编号"/>
+                                            <field name="customs_id" string="进出口岸"/>
+                                            <field name="customer_contract_no" string="合同协议号"/>
+                                            <field name="dec_date" string="申报日期" widget="date"/>
+                                        </group>
+                                    </group>
+                                    <group col="3" colspan="1">
+                                        <group>
+                                            <field name="business_company_id" string="经营单位/收发货人"/>
+                                            <field name="transport_mode_id" string="运输方式"/>
+                                            <field name="bill_no" string="提运单号"/>
+                                            <field name="payment_mark" string="纳税单位"/>
+                                            <field name="port_id" string="装货港/指运港"/>
+                                        </group>
+                                        <group>
+                                            <field name="input_company_id" string="消费使用单位"/>
+                                            <field name="NativeShipName" string="运输工具名称"/>
+                                            <field name="trade_mode_id" string="监管方式"/>
+                                            <field name="licenseNo" string="许可证号"/>
+                                            <field name="region_id" string="境内目的地"/>
+                                        </group>
+                                        <group>
+                                            <field name="declare_company_id" string="申报单位"/>
+                                            <field name="VoyageNo" string="航次号"/>
+                                            <field name="CutMode_id" string="征免性质"/>
+                                            <field name="origin_arrival_country_id" string="启运国/抵达国"/>
+                                            <field name="trade_terms_id" string="成交方式"/>
+                                        </group>
+                                    </group>
+
+
+                                    <group col="3" colspan="1">
+                                        <group col="4">
+                                            <!--显示效果 1-->
+                                            <!--&lt;!&ndash;<field name="fee_mark" string="运费" colspan="4"/>&ndash;&gt;-->
+                                            <!--<label for="fee_mark" string="运费" colspan="1"/>-->
+                                            <!--<field name="fee_mark" nolabel="1" colspan="1" placeholder="运费标记" />-->
+                                            <!--<field name="fee_rate" nolabel="1" colspan="1" placeholder="运费/率" />-->
+                                            <!--<field name="fee_currency_id" nolabel="1" colspan="1" placeholder="运费币制" />-->
+                                            <!--<div/>-->
+                                            <!--&lt;!&ndash;<field name="customer_service" colspan="4"/>&ndash;&gt;-->
+
+                                            <!--显示效果 2-->
+                                            <label for="fee_mark" string="运费" colspan="1"/>
+                                            <h6>
+                                                <field name="fee_mark" class="oe_inline" placeholder="运费标记" colspan="1"/>
+                                                <field name="other_rate" class="oe_inline" placeholder="运费/率" colspan="1"/>
+                                                <field name="other_currency_id" class="oe_inline" placeholder="运费币制" colspan="1"/>
+                                            </h6>
+                                            <div/>
+                                        </group>
+
+                                        <group col="4">
+                                            <!--<label for="insurance_mark" string="保费" colspan="1"/>-->
+                                            <!--<field name="insurance_mark" nolabel="1" colspan="1" placeholder="保费标记" />-->
+                                            <!--<field name="insurance_rate" nolabel="1" colspan="1" placeholder="保费/率" />-->
+                                            <!--<field name="insurance_currency_id" nolabel="1" colspan="1" placeholder="保费币制" />-->
+                                            <!--<div/>-->
+
+                                            <label for="insurance_mark" string="保费" colspan="1"/>
+                                            <h6>
+                                                <field name="insurance_mark" class="oe_inline" placeholder="保费标记" colspan="1"/>
+                                                <field name="insurance_rate" class="oe_inline" placeholder="保费/率" colspan="1"/>
+                                                <field name="insurance_currency_id" class="oe_inline" placeholder="保费币制" colspan="1"/>
+                                            </h6>
+                                            <div/>
+                                        </group>
+
+                                        <group col="4" colspan="1">
+                                            <!--<label for="other_mark" string="杂费" colspan="1"/>-->
+                                            <!--<field name="other_mark" nolabel="1" colspan="1" placeholder="杂费标记" />-->
+                                            <!--<field name="other_rate" nolabel="1" colspan="1" placeholder="杂费/率" />-->
+                                            <!--<field name="other_currency_id" nolabel="1" colspan="1" placeholder="杂费币制" />-->
+                                            <!--<div/>-->
+
+                                            <label for="other_mark" string="杂费" />
+                                            <h6>
+                                                <field name="other_mark" class="oe_inline" placeholder="杂费标记" />
+                                                <field name="other_rate" class="oe_inline" placeholder="杂费/率" />
+                                                <field name="other_currency_id" class="oe_inline" placeholder="杂费币制" />
+                                            </h6>
+                                            <div/>
+                                        </group>
+                                    </group>
+
+                                    <group col="3" colspan="1">
+                                        <group>
+                                            <field name="qty" string="件数"/>
+                                            <field name="trade_country_id" string="贸易国(地区)"/>
+                                            <field name="promise1" string="特殊关系确认"/>
+                                            <field name="remarks" string="备注"/>
+                                        </group>
+                                        <group>
+                                            <field name="packing_id" string="包装种类"/>
+                                            <field name="in_ratio" string="征税比例"/>
+                                            <field name="entry_type_id" string="报关单类型"/>
+                                            <field name="ediId" string="报关标志"/>
+                                            <field name="decl_trn_rel" string="报/转关关系标志"/>
+                                        </group>
+                                        <group>
+                                            <field name="gross_weight" string="毛重(KG)"/>
+                                            <field name="net_weight" string="净重(KG)"/>
+                                            <field name="bill_type_id" string="备案清单类型"/>
+                                            <field name="promise2" string="价格影响确认"/>
+                                            <field name="promise3" string="特许权使用费支付确认"/>
+                                        </group>
+                                    </group>
+
+                                    <notebook>
+                                         <page string="报关单商品列表">
+                                            <field name="dec_goods_list_ids" mode="tree">
+                                                <tree string="cus_goods_list_tree" editable="bottom">
+                                                    <!--<field name="goods_name" string="商品名称"/>-->
+                                                    <field name="cus_goods_tariff_id" string="商品编码"/>
+                                                    <field name="goods_model" string="规格模型"/>
+                                                    <field name="deal_qty" string="成交数量"/>
+                                                    <field name="deal_unit_price" string="成交单价"/>
+                                                    <field name="deal_unit" string="成交单位"/>
+                                                    <field name="deal_total_price" string="成交总价"/>
+                                                    <field name="currency_id" string="币制"/>
+                                                    <field name="first_qty" string="第一数量"/>
+                                                    <field name="first_unit" string="第一单位"/>
+                                                    <field name="second_qty" string="第二数量"/>
+                                                    <field name="second_unit" string="第二单位"/>
+                                                    <field name="origin_country_id" string="原产国"/>
+                                                    <field name="destination_country_id" string="目的国"/>
+                                                    <field name="duty_mode_id" string="征免方式"/>
+                                                    <field name="create_uid" string="创建人" readonly="1"/>
+                                                    <field name="create_date" string="创建时间" readonly="1" widget="date"/>
+                                                </tree>
+                                            </field>
+                                        </page>
+                                    </notebook>
+
+                                </page>
+
+                                <page string="随附单证">
+                                    <field name="licenseNo_id" mode="tree">
+                                        <tree string="license_No_tree" editable="bottom">
+                                            <field name="dec_license_no" string="单证编号"/>
+                                            <field name="dec_license_doc_type_id" string="单证类型"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+                                <page string="Receipt">
+                                    <field name="receipt_ids" mode="tree" readonly="1">
+                                        <tree>
+                                            <field name="sequence" invisible="1"/>
+                                            <field name="status_id" readonly="1"/>
+                                            <field name="message" readonly="1"/>
+                                            <field name="notice_date" readonly="1"/>
+                                        </tree>
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="status_id" readonly="1" options="{'on_open': True}"/>
+                                                    <field name="notice_date" readonly="1"/>
+                                                </group>
+                                                <group>
+                                                    <field name="message" readonly="1"/>
+                                                </group>
+                                            </group>
+                                        </form>
+                                    </field>
+                                </page>
+
+                                <page string="配置信息（字段确认后，该page页面删除）">
+                                    <group>
+                                        <group>
+                                            <field name="cop_code" string="企业组织机构代码"/>
+                                            <field name="cop_name" string="录入单位名称"/>
+                                            <field name="inputer_name" string="录入员姓名"/>
+                                            <field name="oper_name" string="操作员姓名"/>
+                                            <field name="certificate" string="操作员卡的证书号"/>
+                                        </group>
+                                        <group>
+                                            <field name="cop_code_scc" string="录入单位社会信用统一编码"/>
+                                            <field name="owner_code_scc" string="社会信用统一编码"/>
+                                            <field name="trade_code_scc" string="统一编码"/>
+                                            <field name="ic_code" string="操作员IC卡号"/>
+                                        </group>
+                                    </group>
+                                </page>
+
+                            </notebook>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"
+                               widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

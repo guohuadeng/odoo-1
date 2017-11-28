@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--<delete id="menu_expense_settlement" model="ir.ui.menu" />-->
+    <menuitem id="expense_settlement_menu" name="结算" web_icon="settlement,static/description/icon.png" />
+
+    <menuitem id="expense_settlement_work_sheet" string="Work Sheet" name="费用清单" parent="expense_settlement_menu"
+              sequence="10" action="action_expense_settlement"/>
+
+    <menuitem id="expense_settlement_receivable" string="expense receivable" name="应收" parent="expense_settlement_menu"
+              sequence="20" action="action_expense_receivable"/>
+            <menuitem id="expense_settlement_receivable_sub" string="expense receivable sub" name="应收费用" parent="expense_settlement_receivable"
+              sequence="50" action="action_expense_receivable"/>
+            <menuitem id="expense_customer_bill" string="expense customer bill" name="账单" parent="expense_settlement_receivable"
+                  sequence="60" action="action_customer_bill"/>
+
+    <menuitem id="expense_settlement_payable" string="expense payable" name="应付" parent="expense_settlement_menu"
+          sequence="30" action="action_expense_payable"/>
+            <menuitem id="expense_settlement_payable_sub" string="expense payable sub" name="应付费用" parent="expense_settlement_payable"
+              sequence="70" action="action_expense_payable"/>
+            <menuitem id="payment_application_sheet" string="payment application sheet" name="付款申请单" parent="expense_settlement_payable"
+              sequence="80" action="action_payment_application_sheet"/>
+
+    <menuitem id="expense_settlement_about_review" string="expense review" name="审核" parent="expense_settlement_menu"
+      sequence="35" action="action_pending_review_application"/>
+
+    <menuitem id="expense_settlement_statistics" string="expense statistics" name="统计" parent="expense_settlement_menu"
+          sequence="40" action="action_expense_settlement"/>
+
+        <menuitem id="expense_settlement_report" string="expense payable sub" name="工作单" parent="expense_settlement_statistics"
+              sequence="90" action="action_expense_report"/>
+
+    <menuitem id="expense_settlement_setting" string="expense setting" name="设置" parent="expense_settlement_menu"
+      sequence="50" action="action_expense_settlement"/>
+
+    <menuitem id="expense_settlement_bill_type" string="expense bill type" name="账单类型" parent="expense_settlement_setting"
+          sequence="95" action="action_customer_bill_type"/>
+
+
+</odoo>
+

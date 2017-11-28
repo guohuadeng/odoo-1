@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="transportation_term_tree" model="ir.ui.view">
+            <field name="name">transportation term list</field>
+            <field name="model">transportation_term</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="cn_name" string="Chinese Name"/>
+                    <field name="en_name" string="English Name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="transportation_term_form" model="ir.ui.view">
+            <field name="name">transportation term form</field>
+            <field name="model">transportation_term</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="cn_name" string="Chinese Name"/>
+                                <field name="description"/>
+                            </group>
+                            <group><field name="en_name" string="English Name"/></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="transportation_term_search" model="ir.ui.view">
+           <field name="name">transportation term search view</field>
+           <field name="model">transportation_term</field>
+            <field name="arch" type="xml">
+                <search string="Transportation Term">
+                  <field name="cn_name"/>
+                  <field name="en_name"/>
+                </search>
+           </field>
+        </record>
+
+        <record id="transportation_term_action" model="ir.actions.act_window">
+            <field name="name">Transportation Term</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">transportation_term</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

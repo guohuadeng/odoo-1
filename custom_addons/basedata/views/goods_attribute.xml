@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="goods_attribute_tree" model="ir.ui.view">
+            <field name="name">goods attribute list</field>
+            <field name="model">goods_attribute</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="attribute_name" string="Attribute Name"/>
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="goods_attribute_form" model="ir.ui.view">
+            <field name="name">goods attribute form</field>
+            <field name="model">goods_attribute</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group><field name="attribute_name" string="Attribute Name"/></group>
+                            <group>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="goods_attribute_action" model="ir.actions.act_window">
+            <field name="name">Goods Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">goods_attribute</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

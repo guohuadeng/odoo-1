@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_service_center_work_sheet,service_center.work_sheet,model_work_sheet,,1,1,1,1
+access_service_center_goods_size,service_center.goods_size,model_service_center_goods_size,,1,1,1,1
+access_service_center_current_state,service_center.current_state,model_service_center_current_state,,1,1,1,1
+access_service_center_business_stage,service_center.business_stage,model_service_center_business_stage,,1,1,1,1
+access_service_center_business_status,service_center.business_status,model_service_center_business_status,,1,1,1,1
+access_container_type_and_qty,container_type_and_qty,model_container_type_and_qty,,1,1,1,1
+access_containers_list,containers_list,model_containers_list,,1,1,1,1

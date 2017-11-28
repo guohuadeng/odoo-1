@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_customs_center_customs_dec,customs_center.customs_dec,model_customs_center_customs_dec,,1,1,1,1
+access_customs_center_cus_goods_list,customs_center.cus_goods_list,model_customs_center_cus_goods_list,,1,1,1,1
+access_customs_center_dec_goods_list,customs_center.dec_goods_list,model_customs_center_dec_goods_list,,1,1,1,1
+access_customs_center_customs_order,customs_center.customs_order,model_customs_center_customs_order,,1,1,1,1
+access_customs_center_dec_result,customs_center.dec_result,model_customs_center_dec_result,,1,1,1,1
+access_customs_center_dec_res_status,customs_center.dec_res_status,model_customs_center_dec_res_status,,1,1,1,1
