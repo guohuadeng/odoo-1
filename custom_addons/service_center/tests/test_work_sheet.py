@@ -41,3 +41,35 @@ class WorkSheetTestCase(TransactionCase):
         with self.assertRaises(ValidationError) as e:
             self.work_sheet_1.hs_code = '12345'
         self.assertIn('HS code', str(e.exception), 'The check length of HS code does not work!')
+
+    def test_compute_switch_bill_address(self):
+        """测试换单公司改变"""
+        company_a = self.env['res.partner'].create({
+            'name': 'switch bill company A',
+            'is_company': True,
+            'supplier': True,
+            'city': 'beijing',
+            'street': 'street A',
+            'phone': '123456'
+        })
+
+        company_b = self.env['res.partner'].create({
+            'name': 'switch bill company B',
+            'is_company': True,
+            'supplier': True,
+            'city': 'shanghai',
+            'street': 'street B',
+            'phone': '654321'
+        })
+
+        self.work_sheet_1.switch_bill_company = company_a
+        self.assertEqual(
+            self.work_sheet_1.switch_bill_address,
+            'beijing street A',
+            'switch bill function cannot change address'
+        )
+        self.assertEqual(
+            self.work_sheet_1.switch_bill_contact,
+            '123456',
+            'switch bill functin cannot change contact phone'
+        )
