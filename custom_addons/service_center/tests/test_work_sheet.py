@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 class WorkSheetTestCase(TransactionCase):
     """工作单测试用例"""
 
+
     def setUp(self):
         super(WorkSheetTestCase, self).setUp()
         group_user = self.env.ref('base.group_user')

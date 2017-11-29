@@ -25,7 +25,7 @@ def delegate_to_xml(self):
     trn_conta_goods_list = etree.SubElement(root, "TrnContaGoodsList")
     e_doc_realation_info = etree.SubElement(root, "EdocRealation")
 
-    client_seq_no = str(uuid.uuid1())  # 客户端唯一编号
+    # client_seq_no = str(uuid.uuid1())  # 客户端唯一编号
 
     head_node_dic = OrderedDict()
     head_node_dic['AgentCode'] = self.declare_company_id.register_code     # u'申报单位代码'
@@ -33,24 +33,24 @@ def delegate_to_xml(self):
     head_node_dic['ApprNo'] = None
     head_node_dic['BillNo'] = str(self.bill_no)    # u'提单号'
     head_node_dic['ContrNo'] = str(self.customer_contract_no)   # u'合同编号'
-    head_node_dic['CopCode'] = u'录入单位代码'   # 后台配置
-    head_node_dic['CopName'] = u'录入单位名称'   # 后台配置
+    head_node_dic['CopCode'] = self.cop_code  # u'录入单位代码'   # 后台配置
+    head_node_dic['CopName'] = self.cop_name   # u'录入单位名称'   # 后台配置   不能加str()
     head_node_dic['CustomMaster'] = str(self.custom_master_id.Code)  # u'申报地海关'
     head_node_dic['CutMode'] = str(self.CutMode_id)  # u'征免性质'
     head_node_dic['DataSource'] = None
-    head_node_dic['DeclTrnRel'] = u'报关/转关关系标志'
+    head_node_dic['DeclTrnRel'] = str(self.decl_trn_rel)  # u'报关/转关关系标志'
     head_node_dic['DistinatePort'] = str(self.port_id.Code)  # 装货港 delegate_port(2,)  ok
     head_node_dic['DistrictCode'] = str(self.region_id.Code)  # str(self.region_id.Code)  # u'境内目的地'  ok
-    head_node_dic['EntryId'] = u'报关标志'   # 增加选择字段
+    head_node_dic['EntryId'] = str(self.ediId)  # u'报关标志'   # 增加选择字段
     head_node_dic['EntryType'] = str(self.entry_type_id.Code)  # u'报关单类型'
-    head_node_dic['FeeCurr'] = self.fee_currency_id.Code     # u'运费币制'
+    head_node_dic['FeeCurr'] = self.fee_currency_id.Code   # u'运费币制'
     head_node_dic['FeeMark'] = self.fee_mark  # u'运费标记'
     head_node_dic['FeeRate'] = str(self.fee_rate)  # u'运费／率'
     head_node_dic['GrossWet'] = str(self.gross_weight)  # u'毛重'
     head_node_dic['IEDate'] = self.in_out_date   # u'进出日期'
     head_node_dic['IEFlag'] = self.inout   # u'进出口标志'
     head_node_dic['IEPort'] = self.customs_id.Code  # u'进出口岸'
-    head_node_dic['InputerName'] = u'录入员姓名'   # 设置界面  和操作员同值
+    head_node_dic['InputerName'] = self.inputer_name  # u'录入员姓名'   # 设置界面和操作员同值  不能加str()
     head_node_dic['InRatio'] = None
     head_node_dic['InsurCurr'] = self.insurance_currency_id.Code  # u'保险费币制'
     head_node_dic['InsurMark'] = self.insurance_mark  # u'保险费标记'
@@ -76,20 +76,20 @@ def delegate_to_xml(self):
     head_node_dic['TradeCode'] = self.business_company_id.register_code   # u'经营单位编号/收发货人海关10位编号'
     head_node_dic['TradeCountry'] = self.trade_country_id.Code   # u'贸易国别'
     head_node_dic['TradeMode'] = self.trade_mode_id.Code  # u'监管方式'
-    head_node_dic['TradeName'] = self.business_company_id.register_name_cn      # u'经营单位名称'  # self.business_company_id.register_name_cn
+    head_node_dic['TradeName'] = self.business_company_id.register_name_cn    # u'经营单位名称'  # self.business_company_id.register_name_cn
     head_node_dic['TrafMode'] = self.transport_mode_id.code   # u'运输方式代码'
     head_node_dic['TrafName'] = self.NativeShipName  # u'运输工具代码及名称'
     head_node_dic['TransMode'] = self.trade_terms_id.Code   # u'成交方式'
     head_node_dic['Type'] = None   # u'EDI申报备注'
-    head_node_dic['TypistNo'] = u'录入员IC卡号'   # 必填配置界面
+    head_node_dic['TypistNo'] = self.ic_code  # u'录入员IC卡号'   # 必填配置界面
     head_node_dic['WrapType'] = self.packing_id.Code  # u'包装种类'
     head_node_dic['ChkSurety'] = None  # u'担保验放标志'
     head_node_dic['BillType'] = self.bill_type_id.Code  # u'备案清单类型'
     head_node_dic['AgentCodeScc'] = str(self.dec_seq_no)  # u'申报单位统一编码'
-    head_node_dic['CopCodeScc'] = u'录入单位统一编码'    # 设置界面
+    head_node_dic['CopCodeScc'] = self.cop_code_scc  # u'录入单位统一编码'    # 设置界面
     head_node_dic['OwnerCodeScc'] = self.input_company_id.unified_social_credit_code      # u'货主单位/消费生产单位 社会统一编码'
     head_node_dic['TradeCodeScc'] = self.business_company_id.unified_social_credit_code   # u'经营单位社会统一编码18位'
-    head_node_dic['PromiseItmes'] = self.promise1+self.promise2+self.promise3       # u'承诺事项'  字符串拼接
+    head_node_dic['PromiseItmes'] = str(self.promise1+self.promise2+self.promise3)       # u'承诺事项'  字符串拼接
     head_node_dic['TradeAreaCode'] = self.trade_country_id.Code  # u'贸易国别'
 
     for node in head_node_dic:
@@ -172,15 +172,16 @@ def delegate_to_xml(self):
     #         _node.text = value
 
     dec_sign = OrderedDict()
-    dec_sign['ClientSeqNo'] = client_seq_no.encode('utf8')
-    dec_sign['CopCode'] = u'操作企业组织机构代码'   # 配置界面设置
-    dec_sign['ICCode'] = u'操作员IC卡号'   # 配置界面配置
+    # dec_sign['ClientSeqNo'] = client_seq_no.encode('utf8')
+    dec_sign['ClientSeqNo'] = str(self.client_seq_no)
+    dec_sign['CopCode'] = self.cop_code  # u'操作企业组织机构代码'   # 配置界面设置   不能加str()否则报编码 可能原因，设置默认值渲染到页面之后 已经是unicode
+    dec_sign['ICCode'] = self.ic_code  # u'操作员IC卡号'   # 配置界面配置
     dec_sign['OperType'] = 'G'              # u'操作类型'
-    dec_sign['OperName'] = u'操作员姓名'    # 配置界面
+    dec_sign['OperName'] = self.oper_name  # u'操作员姓名'    # 配置界面
     dec_sign['Sign'] = 'abcdff'  # u'报关单签名'
-    dec_sign['SignDate'] = (datetime.now()+timedelta(hours=8)).strftime('%Y/%m/%d %H:%M:%S')  # u'签名时间'
+    dec_sign['SignDate'] = (datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S00')  # u'签名时间'
     dec_sign['HostId'] = None  # u'邮箱ID'
-    dec_sign['Certificate'] = u'操作员卡对应的证书号'   # 配置界面
+    dec_sign['Certificate'] = self.certificate  # u'操作员卡对应的证书号'   # 配置界面
 
     for node in dec_sign:
         _node = etree.SubElement(body_dec_sign, node)
@@ -189,28 +190,28 @@ def delegate_to_xml(self):
             _node.text = value
 
     # 转关相关报文头部信息
-    trn_head = OrderedDict()
-    trn_head['ContractorName'] = None  # u'承运单位名称'
-    trn_head['ContractorCode'] = None  # u'承运单位组织机构代码'
-    trn_head['ESealFlag'] = None  # u'是否启用电子关锁标志'
-    trn_head['NativeTrafMode'] = None   # u'境内运输方式'
-    trn_head['NativeShipName'] = None  # u'境内运输工具名称'
-    trn_head['NativeVoyageNo'] = None  # u'境内运输工具航次'
-    trn_head['TrnPreId'] = None   # u'转关单统一编号'
-    trn_head['TransNo'] = None  # u'南方模式中的载货清单号'
-    trn_head['TransFlag'] = None  # u'转关类型'
-    trn_head['TrafCustomsNo'] = None  # u'境内运输工具编号'
-    trn_head['TurnNo'] = None  # u'转关申报单号'
-    trn_head['ValidTime'] = None  # u'预计运抵指运地时间'
-    trn_head['Notes'] = None  # u'备注'
-    trn_head['TrnType'] = None  # u'转关单类型'
-    # trn_head['ApplCodeScc'] = u'转关申报单位统一代码'
-
-    for node in trn_head:
-        _node = etree.SubElement(trn_head_info, node)
-        value = trn_head[node]
-        if value:
-            _node.text = value
+    # trn_head = OrderedDict()
+    # trn_head['ContractorName'] = None  # u'承运单位名称'
+    # trn_head['ContractorCode'] = None  # u'承运单位组织机构代码'
+    # trn_head['ESealFlag'] = None  # u'是否启用电子关锁标志'
+    # trn_head['NativeTrafMode'] = None   # u'境内运输方式'
+    # trn_head['NativeShipName'] = None  # u'境内运输工具名称'
+    # trn_head['NativeVoyageNo'] = None  # u'境内运输工具航次'
+    # trn_head['TrnPreId'] = None   # u'转关单统一编号'
+    # trn_head['TransNo'] = None  # u'南方模式中的载货清单号'
+    # trn_head['TransFlag'] = None  # u'转关类型'
+    # trn_head['TrafCustomsNo'] = None  # u'境内运输工具编号'
+    # trn_head['TurnNo'] = None  # u'转关申报单号'
+    # trn_head['ValidTime'] = None  # u'预计运抵指运地时间'
+    # trn_head['Notes'] = None  # u'备注'
+    # trn_head['TrnType'] = None  # u'转关单类型'
+    # # trn_head['ApplCodeScc'] = u'转关申报单位统一代码'
+    #
+    # for node in trn_head:
+    #     _node = etree.SubElement(trn_head_info, node)
+    #     value = trn_head[node]
+    #     if value:
+    #         _node.text = value
 
     # 转关相关报文列表信息
     trn_list = OrderedDict()
@@ -297,7 +298,7 @@ def delegate_to_xml(self):
     # 检查并生成相应的目录
     if not os.path.exists(dec_catalog_path):
         os.mkdir(dec_catalog_path)
-    obj_dir = os.path.join(dec_catalog_path, 'DECDATA' + client_seq_no + '.xml')
+    obj_dir = os.path.join(dec_catalog_path, 'DECDATA' + str(self.client_seq_no) + '.xml')
     with open(obj_dir, 'w') as fp:
         fp.write(string.encode('utf8'))
 

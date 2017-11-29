@@ -7,6 +7,7 @@ import odoo.addons.queue_job.job as q_job
 from odoo.tools import config
 import logging, os, shutil
 from lxml import etree
+import uuid
 # from custom_addons.customs_center.utils.to_xml_message import delegate_to_xml
 from ..utils.to_xml_message import delegate_to_xml
 _logger = logging.getLogger(__name__)
@@ -30,12 +31,10 @@ class CustomsDeclaration(models.Model):
     _description = 'Customs Declaration'
 
     name = fields.Char(string="Name")  # 报关单流水号
-    client_seq_No = fields.Char(string="client seq No")  # 报关单客户端编号
+    client_seq_no = fields.Char(string="client seq No")  # 报关单客户端编号
     # 关联工作单
     work_sheet_id = fields.Many2one(comodel_name="work_sheet", string="Work Sheet")  # 工作单ID
-    # 关联企业报关单 目录配置模型 多对一
-    et_dec_catalog_ids = fields.Many2one(comodel_name="customs_center.dec_settings", string="Setting Dec catalog")  # 企业报关单ID
-    et_dec_catalog_name = fields.Char(related='et_dec_catalog_ids.et_dec_catalog_name', string="enterprise path")
+
     # 关联通关清单 多对一
     customs_order_id = fields.Many2one(comodel_name="customs_center.customs_order", string="customs Order")
     cus_ciq_No = fields.Char(string="cus Ciq No")  # 关检关联号
@@ -52,10 +51,6 @@ class CustomsDeclaration(models.Model):
     in_out_date = fields.Datetime(string="InoutDate", required=True)   # 进出口日期
     dec_date = fields.Datetime(string="DecDate", required=True)   # 申报日期
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")  # 进出口岸
-
-    business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
-    input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
-    declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
 
     transport_mode_id = fields.Many2one(comodel_name="delegate_transport_mode",
                                         string="Transport Mode")  # 运输方式
@@ -109,7 +104,7 @@ class CustomsDeclaration(models.Model):
                                                         ('9', u'9-空')], )  # 特殊关系确认
     promise2 = fields.Selection(string="promise2", selection=[('0', u'0-否'),
                                                         ('1', u'1-是'),
-                                                        ('9', u'0-空')], )  # 价格影响确认
+                                                        ('9', u'9-空')], )  # 价格影响确认
     promise3 = fields.Selection(string="promise3", selection=[('0', u'0-否'),
                                                         ('1', u'1-是'),
                                                         ('9', u'9-空')], )  # 支付特许权使用费确认
@@ -127,15 +122,21 @@ class CustomsDeclaration(models.Model):
     # cop_name = fields.Char(string="Cop Name", required=True, )      # 录入单位名称
     # custom_master = fields.Char(string="Custom Master", required=True, )  # 申报地海关代码
 
-    cop_code = fields.Char(string="cop code")  # 录入单位代码 企业组织机构代码
-    cop_name = fields.Char(string="cop name")      # 录入单位名称
+    declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
+    input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
+    business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
+
+    cop_code = fields.Char(string="cop code")  # 录入单位企业组织机构代码
+    cop_name = fields.Char(string="cop name")  # 录入单位企业名称
+    cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
     inputer_name = fields.Char(string="inputer name")  # 录入员姓名
     oper_name = fields.Char(string="oper name")     # 操作员姓名
     certificate = fields.Char(string="oper card certificate")   # 操作员卡的证书号
-    cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
-    owner_code_scc = fields.Char(string="owner Social credit uniform coding")  # 货主单位/生产消费单位 社会信用统一编码
-    trade_code_scc = fields.Char(string="owner Social credit uniform coding")  # 经营单位 / 收发货人 统一编码
-    ic_code = fields.Char(string="IC number")  # 操作员IC卡号
+    ic_code = fields.Char(string="IC number")  # 操作员IC卡号/录入员IC卡号
+
+    # cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
+    # owner_code_scc = fields.Char(string="owner Social credit uniform coding")  # 货主单位/生产消费单位 社会信用统一编码
+    # trade_code_scc = fields.Char(string="owner Social credit uniform coding")  # 经营单位 / 收发货人 统一编码
 
     decl_trn_rel = fields.Selection(string="DeclTrnRel", selection=[('0', u'一般报关单'), ('1', u'转关提前报关单')])   # 报关/转关关系标志
     ediId = fields.Selection(string="ediId", selection=[('1', u'普通报关'), ('3', u'北方转关提前'),
@@ -158,6 +159,7 @@ class CustomsDeclaration(models.Model):
         """设置报关单命名规则"""
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('code_customs_declaration') or _('New')
+            vals['client_seq_no'] = str(uuid.uuid1())
         result = super(CustomsDeclaration, self).create(vals)
 
         return result
@@ -168,10 +170,6 @@ class CustomsDeclaration(models.Model):
         for line in self:
             delegate_to_xml(line)
         return True
-
-    # @api.model
-    # def parse_receipt_xml(self):
-    #     pass
 
     @api.model
     @q_job.job

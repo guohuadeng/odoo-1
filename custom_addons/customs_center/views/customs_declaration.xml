@@ -44,6 +44,7 @@
                         <group col="4" colspan="1">
                             <group>
                                 <field name="inout"  string="进出口类型"/>
+                                <field name="client_seq_no"  string="报关单客户端编号" invisible="1"/>
                             </group>
                             <group>
                                 <field name="custom_master_id"  string="申报地海关"/>
@@ -238,19 +239,15 @@
                                     </field>
                                 </page>
 
-                                <page string="配置信息（字段确认后，该page页面删除）">
+                                <page string="配置信息(字段确认后，该page页面删除)">
                                     <group>
                                         <group>
-                                            <field name="cop_code" string="企业组织机构代码"/>
+                                            <field name="cop_code" string="录入单位企业组织机构代码"/>
                                             <field name="cop_name" string="录入单位名称"/>
+                                            <field name="cop_code_scc" string="录入单位社会信用统一编码"/>
                                             <field name="inputer_name" string="录入员姓名"/>
                                             <field name="oper_name" string="操作员姓名"/>
                                             <field name="certificate" string="操作员卡的证书号"/>
-                                        </group>
-                                        <group>
-                                            <field name="cop_code_scc" string="录入单位社会信用统一编码"/>
-                                            <field name="owner_code_scc" string="社会信用统一编码"/>
-                                            <field name="trade_code_scc" string="统一编码"/>
                                             <field name="ic_code" string="操作员IC卡号"/>
                                         </group>
                                     </group>
