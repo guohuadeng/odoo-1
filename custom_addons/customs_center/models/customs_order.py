@@ -18,16 +18,16 @@ class CustomsOrder(models.Model):
     customer_id = fields.Many2one(comodel_name="res.partner", string="Customer")                 # 客户 (委托单位)
     work_sheet_id = fields.Many2one(comodel_name="work_sheet", string="Work Sheet")              # 工作单ID
 
-    inout = fields.Selection(string="InOut", selection=[('i', 'Import'), ('e', 'Export'), ], required=True)   # 进出口类型
+    inout = fields.Selection(string="InOut", selection=[('I', 'Import'), ('E', 'Export'), ], required=True)   # 进出口类型
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")              # 进出口岸
     custom_master_id = fields.Many2one(comodel_name="delegate_customs", string="Declare Customs")  # 申报口岸/海关
     ManualNo = fields.Char(string="Manual No")                                                   # 备案号
     customer_contract_no = fields.Char(string="Customer Contract No")                            # 合同号
-    LicenseNo = fields.Char(string="License No")                                                 # 许可证号
+    licenseNo = fields.Char(string="License No")                                                 # 许可证号
 
-    business_company_id = fields.Char(string="business company name")                            # 收发货人 新建企业库表
-    input_company_id = fields.Char(string="input company id")                                    # 生产消费单位 新建企业库表
-    declare_company_id = fields.Char(string="declare company name")                              # 申报单位 新建企业库表
+    declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
+    input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
+    business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
 
     transport_mode_id = fields.Many2one(comodel_name="delegate_transport_mode",
                                         string="Transport Mode")                                 # 运输方式
@@ -36,7 +36,7 @@ class CustomsOrder(models.Model):
 
     trade_terms_id = fields.Many2one(comodel_name="delegate_trade_terms", string="Trade Term")   # 成交方式 or 贸易条款
     trade_mode_id = fields.Many2one(comodel_name="delegate_trade_mode", string="Trade Mode")     # 监管方式
-    CutMode_id = fields.Char(string="CutMode id")                                                # 征免性质   征免性质表待新建
+    CutMode_id = fields.Many2one(comodel_name="basedata.cus_cut_mode", string="CutMode id")      # 征免性质   征免性质表待新建
     packing_id = fields.Many2one(comodel_name="delegate_packing", string="Package Type")         # 包装方式
     trade_country_id = fields.Many2one(comodel_name="delegate_country",
                                        string="Trade Country")                                   # 贸易国别
@@ -60,10 +60,68 @@ class CustomsOrder(models.Model):
                                                         ('cancel', 'Cancel'),
                                                         ('failure', 'Failure')], default='draft')  # 通关清单
 
-    @api.model
+    @api.multi
     def generate_customs_declaration(self):
         """ 生成报关单 """
-        pass
+        # if len(self.mapped('cus_goods_list_ids')) != 1:
+        #     raise UserError(_("有多个商品"))
+        customs_order_info_dic = dict()
+        for line in self:
+            customs_order_info_dic.update({
+                'default_inout': line.inout,
+                'default_customs_id': line.customs_id.id,
+                'default_custom_master_id': line.custom_master_id.id,
+                'default_ManualNo': line.ManualNo,
+                'default_customer_contract_no': line.customer_contract_no,
+                'default_licenseNo': line.licenseNo,
+                'default_declare_company_id': line.declare_company_id.id,
+                'default_input_company_id': line.input_company_id.id,
+                'default_business_company_id': line.business_company_id.id,
+                'default_transport_mode_id': line.transport_mode_id.id,
+                'default_transport_name': line.transport_name,
+                'default_VoyageNo': line.VoyageNo,
+                'default_trade_terms_id': line.trade_terms_id.id,
+                'default_trade_mode_id': line.trade_mode_id.id,
+                'default_CutMode_id': line.CutMode_id.id,
+                'default_packing_id': line.packing_id.id,
+                'default_trade_country_id': line.trade_country_id.id,
+                'default_origin_arrival_country_id': line.origin_arrival_country_id.id,
+                'default_port_id': line.port_id.id,
+                'default_region_id': line.region_id.id,
+                'default_qty': line.qty,
+                'default_gross_weight': line.gross_weight,
+                'default_net_weight': line.net_weight,
+                'default_remarks': line.marks,
+            })
+        # print('**************^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^****************')
+        # for item in customs_order_info_dic.items():
+        #     print(item)
+
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'customs_center.customs_dec',
+            'target': 'current',
+            'context': customs_order_info_dic,
+        }
+
+        # print('*********************88888888888888888**********************************')
+        # default_customer_id = self.mapped('customer_id')[0]
+        # default_inout = self.mapped('inout')[0]
+        # print(default_customer_id.id)
+        # print(default_inout.id)
+        # print('*********************88888888888888888**********************************')
+        # return {
+        #     'type': 'ir.actions.act_window',
+        #     'view_mode': 'form',
+        #     'res_model': 'customs_center.customs_dec',
+        #     'target': 'current',
+        #     'context': {
+        #         'default_receivable_expense_no': self.ids,   # [line.expense_receivable_no for line in self]
+        #         'default_settlement_object': default_settlement_object.id,
+        #         'default_customer_id': default_customer_id.id
+        #     }
+        # }
 
     @api.model
     def create(self, vals):
