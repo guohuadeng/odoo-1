@@ -18,15 +18,3 @@ class CompanySettings(models.TransientModel):
     default_certificate = fields.Char(default_model='customs_center.customs_dec')   # 操作员卡的证书号
     default_ic_code = fields.Char(default_model='customs_center.customs_dec')  # 操作员IC卡号
 
-
-class SettingDeclaration(models.Model):
-    """ 企业报关单 相关设置"""
-    _name = 'customs_center.dec_settings'
-    _rec_name = 'et_dec_catalog_name'
-    _description = 'Setting Declaration catalog'
-
-    et_dec_catalog_name = fields.Char(string="enterprise path", required=True, )
-    # customs_declaration_id = fields.One2many(comodel_name="customs_center.customs_dec", inverse_name="et_dec_catalog_ids",
-    #                                     string="Customs Declaration")
-
-

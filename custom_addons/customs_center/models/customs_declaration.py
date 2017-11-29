@@ -7,6 +7,7 @@ import odoo.addons.queue_job.job as q_job
 from odoo.tools import config
 import logging, os, shutil
 from lxml import etree
+import uuid
 # from custom_addons.customs_center.utils.to_xml_message import delegate_to_xml
 from ..utils.to_xml_message import delegate_to_xml
 _logger = logging.getLogger(__name__)
@@ -30,12 +31,10 @@ class CustomsDeclaration(models.Model):
     _description = 'Customs Declaration'
 
     name = fields.Char(string="Name")  # 报关单流水号
-    client_seq_No = fields.Char(string="client seq No")  # 报关单客户端编号
+    client_seq_no = fields.Char(string="client seq No")  # 报关单客户端编号
     # 关联工作单
     work_sheet_id = fields.Many2one(comodel_name="work_sheet", string="Work Sheet")  # 工作单ID
-    # 关联企业报关单 目录配置模型 多对一
-    et_dec_catalog_ids = fields.Many2one(comodel_name="customs_center.dec_settings", string="Setting Dec catalog")  # 企业报关单ID
-    et_dec_catalog_name = fields.Char(related='et_dec_catalog_ids.et_dec_catalog_name', string="enterprise path")
+
     # 关联通关清单 多对一
     customs_order_id = fields.Many2one(comodel_name="customs_center.customs_order", string="customs Order")
     cus_ciq_No = fields.Char(string="cus Ciq No")  # 关检关联号
@@ -160,6 +159,7 @@ class CustomsDeclaration(models.Model):
         """设置报关单命名规则"""
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('code_customs_declaration') or _('New')
+            vals['client_seq_no'] = str(uuid.uuid1())
         result = super(CustomsDeclaration, self).create(vals)
 
         return result
@@ -170,10 +170,6 @@ class CustomsDeclaration(models.Model):
         for line in self:
             delegate_to_xml(line)
         return True
-
-    # @api.model
-    # def parse_receipt_xml(self):
-    #     pass
 
     @api.model
     @q_job.job

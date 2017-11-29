@@ -25,7 +25,7 @@ def delegate_to_xml(self):
     trn_conta_goods_list = etree.SubElement(root, "TrnContaGoodsList")
     e_doc_realation_info = etree.SubElement(root, "EdocRealation")
 
-    client_seq_no = str(uuid.uuid1())  # 客户端唯一编号
+    # client_seq_no = str(uuid.uuid1())  # 客户端唯一编号
 
     head_node_dic = OrderedDict()
     head_node_dic['AgentCode'] = self.declare_company_id.register_code     # u'申报单位代码'
@@ -172,7 +172,8 @@ def delegate_to_xml(self):
     #         _node.text = value
 
     dec_sign = OrderedDict()
-    dec_sign['ClientSeqNo'] = client_seq_no.encode('utf8')
+    # dec_sign['ClientSeqNo'] = client_seq_no.encode('utf8')
+    dec_sign['ClientSeqNo'] = str(self.client_seq_no)
     dec_sign['CopCode'] = self.cop_code  # u'操作企业组织机构代码'   # 配置界面设置   不能加str()否则报编码 可能原因，设置默认值渲染到页面之后 已经是unicode
     dec_sign['ICCode'] = self.ic_code  # u'操作员IC卡号'   # 配置界面配置
     dec_sign['OperType'] = 'G'              # u'操作类型'
@@ -297,7 +298,7 @@ def delegate_to_xml(self):
     # 检查并生成相应的目录
     if not os.path.exists(dec_catalog_path):
         os.mkdir(dec_catalog_path)
-    obj_dir = os.path.join(dec_catalog_path, 'DECDATA' + client_seq_no + '.xml')
+    obj_dir = os.path.join(dec_catalog_path, 'DECDATA' + str(self.client_seq_no) + '.xml')
     with open(obj_dir, 'w') as fp:
         fp.write(string.encode('utf8'))
 

@@ -8,5 +8,5 @@
        <menuitem id="sw_customs_declaration" string="Customs Declaration" name="报关单" parent="sw_making_document_menu"
           sequence="30" action="action_customs_declaration"/>
     <menuitem id="sw_settings_dec_menu" string="Settings Declaration" name="设置" parent="customs_center_menu" sequence="15"/>
-        <menuitem id="your_settings_menu" name="企业信息" parent="sw_settings_dec_menu" sequence="40" action="your_settings_action"/>
+        <menuitem id="setting_declaration" name="企业信息" parent="sw_settings_dec_menu" sequence="40" action="setting_declaration_action"/>
 </odoo>

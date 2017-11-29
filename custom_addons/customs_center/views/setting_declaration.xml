@@ -1,50 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
         <record id="setting_declaration_action" model="ir.actions.act_window">
             <field name="name">Setting Declaration</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">customs_center.dec_settings</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-
-        <!--<record id="setting_declaration_list" model="ir.ui.view">-->
-            <!--<field name="name">Setting Declaration List</field>-->
-            <!--<field name="model">customs_center.dec_settings</field>-->
-            <!--<field name="arch" type="xml">-->
-                <!--<tree>-->
-                    <!--<field name="et_dec_catalog_name" string="企业报文存放目录名称"/>-->
-                <!--</tree>-->
-            <!--</field>-->
-        <!--</record>-->
-
-        <!--<record id="setting_declaration_form" model="ir.ui.view">-->
-            <!--<field name="name">Setting Declaration Form</field>-->
-            <!--<field name="model">customs_center.dec_settings</field>-->
-            <!--<field name="arch" type="xml">-->
-                <!--<form>-->
-                    <!--<sheet>-->
-                        <!--<group>-->
-                            <!--<group>-->
-                                <!--<field name="et_dec_catalog_name" string="企业报文存放目录名称"/>-->
-                            <!--</group>-->
-                        <!--</group>-->
-                    <!--</sheet>-->
-                <!--</form>-->
-            <!--</field>-->
-        <!--</record>-->
-
-        <!--<record id="setting_declaration_action" model="ir.actions.act_window">-->
-            <!--<field name="name">Setting Declaration</field>-->
-            <!--<field name="type">ir.actions.act_window</field>-->
-            <!--<field name="res_model">customs_center.dec_settings</field>-->
-            <!--<field name="view_mode">tree,form</field>-->
-        <!--</record>-->
-
-
-        <record id="your_settings_action" model="ir.actions.act_window">
-            <field name="name">Your configuration</field>
             <field name="res_model">customs_center.settings</field>
             <!--<field name="view_id" ref="setting_declaration_form"/>-->
             <field name="view_mode">form</field>
