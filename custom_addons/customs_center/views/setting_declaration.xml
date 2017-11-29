@@ -55,35 +55,28 @@
             <field name="name">Your configuration</field>
             <field name="model">customs_center.settings</field>
             <field name="arch" type="xml">
-                <form string="Your configuration" class="oe_form_configuration">
-                    <header>
-                        <button string="Save" type="object"
-                            name="execute" class="oe_highlight"/>
-                        or
-                        <button string="Cancel" type="object"
-                            name="cancel" class="oe_link"/>
-                    </header>
-                    <group string="Company">
-                        <label for="id" string="Name &amp; Phone"/>
-                        <div>
-                            <div>
-                                <label for="统一编号"/>
-                                <field name="default_dec_seq_no"/>
-                            </div>
-                            <!--<div>-->
-                                <!--<label for="company_name"/>-->
-                                <!--<field name="company_name"/>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<label for="company_phone"/>-->
-                                <!--<field name="company_phone"/>-->
-                            <!--</div>-->
-                        </div>
-                    </group>
-                </form>
-            </field>
-        </record>
-
+                    <form string="企业信息">
+                        <header>
+                            <h3>
+                             <button string="Save" type="object" name="execute" class="oe_highlight"/>
+                              or
+                             <button string="Cancel" type="object" name="cancel" class="oe_highlight"/>
+                            </h3>
+                        </header>
+                        <sheet>
+                            <group >
+                                <field name="default_cop_code" string="录入单位企业组织机构代码"/>
+                                <field name="default_cop_name" string="录入单位名称"/>
+                                <field name="default_cop_code_scc" string="录入单位社会信用统一编码"/>
+                                <field name="default_inputer_name" string="录入员姓名"/>
+                                <field name="default_oper_name" string="操作员姓名"/>
+                                <field name="default_certificate" string="操作员卡的证书号"/>
+                                <field name="default_ic_code" string="操作员IC卡号"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
 
 
 

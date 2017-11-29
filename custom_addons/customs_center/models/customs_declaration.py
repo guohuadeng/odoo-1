@@ -53,10 +53,6 @@ class CustomsDeclaration(models.Model):
     dec_date = fields.Datetime(string="DecDate", required=True)   # 申报日期
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")  # 进出口岸
 
-    business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
-    input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
-    declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
-
     transport_mode_id = fields.Many2one(comodel_name="delegate_transport_mode",
                                         string="Transport Mode")  # 运输方式
     NativeShipName = fields.Char(string="Native Ship Name")  # 运输工具名称
@@ -109,7 +105,7 @@ class CustomsDeclaration(models.Model):
                                                         ('9', u'9-空')], )  # 特殊关系确认
     promise2 = fields.Selection(string="promise2", selection=[('0', u'0-否'),
                                                         ('1', u'1-是'),
-                                                        ('9', u'0-空')], )  # 价格影响确认
+                                                        ('9', u'9-空')], )  # 价格影响确认
     promise3 = fields.Selection(string="promise3", selection=[('0', u'0-否'),
                                                         ('1', u'1-是'),
                                                         ('9', u'9-空')], )  # 支付特许权使用费确认
@@ -127,15 +123,21 @@ class CustomsDeclaration(models.Model):
     # cop_name = fields.Char(string="Cop Name", required=True, )      # 录入单位名称
     # custom_master = fields.Char(string="Custom Master", required=True, )  # 申报地海关代码
 
-    cop_code = fields.Char(string="cop code")  # 录入单位代码 企业组织机构代码
-    cop_name = fields.Char(string="cop name")      # 录入单位名称
+    declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
+    input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
+    business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
+
+    cop_code = fields.Char(string="cop code")  # 录入单位企业组织机构代码
+    cop_name = fields.Char(string="cop name")  # 录入单位企业名称
+    cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
     inputer_name = fields.Char(string="inputer name")  # 录入员姓名
     oper_name = fields.Char(string="oper name")     # 操作员姓名
     certificate = fields.Char(string="oper card certificate")   # 操作员卡的证书号
-    cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
-    owner_code_scc = fields.Char(string="owner Social credit uniform coding")  # 货主单位/生产消费单位 社会信用统一编码
-    trade_code_scc = fields.Char(string="owner Social credit uniform coding")  # 经营单位 / 收发货人 统一编码
-    ic_code = fields.Char(string="IC number")  # 操作员IC卡号
+    ic_code = fields.Char(string="IC number")  # 操作员IC卡号/录入员IC卡号
+
+    # cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
+    # owner_code_scc = fields.Char(string="owner Social credit uniform coding")  # 货主单位/生产消费单位 社会信用统一编码
+    # trade_code_scc = fields.Char(string="owner Social credit uniform coding")  # 经营单位 / 收发货人 统一编码
 
     decl_trn_rel = fields.Selection(string="DeclTrnRel", selection=[('0', u'一般报关单'), ('1', u'转关提前报关单')])   # 报关/转关关系标志
     ediId = fields.Selection(string="ediId", selection=[('1', u'普通报关'), ('3', u'北方转关提前'),

@@ -24,7 +24,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
-        # 'data/parse_message.xml',
+        'data/parse_message.xml',
         'data/result_status.xml',
         'views/customs_declaration.xml',
         'views/customs_order.xml',
