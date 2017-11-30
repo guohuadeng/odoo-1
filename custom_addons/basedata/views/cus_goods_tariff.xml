@@ -27,6 +27,12 @@
                             <group>
                                 <field name="NameCN" string="Chinese Name"/>
                             </group>
+                            <group>
+                                <field name="first_unit" string="First Unit"/>
+                            </group>
+                            <group>
+                                <field name="second_unit" string="second Unit"/>
+                            </group>
                         </group>
                     </sheet>
                 </form>
@@ -42,6 +48,8 @@
                     <field name="Code_s" string="Attach Code"/>
                     <field name="Code_ts" string="goods Code"/>
                     <field name="NameCN" string="Chinese Name"/>
+                    <field name="first_unit" string="First Unit"/>
+                    <field name="second_unit" string="second Unit"/>
                 </tree>
             </field>
         </record>

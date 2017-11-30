@@ -39,7 +39,7 @@ class CusCurrency(models.Model):
     _rec_name = 'NameCN'
 
     Code = fields.Char(string='Currency Code', required=True)       # 币制代码
-    symbol = fields.Char(string='Symbol', required=True)     # 符号
+    symbol = fields.Char(string='Symbol',)     # 符号
     NameCN = fields.Char(string='Chinese Name', size=50, required=True)   # 中文名称
 
 
@@ -81,10 +81,11 @@ class CusGoodsTariff(models.Model):
     _rec_name = 'NameCN'
 
     Code_t = fields.Char(string='tax regulations Code', required=True)       # 税则号
-    Code_s = fields.Char(string='Attach Code', required=True)       # 附加编号
-    Code_ts = fields.Char(string='goods Code', required=True)       # 商品编号
+    Code_s = fields.Char(string='Attach Code',)       # 附加编号
+    Code_ts = fields.Char(string='goods Code',)       # 商品编号
     NameCN = fields.Char(string='Chinese Name', size=50, required=True)     # 中文名称
-
+    first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
+    second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
 
 class DecLicenseDocType(models.Model):
     """ 随附单证类型 """

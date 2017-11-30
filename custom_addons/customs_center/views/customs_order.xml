@@ -62,7 +62,7 @@
                                             <!--<field name="customMaster_id" string="申报海关"/>-->
                                             <field name="ManualNo" string="备案号"/>
                                             <field name="customer_contract_no" string="合同号"/>
-                                            <field name="LicenseNo" string="许可证号"/>
+                                            <field name="licenseNo" string="许可证号"/>
                                             <field name="business_company_id" string="收发货人"/>
                                             <field name="input_company_id" string="生产消费单位"/>
                                         </group>

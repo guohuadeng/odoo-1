@@ -135,8 +135,8 @@ class CustomsDeclaration(models.Model):
     ic_code = fields.Char(string="IC number")  # 操作员IC卡号/录入员IC卡号
 
     # cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
-    # owner_code_scc = fields.Char(string="owner Social credit uniform coding")  # 货主单位/生产消费单位 社会信用统一编码
-    # trade_code_scc = fields.Char(string="owner Social credit uniform coding")  # 经营单位 / 收发货人 统一编码
+    # owner_code_scc = fields.Char(string="owner Social credit uniform coding")   # 货主单位/生产消费单位 社会信用统一编码
+    # trade_code_scc = fields.Char(string="owner Social credit uniform coding")   # 经营单位 / 收发货人 统一编码
 
     decl_trn_rel = fields.Selection(string="DeclTrnRel", selection=[('0', u'一般报关单'), ('1', u'转关提前报关单')])   # 报关/转关关系标志
     ediId = fields.Selection(string="ediId", selection=[('1', u'普通报关'), ('3', u'北方转关提前'),

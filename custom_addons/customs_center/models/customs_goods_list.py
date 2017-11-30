@@ -25,9 +25,9 @@ class CusGoodsList(models.Model):
     deal_total_price = fields.Monetary(string="deal total price", )  # 成交总价
     currency_id = fields.Char(string="currency id", required=False, )  # 币制
     first_qty = fields.Integer(string="first quantity", required=False,)  # 第一数量
-    first_unit = fields.Char(string="First Unit", )  # 第一单位
+    first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit")  # 第一单位
     second_qty = fields.Integer(string="second quantity",)  # 第二数量
-    second_unit = fields.Char(string="second Unit", )  # 第二单位
+    second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二单位
     origin_country_id = fields.Char(string="origin country", )  # 原产国
     destination_country_id = fields.Char(string="destination country", )  # 目的国
     duty_mode_id = fields.Char(string="Duty Mode", )  # 征免方式
