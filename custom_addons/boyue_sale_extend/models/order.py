@@ -12,7 +12,7 @@ class Order(models.Model):
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type", required=True, )
     contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, )
     servicer = fields.Many2one(comodel_name="res.partner", string="Servicer")
-    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", track_visibility='always')
+    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", index=True, track_visibility='always')
     goods_name = fields.Text(string="Goods Name", required=False, )
     delivery_info = fields.One2many(comodel_name="boyue_sale_extend.delivery_info", inverse_name="order",
                                     string="Delivery Info", )
@@ -123,14 +123,13 @@ class Order(models.Model):
 
 
 
-    @api.multi
-    def write(self, vals):
-        for obj in self:
-            if 'customer_service' in vals:
-                partner_id = self.env['res.users'].browse(int(vals.get('customer_service'))).partner_id
-                print(partner_id.ids)
-                obj.message_subscribe_users(user_ids=partner_id.ids)
-        return super(Order, self).write(vals)
+    # @api.multi
+    # def write(self, vals):
+    #     for obj in self:
+    #         if 'customer_service' in vals:
+    #             partner_id = self.env['res.users'].browse(int(vals.get('customer_service'))).partner_id
+    #             obj.message_subscribe_users(user_ids=partner_id.ids)
+    #     return super(Order, self).write(vals)
 
     @api.multi
     def signed_contract(self):
