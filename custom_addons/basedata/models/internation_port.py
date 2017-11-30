@@ -24,7 +24,7 @@ class InternationPort(models.Model):
         result = []
         for record in self:
             result.append(
-                (record.id, record.name_en)
+                (record.id, u"%s %s %s"%(record.code, record.name_cn, record.name_en))
             )
         return result
 
