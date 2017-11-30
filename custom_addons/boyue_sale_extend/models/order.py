@@ -12,10 +12,12 @@ class Order(models.Model):
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type", required=True, )
     contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, )
     servicer = fields.Many2one(comodel_name="res.partner", string="Servicer")
-    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", track_visibility='onchange')
+    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", track_visibility='always')
     goods_name = fields.Text(string="Goods Name", required=False, )
     delivery_info = fields.One2many(comodel_name="boyue_sale_extend.delivery_info", inverse_name="order",
                                     string="Delivery Info", )
+    # partner_id = fields.Many2one('res.partner', string='Customer', readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, required=True, change_default=True, index=True, track_visibility='onchange')
+
 
 
     # 进出口类型
@@ -340,6 +342,24 @@ class OrderLine(models.Model):
                 self.product_id = False
             return {'warning': warning}
         return {'domain': domain}
+
+    @api.onchange('product_uom', 'product_uom_qty')
+    def product_uom_change(self):
+        if not self.product_uom:
+            self.price_unit = 0.0
+            return
+        if self.order_id.pricelist_id and self.order_id.partner_id:
+            product = self.product_id.with_context(
+                lang=self.order_id.partner_id.lang,
+                partner=self.order_id.partner_id.id,
+                quantity=self.product_uom_qty,
+                date_order=self.order_id.date_order,
+                pricelist=self.order_id.pricelist_id.id,
+                uom=self.product_uom.id,
+                fiscal_position=self.env.context.get('fiscal_position')
+            )
+            self.price_unit = self.env['account.tax']._fix_tax_included_price(self._get_display_price(product), product.taxes_id, self.tax_id)
+            self.quote_price_unit = self.price_unit     # 同时更改报价单价
 
 
 class ContractWizard(models.TransientModel):

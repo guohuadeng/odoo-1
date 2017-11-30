@@ -168,8 +168,6 @@
         </field>
     </record>
 
-    <delete id="sale.menu_sale_order" model="ir.ui.menu"/>
-
     <!-- 向公司中添加公司代码 -->
     <record id="view_company_form_extend" model="ir.ui.view">
         <field name="name">res_company_form_extend</field>

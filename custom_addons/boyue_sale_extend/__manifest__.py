@@ -36,7 +36,8 @@
         'views/certificate_manage_views.xml',
         'views/sale_customer_info.xml',
         'views/incoterm.xml',
-        'views/template.xml'
+        'views/template.xml',
+        'data/delete_order_menu.xml'
     ],
     'qweb': [
         'static/src/xml/widget.xml',

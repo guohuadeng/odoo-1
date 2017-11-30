@@ -64,6 +64,7 @@ class WorkSheetTestCase(TransactionCase):
         })
 
         self.work_sheet_1.switch_bill_company = company_a
+        self.work_sheet_1._compute_switch_bill_address()
         self.assertEqual(
             self.work_sheet_1.switch_bill_address,
             'beijing street A',
@@ -74,3 +75,39 @@ class WorkSheetTestCase(TransactionCase):
             '123456',
             'switch bill functin cannot change contact phone'
         )
+        self.work_sheet_1.switch_bill_company = company_b
+        self.work_sheet_1._compute_switch_bill_address()
+        self.assertEqual(
+            self.work_sheet_1.switch_bill_address,
+            'shanghai street B',
+            'switch bill function cannot change address'
+        )
+        self.assertEqual(
+            self.work_sheet_1.switch_bill_contact,
+            '654321',
+            'switch bill functin cannot change contact phone'
+        )
+
+
+    def test_get_sale_man(self):
+        """测试当更改委托单位时改变相应的销售员、结算单位"""
+        sale_man = self.env['res.users'].create({
+            'name': 'sale man A',
+            'employee': True,
+            'login': 'sale man A',
+            'groups_id': [(6, 0, [self.ref('base.group_user')])]
+        })
+        customer = self.env['res.partner'].create({
+            'name': 'customer A',
+            'is_company': True,
+            'user_id': sale_man.id
+        })
+
+        work_sheet_1 = self.work_sheet_1
+        work_sheet_1.customer = customer
+        work_sheet_1._get_sale_man()
+        self.assertEqual(work_sheet_1.sale_man.name, 'sale man A', 'change sale man when change customer')
+        self.assertEqual(work_sheet_1.settlement_object.name, 'customer A', 'The settlement obj don\'t change when change customer')
+        self.assertEqual(work_sheet_1.consignee.name, 'customer A')
+
+

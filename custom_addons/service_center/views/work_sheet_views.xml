@@ -19,10 +19,9 @@
                     <field name="hawb" string="HAWB"
                             attrs="{'invisible':[('trans_mode_code','=',%(basedata.delegate_transport_mode_5)d)]}"/>
                     <field name="loading_port"/>
-                    <field name="transition_port"/>
                     <field name="destination_port"/>
-                    <field name="start_date"/>
-                    <field name="arrive_date"/>
+                    <field name="start_date" widget="date"/>
+                    <field name="arrive_date" widget="date"/>
                     <field name="sale_man"/>
                     <field name="customer_service"/>
                     <field name="create_date" />
@@ -46,8 +45,8 @@
                     <field name="loading_port"/>
                     <field name="transition_port"/>
                     <field name="destination_port"/>
-                    <field name="start_date"/>
-                    <field name="arrive_date"/>
+                    <field name="start_date" widget="date"/>
+                    <field name="arrive_date" widget="date"/>
                     <field name="sale_man"/>
                     <field name="customer_service"/>
                     <field name="state"/>
@@ -68,8 +67,8 @@
                     <field name="loading_port"/>
                     <field name="transition_port"/>
                     <field name="destination_port"/>
-                    <field name="start_date"/>
-                    <field name="arrive_date"/>
+                    <field name="start_date" widget="date"/>
+                    <field name="arrive_date" widget="date"/>
                     <field name="sale_man"/>
                     <field name="customer_service"/>
                     <field name="state"/>
@@ -90,8 +89,8 @@
                     <field name="loading_port"/>
                     <field name="transition_port"/>
                     <field name="destination_port"/>
-                    <field name="start_date"/>
-                    <field name="arrive_date"/>
+                    <field name="start_date" widget="date"/>
+                    <field name="arrive_date" widget="date"/>
                     <field name="sale_man"/>
                     <field name="customer_service"/>
                     <field name="state"/>
