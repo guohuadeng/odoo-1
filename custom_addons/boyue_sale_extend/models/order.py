@@ -218,6 +218,8 @@ class Order(models.Model):
                 'trade_mode_id': obj.trade_mode.id if obj.trade_mode else False,
                 'qty': obj.num,
                 'cn_name': obj.goods_name,
+                'sale_man': obj.user_id.id,
+                'customer_service': obj.customer_service.id
             }
             vals = {i: vals[i] for i in vals if vals[i]}
             obj.work_sheet_id |= self.env['work_sheet']\
