@@ -61,7 +61,7 @@
                     <group>
                         <field name="customer" domain="[('customer', '=', True), ('is_company', '=', True)]"/>
                         <!--<field name="id" string="客户ID" invisible="1"/>-->
-                        <field name="customer_signatory" domain="[('parent_id', '=', customer)]"/>
+                        <field name="customer_signatory" domain="[('parent_id', '=', customer), ('is_company', '=', True) ('type', '=', 'contact')]"/>
                         <field name="contract_effective_date" widget="date"/>
                         <field name="contract_failure_date" widget="date"/>
                         <field name="note" />

@@ -12,13 +12,13 @@
                             <group>
                                 <field name="name_cn"/>
                                 <field name="name_en"/>
-                                <field name="city_name_cn"/>
-                                <field name="city_name_en"/>
+                                <field name="code"/>
+                                <field name="port_type"/>
                             </group>
                             <group>
-                                <field name="code"/>
+                                <field name="city_name_cn"/>
+                                <field name="city_name_en"/>
                                 <field name="city_code"/>
-                                <field name="port_type"/>
                             </group>
                         </group>
                     </sheet>
@@ -35,8 +35,23 @@
                     <field name="name_en"/>
                     <field name="code"/>
                     <field name="port_type"/>
+                    <field name="city_name_cn"/>
+                    <field name="city_name_en"/>
+                    <field name="city_code"/>
                 </tree>
             </field>
+        </record>
+
+        <record id="internation_port_search_view" model="ir.ui.view">
+           <field name="name">internation port search</field>
+           <field name="model">basedata.internation_port</field>
+            <field name="arch" type="xml">
+                <search>
+                  <field name="name_cn" string="Port Chinese Name"/>
+                  <field name="name_en" string="Port English Name"/>
+                  <field name="code" string="Port Code"/>
+                </search>
+           </field>
         </record>
 
         <record id="internation_port_action" model="ir.actions.act_window">

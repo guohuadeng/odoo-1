@@ -217,7 +217,7 @@ class Order(models.Model):
                 'deal_type': obj.incoterm.id if obj.incoterm else False,
                 'trade_mode_id': obj.trade_mode.id if obj.trade_mode else False,
                 'qty': obj.num,
-                'cn_name': obj.goods_name
+                'cn_name': obj.goods_name,
             }
             vals = {i: vals[i] for i in vals if vals[i]}
             obj.work_sheet_id |= self.env['work_sheet']\

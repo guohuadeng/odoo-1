@@ -184,11 +184,11 @@
                         <field name="trans_mode_code" invisible="1"/>
                         <group>
                             <field name="customer" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
-                            <field name="contact" required="1" domain="[('parent_id', '=', customer), ('is_company', '=', False)]"/>
+                            <field name="contact" required="1" domain="[('parent_id', '=', customer), ('is_company', '=', False), ('type', '=', 'contact')]"/>
                             <field name="settlement_object" domain="[('customer', '=', True), ('is_company', '=', True)]"/>
                         </group>
                         <group>
-                            <field name="sale_order_no" required="1" domain="[('partner_id', '=', customer)]" context="{'hide_sale': True}"/>
+                            <field name="sale_order_no" options="{'no_create_edit': True, 'no_create': True}" domain="[('partner_id', '=', customer)]" context="{'hide_sale': True}"/>
                             <field name="contract_no" domain="[('customer', '=', customer)]"/>
                             <field name="customer_project_no"/>
                             <field name="inner_protocol_no" string="内部协议号"/>
@@ -255,9 +255,8 @@
                                     <field name="customer_contract_no" colspan="4"/>
                                     <field name="deal_type" colspan="4" required="1"/>
                                     <field name="trade_mode_id" colspan="4"/>
-                                    <field name="transport_item" colspan="4" required="1"/>
-                                    <field name="freight_clause" colspan="4"
-                                           attrs="{'required':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)]}"/>
+                                    <field name="transport_item" colspan="4" attrs="{'required':[('trans_mode_code','=',%(basedata.delegate_transport_mode_2)d)]}"/>
+                                    <field name="freight_clause" colspan="4" required="1" />
                                     <field name="goodsValue" colspan="4"/>
                                     <field name="goods_currency_id"  colspan="4" string="币种"/>
                                     <!--<field name="goods_currency_id" nolabel="1" colspan="1"/>-->

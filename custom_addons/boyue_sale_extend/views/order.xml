@@ -11,7 +11,7 @@
                 <field name="contract" readonly="1"/>
                 <field name="business_type" attrs="{'readonly': [('state', 'not in', ('draft', 'sent'))]}"
                        options="{'no_open': True, 'no_create_edit': 1}"/>
-                <field name="contact" widget="many2many_tags" options="{'no_create_edit': 1}" domain="[('parent_id', '=', partner_id)]"
+                <field name="contact" widget="many2many_tags" options="{'no_create_edit': 1}" domain="[('parent_id', '=', partner_id), ('type', '=', 'contact')]"
                  context="{'default_is_company': False, 'default_parent_id': partner_id}"/>
             </xpath>
 
