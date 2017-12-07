@@ -107,7 +107,7 @@ class Order(models.Model):
         result = super(Order, self).create(vals)
         if 'customer_service' in vals:
             partner_id = self.env['res.users'].browse(int(vals.get('customer_service'))).partner_id
-        result.message_subscribe_users(user_ids=partner_id.ids)
+        # result.message_subscribe_users(user_ids=partner_id.ids)
         return result
 
 
@@ -242,7 +242,7 @@ class Order(models.Model):
         """得到销售订单的客服"""
         for obj in self:
             if obj.partner_id and len(obj.partner_id.customer_service_ids) == 1:
-                obj.customer_service = obj.partner_id.customer_service_ids[0]
+                obj.update({'customer_service': obj.partner_id.customer_service_ids[0].id})
 
 
 class delivery_info(models.Model):
