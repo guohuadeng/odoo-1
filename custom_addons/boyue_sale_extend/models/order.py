@@ -106,8 +106,8 @@ class Order(models.Model):
                                                    partner.property_product_pricelist.id)
         result = super(Order, self).create(vals)
         if 'customer_service' in vals:
-            partner_id = self.env['res.users'].browse(int(vals.get('customer_service'))).partner_id
-        # result.message_subscribe_users(user_ids=partner_id.ids)
+            user_id = self.env['res.users'].browse(int(vals.get('customer_service')))
+            result.message_subscribe_users(user_ids=user_id.ids)
         return result
 
 
