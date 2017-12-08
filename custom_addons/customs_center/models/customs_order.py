@@ -18,7 +18,8 @@ class CustomsOrder(models.Model):
     customer_id = fields.Many2one(comodel_name="res.partner", string="Customer")                 # 客户 (委托单位)
     work_sheet_id = fields.Many2one(comodel_name="work_sheet", string="Work Sheet")              # 工作单ID
 
-    inout = fields.Selection(string="InOut", selection=[('I', 'Import'), ('E', 'Export'), ], required=True)   # 进出口类型
+    business_type = fields.Many2one(comodel_name="business_type", string="Business Type")   # 业务类型
+    inout = fields.Selection(string="InOut", selection=[('i', 'Import'), ('e', 'Export'), ], required=True)   # 进出口类型
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")              # 进出口岸
     custom_master_id = fields.Many2one(comodel_name="delegate_customs", string="Declare Customs")  # 申报口岸/海关
     ManualNo = fields.Char(string="Manual No")                                                   # 备案号
@@ -60,68 +61,114 @@ class CustomsOrder(models.Model):
                                                         ('cancel', 'Cancel'),
                                                         ('failure', 'Failure')], default='draft')  # 通关清单
 
-    @api.multi
-    def generate_customs_declaration(self):
+
+
+    def generate_customs_declaration(self, vals):
         """ 生成报关单 """
-        # if len(self.mapped('cus_goods_list_ids')) != 1:
-        #     raise UserError(_("有多个商品"))
-        customs_order_info_dic = dict()
+        # obj = super(CustomsOrder, self).create(vals)
         for line in self:
-            customs_order_info_dic.update({
-                'default_inout': line.inout,
-                'default_customs_id': line.customs_id.id,
-                'default_custom_master_id': line.custom_master_id.id,
-                'default_ManualNo': line.ManualNo,
-                'default_customer_contract_no': line.customer_contract_no,
-                'default_licenseNo': line.licenseNo,
-                'default_declare_company_id': line.declare_company_id.id,
-                'default_input_company_id': line.input_company_id.id,
-                'default_business_company_id': line.business_company_id.id,
-                'default_transport_mode_id': line.transport_mode_id.id,
-                'default_transport_name': line.transport_name,
-                'default_VoyageNo': line.VoyageNo,
-                'default_trade_terms_id': line.trade_terms_id.id,
-                'default_trade_mode_id': line.trade_mode_id.id,
-                'default_CutMode_id': line.CutMode_id.id,
-                'default_packing_id': line.packing_id.id,
-                'default_trade_country_id': line.trade_country_id.id,
-                'default_origin_arrival_country_id': line.origin_arrival_country_id.id,
-                'default_port_id': line.port_id.id,
-                'default_region_id': line.region_id.id,
-                'default_qty': line.qty,
-                'default_gross_weight': line.gross_weight,
-                'default_net_weight': line.net_weight,
-                'default_remarks': line.marks,
-            })
-        # print('**************^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^****************')
-        # for item in customs_order_info_dic.items():
-        #     print(item)
+            dic = {
+                'inout': line.business_type.in_out,
+                'customs_id': line.customs_id.id,
+                'custom_master_id': line.custom_master_id.id,
+                'ManualNo': line.ManualNo,
+                'customer_contract_no': line.customer_contract_no,
+                'licenseNo': line.licenseNo,
+                'declare_company_id': line.declare_company_id.id,
+                'input_company_id': line.input_company_id.id,
+                'business_company_id': line.business_company_id.id,
+                'transport_mode_id': line.transport_mode_id.id,
+                'transport_name': line.transport_name,
+                'VoyageNo': line.VoyageNo,
+                'trade_terms_id': line.trade_terms_id.id,
+                'trade_mode_id': line.trade_mode_id.id,
+                'CutMode_id': line.CutMode_id.id,
+                'packing_id': line.packing_id.id,
+                'trade_country_id': line.trade_country_id.id,
+                'origin_arrival_country_id': line.origin_arrival_country_id.id,
+                'port_id': line.port_id.id,
+                'region_id': line.region_id.id,
+                'qty': line.qty,
+                'gross_weight': line.gross_weight,
+                'net_weight': line.net_weight,
+                'remarks': line.marks,
+            }
 
-        return {
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'res_model': 'customs_center.customs_dec',
-            'target': 'current',
-            'context': customs_order_info_dic,
-        }
+            dic = {item: dic[item] for item in dic if dic[item]}
+            # _dic = {}
+            # for item in dic:
+            #     if item in {'customer_id', 'custom_master_id', 'declare_company_id', 'trade_terms_id', 'trade_mode_id',
+            #                 'CutMode_id', 'packing_id', 'trade_country_id', 'origin_arrival_country_id',
+            #                 'input_company_id', 'business_company_id', 'transport_mode_id', 'port_id', 'region_id'}:
+            #         _dic[item] = dic[item].id
+            # dic.update(_dic)
+            dic.update(dic)
+            self.env['customs_center.customs_dec'].create(dic)
 
-        # print('*********************88888888888888888**********************************')
-        # default_customer_id = self.mapped('customer_id')[0]
-        # default_inout = self.mapped('inout')[0]
-        # print(default_customer_id.id)
-        # print(default_inout.id)
-        # print('*********************88888888888888888**********************************')
-        # return {
-        #     'type': 'ir.actions.act_window',
-        #     'view_mode': 'form',
-        #     'res_model': 'customs_center.customs_dec',
-        #     'target': 'current',
-        #     'context': {
-        #         'default_receivable_expense_no': self.ids,   # [line.expense_receivable_no for line in self]
-        #         'default_settlement_object': default_settlement_object.id,
-        #         'default_customer_id': default_customer_id.id
-        #     }
-        # }
+        for obj in self:
+            if not obj.customs_order_ids:
+                return
+            customs_clearance_obj = obj.customs_declaration_ids[0]
+            return {
+                'name': "Customs Center Clearance",
+                'type': "ir.actions.act_window",
+                'view_type': 'form',
+                'view_mode': 'form, tree',
+                'res_model': 'customs_center.customs_order',
+                'views': [[False, 'form']],
+                'res_id': customs_clearance_obj.id,
+                'target': 'current'
+            }
+
+
+
+
+    # @api.multi
+    # def generate_customs_declaration(self):
+    #     """ 生成报关单 """
+    #     # if len(self.mapped('cus_goods_list_ids')) != 1:
+    #     #     raise UserError(_("有多个商品"))
+    #     customs_order_info_dic = dict()
+    #     for line in self:
+    #         customs_order_info_dic.update({
+    #             'default_inout': line.inout,
+    #             'default_customs_id': line.customs_id.id,
+    #             'default_custom_master_id': line.custom_master_id.id,
+    #             'default_ManualNo': line.ManualNo,
+    #             'default_customer_contract_no': line.customer_contract_no,
+    #             'default_licenseNo': line.licenseNo,
+    #             'default_declare_company_id': line.declare_company_id.id,
+    #             'default_input_company_id': line.input_company_id.id,
+    #             'default_business_company_id': line.business_company_id.id,
+    #             'default_transport_mode_id': line.transport_mode_id.id,
+    #             'default_transport_name': line.transport_name,
+    #             'default_VoyageNo': line.VoyageNo,
+    #             'default_trade_terms_id': line.trade_terms_id.id,
+    #             'default_trade_mode_id': line.trade_mode_id.id,
+    #             'default_CutMode_id': line.CutMode_id.id,
+    #             'default_packing_id': line.packing_id.id,
+    #             'default_trade_country_id': line.trade_country_id.id,
+    #             'default_origin_arrival_country_id': line.origin_arrival_country_id.id,
+    #             'default_port_id': line.port_id.id,
+    #             'default_region_id': line.region_id.id,
+    #             'default_qty': line.qty,
+    #             'default_gross_weight': line.gross_weight,
+    #             'default_net_weight': line.net_weight,
+    #             'default_remarks': line.marks,
+    #         })
+    #     # print('**************^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^****************')
+    #     for item in customs_order_info_dic.items():
+    #         print(item)
+    #
+    #     return {
+    #         'type': 'ir.actions.act_window',
+    #         'view_mode': 'form',
+    #         'res_model': 'customs_center.customs_dec',
+    #         'target': 'current',
+    #         'context': customs_order_info_dic,
+    #     }
+
+
 
     @api.model
     def create(self, vals):
@@ -159,7 +206,59 @@ class WorkSheet(models.Model):
             if len(item.customs_order_ids) > 1:
                 raise ValidationError(_('work sheet must relate only one clearance draft'))
 
+    @api.model
+    def create(self, vals):
+        """当创建工作单时，如果“关务中心报关”被选上 则创建通关清单"""
+        obj = super(WorkSheet, self).create(vals)
+        if vals.get('custom_center'):
+            dic = {
+                'customer_id': obj.customer,
+                'work_sheet_id': obj.id,
+                'inout': obj.business_type.in_out,
+                'business_type': obj.business_type.id,
+                # 'business_company_id': obj.consignee if obj.in_out == 'i' else obj.consignor,
+                'customer_contract_no': obj.customer_contract_no,
+                'trade_terms_id': obj.deal_type.trade_term_id if obj.deal_type else False,
+                'trade_mode_id': obj.trade_mode_id,
+                'transport_mode_id': obj.business_type.transport_mode,
+                'qty': obj.qty,
+                'gross_weight': obj.gross_weight,
+                'customs_id': obj.sale_order_no.customs[
+                    0] if obj.sale_order_no and obj.sale_order_no.customs else False,
+                'trade_country_id': obj.sale_order_no.trade_country if obj.sale_order_no else False,
+                'port_id': obj.sale_order_no.port if obj.sale_order_no else False,
+                'region_id': obj.sale_order_no.region if obj.sale_order_no else False,
+                'wrap_type': obj.wrap_type
+            }
 
+            dic = {item: dic[item] for item in dic if dic[item]}  # 清除False
+            _dic = {}  # 把object转换为id
+            for item in dic:
+                if item in {'customer_id', 'trade_terms_id', 'trade_mode_id',
+                            'transport_mode_id', 'customs_id', 'trade_country_id', 'port_id', 'region_id'}:
+                    _dic[item] = dic[item].id
+            dic.update(_dic)
+            self.env['customs_center.customs_order'].create(dic)
+        return obj
+
+    @api.multi
+    def customs_center_clearance(self):
+        """从服务中心 跳转到关务中心通关清单界面"""
+        for obj in self:
+            if not obj.customs_order_ids:
+                return
+
+            customs_clearance_obj = obj.customs_order_ids[0]
+            return {
+                'name': "Customs Center Clearance",
+                'type': "ir.actions.act_window",
+                'view_type': 'form',
+                'view_mode': 'form, tree',
+                'res_model': 'customs_center.customs_order',
+                'views': [[False, 'form']],
+                'res_id': customs_clearance_obj.id,
+                'target': 'current'
+            }
 
 
 

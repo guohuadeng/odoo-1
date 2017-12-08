@@ -229,6 +229,7 @@ class WorkSheet(models.Model):
                 'port_id': obj.sale_order_no.port if obj.sale_order_no else False,
                 'region_id': obj.sale_order_no.region if obj.sale_order_no else False,
                 'wrap_type': obj.wrap_type
+
             }
 
             dic = {item: dic[item] for item in dic if dic[item]}  # 清除False

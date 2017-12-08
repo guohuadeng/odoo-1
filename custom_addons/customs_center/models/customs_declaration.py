@@ -42,7 +42,7 @@ class CustomsDeclaration(models.Model):
 
     entry_type_id = fields.Many2one(comodel_name="basedata.cus_entry_type", string="Entry Type")  # 报关单类型 关联报关单类型字典表，待新增
     bill_type_id = fields.Many2one(comodel_name="basedata.cus_filing_bill_type", string="bill Type")    # 备案清单 待新建，备案清单类型表
-    inout = fields.Selection(string="InOut", selection=[('I', 'Import'), ('E', 'Export'), ], required=True)  # 进出口类型
+    inout = fields.Selection(string="InOut", selection=[('i', 'Import'), ('e', 'Export'), ], required=True)  # 进出口类型
     dec_seq_no = fields.Char(string="DecSeqNo")  # 统一编号
     pre_entry_id = fields.Char(string="PreEntryId")  # 预录入编号
     entry_id = fields.Char(string="EntryId")  # 海关编号
