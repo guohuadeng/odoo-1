@@ -48,8 +48,8 @@ class CustomsDeclaration(models.Model):
     entry_id = fields.Char(string="EntryId")  # 海关编号
     ManualNo = fields.Char(string="Manual No")  # 备案号
     customer_contract_no = fields.Char(string="Customer Contract No")  # 合同协议号
-    in_out_date = fields.Datetime(string="InoutDate", required=True)   # 进出口日期
-    dec_date = fields.Datetime(string="DecDate", required=True)   # 申报日期
+    in_out_date = fields.Datetime(string="InoutDate", required=True, default=fields.Datetime.now)   # 进出口日期
+    dec_date = fields.Datetime(string="DecDate", required=True, default=fields.Datetime.now)   # 申报日期
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")  # 进出口岸
 
     transport_mode_id = fields.Many2one(comodel_name="delegate_transport_mode",

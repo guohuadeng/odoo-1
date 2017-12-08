@@ -61,14 +61,18 @@ class CustomsOrder(models.Model):
                                                         ('cancel', 'Cancel'),
                                                         ('failure', 'Failure')], default='draft')  # 通关清单
 
-
+    @api.multi
+    def create(self, vals):
+        obj = super(CustomsOrder, self).create(vals)
+        self.env['customs_center.customs_order'].update({'customs_order_state': 'succeed'})
+        return obj
 
     def generate_customs_declaration(self, vals):
         """ 生成报关单 """
-        # obj = super(CustomsOrder, self).create(vals)
         for line in self:
             dic = {
-                'inout': line.business_type.in_out,
+                'inout': line.inout,
+                'customs_order_id': line.id,
                 'customs_id': line.customs_id.id,
                 'custom_master_id': line.custom_master_id.id,
                 'ManualNo': line.ManualNo,
@@ -95,30 +99,46 @@ class CustomsOrder(models.Model):
             }
 
             dic = {item: dic[item] for item in dic if dic[item]}
-            # _dic = {}
-            # for item in dic:
-            #     if item in {'customer_id', 'custom_master_id', 'declare_company_id', 'trade_terms_id', 'trade_mode_id',
-            #                 'CutMode_id', 'packing_id', 'trade_country_id', 'origin_arrival_country_id',
-            #                 'input_company_id', 'business_company_id', 'transport_mode_id', 'port_id', 'region_id'}:
-            #         _dic[item] = dic[item].id
-            # dic.update(_dic)
             dic.update(dic)
-            self.env['customs_center.customs_dec'].create(dic)
 
-        for obj in self:
-            if not obj.customs_order_ids:
-                return
-            customs_clearance_obj = obj.customs_declaration_ids[0]
+            @api.multi
+            def create(self, vals):
+                obj = super(CustomsDeclaration, self).create(vals)
+                return obj
+            customs_declaration_obj = self.env['customs_center.customs_dec'].create(dic)
+
+            # 获取当前对象下的报关单ID
+            # customs_order_obj = self.env['customs_center.customs_order']
+            # print(customs_order_obj)
+            # customs_clearance_obj = customs_order_obj.customs_declaration_ids
+            print(customs_declaration_obj)
             return {
                 'name': "Customs Center Clearance",
                 'type': "ir.actions.act_window",
                 'view_type': 'form',
                 'view_mode': 'form, tree',
-                'res_model': 'customs_center.customs_order',
+                'res_model': 'customs_center.customs_dec',
                 'views': [[False, 'form']],
-                'res_id': customs_clearance_obj.id,
-                'target': 'current'
+                'res_id': customs_declaration_obj.id,
+                # 'target': 'current'
+                'target': 'main'
             }
+
+    # @api.multi
+    # def customs_center_clearance(self):
+    #     """从通关清单 跳转到报关单界面"""
+    #     for obj in self:
+    #         customs_clearance_obj = obj.customs_declaration_ids[0]
+    #         return {
+    #             'name': "Customs Center Clearance",
+    #             'type': "ir.actions.act_window",
+    #             'view_type': 'form',
+    #             'view_mode': 'form, tree',
+    #             'res_model': 'customs_center.customs_dec',
+    #             'views': [[False, 'form']],
+    #             'res_id': customs_clearance_obj.id,
+    #             'target': 'current'
+    #         }
 
 
 

@@ -408,11 +408,11 @@ class ExpenseStatement(models.Model):
     # ###########################################################################################
 
     # 关联工作单号 唯一约束
-    @api.constrains('name')
+    @api.constrains('work_sheet_no')
     def _check_work_sheet_no(self):
-        work_sheet_no = self.search([('work_sheet_no', '=', self.work_sheet_no)])
-        if len(work_sheet_no) > 1:
-            raise except_orm(u'error', u'unique error')
+        for item in self:
+            if len(item.work_sheet_no) > 1:
+                raise except_orm(u'error', u'unique error')
 
     # 确认收入
     @api.multi

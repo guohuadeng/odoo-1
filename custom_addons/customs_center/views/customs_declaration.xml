@@ -19,6 +19,7 @@
                     <field name="customer_id"/>
                     <field name="transport_mode_id"/>
                     <field name="customs_id"/>
+                    <field name="customs_order_id"  string="关联的通关清单"/>
                 </tree>
             </field>
         </record>
@@ -45,6 +46,7 @@
                             <group>
                                 <field name="inout" string="进出口类型" required="1"/>
                                 <field name="client_seq_no"  string="报关单客户端编号" invisible="1"/>
+                                <field name="customs_order_id"  string="关联的通关清单" invisible="1"/>
                             </group>
                             <group>
                                 <field name="custom_master_id"  string="申报地海关"/>
@@ -263,6 +265,21 @@
                     </div>
                 </form>
             </field>
+        </record>
+
+        <!--报关单搜索视图-->
+        <record id="view_customs_declaration_search" model="ir.ui.view">
+           <field name="name">customs declaration search</field>
+           <field name="model">customs_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <search string="customs declaration search">
+                    <field name="customs_order_id" string="通关清单" domain="[('customs_center.customs_dec.customs_order_id', '=', self)]"/>
+                    <!--<field name="customer_id" string="客户" domain="[('settlement.receivable_expense.customer_id', '=', self)]"/>-->
+                    <!--<field name="sale_man_id" string="销售员" domain="[('settlement.receivable_expense.sale_man_id', '=', self)]"/>-->
+                    <!--<field name="customer_service_id" string="客服" domain="[('settlement.receivable_expense.customer_service_id', '=', self)]"/>-->
+                    <!--<field name="settlement_object_id" string="结算对象" domain="[('settlement.receivable_expense.settlement_object_id', 'ilike', self),('customer.is_company','=','True')]"/>-->
+                </search>
+           </field>
         </record>
 
     </data>
