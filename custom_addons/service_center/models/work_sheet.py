@@ -154,6 +154,7 @@ class WorkSheet(models.Model):
 
     # 增加附件上传功能
     attachment_number = fields.Integer(compute='_compute_attachment_number', string='Number of Attachments')
+    transport_code = fields.Char(string='Transport Code', related='business_type.transport_mode.code', readonly=True)
 
     @api.multi
     def _compute_attachment_number(self):
