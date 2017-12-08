@@ -14,6 +14,7 @@ class InternationPort(models.Model):
     code = fields.Char(string="Code")
     port_type = fields.Selection(string="Port Type", selection=[('airport', 'Airport'),
                                                                 ('seaport', 'Seaport')])
+    transport_mode = fields.Char(string="Transport Mode", compute='_get_transport_mode')
     city_name_cn = fields.Char(string="City Chinese Name")
     city_name_en = fields.Char(string="City English Name")
     city_code = fields.Char(string="City Code")
@@ -38,3 +39,12 @@ class InternationPort(models.Model):
         return super(InternationPort, self)._name_search(
             name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
         )
+
+    @api.depends('port_type')
+    def _get_transport_mode(self):
+        """得到运输方式"""
+        for obj in self:
+            if obj.port_type == 'airport':
+                obj.transport_mode = self.env.ref('basedata.delegate_transport_mode_5').code
+            elif obj.port_type == 'seaport':
+                obj.transport_mode = self.env.ref('basedata.delegate_transport_mode_2').code

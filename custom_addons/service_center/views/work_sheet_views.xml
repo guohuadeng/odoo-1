@@ -182,6 +182,7 @@
                         <field name="business_type" invisible="1"/>
                         <field name="in_out" invisible="1" />
                         <field name="trans_mode_code" invisible="1"/>
+                        <field name="transport_code" invisible="1"/>
                         <group>
                             <field name="customer" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
                             <field name="contact" required="1" domain="[('parent_id', '=', customer), ('is_company', '=', False), ('type', '=', 'contact')]"/>
@@ -212,9 +213,9 @@
                                     <field name="consignor" required="1" domain="[('is_company', '=', True),('customer', '=', True)]"/>
                                     <field name="consignee" required="1" domain="[('is_company', '=', True),('customer', '=', True)]"/>
                                     <field name="input_company" domain="[('is_company', '=', True),('customer', '=', True)]"/>
-                                    <field name="loading_port" required="1"/>
-                                    <field name="transition_port"/>
-                                    <field name="destination_port" required="1"/>
+                                    <field name="loading_port" required="1" domain="[('transport_mode', '=', transport_code)]"/>
+                                    <field name="transition_port" domain="[('transport_mode', '=', transport_code)]"/>
+                                    <field name="destination_port" required="1" domain="[('transport_mode', '=', transport_code)]"/>
                                     <field name="destination"/>
                                     <field name="route"/>
                                     <field name="air_company"

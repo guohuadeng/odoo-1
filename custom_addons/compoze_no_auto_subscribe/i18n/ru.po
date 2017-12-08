@@ -1,0 +1,32 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* compoze_no_auto_subscribe
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-26 16:16+0000\n"
+"PO-Revision-Date: 2017-01-26 16:16+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: compoze_no_auto_subscribe
+#: model:ir.model,name:compoze_no_auto_subscribe.model_mail_thread
+msgid "Email Thread"
+msgstr "Цепочка эл.почты"
+
+#. module: compoze_no_auto_subscribe
+#: model:ir.model,name:compoze_no_auto_subscribe.model_mail_compose_message
+msgid "Email composition wizard"
+msgstr "Мастер составления эл. почты"
+
+#. module: compoze_no_auto_subscribe
+#: model:ir.model.fields,field_description:compoze_no_auto_subscribe.field_mail_compose_message_subscribe_recipients
+msgid "Subscribe recipients"
+msgstr "Подписчики"
+
