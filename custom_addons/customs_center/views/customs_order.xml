@@ -112,8 +112,7 @@
                                  <page string="通关清单商品列表">
                                     <field name="cus_goods_list_ids" mode="tree">
                                         <tree string="cus_goods_list_tree" editable="bottom">
-                                            <field name="goods_name" string="商品名称"/>
-                                            <field name="CodeTS" string="商品编码"/>
+                                            <field name="cus_goods_tariff_id" string="商品编码"/>
                                             <field name="goods_model" string="规格模型"/>
                                             <field name="deal_qty" string="成交数量"/>
                                             <field name="deal_unit_price" string="成交单价"/>

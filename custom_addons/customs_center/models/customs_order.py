@@ -60,16 +60,35 @@ class CustomsOrder(models.Model):
                                                         ('succeed', 'Success'),
                                                         ('cancel', 'Cancel'),
                                                         ('failure', 'Failure')], default='draft')  # 通关清单
+    # 第一种写法 通关清单点击保存的时候 更改状态为成功
+    # @api.multi
+    # def write(self, vals):
+    #     obj = super(CustomsOrder, self).write(vals)
+    #     self.env['customs_center.customs_order'].update({'customs_order_state': 'succeed'})
+    #     return obj
 
-    @api.multi
-    def create(self, vals):
-        obj = super(CustomsOrder, self).create(vals)
-        self.env['customs_center.customs_order'].update({'customs_order_state': 'succeed'})
-        return obj
+    # @api.multi
+    # def write(self, vals):
+    #     obj = super(CustomsOrder, self).write(vals)
+    #     obj.update({'customs_order_state': 'succeed'})
+    #     print('hahahhahahahahhahahahhahahahaahahahha')
+    #     return True
 
     def generate_customs_declaration(self, vals):
         """ 生成报关单 """
         for line in self:
+            # goods = line.cus_goods_list_ids
+            # goods_dic = {}
+            # for goods_dic_item in goods:
+            #     goods_dic = {
+            #         'cus_goods_tariff_id': goods_dic_item.cus_goods_tariff_id,
+            #         'goods_model': goods_dic_item.goods_model,
+            #         'deal_qty': goods_dic_item.deal_qty,
+            #         'deal_unit_price': goods_dic_item.deal_unit_price,
+            #     }
+            # # dic = {item: dic[item] for item in dic if dic[item]}
+            # # dic.update(dic)
+
             dic = {
                 'inout': line.inout,
                 'customs_order_id': line.id,
@@ -96,6 +115,8 @@ class CustomsOrder(models.Model):
                 'gross_weight': line.gross_weight,
                 'net_weight': line.net_weight,
                 'remarks': line.marks,
+               #  'dec_goods_list_ids': goods_dic,
+                'dec_goods_list_ids': line.cus_goods_list_ids.ids,
             }
 
             dic = {item: dic[item] for item in dic if dic[item]}
@@ -189,14 +210,12 @@ class CustomsOrder(models.Model):
     #     }
 
 
-
     @api.model
     def create(self, vals):
         """设置原始清单命名规则"""
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('code_customs_order') or _('New')
         result = super(CustomsOrder, self).create(vals)
-
         return result
 
 
