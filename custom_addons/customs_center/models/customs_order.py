@@ -116,8 +116,16 @@ class CustomsOrder(models.Model):
                 'net_weight': line.net_weight,
                 'remarks': line.marks,
                #  'dec_goods_list_ids': goods_dic,
-                'dec_goods_list_ids': line.cus_goods_list_ids.ids,
+                'dec_goods_list_ids': line.cus_goods_list_ids,
             }
+            print("PPPPPPPPPPPPP PPPPPPPPP PPPPPPPPPPP")
+            print(line.cus_goods_list_ids)
+            print(line.cus_goods_list_ids.ids)
+            print(self.env['customs_center.cus_goods_list'].customs_order_id.ids)
+            # customs_center.cus_goods_list(1, 2)
+            # [1, 2]
+            # []
+
 
             dic = {item: dic[item] for item in dic if dic[item]}
             dic.update(dic)
