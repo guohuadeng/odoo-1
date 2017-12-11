@@ -207,6 +207,7 @@ class WorkSheet(models.Model):
 
     customs_order_ids = fields.One2many(comodel_name="customs_center.customs_order", inverse_name="work_sheet_id",
                                           string="Customs Order")
+    custom_center = fields.Boolean(string="Custom Center")     # 关务中心报关选框
     customs_order_state = fields.Selection(string="State", selection=[('draft', 'Draft'),
                                                         ('succeed', 'Success'),
                                                         ('cancel', 'Cancel'),
