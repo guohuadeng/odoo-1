@@ -71,7 +71,6 @@ class CustomsOrder(models.Model):
     # def write(self, vals):
     #     obj = super(CustomsOrder, self).write(vals)
     #     obj.update({'customs_order_state': 'succeed'})
-    #     print('hahahhahahahahhahahahhahahahaahahahha')
     #     return True
 
     def generate_customs_declaration(self, vals):
@@ -118,7 +117,6 @@ class CustomsOrder(models.Model):
                #  'dec_goods_list_ids': goods_dic,
                 'dec_goods_list_ids': line.cus_goods_list_ids,
             }
-            print("PPPPPPPPPPPPP PPPPPPPPP PPPPPPPPPPP")
             print(line.cus_goods_list_ids)
             print(line.cus_goods_list_ids.ids)
             print(self.env['customs_center.cus_goods_list'].customs_order_id.ids)
@@ -126,14 +124,9 @@ class CustomsOrder(models.Model):
             # [1, 2]
             # []
 
-
             dic = {item: dic[item] for item in dic if dic[item]}
             dic.update(dic)
 
-            @api.multi
-            def create(self, vals):
-                obj = super(CustomsDeclaration, self).create(vals)
-                return obj
             customs_declaration_obj = self.env['customs_center.customs_dec'].create(dic)
 
             # 获取当前对象下的报关单ID
@@ -152,25 +145,6 @@ class CustomsOrder(models.Model):
                 # 'target': 'current'
                 'target': 'main'
             }
-
-    # @api.multi
-    # def customs_center_clearance(self):
-    #     """从通关清单 跳转到报关单界面"""
-    #     for obj in self:
-    #         customs_clearance_obj = obj.customs_declaration_ids[0]
-    #         return {
-    #             'name': "Customs Center Clearance",
-    #             'type': "ir.actions.act_window",
-    #             'view_type': 'form',
-    #             'view_mode': 'form, tree',
-    #             'res_model': 'customs_center.customs_dec',
-    #             'views': [[False, 'form']],
-    #             'res_id': customs_clearance_obj.id,
-    #             'target': 'current'
-    #         }
-
-
-
 
     # @api.multi
     # def generate_customs_declaration(self):

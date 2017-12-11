@@ -17,10 +17,6 @@ class CusGoodsList(models.Model):
     # goods_name = fields.Char(string="goods name", required=False, )  # 商品名称
     # 关联通关清单 多对一
     customs_order_id = fields.Many2one(comodel_name="customs_center.customs_order", string="customs Order")
-    # # 新加 可删除
-    # customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
-    #                                    string="customs declaration")
-
 
     cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )  # 海关税则编码
     goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
