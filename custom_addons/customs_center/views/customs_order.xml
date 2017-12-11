@@ -142,6 +142,8 @@
             </field>
         </record>
 
+
+
         <!--扩展工作单视图-->
         <!-- Inherit Form View to Modify it -->
         <record id="view_customs_work_sheet_form_extend" model="ir.ui.view">
@@ -149,11 +151,16 @@
             <field name="model">work_sheet</field>
             <field name="inherit_id" ref="service_center.view_work_sheet_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//div[@class='row']" position="inside">
+                    <div class="col-md-1" attrs="{'invisible': [('state', '=', 'cancel')]}">
+                        <field name="custom_center" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                        <label for="custom center" string="关务中心"/>
+                    </div>
+                </xpath>
 
                 <xpath expr="//button[@c_name='warehouse']" position="before">
                     <button name="customs_center_clearance" type="object" class="oe_stat_button" string="关务中心报关"
                             attrs="{'invisible': ['|', ('custom_center','=',False), ('state', '=', 'cancel')]}" icon="fa-pencil-square-o">
-                        <!--<field name="customs_order_state" widget="statinfo" string="Customs Center Declaration"/>-->
                     </button>
                 </xpath>
 
