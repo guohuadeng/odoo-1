@@ -19,6 +19,7 @@
                     <field name="customer_id"/>
                     <field name="transport_mode_id"/>
                     <field name="customs_id"/>
+                    <field name="customs_order_id"  string="关联的通关清单"/>
                 </tree>
             </field>
         </record>
@@ -43,8 +44,9 @@
                         <!--************ +++++++++++++++++++++++  *****************-->
                         <group col="4" colspan="1">
                             <group>
-                                <field name="inout"  string="进出口类型"/>
+                                <field name="inout" string="进出口类型" required="1"/>
                                 <field name="client_seq_no"  string="报关单客户端编号" invisible="1"/>
+                                <field name="customs_order_id"  string="关联的通关清单" invisible="1"/>
                             </group>
                             <group>
                                 <field name="custom_master_id"  string="申报地海关"/>
@@ -245,7 +247,7 @@
                                             <field name="cop_code" string="录入单位企业组织机构代码"/>
                                             <field name="cop_name" string="录入单位名称"/>
                                             <field name="cop_code_scc" string="录入单位社会信用统一编码"/>
-                                            <field name="inputer_name" string="录入员姓名"/>
+                                            <field name="inputer_name" string="录入员姓名" required="1"/>
                                             <field name="oper_name" string="操作员姓名"/>
                                             <field name="certificate" string="操作员卡的证书号"/>
                                             <field name="ic_code" string="操作员IC卡号"/>
@@ -263,6 +265,17 @@
                     </div>
                 </form>
             </field>
+        </record>
+
+        <!--报关单搜索视图-->
+        <record id="view_customs_declaration_search" model="ir.ui.view">
+           <field name="name">customs declaration search</field>
+           <field name="model">customs_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <search string="customs declaration search">
+                    <field name="customs_order_id" string="通关清单" domain="[('customs_center.customs_dec.customs_order_id', '=', self)]"/>
+                </search>
+           </field>
         </record>
 
     </data>

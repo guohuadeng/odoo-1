@@ -46,6 +46,7 @@ class WorkSheet(models.Model):
     land_trans = fields.Boolean(string="Land Transportation")      # 陆运
     warehouse = fields.Boolean(string="Warehouse")           # 仓储
     custom = fields.Boolean(string="Custom")                 # 报关
+    custom_center = fields.Boolean(string="Custom Center")                 # 报关
     # deliver_order = fields.Boolean(string='Deliver Order')            # 换单
     switch_bill = fields.Boolean(string='Switch Bill')            # 换单
 

@@ -42,14 +42,14 @@ class CustomsDeclaration(models.Model):
 
     entry_type_id = fields.Many2one(comodel_name="basedata.cus_entry_type", string="Entry Type")  # 报关单类型 关联报关单类型字典表，待新增
     bill_type_id = fields.Many2one(comodel_name="basedata.cus_filing_bill_type", string="bill Type")    # 备案清单 待新建，备案清单类型表
-    inout = fields.Selection(string="InOut", selection=[('I', 'Import'), ('E', 'Export'), ], required=True)  # 进出口类型
+    inout = fields.Selection(string="InOut", selection=[('i', 'Import'), ('e', 'Export'), ], required=True)  # 进出口类型
     dec_seq_no = fields.Char(string="DecSeqNo")  # 统一编号
     pre_entry_id = fields.Char(string="PreEntryId")  # 预录入编号
     entry_id = fields.Char(string="EntryId")  # 海关编号
     ManualNo = fields.Char(string="Manual No")  # 备案号
     customer_contract_no = fields.Char(string="Customer Contract No")  # 合同协议号
-    in_out_date = fields.Datetime(string="InoutDate", required=True)   # 进出口日期
-    dec_date = fields.Datetime(string="DecDate", required=True)   # 申报日期
+    in_out_date = fields.Datetime(string="InoutDate", required=True, default=fields.Datetime.now)   # 进出口日期
+    dec_date = fields.Datetime(string="DecDate", required=True, default=fields.Datetime.now)   # 申报日期
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")  # 进出口岸
 
     transport_mode_id = fields.Many2one(comodel_name="delegate_transport_mode",
@@ -146,6 +146,9 @@ class CustomsDeclaration(models.Model):
     # 关联报关单商品列表 1对多关系
     dec_goods_list_ids = fields.One2many(comodel_name="customs_center.dec_goods_list",
                                          inverse_name="customs_declaration_id", string="dec goods name")
+    # 通关清单 和报关单共用一张商品表的时候 下方的写法
+    # dec_goods_list_ids = fields.One2many(comodel_name="customs_center.cus_goods_list",
+    #                                      inverse_name="customs_declaration_id", string="cus goods name")
 
     customs_declaration_state = fields.Selection(string="State", selection=[('draft', 'Draft'),
                                                         ('succeed', 'Success'),

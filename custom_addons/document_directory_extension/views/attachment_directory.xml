@@ -38,11 +38,9 @@
             <field name="inherit_id" ref="base.view_attachment_search"/>
             <field name="arch" type="xml">
                 <xpath expr="//search" position="inside">
-                    <field name="res_name" />
                     <field name="number"/>
                     <field name="name"/>
                     <field name="directory_id"/>
-                    <!--<field name="res_name"  domain="[('ir.attachment.res_name', '=', self)]"/>-->
                 </xpath>
                 <xpath expr="//group" position="inside">
                     <filter string="Directory" context="{'group_by':'directory_id'}"/>

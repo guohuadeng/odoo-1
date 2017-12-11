@@ -163,6 +163,10 @@
                             <field name="custom" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
                             <label for="custom" string="Customs Clearance"/>
                         </div>
+                        <div class="col-md-1" attrs="{'invisible': [('state', '=', 'cancel')]}">
+                            <field name="custom_center" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <label for="custom center" string="关务中心报关"/>
+                        </div>
                         <div class="col-md-1">
                             <field name="inspection" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
                             <label for="inspection" string="Customs Inspection"/>

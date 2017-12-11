@@ -29,11 +29,11 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="generate_customs_declaration" string="生成报关单" class="oe_highlight"  type="object" />
+                        <!--<button name="generate_customs_declaration" string="生成报关单" class="oe_highlight"  type="object" />-->
                         <!--<button name="send_message" string="Resend Message" class="oe_highlight" states="failure" type="object"-->
                             <!--attrs="{'invisible': ['|',('state', '=', 'cancel')]}"/>-->
-                        <!--<field name="state" widget="statusbar" statusbar_visible="draft,succeed"-->
-                               <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
+                        <field name="customs_order_state" widget="statusbar" statusbar_visible="draft,succeed"
+                               statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>
                     </header>
                     <sheet>
                         <!--************关务模块测试 新加生成XML报文按钮*****************-->
@@ -41,12 +41,30 @@
                             <!--<button name="generate_and_sent_xml" type="object" string="生成并发送XML报文" class="oe_stat_button" icon="fa-align-justify" />-->
                         <!--</div>-->
                         <!--************ +++++++++++++++++++++++  *****************-->
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="generate_customs_declaration" string="生成报关单" type="object" class="oe_stat_button" icon="fa-indent" attrs="{'invisible': [('customs_order_state','=', 'draft')]}"/>
+                            <button name="%(customs_center.action_customs_declaration)d" type="action" string="已生成的报关单" context="{'search_default_customs_order_id': active_id}"
+                                    attrs="{'invisible': [('customs_order_state','=', 'draft')]}"
+                                    class="oe_stat_button" icon="fa-align-justify" />
+
+                            <!--<button name="action_get_attachment_view" class="oe_stat_button" icon="fa-book" type="object">-->
+                                <!--<field name="attachment_number" widget="statinfo" string="附件上传"/>-->
+                            <!--</button>-->
+                        </div>
+
+
                         <group col="3" colspan="1">
                             <group>
                                 <field name="custom_master_id" required="1" string="申报地海关"/>
                             </group>
                             <group>
-                                <field name="customs_order_state" readonly="1" string="报关状态"/>
+                                <field name="customs_order_state"  string="报关状态"/>
+                                <field name="business_type"  string="业务类型"/>
                                 <!--<field name="create_date" readonly="1"/>-->
                             </group>
                             <group>
@@ -94,8 +112,7 @@
                                  <page string="通关清单商品列表">
                                     <field name="cus_goods_list_ids" mode="tree">
                                         <tree string="cus_goods_list_tree" editable="bottom">
-                                            <field name="goods_name" string="商品名称"/>
-                                            <field name="CodeTS" string="商品编码"/>
+                                            <field name="cus_goods_tariff_id" string="商品编码"/>
                                             <field name="goods_model" string="规格模型"/>
                                             <field name="deal_qty" string="成交数量"/>
                                             <field name="deal_unit_price" string="成交单价"/>
@@ -124,6 +141,25 @@
                 </form>
             </field>
         </record>
+
+        <!--扩展工作单视图-->
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_customs_work_sheet_form_extend" model="ir.ui.view">
+            <field name="name">work customs sheet form extend</field>
+            <field name="model">work_sheet</field>
+            <field name="inherit_id" ref="service_center.view_work_sheet_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@c_name='warehouse']" position="before">
+                    <button name="customs_center_clearance" type="object" class="oe_stat_button" string="关务中心报关"
+                            attrs="{'invisible': ['|', ('custom_center','=',False), ('state', '=', 'cancel')]}" icon="fa-pencil-square-o">
+                        <!--<field name="customs_order_state" widget="statinfo" string="Customs Center Declaration"/>-->
+                    </button>
+                </xpath>
+
+            </field>
+        </record>
+
 
     </data>
 </odoo>

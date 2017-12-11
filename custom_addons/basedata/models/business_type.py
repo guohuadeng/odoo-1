@@ -13,3 +13,4 @@ class BusinessType(models.Model):
     in_out = fields.Selection(string='InOut', selection=[('i', 'import'), ('e', 'export')])
     transport_mode = fields.Many2one(comodel_name='delegate_transport_mode', string='Transport Mode')
     code = fields.Char(string="Code", required=True)
+
