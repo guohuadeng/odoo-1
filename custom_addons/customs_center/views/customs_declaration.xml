@@ -163,22 +163,22 @@
                                         <group>
                                             <field name="qty" string="件数"/>
                                             <field name="trade_country_id" string="贸易国(地区)"/>
-                                            <field name="promise1" string="特殊关系确认"/>
+                                            <field name="promise1" string="特殊关系确认" required="1"/>
                                             <field name="remarks" string="备注"/>
                                         </group>
                                         <group>
                                             <field name="packing_id" string="包装种类"/>
                                             <field name="in_ratio" string="征税比例"/>
-                                            <field name="entry_type_id" string="报关单类型"/>
-                                            <field name="ediId" string="报关标志"/>
-                                            <field name="decl_trn_rel" string="报/转关关系标志"/>
+                                            <field name="entry_type_id" string="报关单类型" required="1"/>
+                                            <field name="ediId" string="报关标志" required="1"/>
+                                            <field name="decl_trn_rel" string="报/转关关系标志" required="1"/>
                                         </group>
                                         <group>
                                             <field name="gross_weight" string="毛重(KG)"/>
                                             <field name="net_weight" string="净重(KG)"/>
                                             <field name="bill_type_id" string="备案清单类型"/>
-                                            <field name="promise2" string="价格影响确认"/>
-                                            <field name="promise3" string="特许权使用费支付确认"/>
+                                            <field name="promise2" string="价格影响确认" required="1"/>
+                                            <field name="promise3" string="特许权使用费支付确认" required="1"/>
                                         </group>
                                     </group>
 
@@ -244,13 +244,13 @@
                                 <page string="配置信息(字段确认后，该page页面删除)">
                                     <group>
                                         <group>
-                                            <field name="cop_code" string="录入单位企业组织机构代码"/>
-                                            <field name="cop_name" string="录入单位名称"/>
+                                            <field name="cop_code" string="录入单位企业组织机构代码" required="1"/>
+                                            <field name="cop_name" string="录入单位名称" required="1"/>
                                             <field name="cop_code_scc" string="录入单位社会信用统一编码"/>
                                             <field name="inputer_name" string="录入员姓名" required="1"/>
                                             <field name="oper_name" string="操作员姓名"/>
                                             <field name="certificate" string="操作员卡的证书号"/>
-                                            <field name="ic_code" string="操作员IC卡号"/>
+                                            <field name="ic_code" string="操作员IC卡号" required="1"/>
                                         </group>
                                     </group>
                                 </page>
