@@ -51,10 +51,10 @@
                             <group>
                                 <field name="custom_master_id"  string="申报地海关"/>
                             </group>
-                            <group>
-                                <field name="customs_declaration_state"  string="报关状态"/>
-                                <!--<field name="create_date" readonly="1"/>-->
-                            </group>
+                            <!--<group>-->
+                                <!--<field name="customs_declaration_state"  string="报关状态"/>-->
+                                <!--&lt;!&ndash;<field name="create_date" readonly="1"/>&ndash;&gt;-->
+                            <!--</group>-->
                             <group>
                                 <field name="cus_ciq_No"  string="关检关联号"/>
                             </group>
@@ -68,13 +68,13 @@
                                 <page string="Customs Declaration">
                                     <group>
                                         <group>
-                                            <field name="dec_seq_no" string="统一编号"/>
-                                            <field name="entry_id" string="海关编号"/>
+                                            <field name="dec_seq_no" string="统一编号" readonly="1"/>
+                                            <field name="entry_id" string="海关编号" readonly="1"/>
                                             <field name="ManualNo" string="备案号"/>
                                             <field name="in_out_date" string="进出口日期" widget="date"/>
                                         </group>
                                         <group>
-                                            <field name="pre_entry_id" string="预录入编号"/>
+                                            <field name="pre_entry_id" string="预录入编号" readonly="1"/>
                                             <field name="customs_id" string="进出口岸"/>
                                             <field name="customer_contract_no" string="合同协议号"/>
                                             <field name="dec_date" string="申报日期" widget="date"/>
@@ -82,7 +82,7 @@
                                     </group>
                                     <group col="3" colspan="1">
                                         <group>
-                                            <field name="business_company_id" string="经营单位/收发货人"/>
+                                            <field name="business_company_id" string="收发货人"/>
                                             <field name="transport_mode_id" string="运输方式"/>
                                             <field name="bill_no" string="提运单号"/>
                                             <field name="payment_mark" string="纳税单位"/>
@@ -183,12 +183,12 @@
                                     </group>
 
                                     <notebook>
-                                         <page string="报关单商品列表">
+                                         <page string="商品列表">
                                             <field name="dec_goods_list_ids" mode="tree">
                                                 <tree string="cus_goods_list_tree" editable="bottom">
-                                                    <!--<field name="goods_name" string="商品名称"/>-->
                                                     <field name="cus_goods_tariff_id" string="商品编码"/>
-                                                    <field name="goods_model" string="规格模型"/>
+                                                    <field name="goods_name" string="商品名称"/>
+                                                    <field name="goods_model" string="规格型号"/>
                                                     <field name="deal_qty" string="成交数量"/>
                                                     <field name="deal_unit_price" string="成交单价"/>
                                                     <field name="deal_unit" string="成交单位"/>
@@ -244,13 +244,14 @@
                                 <page string="配置信息(字段确认后，该page页面删除)">
                                     <group>
                                         <group>
-                                            <field name="cop_code" string="录入单位企业组织机构代码" required="1"/>
-                                            <field name="cop_name" string="录入单位名称" required="1"/>
-                                            <field name="cop_code_scc" string="录入单位社会信用统一编码"/>
-                                            <field name="inputer_name" string="录入员姓名" required="1"/>
-                                            <field name="oper_name" string="操作员姓名"/>
-                                            <field name="certificate" string="操作员卡的证书号"/>
-                                            <field name="ic_code" string="操作员IC卡号" required="1"/>
+                                            <field name="cop_code" string="录入单位企业组织机构代码" readonly="1"/>
+                                            <field name="cop_name" string="录入单位名称" readonly="1"/>
+                                            <field name="cop_code_scc" string="录入单位社会信用统一编码" />
+                                            <field name="inputer_name" string="录入员姓名" readonly="1"/>
+                                            <field name="oper_name" string="操作员姓名" readonly="1"/>
+                                            <field name="certificate" string="操作员卡的证书号" readonly="1"/>
+                                            <field name="ic_code" string="操作员IC卡号" readonly="1"/>
+                                            <field name="cus_dec_dir" string="报文存放路径" readonly="1"/>
                                         </group>
                                     </group>
                                 </page>

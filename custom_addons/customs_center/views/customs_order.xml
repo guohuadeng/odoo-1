@@ -32,8 +32,8 @@
                         <button name="generate_customs_declaration" string="生成报关单" type="object" class="oe_highlight"/>
                         <!--<button name="generate_customs_declaration" string="生成报关单" type="object" class="oe_highlight"-->
                                 <!--attrs="{'invisible':[('customs_declaration_ids','!=','')]}"/>-->
-                        <field name="customs_order_state" widget="statusbar" statusbar_visible="draft,succeed"
-                               statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>
+                        <!--<field name="customs_order_state" widget="statusbar" statusbar_visible="draft,succeed"-->
+                               <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -44,7 +44,6 @@
                         </div>
                         <div class="oe_button_box" name="button_box">
                             <button name="%(customs_center.action_customs_declaration)d" type="action"  context="{'search_default_customs_order_id': active_id}"
-                                    attrs="{'invisible': [('customs_order_state','=', 'draft')]}"
                                     class="oe_stat_button" icon="fa-align-justify">
                                 <field name="custom_count" widget="statinfo" string="报关单"/>
                             </button>
@@ -60,7 +59,8 @@
                                 <field name="custom_master_id" required="1" string="申报地海关"/>
                             </group>
                             <group>
-                                <field name="business_type"  string="业务类型"/>
+                                <field name="business_type"  string="业务类型" invisible="1"/>
+                                <field name="work_sheet_id"  string="工作单号"/>
                                 <!--<field name="create_date" readonly="1"/>-->
                             </group>
                             <group>
@@ -68,7 +68,7 @@
                             </group>
                         </group>
                         <notebook>
-                                <page string="Customs Order">
+                                <page string="报关信息">
                                     <group col="3" colspan="1">
                                         <group>
                                             <field name="inout" string="进出口类型"/>
@@ -105,11 +105,12 @@
                             </notebook>
 
                             <notebook>
-                                 <page string="通关清单商品列表">
+                                 <page string="商品列表">
                                     <field name="cus_goods_list_ids" mode="tree">
                                         <tree string="cus_goods_list_tree" editable="bottom">
                                             <field name="cus_goods_tariff_id" string="商品编码"/>
-                                            <field name="goods_model" string="规格模型"/>
+                                            <field name="goods_name" string="商品名称"/>
+                                            <field name="goods_model" string="规格型号"/>
                                             <field name="deal_qty" string="成交数量"/>
                                             <field name="deal_unit_price" string="成交单价"/>
                                             <field name="deal_unit" string="成交单位"/>

@@ -133,6 +133,7 @@ class CustomsDeclaration(models.Model):
     oper_name = fields.Char(string="oper name")     # 操作员姓名
     certificate = fields.Char(string="oper card certificate")   # 操作员卡的证书号
     ic_code = fields.Char(string="IC number")  # 操作员IC卡号/录入员IC卡号
+    cus_dec_dir = fields.Char(string="customs dec path")  # 企业报文服务器存放路径
 
     # cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
     # owner_code_scc = fields.Char(string="owner Social credit uniform coding")   # 货主单位/生产消费单位 社会信用统一编码

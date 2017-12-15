@@ -14,7 +14,15 @@ class CusGoodsList(models.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']
     _description = 'Customs cus Goods List'
 
-    # goods_name = fields.Char(string="goods name", required=False, )  # 商品名称
+    goods_name = fields.Char(compute='_generate_about_name', string="goods name", store=True)  # 商品名称
+    # @api.onchange('cus_goods_tariff_id')
+    # def _default_company_id(self):
+    #     for goods_list in self:
+    #         if goods_list.cus_goods_tariff_id:
+    #             goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
+    #             return goods_list.goods_name
+    # goods_name = fields.Char(string="goods name", default=_default_company_id)  # 商品名称
+
     # 关联通关清单 多对一
     customs_order_id = fields.Many2one(comodel_name="customs_center.customs_order", string="customs Order", copy=False)
     # 关联报关单 多对一
@@ -36,6 +44,37 @@ class CusGoodsList(models.Model):
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
+
+
+    @api.depends('cus_goods_tariff_id')
+    def _generate_about_name(self):
+        """根据当前海关税则编码的变化 改变商品名称"""
+        for goods_list in self:
+            if goods_list.cus_goods_tariff_id:
+                goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
+
+    # @api.model
+    # def create(self, values):
+    #     self.product_id_change()
+    #         # for field in onchange_fields:
+    #         #     if field not in values:
+    #         #         values[field] = line._fields[field].convert_to_write(line[field], line)
+    #     line = super(CusGoodsList, self).create(values)
+    #     return line
+    #
+    # @api.multi
+    # @api.onchange('cus_goods_tariff_id')
+    # def product_id_change(self):
+    #     if not self.cus_goods_tariff_id:
+    #         return {'domain': {'goods_name': []}}
+    #
+    #     for goods_list in self:
+    #         if goods_list.cus_goods_tariff_id:
+    #             goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
+    #             return goods_list.goods_name
+    #             # return {'domain': {'goods_name': goods_list.cus_goods_tariff_id.NameCN}}
+
+
 
 
 # class DecGoodsList(models.Model):
@@ -65,3 +104,4 @@ class CusGoodsList(models.Model):
 #     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
 #     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
 #     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
+

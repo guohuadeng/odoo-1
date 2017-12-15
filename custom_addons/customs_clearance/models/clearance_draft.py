@@ -17,7 +17,7 @@ class ClearanceDraft(models.Model):
     name = fields.Char(string="Name")
     customer_id = fields.Many2one(comodel_name="res.partner", string="Customer")     # 客户
     work_sheet_id = fields.Many2one(comodel_name="work_sheet", string="Work Sheet")                 # 工作单
-    inout = fields.Selection(string="InOut", selection=[('i', 'Import'), ('e', 'Export'), ])     # 进出口
+    inout = fields.Selection(string="InOut", selection=[('i', u'进口'), ('e', u'出口'), ])     # 进出口
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")                             # 进出口岸
     business_company_id = fields.Many2one(comodel_name="res.partner", string="Business Company")  # 收发货人
     input_company_id = fields.Many2one(comodel_name="res.partner", string="InputCompany")        # 生产消费单位

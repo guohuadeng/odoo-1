@@ -292,8 +292,11 @@ def delegate_to_xml(self):
     #     fp.write(string.encode('utf8'))
 
     ############################################################
-    # 企业报关单 存放目录 自动生成
-    company_name = self.env.user.company_id.name
+    # 报文生成路径 方式1：: 根据当前公司名 自动生成
+    # company_name = self.env.user.company_id.name
+
+    # 报文生成路径 方式1： 用户配置界面自定义
+    company_name = str(self.cus_dec_dir)
     dec_catalog_path = os.path.join(base_dir, company_name)
     # 检查并生成相应的目录
     if not os.path.exists(dec_catalog_path):

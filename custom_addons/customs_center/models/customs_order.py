@@ -124,8 +124,8 @@ class CustomsOrder(models.Model):
                 'res_model': 'customs_center.customs_dec',
                 'views': [[False, 'form']],
                 'res_id': customs_declaration_obj.id,
-                # 'target': 'current'
-                'target': 'main'
+                'target': 'current'
+                # 'target': 'main'
             }
 
     # @api.multi
@@ -244,6 +244,44 @@ class WorkSheet(models.Model):
             dic.update(_dic)
             self.env['customs_center.customs_order'].create(dic)
         return obj
+
+    @api.multi
+    def write(self, vals):
+        """重写修改方法，实现再次编辑工作单的时候 勾选报关 也创建通关清单"""
+        for obj in self:
+            if 'custom_center' in vals:
+                if not obj.custom_center and not obj.customs_order_ids:  # 如果报关选项 没有勾选且没有关联的通关清单
+                    dic = {
+                        'customer_id': obj.customer,
+                        'work_sheet_id': obj.id,
+                        'inout': obj.business_type.in_out,
+                        'business_type': obj.business_type.id,
+                        # 'business_company_id': obj.consignee if obj.in_out == 'i' else obj.consignor,
+                        'customer_contract_no': obj.customer_contract_no,
+                        'trade_terms_id': obj.deal_type.trade_term_id if obj.deal_type else False,
+                        'trade_mode_id': obj.trade_mode_id,
+                        'transport_mode_id': obj.business_type.transport_mode,
+                        'qty': obj.qty,
+                        'gross_weight': obj.gross_weight,
+                        'customs_id': obj.sale_order_no.customs[
+                            0] if obj.sale_order_no and obj.sale_order_no.customs else False,
+                        'trade_country_id': obj.sale_order_no.trade_country if obj.sale_order_no else False,
+                        'port_id': obj.sale_order_no.port if obj.sale_order_no else False,
+                        'region_id': obj.sale_order_no.region if obj.sale_order_no else False,
+                        'wrap_type': obj.wrap_type
+                    }
+
+                    dic = {item: dic[item] for item in dic if dic[item]}  # 清除False
+                    _dic = {}  # 把object转换为id
+                    for item in dic:
+                        if item in {'customer_id', 'trade_terms_id', 'trade_mode_id',
+                                    'transport_mode_id', 'customs_id', 'trade_country_id', 'port_id', 'region_id'}:
+                            _dic[item] = dic[item].id
+                    dic.update(_dic)
+                    self.env['customs_center.customs_order'].create(dic)
+        return super(WorkSheet, self).write(vals)
+
+
 
     @api.multi
     def customs_center_clearance(self):
