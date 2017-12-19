@@ -9,14 +9,14 @@
     </record>
 
 
-    <!--<menuitem-->
-        <!--id= "menu_certificate_management_config"-->
-        <!--parent= "sales_team.menu_sales"-->
-        <!--sequence= "3"-->
-        <!--name= "客户证书"-->
-        <!--action="action_certificate_management"/>-->
+    <menuitem
+        id= "menu_certificate_management_config"
+        parent= "sales_team.menu_sales"
+        sequence= "3"
+        name= "客户证书"
+        action="action_certificate_management"/>
 
-    <delete id="menu_certificate_management_config" model="ir.ui.menu"/>
+    <!--<delete id="menu_certificate_management_config" model="ir.ui.menu"/>-->
 
     <record id="view_certificate_management_tree" model="ir.ui.view">
         <field name="name">certificate management tree</field>
