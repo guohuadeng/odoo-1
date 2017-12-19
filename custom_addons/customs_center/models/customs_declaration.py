@@ -12,9 +12,9 @@ import uuid
 from ..utils.to_xml_message import delegate_to_xml
 _logger = logging.getLogger(__name__)
 
-RECV_XML_BASE_PATH = config.options['recv_xml_message_path']
-ERROR_XML_BASE_PATH = config.options['error_xml_message_path']
-BAKUP_XML_BASE_PATH = config.options['bakup_xml_message_path']
+RECV_XML_BASE_PATH = config.options.get('recv_xml_message_path')
+ERROR_XML_BASE_PATH = config.options.get('error_xml_message_path')
+BAKUP_XML_BASE_PATH = config.options.get('bakup_xml_message_path')
 
 
 def check_and_mkdir(*path):
