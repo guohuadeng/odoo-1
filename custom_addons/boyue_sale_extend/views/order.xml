@@ -156,6 +156,32 @@
         </field>
     </record>
 
+    <record id="view_quotation_tree_extend" model="ir.ui.view">
+        <field name="name">sale order list view extend</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="business_type"/>
+                <field name="tag_ids"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter_extend" model="ir.ui.view">
+       <field name="name">sale.order.search.inherit.quotation.extend</field>
+       <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="business_type"/>
+                <field name="tag_ids" domain="[('tag_ids.name', 'ilike', self)]"/>
+            </xpath>
+        </field>
+    </record>
+
     <!-- Inherit Form View to Modify it -->
     <record id="view_order_form_inherit_sale_stock_extend" model="ir.ui.view">
         <field name="name">order invisible incoterm</field>

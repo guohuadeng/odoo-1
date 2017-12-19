@@ -108,6 +108,9 @@
                             <field name="name"/>
                             <field name="remark"/>
                         </group>
+                        <group>
+                            <field name="code"/>
+                        </group>
                     </group>
                 </sheet>
             </form>

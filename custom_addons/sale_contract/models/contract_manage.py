@@ -92,5 +92,5 @@ class SaleContractType(models.Model):
     # 备注说明
     remark = fields.Text(string='Remark')
     name = fields.Char(string="Type Name", required=True, )
-
+    code = fields.Char(string="Code", required=True)
 

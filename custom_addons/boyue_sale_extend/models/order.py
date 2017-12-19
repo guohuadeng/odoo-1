@@ -8,9 +8,9 @@ class Order(models.Model):
     _description = 'quote order'
     _inherit = 'sale.order'
 
-    contract = fields.Many2one(comodel_name="contract.sale_contract", string="Contract", required=False)
+    contract = fields.Many2one(comodel_name="contract.sale_contract", string="Contract", required=False, copy=False)
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type", required=True, )
-    contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, )
+    contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, copy=False)
     servicer = fields.Many2one(comodel_name="res.partner", string="Servicer")
     customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", index=True, track_visibility='always')
     goods_name = fields.Text(string="Goods Name", required=False, )
@@ -54,6 +54,14 @@ class Order(models.Model):
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
     work_sheet_id = fields.One2many(comodel_name="work_sheet", inverse_name="sale_order_no", string="Work Sheet")
     work_sheet_count = fields.Integer(string="Work Sheet Count", compute='_count_work_sheet')
+
+    # 去除复制的字段
+    validity_date = fields.Date(string='Expiration Date', readonly=True, copy=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+                                help="Manually set the expiration date of your quotation (offer), or it will set the date automatically based on the template if online quotation is installed.")
+    message_follower_ids = fields.One2many(
+        'mail.followers', 'res_id', string='Followers', copy=False,
+        domain=lambda self: [('res_model', '=', self._name)])
+    order_line = fields.One2many('sale.order.line', 'order_id', string='Order Lines', copy=False, states={'cancel': [('readonly', True)], 'done': [('readonly', True)]})
 
     @api.model
     def create(self, vals):
