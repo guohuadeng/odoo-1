@@ -10,5 +10,5 @@ class SaleContract(models.Model):
         """覆盖合同的创建方法，重写合同名生成规则"""
         result = super(SaleContract, self).create(vals)
         name = result.name
-        result.name = self.env.user.company_id.company_code + '-' + name[0:4] + result.contract_type.code + name[4:]
+        result.name = self.env.user.company_id.company_code + '-' + name[0:4] + name[4:] + result.contract_type.code
         return result
