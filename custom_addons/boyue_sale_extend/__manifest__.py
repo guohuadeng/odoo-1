@@ -22,7 +22,7 @@
     'version': '0.2',
 
     # any module necessary for this one to work correctly
-    'depends': ['basedata', 'sale_contract', 'purchase', 'hr', 'service_center'],
+    'depends': ['basedata', 'sale_contract', 'purchase', 'hr', 'service_center', 'website_quote'],
 
     # always loaded
     'data': [

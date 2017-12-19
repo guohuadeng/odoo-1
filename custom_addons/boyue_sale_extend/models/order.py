@@ -2,6 +2,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError,UserError
 import odoo.addons.decimal_precision as dp
+from datetime import datetime, timedelta
 
 class Order(models.Model):
     """继承销售订单，添加通关数据字段"""
@@ -11,11 +12,10 @@ class Order(models.Model):
     contract = fields.Many2one(comodel_name="contract.sale_contract", string="Contract", required=False, copy=False)
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type", required=True, )
     contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, copy=False)
-    servicer = fields.Many2one(comodel_name="res.partner", string="Servicer")
-    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", index=True, track_visibility='always')
-    goods_name = fields.Text(string="Goods Name", required=False, )
+    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", index=True, copy=False, track_visibility='always')
+    goods_name = fields.Text(string="Goods Name", required=False, copy=False)
     delivery_info = fields.One2many(comodel_name="boyue_sale_extend.delivery_info", inverse_name="order",
-                                    string="Delivery Info", )
+                                    string="Delivery Info", copy=False)
     # partner_id = fields.Many2one('res.partner', string='Customer', readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, required=True, change_default=True, index=True, track_visibility='onchange')
 
 
@@ -29,8 +29,8 @@ class Order(models.Model):
     # transport = fields.Many2one('delegate_transport_mode', string='Transport Mode')     # 运输方式
     # exemption = fields.Many2one('delegate_exemption', string='Exemption')               # 免征性质
     # trade_term = fields.Many2one('delegate_trade_terms', string='Trade Term')           # 成交方式
-    port = fields.Many2one('delegate_port', string='Port')                              # 装货/指运港
-    num = fields.Integer('Num')                     # 件数
+    port = fields.Many2one('delegate_port', string='Port', copy=False)                              # 装货/指运港
+    num = fields.Integer('Num', copy=False)                     # 件数
     gross_weight = fields.Float('Gross Weight')     # 毛重
     # mark_code = fields.Char('Mark Code')            # 标记唛码
     remarks = fields.Text('Remarks')                # 备注
@@ -251,6 +251,68 @@ class Order(models.Model):
             if obj.partner_id and len(obj.partner_id.customer_service_ids) == 1:
                 obj.update({'customer_service': obj.partner_id.customer_service_ids[0].id})
 
+
+    @api.onchange('template_id')
+    def onchange_template_id(self):
+        if not self.template_id:
+            return
+        template = self.template_id.with_context(lang=self.partner_id.lang)
+
+        order_lines = [(5, 0, 0)]
+        for line in template.quote_line:
+            if self.pricelist_id:
+                price = self.pricelist_id.with_context(uom=line.product_uom_id.id).get_product_price(line.product_id, 1, False)
+            else:
+                price = line.price_unit
+
+            data = {
+                'name': line.name,
+                'price_unit': price,
+                'discount': line.discount,
+                'product_uom_qty': line.product_uom_qty,
+                'product_id': line.product_id.id,
+                'quote_currency_id': line.product_id.currency_id,    # 把产品的货币带到询价货币中去
+                'quote_price_unit': price,      # 当产品发生改变时，报价单价也要发生改变
+                'layout_category_id': line.layout_category_id,
+                'product_uom': line.product_uom_id.id,
+                'website_description': line.website_description,
+                'state': 'draft',
+                'customer_lead': self._get_customer_lead(line.product_id.product_tmpl_id),
+            }
+            if self.pricelist_id:
+                data.update(self.env['sale.order.line']._get_purchase_price(self.pricelist_id, line.product_id, line.product_uom_id, fields.Date.context_today(self)))
+            order_lines.append((0, 0, data))
+
+        self.order_line = order_lines
+        self.order_line._compute_tax_id()
+
+        option_lines = []
+        for option in template.options:
+            if self.pricelist_id:
+                price = self.pricelist_id.with_context(uom=option.uom_id.id).get_product_price(option.product_id, 1, False)
+            else:
+                price = option.price_unit
+            data = {
+                'product_id': option.product_id.id,
+                'layout_category_id': option.layout_category_id,
+                'name': option.name,
+                'quantity': option.quantity,
+                'uom_id': option.uom_id.id,
+                'price_unit': price,
+                'discount': option.discount,
+                'website_description': option.website_description,
+            }
+            option_lines.append((0, 0, data))
+        self.options = option_lines
+
+        if template.number_of_days > 0:
+            self.validity_date = fields.Date.to_string(datetime.now() + timedelta(template.number_of_days))
+
+        self.website_description = template.website_description
+        self.require_payment = template.require_payment
+
+        if template.note:
+            self.note = template.note
 
 class delivery_info(models.Model):
     """收发货信息"""
