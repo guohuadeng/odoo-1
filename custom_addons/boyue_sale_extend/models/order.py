@@ -30,8 +30,8 @@ class Order(models.Model):
     # transport = fields.Many2one('delegate_transport_mode', string='Transport Mode')     # 运输方式
     # exemption = fields.Many2one('delegate_exemption', string='Exemption')               # 免征性质
     # trade_term = fields.Many2one('delegate_trade_terms', string='Trade Term')           # 成交方式
-    port = fields.Many2one('delegate_port', string='Port', copy=False)                              # 装货/指运港
-    num = fields.Integer('Num', copy=False)                     # 件数
+    port = fields.Many2one('delegate_port', string='Port')                              # 装货/指运港
+    num = fields.Integer('Num')                     # 件数
     gross_weight = fields.Float('Gross Weight')     # 毛重
     # mark_code = fields.Char('Mark Code')            # 标记唛码
     remarks = fields.Text('Remarks')                # 备注
