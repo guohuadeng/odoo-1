@@ -30,11 +30,12 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"  type="object" />
+                        <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"  type="object" attrs="{'invisible': [('cus_dec_sent_state','=','succeed')]}"/>
+                        <button name="dec_send_success" string="已发送" class="oe_highlight"  type="object" attrs="{'invisible': [('cus_dec_sent_state','=','draft')],'readonly': [('cus_dec_sent_state','=','succeed')]}"/>
                         <!--<button name="send_message" string="Resend Message" class="oe_highlight" states="failure" type="object"-->
                             <!--attrs="{'invisible': ['|',('state', '=', 'cancel')]}"/>-->
-                        <!--<field name="state" widget="statusbar" statusbar_visible="draft,succeed"-->
-                               <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
+                        <field name="cus_dec_sent_state" widget="statusbar"
+                               statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>
                     </header>
                     <sheet>
                         <!--************关务模块测试 新加生成XML报文按钮*****************-->

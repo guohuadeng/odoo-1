@@ -8,6 +8,7 @@ from odoo.tools import config
 import logging, os, shutil
 from lxml import etree
 import uuid
+from datetime import datetime, timedelta
 # from custom_addons.customs_center.utils.to_xml_message import delegate_to_xml
 from ..utils.to_xml_message import delegate_to_xml
 _logger = logging.getLogger(__name__)
@@ -158,12 +159,18 @@ class CustomsDeclaration(models.Model):
     receipt_ids = fields.One2many(comodel_name="customs_center.dec_result", inverse_name="customs_declaration_id",
                                   string="Recipts", required=False, )
 
+    cus_dec_sent_state = fields.Selection(string="Sent State", selection=[('draft', 'Draft'),
+                                                                      ('succeed', 'Success'),
+                                                                      ('cancel', 'Cancel'),
+                                                                      ('failure', 'Failure')],default='draft')  # 报关单发送单一窗口状态
+
     @api.model
     def create(self, vals):
         """设置报关单命名规则"""
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('code_customs_declaration') or _('New')
-            vals['client_seq_no'] = str(uuid.uuid1())
+            # vals['client_seq_no'] = str(uuid.uuid1())
+            vals['client_seq_no'] = str((datetime.now()+timedelta(hours=8)).strftime('%y%m%d%H%M%S%f'))
         result = super(CustomsDeclaration, self).create(vals)
 
         return result
@@ -171,9 +178,17 @@ class CustomsDeclaration(models.Model):
     @api.multi
     def customs_delegate_to_xml(self):
         """ 根据报关单生成xml报文 存放到指定目录 """
+        self.update({'cus_dec_sent_state': 'succeed'})
         for line in self:
             delegate_to_xml(line)
         return True
+
+    @api.multi
+    def dec_send_success(self):
+        pass
+        return True
+
+
 
     @api.model
     @q_job.job

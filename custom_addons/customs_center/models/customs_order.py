@@ -59,7 +59,7 @@ class CustomsOrder(models.Model):
     customs_order_state = fields.Selection(string="State", selection=[('draft', 'Draft'),
                                                         ('succeed', 'Success'),
                                                         ('cancel', 'Cancel'),
-                                                        ('failure', 'Failure')], default='draft')  # 通关清单
+                                                        ('failure', 'Failure')], default='draft')  # 通关清单状态
 
     custom_count = fields.Integer(string='Custom Declaration', compute='_get_custom_count')
     @api.depends('customs_declaration_ids')
