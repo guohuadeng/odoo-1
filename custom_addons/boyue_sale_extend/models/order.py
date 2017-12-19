@@ -61,7 +61,6 @@ class Order(models.Model):
     message_follower_ids = fields.One2many(
         'mail.followers', 'res_id', string='Followers', copy=False,
         domain=lambda self: [('res_model', '=', self._name)])
-    order_line = fields.One2many('sale.order.line', 'order_id', string='Order Lines', copy=False, states={'cancel': [('readonly', True)], 'done': [('readonly', True)]})
 
     @api.model
     def create(self, vals):
