@@ -11,9 +11,10 @@ class Order(models.Model):
 
     contract = fields.Many2one(comodel_name="contract.sale_contract", string="Contract", required=False, copy=False)
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type", required=True, )
-    contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, copy=False)
-    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", index=True, copy=False, track_visibility='always')
-    goods_name = fields.Text(string="Goods Name", required=False, copy=False)
+    contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, )
+    servicer = fields.Many2one(comodel_name="res.partner", string="Servicer")
+    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", track_visibility='onchange')
+    goods_name = fields.Text(string="Goods Name", required=False, )
     delivery_info = fields.One2many(comodel_name="boyue_sale_extend.delivery_info", inverse_name="order",
                                     string="Delivery Info", copy=False)
     # partner_id = fields.Many2one('res.partner', string='Customer', readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, required=True, change_default=True, index=True, track_visibility='onchange')
