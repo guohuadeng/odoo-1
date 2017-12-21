@@ -27,6 +27,8 @@
         'data/ir_sequence_data.xml',
         'data/parse_message.xml',
         'data/result_status.xml',
+        'views/goods_classification_views.xml',
+        'views/pending_classified_goods_views.xml',
         'views/customs_declaration.xml',
         'views/customs_order.xml',
         'views/result_status.xml',

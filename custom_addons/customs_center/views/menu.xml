@@ -7,6 +7,13 @@
           sequence="20" action="action_customs_order"/>
        <menuitem id="sw_customs_declaration" string="Customs Declaration" name="报关单" parent="sw_making_document_menu"
           sequence="30" action="action_customs_declaration"/>
+
+    <menuitem id="sw_goods_classification_menu" string="goods classification menu" name="商品归类" parent="customs_center_menu" sequence="12"/>
+       <menuitem id="sw_goods_classification" string="goods classification" name="商品归类" parent="sw_goods_classification_menu"
+          sequence="32" action="action_goods_classification"/>
+       <menuitem id="sw_pending_classified_goods" string="pending classified goods" name="待归类商品" parent="sw_goods_classification_menu"
+          sequence="33" action="action_pending_classified_goods"/>
+
     <menuitem id="sw_settings_dec_menu" string="Settings Declaration" name="设置" parent="customs_center_menu" sequence="15"/>
         <menuitem id="setting_declaration" name="企业信息" parent="sw_settings_dec_menu" sequence="40" action="setting_declaration_action"/>
 </odoo>

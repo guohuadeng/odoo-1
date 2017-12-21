@@ -21,6 +21,9 @@ class CusGoodsList(models.Model):
     customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec", string="customs declaration", copy=False)
 
     cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )  # 海关税则编码
+    # 关联商品归类信息
+    goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False,)  # 客户料号
+
     goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
 
     deal_qty = fields.Integer(string="deal quantity", required=False, default=1)  # 成交数量
@@ -36,6 +39,11 @@ class CusGoodsList(models.Model):
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
+    ManualSN = fields.Char(string="Manual SN")  # 备案序号
+    # 是否归类
+    classify_status = fields.Selection(selection=[('yes', 'YES'),    # 商品是否归类
+                                        ('no', 'NO')  # 未归类
+                                        ], string='archive status', readonly=True, default='no')
 
 
     @api.onchange('cus_goods_tariff_id')
@@ -44,6 +52,11 @@ class CusGoodsList(models.Model):
         for goods_list in self:
             if goods_list.cus_goods_tariff_id:
                 goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
+
+    @api.multi
+    def goods_classified_btn(self):
+        """ 将商品历史申报归类按钮 """
+        pass
 
     # @api.model
     # def create(self, values):
