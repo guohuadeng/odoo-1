@@ -21,6 +21,7 @@ class CusGoodsList(models.Model):
     customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec", string="customs declaration", copy=False)
 
     cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )  # 海关税则编码
+
     # 关联商品归类信息
     goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False,)  # 客户料号
 
@@ -40,6 +41,18 @@ class CusGoodsList(models.Model):
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
     ManualSN = fields.Char(string="Manual SN")  # 备案序号
+
+    # # 是否属于报关单 已在视图层面action过滤 暂不需要该字段
+    # customs_dec_goods_own = fields.Selection(selection=[('yes', 'YES'),    # 是否属于报关单
+    #                                     ('no', 'NO')
+    #                                     ], string='archive status', readonly=True, default='no')
+    # @api.onchange('customs_declaration_id')
+    # def _change_customs_dec_own(self):
+    #     """ 为了区分通关清单和报关单共用一张表 """
+    #     for goods_list in self:
+    #         if goods_list.customs_declaration_id:
+    #             goods_list.customs_dec_goods_own = 'yes'
+
     # 是否归类
     classify_status = fields.Selection(selection=[('yes', 'YES'),    # 商品是否归类
                                         ('no', 'NO')  # 未归类

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_pending_review_goods" model="ir.actions.act_window">
+            <field name="name">待审核归类商品</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.goods_classify</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'check_pending')]</field>
+        </record>
+
+        <!-- 待审核归类 列表视图 -->
+        <record id="view_pending_review_application_tree" model="ir.ui.view">
+            <field name="name">pending goods classify tree</field>
+            <field name="model">customs_center.goods_classify</field>
+            <!--<field name="priority">2</field>-->
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="cus_goods_code" string="客户料号"/>
+                    <field name="cus_goods_tariff_id" string="商品编号"/>
+                    <field name="goods_name" string="商品名称"/>
+                    <field name="first_unit" string="第一计量单位"/>
+                    <field name="second_unit" string="第二计量单位"/>
+                    <field name="origin_country_id" string="原产国"/>
+                    <field name="destination_country_id" string="目的国"/>
+                    <field name="ManualNo" string="备案号"/>
+                    <field name="ManualSN" string="备案序号"/>
+                    <field name="state" string="状态" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>
