@@ -262,6 +262,12 @@ class CustomsDeclaration(models.Model):
                 shutil.move(xml_message, bakup_path)
                 _logger.info(u'Had parsed the xml message %s' % xml_message.decode('utf-8'))
 
+    @api.multi
+    def create_customs_declearation(self):
+        """创建商品列表"""
+
+        return True
+
 
 class WorkSheet(models.Model):
     """" 工作单 """
