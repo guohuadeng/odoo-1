@@ -71,6 +71,8 @@ class CusGoodsList(models.Model):
     def goods_classified_btn(self):
         """ 将历史申报商品 归类按钮 """
         for line in self:
+            print(line.currency_id.id)
+            print(line.line.destination_country_id.id)
             return {
                 'name': "customs center goods classified",
                 'type': "ir.actions.act_window",
