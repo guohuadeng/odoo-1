@@ -69,7 +69,63 @@ class CusGoodsList(models.Model):
     @api.multi
     def goods_classified_btn(self):
         """ 将商品历史申报归类按钮 """
-        pass
+        for line in self:
+            cus_goods_list_ids = []
+            if line.cus_goods_list_ids:
+                cus_goods_list_ids = [goods.copy().id for goods in line.cus_goods_list_ids]
+
+            dic = {
+                'inout': line.inout,
+                'customs_order_id': line.id,
+                'customs_id': line.customs_id.id,
+                'custom_master_id': line.custom_master_id.id,
+                'ManualNo': line.ManualNo,
+                'customer_contract_no': line.customer_contract_no,
+                'licenseNo': line.licenseNo,
+                'declare_company_id': line.declare_company_id.id,
+                'input_company_id': line.input_company_id.id,
+                'business_company_id': line.business_company_id.id,
+                'transport_mode_id': line.transport_mode_id.id,
+                'transport_name': line.transport_name,
+                'VoyageNo': line.VoyageNo,
+                'trade_terms_id': line.trade_terms_id.id,
+                'trade_mode_id': line.trade_mode_id.id,
+                'CutMode_id': line.CutMode_id.id,
+                'packing_id': line.packing_id.id,
+                'trade_country_id': line.trade_country_id.id,
+                'origin_arrival_country_id': line.origin_arrival_country_id.id,
+                'port_id': line.port_id.id,
+                'region_id': line.region_id.id,
+                'qty': line.qty,
+                'gross_weight': line.gross_weight,
+                'net_weight': line.net_weight,
+                'remarks': line.marks,
+               #  'dec_goods_list_ids': goods_dic,
+               #  'dec_goods_list_ids': cus_goods_list_ids,
+            }
+
+            dic = {item: dic[item] for item in dic if dic[item]}
+
+            customs_declaration_obj = self.env['customs_center.customs_dec'].create(dic)
+            customs_declaration_obj.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search([('id', 'in', cus_goods_list_ids)])
+
+            # 获取当前对象下的报关单ID
+            # customs_order_obj = self.env['customs_center.customs_order']
+            # print(customs_order_obj)
+            # customs_clearance_obj = customs_order_obj.customs_declaration_ids
+
+            return {
+                'name': "Customs Center Clearance",
+                'type': "ir.actions.act_window",
+                'view_type': 'form',
+                'view_mode': 'form, tree',
+                'res_model': 'customs_center.customs_dec',
+                'views': [[False, 'form']],
+                'res_id': customs_declaration_obj.id,
+                'target': 'current'
+                # 'target': 'main'
+            }
+
 
     # @api.model
     # def create(self, values):

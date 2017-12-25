@@ -32,9 +32,17 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="submit_review_btn" string="提交审核" type="object" class="oe_highlight"/>
-                        <!--<field name="customs_order_state" widget="statusbar" statusbar_visible="draft,succeed"-->
-                               <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
+                        <button name="submit_review_btn" string="提交审核" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ['submitted','refused','approve'])]}"/>
+                        <button name="re_submit_review_btn" string="重新提交审核" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ['draft','submitted','approve'])]}"/>
+                        <button name="already_submit_review_btn" string="已提交" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ['draft','refused','approve'])]}" readonly="1"/>
+                        <!--<button name="already_reviewed_btn" string="已审核" type="object" class="oe_highlight"-->
+                                <!--attrs="{'invisible': [('state', 'in', ['draft','submitted','refused'])]}" readonly="1"/>-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,succeed"
+                               statusbar_colors="{'draft':'blue', 'submitted':'green', 'refused':'red'}"/>
+
                     </header>
                     <sheet>
                         <div class="oe_title">
