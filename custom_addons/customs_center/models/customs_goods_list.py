@@ -71,8 +71,8 @@ class CusGoodsList(models.Model):
     def goods_classified_btn(self):
         """ 将历史申报商品 归类按钮 """
         for line in self:
-            print(line.currency_id.id)
-            print(line.line.destination_country_id.id)
+            # print(line.currency_id.id)
+            # print(line.destination_country_id.id)
             return {
                 'name': "customs center goods classified",
                 'type': "ir.actions.act_window",
@@ -95,6 +95,7 @@ class CusGoodsList(models.Model):
                     'default_duty_mode_id':line.duty_mode_id.id,  # 征免方式
                     'default_ManualNo': line.customs_declaration_id.ManualNo,  # 备案号
                     'default_ManualSN': line.ManualSN,  # 备案序号
+                    'default_customs_declaration_id': line.customs_declaration_id.id,  # 冗余字段
                 },
                 'target': 'current'
             }

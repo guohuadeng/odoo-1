@@ -58,6 +58,17 @@ class GoodsClassification(models.Model):
                                         ('approve', 'approved')  # 通过审核
                                         ], string='status', readonly=True, default='draft')
 
+    customs_declaration_id = fields.Char(string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
+
+    @api.model
+    def create(self, vals):
+        """创建归类的时候 判断该商品有无关联报关单 有则说明是历史上报商品 需要修改原商品状态 为已归类"""
+        for goods_cls_list in self:
+            if goods_cls_list.customs_declaration_id and goods_cls_list.state == 'approve':
+                classify_status = self.env['customs_center.cus_goods_list'].update({'classify_status': 'yes'})
+        result = super(GoodsClassification, self).create(vals)
+        return result
+
     @api.multi
     def submit_review_btn(self):
         """ 商品归类信息提交审核 按钮"""
