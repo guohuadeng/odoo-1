@@ -66,65 +66,85 @@ class CusGoodsList(models.Model):
             if goods_list.cus_goods_tariff_id:
                 goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
 
+
     @api.multi
     def goods_classified_btn(self):
-        """ 将商品历史申报归类按钮 """
+        """ 将历史申报商品 归类按钮 """
         for line in self:
-            cus_goods_list_ids = []
-            if line.cus_goods_list_ids:
-                cus_goods_list_ids = [goods.copy().id for goods in line.cus_goods_list_ids]
-
-            dic = {
-                'inout': line.inout,
-                'customs_order_id': line.id,
-                'customs_id': line.customs_id.id,
-                'custom_master_id': line.custom_master_id.id,
-                'ManualNo': line.ManualNo,
-                'customer_contract_no': line.customer_contract_no,
-                'licenseNo': line.licenseNo,
-                'declare_company_id': line.declare_company_id.id,
-                'input_company_id': line.input_company_id.id,
-                'business_company_id': line.business_company_id.id,
-                'transport_mode_id': line.transport_mode_id.id,
-                'transport_name': line.transport_name,
-                'VoyageNo': line.VoyageNo,
-                'trade_terms_id': line.trade_terms_id.id,
-                'trade_mode_id': line.trade_mode_id.id,
-                'CutMode_id': line.CutMode_id.id,
-                'packing_id': line.packing_id.id,
-                'trade_country_id': line.trade_country_id.id,
-                'origin_arrival_country_id': line.origin_arrival_country_id.id,
-                'port_id': line.port_id.id,
-                'region_id': line.region_id.id,
-                'qty': line.qty,
-                'gross_weight': line.gross_weight,
-                'net_weight': line.net_weight,
-                'remarks': line.marks,
-               #  'dec_goods_list_ids': goods_dic,
-               #  'dec_goods_list_ids': cus_goods_list_ids,
-            }
-
-            dic = {item: dic[item] for item in dic if dic[item]}
-
-            customs_declaration_obj = self.env['customs_center.customs_dec'].create(dic)
-            customs_declaration_obj.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search([('id', 'in', cus_goods_list_ids)])
-
-            # 获取当前对象下的报关单ID
-            # customs_order_obj = self.env['customs_center.customs_order']
-            # print(customs_order_obj)
-            # customs_clearance_obj = customs_order_obj.customs_declaration_ids
-
             return {
-                'name': "Customs Center Clearance",
+                'name': "customs center goods classified",
                 'type': "ir.actions.act_window",
                 'view_type': 'form',
                 'view_mode': 'form, tree',
-                'res_model': 'customs_center.customs_dec',
+                'res_model': 'customs_center.goods_classify',
                 'views': [[False, 'form']],
-                'res_id': customs_declaration_obj.id,
+                'context': {
+                    'default_cus_goods_tariff_id': line.cus_goods_tariff_id.id,
+                    'default_goods_model': line.goods_model, # 规格型号
+                    'default_business_company_id': line.customs_declaration_id.business_company_id.id,  # 经营单位
+                    'default_origin_country_id': line.origin_country_id.id,  # 原产国
+                    'default_destination_country_id': line.destination_country_id.id,  # 目的国
+                    'default_goods_name': line.goods_name,  # 商品名称
+                    'default_first_unit': line.first_unit.id,  # 第一计量单位
+                    'default_second_unit': line.second_unit.id,  # 第二计量单位
+                    'default_deal_unit_price': line.deal_unit.id,  # 成交单位
+                    'default_currency_id': line.currency_id.id,  # 币制
+                    # 'default_supervision_condition': line.inout,  # 监管条件
+                    'default_duty_mode_id':line.duty_mode_id.id,  # 征免方式
+                    'default_ManualNo': line.customs_declaration_id.ManualNo,  # 备案号
+                    'default_ManualSN': line.ManualSN,  # 备案序号
+                },
                 'target': 'current'
-                # 'target': 'main'
             }
+
+
+        # for line in self:
+        #     dic = {
+        #         'cus_goods_tariff_id': line.inout, # 商品编号
+        #         'goods_model': line.inout, # 规格型号
+        #         'business_company_id': line.business_company_id.id,  # 经营单位
+        #         'origin_country_id': line.inout,  # 原产国
+        #         'destination_country_id': line.inout,  # 目的国
+        #         'goods_name': line.inout,  # 商品名称
+        #         'first_unit': line.inout,  # 第一计量单位
+        #         'second_unit': line.inout,  # 第二计量单位
+        #         'deal_unit_price': line.inout,  # 成交单价
+        #         'currency_id': line.inout,  # 币制
+        #         'supervision_condition': line.inout,  # 监管条件
+        #         'duty_mode_id': line.inout,  # 征免方式
+        #         'ManualNo': line.ManualNo,  # 备案号
+        #         'ManualSN': line.inout,  # 备案序号
+        #     }
+        #     print(line.cus_goods_list_ids)
+        #     print(line.cus_goods_list_ids.ids)
+        #     print(self.env['customs_center.cus_goods_list'].customs_order_id.ids)
+        #     # customs_center.cus_goods_list(1, 2)
+        #     # [1, 2]
+        #     # []
+        #
+        #     dic = {item: dic[item] for item in dic if dic[item]}
+        #     dic.update(dic)
+        #
+        #     customs_declaration_obj = self.env['customs_center.customs_dec'].create(dic)
+        #
+        #     # 获取当前对象下的报关单ID
+        #     # customs_order_obj = self.env['customs_center.customs_order']
+        #     # print(customs_order_obj)
+        #     # customs_clearance_obj = customs_order_obj.customs_declaration_ids
+        #     print(customs_declaration_obj)
+        #     return {
+        #         'name': "Customs Center Clearance",
+        #         'type': "ir.actions.act_window",
+        #         'view_type': 'form',
+        #         'view_mode': 'form, tree',
+        #         'res_model': 'customs_center.customs_dec',
+        #         'views': [[False, 'form']],
+        #         'res_id': customs_declaration_obj.id,
+        #         # 'target': 'current'
+        #         'target': 'main'
+        #     }
+
+
 
 
     # @api.model
