@@ -36,7 +36,7 @@ def delegate_to_xml(self):
     head_node_dic['CopCode'] = self.cop_code  # u'录入单位代码'   # 后台配置
     head_node_dic['CopName'] = self.cop_name   # u'录入单位名称'   # 后台配置   不能加str()
     head_node_dic['CustomMaster'] = str(self.custom_master_id.Code)  # u'申报地海关'
-    head_node_dic['CutMode'] = str(self.CutMode_id)  # u'征免性质'
+    head_node_dic['CutMode'] = str(self.CutMode_id.Code)  # u'征免性质'
     head_node_dic['DataSource'] = None
     head_node_dic['DeclTrnRel'] = str(self.decl_trn_rel)  # u'报关/转关关系标志'
     head_node_dic['DistinatePort'] = str(self.port_id.Code)  # 装货港 delegate_port(2,)  ok
@@ -116,7 +116,7 @@ def delegate_to_xml(self):
         product_node_name['FirstUnit'] = item.first_unit.Code   # u'第一计量单位'
         product_node_name['GUnit'] = item.deal_unit.Code    # u'申报/成交计量单位'
         product_node_name['GModel'] = str(item.goods_model)    # u'商品规格、型号'
-        product_node_name['GName'] = item.cus_goods_tariff_id.NameCN   # u'商品名称'
+        product_node_name['GName'] = item.goods_name   # u'商品名称'
         product_node_name['GNo'] = str(i)   # u'商品序号'
         product_node_name['GQty'] = str(item.deal_qty)     # u'申报数量（成交计量单位）'
         product_node_name['OriginCountry'] = item.origin_country_id.Code    # u'原产地'
@@ -292,8 +292,11 @@ def delegate_to_xml(self):
     #     fp.write(string.encode('utf8'))
 
     ############################################################
-    # 企业报关单 存放目录 自动生成
-    company_name = self.env.user.company_id.name
+    # 报文生成路径 方式1：: 根据当前公司名 自动生成
+    # company_name = self.env.user.company_id.name
+
+    # 报文生成路径 方式1： 用户配置界面自定义
+    company_name = str(self.cus_dec_dir)
     dec_catalog_path = os.path.join(base_dir, company_name)
     # 检查并生成相应的目录
     if not os.path.exists(dec_catalog_path):

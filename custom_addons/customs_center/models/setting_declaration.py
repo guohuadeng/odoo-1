@@ -17,4 +17,6 @@ class CompanySettings(models.TransientModel):
     default_oper_name = fields.Char(default_model='customs_center.customs_dec')     # 操作员姓名
     default_certificate = fields.Char(default_model='customs_center.customs_dec')   # 操作员卡的证书号
     default_ic_code = fields.Char(default_model='customs_center.customs_dec')  # 操作员IC卡号
+    default_cus_dec_dir = fields.Char(default_model='customs_center.customs_dec')  # 报文存放目录
+
 

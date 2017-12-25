@@ -23,13 +23,14 @@
                         </header>
                         <sheet>
                             <group >
-                                <field name="default_cop_code" string="录入单位企业组织机构代码"/>
-                                <field name="default_cop_name" string="录入单位名称"/>
-                                <field name="default_cop_code_scc" string="录入单位社会信用统一编码"/>
-                                <field name="default_inputer_name" string="录入员姓名"/>
-                                <field name="default_oper_name" string="操作员姓名"/>
-                                <field name="default_certificate" string="操作员卡的证书号"/>
-                                <field name="default_ic_code" string="操作员IC卡号"/>
+                                <field name="default_cop_code" string="录入单位企业组织机构代码" required="1"/>
+                                <field name="default_cop_name" string="录入单位名称" required="1"/>
+                                <field name="default_cop_code_scc" string="录入单位社会信用统一编码" required="1"/>
+                                <field name="default_inputer_name" string="录入员姓名" required="1"/>
+                                <field name="default_oper_name" string="操作员姓名" required="1"/>
+                                <field name="default_certificate" string="操作员卡的证书号" required="1"/>
+                                <field name="default_ic_code" string="操作员IC卡号" required="1"/>
+                                <field name="default_cus_dec_dir" string="报文存放路径" required="1"/>
                             </group>
                         </sheet>
                     </form>
