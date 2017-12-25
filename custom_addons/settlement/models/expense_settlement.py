@@ -182,7 +182,7 @@ class ExpenseStatement(models.Model):
     start_date = fields.Datetime(related='work_sheet_no.start_date', string='SailingDate')  # 开航日期
     arrive_date = fields.Datetime(related='work_sheet_no.arrive_date', string='Arrival Port Date')  # 到港日期
     customer_service_id = fields.Many2one(related='work_sheet_no.customer_service', string="Customer Service",
-                                          required=False, default=lambda self: self.env.uid)   # 客服
+                                          readonly=True)   # 客服
     # state = fields.Selection(related='work_sheet_no.state', string='status', readonly=True, default='draft')  # 状态
     state = fields.Selection(selection=[('draft', 'Draft'),  # 草稿
                                         # ('confirm', 'Confirm'),  # 已确认

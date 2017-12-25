@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_goods_classification" model="ir.actions.act_window">
+            <field name="name">Goods Classification</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.goods_classify</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="goods_classification_tree" model="ir.ui.view">
+            <field name="name">Goods Classification tree view</field>
+            <field name="model">customs_center.goods_classify</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="cus_goods_code" string="客户料号"/>
+                    <field name="cus_goods_tariff_id" string="商品编号"/>
+                    <field name="goods_name" string="商品名称"/>
+                    <field name="first_unit" string="第一计量单位"/>
+                    <field name="second_unit" string="第二计量单位"/>
+                    <field name="origin_country_id" string="原产国"/>
+                    <field name="destination_country_id" string="目的国"/>
+                    <field name="ManualNo" string="备案号"/>
+                    <field name="ManualSN" string="备案序号"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="goods_classification_form" model="ir.ui.view">
+            <field name="name">Goods Classification Form view</field>
+            <field name="model">customs_center.goods_classify</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="submit_review_btn" string="提交审核" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ['submitted','refused','approve'])]}"/>
+                        <button name="re_submit_review_btn" string="重新提交审核" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ['draft','submitted','approve'])]}"/>
+                        <button name="already_submit_review_btn" string="已提交" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ['draft','refused','approve'])]}" readonly="1"/>
+                        <!--<button name="already_reviewed_btn" string="已审核" type="object" class="oe_highlight"-->
+                                <!--attrs="{'invisible': [('state', 'in', ['draft','submitted','refused'])]}" readonly="1"/>-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,succeed"
+                               statusbar_colors="{'draft':'blue', 'submitted':'green', 'refused':'red'}"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="cus_goods_code"  placeholder="请录入客户料号"/>
+                            </h1>
+                        </div>
+
+                        <group col="3" colspan="1">
+                            <group>
+                                <field name="cus_goods_tariff_id"  string="商品编号"/>
+                                <field name="goods_model"  string="规格型号"/>
+                                <field name="business_company_id" string="经营单位"/>
+                                <field name="origin_country_id"  string="原产国"/>
+                                <field name="destination_country_id"  string="目的国"/>
+                            </group>
+                            <group>
+                                <field name="goods_name"  string="商品名称"/>
+                                <field name="first_unit"  string="第一计量单位"/>
+                                <field name="second_unit"  string="第二计量单位"/>
+                                <field name="deal_unit_price"  string="成交单价"/>
+                                <field name="currency_id"  string="币制"/>
+                            </group>
+                            <group>
+                                <field name="supervision_condition"  string="监管条件"/>
+                                <field name="duty_mode_id"  string="征免方式"/>
+                                <field name="ManualNo"  string="备案号"/>
+                                <field name="ManualSN"  string="备案序号"/>
+                                <field name="create_uid" readonly="1" string="创建人"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"
+                               widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

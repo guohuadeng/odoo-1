@@ -59,34 +59,22 @@ class CustomsOrder(models.Model):
     customs_order_state = fields.Selection(string="State", selection=[('draft', 'Draft'),
                                                         ('succeed', 'Success'),
                                                         ('cancel', 'Cancel'),
-                                                        ('failure', 'Failure')], default='draft')  # 通关清单
-    # 第一种写法 通关清单点击保存的时候 更改状态为成功
-    # @api.multi
-    # def write(self, vals):
-    #     obj = super(CustomsOrder, self).write(vals)
-    #     self.env['customs_center.customs_order'].update({'customs_order_state': 'succeed'})
-    #     return obj
+                                                        ('failure', 'Failure')], default='draft')  # 通关清单状态
 
-    # @api.multi
-    # def write(self, vals):
-    #     obj = super(CustomsOrder, self).write(vals)
-    #     obj.update({'customs_order_state': 'succeed'})
-    #     return True
+    custom_count = fields.Integer(string='Custom Declaration', compute='_get_custom_count')
+    @api.depends('customs_declaration_ids')
+    def _get_custom_count(self):
+        for sheet in self:
+            sheet.custom_count = len(sheet.customs_declaration_ids.ids)
 
-    def generate_customs_declaration(self, vals):
+
+    @api.multi
+    def generate_customs_declaration(self):
         """ 生成报关单 """
         for line in self:
-            # goods = line.cus_goods_list_ids
-            # goods_dic = {}
-            # for goods_dic_item in goods:
-            #     goods_dic = {
-            #         'cus_goods_tariff_id': goods_dic_item.cus_goods_tariff_id,
-            #         'goods_model': goods_dic_item.goods_model,
-            #         'deal_qty': goods_dic_item.deal_qty,
-            #         'deal_unit_price': goods_dic_item.deal_unit_price,
-            #     }
-            # # dic = {item: dic[item] for item in dic if dic[item]}
-            # # dic.update(dic)
+            cus_goods_list_ids = []
+            if line.cus_goods_list_ids:
+                cus_goods_list_ids = [goods.copy().id for goods in line.cus_goods_list_ids]
 
             dic = {
                 'inout': line.inout,
@@ -115,25 +103,19 @@ class CustomsOrder(models.Model):
                 'net_weight': line.net_weight,
                 'remarks': line.marks,
                #  'dec_goods_list_ids': goods_dic,
-                'dec_goods_list_ids': line.cus_goods_list_ids,
+               #  'dec_goods_list_ids': cus_goods_list_ids,
             }
-            print(line.cus_goods_list_ids)
-            print(line.cus_goods_list_ids.ids)
-            print(self.env['customs_center.cus_goods_list'].customs_order_id.ids)
-            # customs_center.cus_goods_list(1, 2)
-            # [1, 2]
-            # []
 
             dic = {item: dic[item] for item in dic if dic[item]}
-            dic.update(dic)
 
             customs_declaration_obj = self.env['customs_center.customs_dec'].create(dic)
+            customs_declaration_obj.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search([('id', 'in', cus_goods_list_ids)])
 
             # 获取当前对象下的报关单ID
             # customs_order_obj = self.env['customs_center.customs_order']
             # print(customs_order_obj)
             # customs_clearance_obj = customs_order_obj.customs_declaration_ids
-            print(customs_declaration_obj)
+
             return {
                 'name': "Customs Center Clearance",
                 'type': "ir.actions.act_window",
@@ -142,8 +124,8 @@ class CustomsOrder(models.Model):
                 'res_model': 'customs_center.customs_dec',
                 'views': [[False, 'form']],
                 'res_id': customs_declaration_obj.id,
-                # 'target': 'current'
-                'target': 'main'
+                'target': 'current'
+                # 'target': 'main'
             }
 
     # @api.multi
@@ -207,7 +189,7 @@ class WorkSheet(models.Model):
 
     customs_order_ids = fields.One2many(comodel_name="customs_center.customs_order", inverse_name="work_sheet_id",
                                           string="Customs Order")
-    custom_center = fields.Boolean(string="Custom Center")     # 关务中心报关选框
+    custom_center = fields.Boolean(string="Custom Center")  # 报关
     customs_order_state = fields.Selection(string="State", selection=[('draft', 'Draft'),
                                                         ('succeed', 'Success'),
                                                         ('cancel', 'Cancel'),
@@ -262,6 +244,44 @@ class WorkSheet(models.Model):
             dic.update(_dic)
             self.env['customs_center.customs_order'].create(dic)
         return obj
+
+    @api.multi
+    def write(self, vals):
+        """重写修改方法，实现再次编辑工作单的时候 勾选报关 也创建通关清单"""
+        for obj in self:
+            if 'custom_center' in vals:
+                if not obj.custom_center and not obj.customs_order_ids:  # 如果报关选项 没有勾选且没有关联的通关清单
+                    dic = {
+                        'customer_id': obj.customer,
+                        'work_sheet_id': obj.id,
+                        'inout': obj.business_type.in_out,
+                        'business_type': obj.business_type.id,
+                        # 'business_company_id': obj.consignee if obj.in_out == 'i' else obj.consignor,
+                        'customer_contract_no': obj.customer_contract_no,
+                        'trade_terms_id': obj.deal_type.trade_term_id if obj.deal_type else False,
+                        'trade_mode_id': obj.trade_mode_id,
+                        'transport_mode_id': obj.business_type.transport_mode,
+                        'qty': obj.qty,
+                        'gross_weight': obj.gross_weight,
+                        'customs_id': obj.sale_order_no.customs[
+                            0] if obj.sale_order_no and obj.sale_order_no.customs else False,
+                        'trade_country_id': obj.sale_order_no.trade_country if obj.sale_order_no else False,
+                        'port_id': obj.sale_order_no.port if obj.sale_order_no else False,
+                        'region_id': obj.sale_order_no.region if obj.sale_order_no else False,
+                        'wrap_type': obj.wrap_type
+                    }
+
+                    dic = {item: dic[item] for item in dic if dic[item]}  # 清除False
+                    _dic = {}  # 把object转换为id
+                    for item in dic:
+                        if item in {'customer_id', 'trade_terms_id', 'trade_mode_id',
+                                    'transport_mode_id', 'customs_id', 'trade_country_id', 'port_id', 'region_id'}:
+                            _dic[item] = dic[item].id
+                    dic.update(_dic)
+                    self.env['customs_center.customs_order'].create(dic)
+        return super(WorkSheet, self).write(vals)
+
+
 
     @api.multi
     def customs_center_clearance(self):

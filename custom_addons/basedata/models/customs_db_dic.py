@@ -73,12 +73,33 @@ class CusRegisterCompany(models.Model):
     unified_social_credit_code = fields.Char(string='Customs unified social credit code', required=True)  # 社会信用统一编码
     register_name_cn = fields.Char(string='Customs Register Name', size=50, required=True)     # 企业海关名称
 
+    @api.multi
+    @api.depends('register_code', 'register_name_cn')
+    def name_get(self):
+        result = []
+        for record in self:
+            result.append(
+                (record.id, u"%s %s" % (record.register_code, record.register_name_cn))
+            )
+        return result
+
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
+        """重写模型name字段搜索方法"""
+        args = args or []
+        if not (name == '' and operator == 'ilike'):
+            args += ['|', ('register_code', operator, name), ('register_name_cn', operator, name)]
+
+        return super(CusRegisterCompany, self)._name_search(
+            name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
+        )
+
 
 class CusGoodsTariff(models.Model):
     """ 海关税则 """
     _name = 'basedata.cus_goods_tariff'
     _description = 'Customs goods tariff'
-    _rec_name = 'NameCN'
+    _rec_name = 'Code_ts'
 
     Code_t = fields.Char(string='tax regulations Code', required=True)       # 税则号
     Code_s = fields.Char(string='Attach Code',)       # 附加编号
@@ -86,6 +107,7 @@ class CusGoodsTariff(models.Model):
     NameCN = fields.Char(string='Chinese Name', size=50, required=True)     # 中文名称
     first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
+    supervision_condition = fields.Char(string="supervision condition")  # 监管条件
 
 class DecLicenseDocType(models.Model):
     """ 随附单证类型 """
