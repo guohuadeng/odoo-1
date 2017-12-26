@@ -38,7 +38,9 @@ class GoodsClassification(models.Model):
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
 
-    supervision_condition = fields.Char(string="supervision condition")  # 监管标识
+    # supervision_condition = fields.Char(string="supervision condition")  # 监管标识/监管标识
+    supervision_condition = fields.Many2one(comodel_name="basedata.cus_unit",
+                                            string="supervision condition")  # 监管标识/监管标识
 
     @api.onchange('cus_goods_tariff_id')
     def _generate_about_name(self):
@@ -58,16 +60,18 @@ class GoodsClassification(models.Model):
                                         ('approve', 'approved')  # 通过审核
                                         ], string='status', readonly=True, default='draft')
 
-    customs_declaration_id = fields.Char(string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
+    customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
+                                         inverse_name="cus_goods_tariff_id", string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
 
-    @api.model
-    def create(self, vals):
-        """创建归类的时候 判断该商品有无关联报关单 有则说明是历史上报商品 需要修改原商品状态 为已归类"""
-        for goods_cls_list in self:
-            if goods_cls_list.customs_declaration_id and goods_cls_list.state == 'approve':
-                classify_status = self.env['customs_center.cus_goods_list'].update({'classify_status': 'yes'})
-        result = super(GoodsClassification, self).create(vals)
-        return result
+
+    # @api.model
+    # def create(self, vals):
+    #     """创建归类的时候 判断该商品有无关联报关单 有则说明是历史上报商品 需要修改原商品状态 为已归类"""
+    #     for goods_cls_list in self:
+    #         if goods_cls_list.customs_declaration_id and goods_cls_list.state == 'approve':
+    #             classify_status = self.env['customs_center.cus_goods_list'].search([('customs_declaration_id', '=', goods_cls_list.customs_declaration_id.id)]).update({'classify_status': 'yes'})
+    #     result = super(GoodsClassification, self).create(vals)
+    #     return result
 
     @api.multi
     def submit_review_btn(self):
@@ -96,6 +100,10 @@ class GoodsClassification(models.Model):
         """ 商品归类信息 审核通过 按钮"""
         self.update({'state': 'approve'})
         for goods_cls_list in self:
+            if goods_cls_list.customs_declaration_id:
+                classify_status = self.env['customs_center.cus_goods_list'].search(
+                    [('customs_declaration_id', '=', goods_cls_list.customs_declaration_id.id)]).update(
+                    {'classify_status': 'yes'})
             body = (_("商品编号：%s 归类，已审核通过！<br/>") % (goods_cls_list.cus_goods_tariff_id.Code_ts))
             goods_cls_list.message_post(body=body)
 
