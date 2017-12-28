@@ -7,6 +7,7 @@
             <field name="res_model">customs_center.cus_goods_list</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('customs_declaration_id','&lt;&gt;', False), ('classify_status', '=', 'no')]</field>
+            <!--过滤条件：由于报关单和通关清单共用一个商品列表模型 第一个过滤条件过滤掉通关清单的商品 第二个过滤条件 过滤掉已经归类的商品-->
         </record>
 
         <record id="pending_classified_goods_tree" model="ir.ui.view">
@@ -25,7 +26,8 @@
                     <field name="origin_country_id" string="原产国"/>
                     <field name="destination_country_id" string="目的国"/>
                     <field name="ManualSN" string="备案序号"/>
-                    <field name="classify_status" string="是否已归类" invisible="1"/>
+                    <!--<field name="classify_status" string="是否已归类" invisible="1"/>-->
+                    <field name="classify_status" string="是否已归类/调试字段-没问题后隐藏"/>
                     <!--<field name="customs_dec_goods_own" string="是否属于报关单" invisible="1"/>-->
                 </tree>
             </field>

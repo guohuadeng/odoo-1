@@ -107,7 +107,7 @@ class CusGoodsTariff(models.Model):
     NameCN = fields.Char(string='Chinese Name', size=50, required=True)     # 中文名称
     first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
-    supervision_condition = fields.Char(string="supervision condition")  # 监管条件
+    supervision_condition = fields.Char(string="supervision condition")  # 监管条件 / 监管标识
 
 class DecLicenseDocType(models.Model):
     """ 随附单证类型 """

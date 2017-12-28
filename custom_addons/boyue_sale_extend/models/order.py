@@ -11,12 +11,12 @@ class Order(models.Model):
 
     contract = fields.Many2one(comodel_name="contract.sale_contract", string="Contract", required=False, copy=False)
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type", required=True, )
-    contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, )
+    contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, copy=False)
     servicer = fields.Many2one(comodel_name="res.partner", string="Servicer")
-    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", track_visibility='onchange')
+    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", index=True, track_visibility='always')
     goods_name = fields.Text(string="Goods Name", required=False, )
     delivery_info = fields.One2many(comodel_name="boyue_sale_extend.delivery_info", inverse_name="order",
-                                    string="Delivery Info", copy=False)
+                                    string="Delivery Info", )
     # partner_id = fields.Many2one('res.partner', string='Customer', readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, required=True, change_default=True, index=True, track_visibility='onchange')
 
 
@@ -30,8 +30,8 @@ class Order(models.Model):
     # transport = fields.Many2one('delegate_transport_mode', string='Transport Mode')     # 运输方式
     # exemption = fields.Many2one('delegate_exemption', string='Exemption')               # 免征性质
     # trade_term = fields.Many2one('delegate_trade_terms', string='Trade Term')           # 成交方式
-    port = fields.Many2one('delegate_port', string='Port', copy=False)                              # 装货/指运港
-    num = fields.Integer('Num', copy=False)                     # 件数
+    port = fields.Many2one('delegate_port', string='Port')                              # 装货/指运港
+    num = fields.Integer('Num')                     # 件数
     gross_weight = fields.Float('Gross Weight')     # 毛重
     # mark_code = fields.Char('Mark Code')            # 标记唛码
     remarks = fields.Text('Remarks')                # 备注

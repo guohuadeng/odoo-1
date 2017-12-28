@@ -30,13 +30,22 @@ class CusGoodsList(models.Model):
     deal_qty = fields.Integer(string="deal quantity", required=False, default=1)  # 成交数量
     deal_unit_price = fields.Monetary(string="deal unit price", )    # 成交单价/申报单价
     deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )    # 成交单位
-    deal_total_price = fields.Monetary(string="deal total price", )  # 成交总价/申报单价
+    deal_total_price = fields.Monetary(compute='_compute_total_goods_price', string="deal total price", )  # 成交总价
+
+    @api.onchange('deal_qty', 'deal_unit_price')
+    def _compute_total_goods_price(self):
+        """根据当前商品列表的成交单价 X 成交数量数量 计算出商品单行总价"""
+        for goods_list in self:
+            if goods_list.deal_qty != 0:
+                goods_list.deal_total_price = goods_list.deal_qty * goods_list.deal_unit_price
+
     currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )  # 币制
     first_qty = fields.Integer(string="first quantity", required=False,)  # 第一法定数量
     first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
 
     second_qty = fields.Integer(string="second quantity",)  # 第二法定数量
     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
+    supervision_condition = fields.Many2one(comodel_name="basedata.cus_unit", string="supervision condition")  # 监管标识/监管标识
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
@@ -65,14 +74,34 @@ class CusGoodsList(models.Model):
         for goods_list in self:
             if goods_list.cus_goods_tariff_id:
                 goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
+                goods_list.first_unit = goods_list.cus_goods_tariff_id.first_unit
+                goods_list.second_unit = goods_list.cus_goods_tariff_id.second_unit
+                goods_list.supervision_condition = goods_list.cus_goods_tariff_id.supervision_condition
+
+    @api.onchange('goods_classification_id')
+    def _generate_about_goods_info(self):
+        """根据当前合规客户料号的变化 改变商品名称 商品编码等信息 并通过onchange装饰器，自动执行_generate_about_name方法"""
+        for goods_list in self:
+            if goods_list.goods_classification_id:
+                goods_list.cus_goods_tariff_id = goods_list.goods_classification_id.cus_goods_tariff_id
+                goods_list.goods_name = goods_list.goods_classification_id.goods_name
+                goods_list.goods_model = goods_list.goods_classification_id.goods_model
+                goods_list.first_unit = goods_list.goods_classification_id.first_unit
+                goods_list.second_unit = goods_list.goods_classification_id.second_unit
+                goods_list.origin_country_id = goods_list.goods_classification_id.origin_country_id
+                goods_list.destination_country_id = goods_list.goods_classification_id.destination_country_id
+                goods_list.duty_mode_id = goods_list.goods_classification_id.duty_mode_id
+                goods_list.ManualSN = goods_list.goods_classification_id.ManualSN
+                goods_list.supervision_condition = goods_list.goods_classification_id.supervision_condition
+
 
 
     @api.multi
     def goods_classified_btn(self):
         """ 将历史申报商品 归类按钮 """
         for line in self:
-            print(line.currency_id.id)
-            print(line.line.destination_country_id.id)
+            # print(line.currency_id.id)
+            # print(line.destination_country_id.id)
             return {
                 'name': "customs center goods classified",
                 'type': "ir.actions.act_window",
@@ -95,6 +124,7 @@ class CusGoodsList(models.Model):
                     'default_duty_mode_id':line.duty_mode_id.id,  # 征免方式
                     'default_ManualNo': line.customs_declaration_id.ManualNo,  # 备案号
                     'default_ManualSN': line.ManualSN,  # 备案序号
+                    'default_customs_declaration_id': line.customs_declaration_id.id,  # 冗余字段
                 },
                 'target': 'current'
             }

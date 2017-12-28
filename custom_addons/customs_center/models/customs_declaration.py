@@ -151,6 +151,9 @@ class CustomsDeclaration(models.Model):
     # 通关清单 和报关单共用一张商品表的时候 下方的写法
     dec_goods_list_ids = fields.One2many(comodel_name="customs_center.cus_goods_list",
                                          inverse_name="customs_declaration_id", string="dec goods name")
+    # 报关单 关联合规模型 一对多 冗余字段 用于修改历史商品列表 通过关联报关单 确认是否已归类
+    dec_goods_classified_ids = fields.One2many(comodel_name="customs_center.goods_classify",
+                                         inverse_name="customs_declaration_id", string="goods classified")
 
     customs_declaration_state = fields.Selection(string="State", selection=[('draft', 'Draft'),
                                                         ('succeed', 'Success'),
