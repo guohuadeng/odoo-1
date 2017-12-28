@@ -318,5 +318,27 @@ class DecLicenseDoc(models.Model):
                                        string="customs declaration")
     dec_license_doc_type_id = fields.Many2one(comodel_name="basedata.dec_license_doc_type", string="DecLicenseDoc type")   # 单证类型/单证代码
 
+class GoodsWizard(models.TransientModel):
+    _name = 'customs_center.goods_wizard'
+    _description = 'Customs Goods Wizard'
 
+    cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )
+    goods_model = fields.Char(string="goods model", required=False, )
+    deal_qty = fields.Integer(string="deal quantity", default=1, required=False, )
+    deal_unit_price = fields.Monetary(string="deal unit price")
+    deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )
+    deal_total_price = fields.Monetary(string="deal total price")
+    currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )
+    first_qty = fields.Integer(string="first quantity", required=False, )
+    first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", required=False, )
+    second_qty = fields.Integer(string="second quantity", required=False, )
+    second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", required=False, )
+    origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", required=False, )
+    destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", required=False, )
+    duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", required=False, )
 
+    @api.multi
+    def create_goods_list(self):
+        """创建报关单商品列表"""
+
+        return True

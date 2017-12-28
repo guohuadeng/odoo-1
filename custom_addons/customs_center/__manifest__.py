@@ -35,6 +35,7 @@
         'views/result_status.xml',
         'views/setting_declaration.xml',
         'views/menu.xml',
+        'views/template.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
