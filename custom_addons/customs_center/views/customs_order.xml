@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="action_customs_order" model="ir.actions.act_window">
-            <field name="name">Customs Customs Order</field>
+            <field name="name">通关清单</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">customs_center.customs_order</field>
             <field name="view_mode">tree,form</field>
@@ -14,11 +14,11 @@
             <field name="arch" type="xml">
                 <tree default_order="create_date desc">
                     <field name="name" string="通关清单号"/>
-                    <!--<field name="work_sheet_id"/>-->
-                    <field name="customer_id" string="委托单位"/>
-                    <field name="transport_mode_id" string="运输方式"/>
+                    <field name="work_sheet_id" string="工作单号"/>
                     <field name="inout" string="进出口类型"/>
-                    <field name="customs_id" string="进出口岸"/>
+                    <field name="business_company_id" string="收发货人"/>
+                    <field name="custom_master_id" string="申报地海关"/>
+                    <field name="create_uid" readonly="1" string="创建人"/>
                 </tree>
             </field>
         </record>
@@ -56,7 +56,7 @@
 
                         <group col="3" colspan="1">
                             <group>
-                                <field name="custom_master_id" required="1" string="申报地海关"/>
+                                <field name="custom_master_id" required="1" string="申报地海关" options="{'no_create_edit': 1, 'no_create': True}"/>
                             </group>
                             <group>
                                 <field name="business_type"  string="业务类型" invisible="1"/>
@@ -123,8 +123,8 @@
                                             <field name="origin_country_id" string="原产国"/>
                                             <field name="destination_country_id" string="目的国"/>
                                             <field name="duty_mode_id" string="征免方式"/>
-                                            <field name="create_uid" string="创建人" readonly="1"/>
-                                            <field name="create_date" string="创建时间" readonly="1" widget="date"/>
+                                            <!--<field name="create_uid" string="创建人" readonly="1"/>-->
+                                            <!--<field name="create_date" string="创建时间" readonly="1" widget="date"/>-->
                                         </tree>
                                     </field>
                                 </page>
@@ -151,12 +151,12 @@
                 <xpath expr="//div[@class='row']" position="inside">
                     <div class="col-md-1" attrs="{'invisible': [('state', '=', 'cancel')]}">
                         <field name="custom_center" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
-                        <label for="custom center" string="关务中心"/>
+                        <label for="custom center" string="报关"/>
                     </div>
                 </xpath>
 
                 <xpath expr="//button[@c_name='warehouse']" position="before">
-                    <button name="customs_center_clearance" type="object" class="oe_stat_button" string="关务中心报关"
+                    <button name="customs_center_clearance" type="object" class="oe_stat_button" string="关务中心"
                             attrs="{'invisible': ['|', ('custom_center','=',False), ('state', '=', 'cancel')]}" icon="fa-pencil-square-o">
                     </button>
                 </xpath>

@@ -19,7 +19,7 @@ class CustomsOrder(models.Model):
     work_sheet_id = fields.Many2one(comodel_name="work_sheet", string="Work Sheet")              # 工作单ID
 
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type")   # 业务类型
-    inout = fields.Selection(string="InOut", selection=[('i', 'Import'), ('e', 'Export'), ], required=True)   # 进出口类型
+    inout = fields.Selection(string="InOut", selection=[('i', u'进口'), ('e', u'出口'), ], required=True)   # 进出口类型
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")              # 进出口岸
     custom_master_id = fields.Many2one(comodel_name="delegate_customs", string="Declare Customs")  # 申报口岸/海关
     ManualNo = fields.Char(string="Manual No")                                                   # 备案号
