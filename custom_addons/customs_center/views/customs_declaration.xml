@@ -37,67 +37,91 @@
                                <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
                     </header>
                     <sheet>
-                        <field name="client_seq_no"  string="报关单客户端编号" invisible="1"/>
-                        <field name="customs_order_id"  string="关联的通关清单" invisible="1"/>
+                        <field name="client_seq_no" string="报关单客户端编号" invisible="1"/>
+                        <field name="customs_order_id" string="关联的通关清单" invisible="1"/>
 
-                        <div style="padding-bottom: 60px">
-                            <div class="col-lg-3 col-md-6">
+                        <div class="row" style="padding-bottom: 15px; padding-top: 11px;">
+                            <div class="col-lg-4 col-md-6">
                                 <div class="col-lg-4 col-md-4"><label for="inout" string="进出口类型"/></div>
-                                <div class="col-lg-8 col-md-8"><field name="inout" class="oe_inline" required="1"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="inout" class="oe_inline" required="1"/>
+                                </div>
                             </div>
-                            <div class="col-lg-3 col-md-6">
+                            <div class="col-lg-4 col-md-6">
                                 <div class="col-lg-4 col-md-4"><label for="custom_master_id" string="申报地海关"/></div>
-                                <div class="col-lg-8 col-md-8"><field name="custom_master_id" /></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="custom_master_id"/>
+                                </div>
                             </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="col-lg-4 col-md-4"><label for="customs_declaration_state" string="报关状态"/></div>
-                                <div class="col-lg-8 col-md-8"><field name="customs_declaration_state"/></div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
+                            <div class="col-lg-4 col-md-6">
                                 <div class="col-lg-4 col-md-4"><label for="cus_ciq_No" string="关检关联号"/></div>
-                                <div class="col-lg-8 col-md-8"><field name="cus_ciq_No"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="cus_ciq_No"/>
+                                </div>
                             </div>
                         </div>
 
 
                         <notebook>
-                                <page string="Customs Declaration">
-                                    <div class="row" style="padding-top:20px">
+                            <page string="基本信息">
+                                <div class="row" style="padding-top:20px">
 
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="col-lg-4 col-md-4"><label for="dec_seq_no" string="统一编号"/></div>
-                                            <div class="col-lg-8 col-md-8"><field name="dec_seq_no" string="统一编号"/></div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="dec_seq_no" string="统一编号"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="dec_seq_no" string="统一编号"/>
                                         </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="col-lg-4 col-md-4"><label for="pre_entry_id" string="预录入编号"/></div>
-                                            <div class="col-lg-8 col-md-8"><field name="pre_entry_id" string="预录入编号"/></div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="col-lg-4 col-md-4"><label for="entry_id" string="海关编号"/></div>
-                                            <div class="col-lg-8 col-md-8"><field name="entry_id" string="海关编号"/></div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="col-lg-4 col-md-4"><label for="customs_id" string="进出口岸"/></div>
-                                            <div class="col-lg-8 col-md-8"><field name="customs_id" string="进出口岸"/></div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="col-lg-4 col-md-4"><label for="ManualNo" string="备案号"/></div>
-                                            <div class="col-lg-8 col-md-8"><field name="ManualNo" string="备案号"/></div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="col-lg-4 col-md-4"><label for="customer_contract_no" string="合同协议号"/></div>
-                                            <div class="col-lg-8 col-md-8"><field name="customer_contract_no" string="合同协议号"/></div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="col-lg-4 col-md-4"><label for="in_out_date" string="进出口日期"/></div>
-                                            <div class="col-lg-8 col-md-8"><field name="in_out_date" string="进出口日期" widget="date"/></div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="col-lg-4 col-md-4"><label for="dec_date" string="申报日期"/></div>
-                                            <div class="col-lg-8 col-md-8"><field name="dec_date" string="申报日期" widget="date"/></div>
-                                        </div>
-
                                     </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="pre_entry_id" string="预录入编号"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="pre_entry_id" string="预录入编号"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="entry_id" string="海关编号"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="entry_id" string="海关编号"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="customs_id" string="进出口岸"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="customs_id" string="进出口岸" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="ManualNo" string="备案号"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="ManualNo" string="备案号"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="customer_contract_no" string="合同协议号"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="customer_contract_no" string="合同协议号"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="in_out_date" string="进出口日期"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="in_out_date" string="进出口日期" widget="date" style="width:100%"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="dec_date" string="申报日期"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="dec_date" string="申报日期" widget="date" style="width: 100%;"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"></div>
+                                        <div class="col-lg-8 col-md-8"></div>
+                                    </div>
+                                </div>
                                     <!--<group col="3" colspan="1">-->
                                         <!--<group>-->
                                             <!--<field name="business_company_id" string="经营单位/收发货人"/>-->
@@ -123,183 +147,201 @@
                                     <!--</group>-->
                                     <div style="padding-bottom: 10px; padding-top: 20px">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
-                                                    <label for="business_company_id" string="经营单位/收发货人"/>
+                                            <div class="col-lg-8 col-md-8">
+                                                <div class="col-lg-2 col-md-2" style="width:16%">
+                                                    <label for="business_company_id" string="收发货人"/>
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field name="business_company_id"/>
+                                                <div class="col-lg-10 col-md-10">
+                                                    <field name="business_company_id" style="width:55%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8">
+                                                <div class="col-lg-2 col-md-2" style="width:16%">
                                                     <label for="input_company_id" string="消费使用单位"/>
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field name="input_company_id"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
-                                                    <label for="declare_company_id" string="申报单位"/>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <field name="declare_company_id"/>
+                                                <div class="col-lg-10 col-md-10">
+                                                    <field name="input_company_id" style="width:55%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
-                                                    <label for="transport_mode_id" string="运输方式"/>
+                                            <div class="col-lg-8 col-md-8">
+                                                <div class="col-lg-2 col-md-2" style="width:16%">
+                                                    <label for="declare_company_id" string="申报单位" />
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field name="transport_mode_id"/>
+                                                <div class="col-lg-10 col-md-10">
+                                                    <field name="declare_company_id" style="width:55%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="transport_mode_id" string="运输方式"/>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="transport_mode_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
                                                     <label for="NativeShipName" string="运输工具名称"/>
                                                 </div>
-                                                <div class="col-md-8">
+                                                <div class="col-lg-8 col-md-8">
                                                     <field name="NativeShipName"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
                                                     <label for="VoyageNo" string="航次号"/>
                                                 </div>
-                                                <div class="col-md-8">
+                                                <div class="col-lg-8 col-md-8">
                                                     <field name="VoyageNo"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
                                                     <label for="bill_no" string="提运单号"/>
                                                 </div>
-                                                <div class="col-md-8">
+                                                <div class="col-lg-8 col-md-8">
                                                     <field name="bill_no"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
-                                                    <label for="trade_mode_id" string="监管方式"/>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="trade_mode_id" string="监管方式" />
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field name="trade_mode_id"/>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="trade_mode_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
-                                                    <label for="CutMode_id" string="征免性质"/>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="CutMode_id" string="征免性质" />
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field name="CutMode_id"/>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="CutMode_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
                                                     <label for="payment_mark" string="纳税单位"/>
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field class="oe_inline" name="payment_mark"/>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="payment_mark" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
                                                     <label for="licenseNo" string="许可证号"/>
                                                 </div>
-                                                <div class="col-md-8">
+                                                <div class="col-lg-8 col-md-8">
                                                     <field name="licenseNo"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
                                                     <label for="origin_arrival_country_id" string="启运国/抵达国"/>
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field name="origin_arrival_country_id"/>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="origin_arrival_country_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
-                                                    <label for="port_id" string="装货港/指运港"/>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="port_id" string="装货港/指运港" />
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field name="port_id"/>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="port_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
                                                     <label for="region_id" string="境内目的地"/>
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field name="region_id"/>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="region_id"  style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="col-md-4">
-                                                    <label for="trade_terms_id" string="成交方式"/>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="trade_terms_id" string="成交方式" />
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <field name="trade_terms_id"/>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="trade_terms_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="col-md-3">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-3 col-md-3">
                                                 <label for="fee_mark" class="oe_inline" string="运费"/>
                                             </div>
-                                            <div class="col-md-3">
-                                                <field class="oe_inline" name="fee_mark" placeholder="运费标记"/>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field class="oe_inline" name="fee_mark" placeholder="运费标记"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <field name="other_rate" placeholder="运费/率"/>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <field class="oe_inline" name="other_currency_id" placeholder="运费币制"/>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <div class="col-md-3">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-3 col-md-3">
                                                 <label for="insurance_mark" string="保费"/>
                                             </div>
-                                            <div class="col-md-3">
-                                                <field class="oe_inline" name="insurance_mark" placeholder="保费标记"/>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field class="oe_inline" name="insurance_mark" placeholder="保费标记"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <field name="insurance_rate" placeholder="保费/率"/>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <field name="insurance_currency_id" placeholder="保费币制"/>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <div class="col-md-3">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-3 col-md-3">
                                                 <label for="other_mark" string="杂费"/>
                                             </div>
-                                            <div class="col-md-3">
-                                                <field class="oe_inline" name="other_mark" placeholder="杂费标记"/>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field class="oe_inline" name="other_mark" placeholder="杂费标记"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <field name="other_rate" placeholder="杂费/率"/>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-lg-3 col-md-3">
                                                 <field name="other_currency_id" placeholder="杂费币制"/>
                                             </div>
                                         </div>
-
                                     </div>
 
 
@@ -357,117 +399,113 @@
                                         <!--</group>-->
                                     <!--</group>-->
 
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
+                                     <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
                                                 <label for="qty" string="件数"/>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-lg-3 col-md-3">
                                                 <field name="qty"/>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="packing_id" string="包装种类"/>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="packing_id" string="包装种类" />
                                             </div>
-                                            <div class="col-md-6">
-                                                <field name="packing_id"/>
+                                            <div class="col-lg-6 col-md-6">
+                                                <field name="packing_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
                                                 <label for="gross_weight" string="毛重(KG)"/>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-lg-6 col-md-6">
                                                 <field name="gross_weight"/>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="trade_country_id" string="贸易国(地区)"/>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <field name="trade_country_id"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="in_ratio" string="征税比例"/>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <field name="in_ratio"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
+                                            <div class="col-lg-4 col-md-4">
                                                 <label for="net_weight" string="净重(KG)"/>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-lg-6 col-md-6">
                                                 <field name="net_weight"/>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="promise1" string="特殊关系确认"/>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="trade_country_id" string="贸易国(地区)"/>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-lg-8 col-md-8">
+                                                <field name="trade_country_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="in_ratio" string="征税比例"/>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8">
+                                                <field name="in_ratio"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="promise1" string="特殊关系确认"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
                                                 <field name="promise1"/>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="entry_type_id" string="报关单类型"/>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="promise2" string="价格影响确认"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
                                             </div>
-                                            <div class="col-md-6">
-                                                <field name="entry_type_id"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="bill_type_id" string="备案清单类型"/>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <field name="bill_type_id"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="remarks" string="备注"/>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <field name="remarks"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="ediId" string="报关标志"/>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <field name="ediId"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="promise2" string="价格影响确认"/>
-                                            </div>
-                                            <div class="col-md-6">
+                                            <div class="col-lg-6 col-md-6">
                                                 <field name="promise2"/>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="decl_trn_rel" string="报/转关关系标志"/>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="promise3" string="特许权使用费支付确认"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
                                             </div>
-                                            <div class="col-md-6">
-                                                <field name="decl_trn_rel"/>
+                                            <div class="col-lg-6 col-md-6">
+                                                <field name="promise3"/>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="col-md-4">
-                                                <label for="promise3" string="特许权使用费支付确认"/>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="entry_type_id" string="报关单类型"/>
                                             </div>
-                                            <div class="col-md-6">
-                                                <field name="promise3"/>
+                                            <div class="col-lg-8 col-md-8">
+                                                <field name="entry_type_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <!--<div class="col-md-4">-->
+                                                <!--<label for="bill_type_id" string="备案清单类型"/>-->
+                                            <!--</div>-->
+                                            <!--<div class="col-md-6">-->
+                                                <!--<field name="bill_type_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>-->
+                                            <!--</div>-->
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8">
+                                            <div class="col-lg-2 col-md-2" style="width:16%">
+                                                <label for="remarks" string="备注"/>
+                                            </div>
+                                            <div class="col-lg-10 col-md-10" style="width:55%">
+                                                <field name="remarks"/>
                                             </div>
                                         </div>
                                     </div>

@@ -19,6 +19,7 @@
                     <field name="business_company_id" string="收发货人"/>
                     <field name="custom_master_id" string="申报地海关"/>
                     <field name="create_uid" readonly="1" string="创建人"/>
+                    <field name="create_date" string="创建时间"/>
                 </tree>
             </field>
         </record>
@@ -43,24 +44,24 @@
                             </h1>
                         </div>
                         <div class="oe_button_box" name="button_box">
-                            <button name="%(customs_center.action_customs_declaration)d" type="action"  context="{'search_default_customs_order_id': active_id}"
+                            <button name="759" type="action" context="{'search_default_customs_order_id': active_id}"
                                     class="oe_stat_button" icon="fa-align-justify">
                                 <field name="custom_count" widget="statinfo" string="报关单"/>
                             </button>
 
                             <!--<button name="action_get_attachment_view" class="oe_stat_button" icon="fa-book" type="object">-->
-                                <!--<field name="attachment_number" widget="statinfo" string="附件上传"/>-->
+                            <!--<field name="attachment_number" widget="statinfo" string="附件上传"/>-->
                             <!--</button>-->
                         </div>
 
 
                         <group col="3" colspan="1">
                             <group>
-                                <field name="custom_master_id" required="1" string="申报地海关" options="{'no_create_edit': 1, 'no_create': True}"/>
+                                <field name="custom_master_id" required="1" string="申报地海关"/>
                             </group>
                             <group>
-                                <field name="business_type"  string="业务类型" invisible="1"/>
-                                <field name="work_sheet_id"  string="工作单号"/>
+                                <field name="business_type" string="业务类型" invisible="1"/>
+                                <field name="work_sheet_id" string="工作单号"/>
                                 <!--<field name="create_date" readonly="1"/>-->
                             </group>
                             <group>
@@ -68,41 +69,218 @@
                             </group>
                         </group>
                         <notebook>
-                                <page string="报关信息">
-                                    <group col="3" colspan="1">
-                                        <group>
-                                            <field name="inout" string="进出口类型"/>
-                                            <field name="customs_id" string="进出口岸"/>
-                                            <!--<field name="customMaster_id" string="申报海关"/>-->
-                                            <field name="ManualNo" string="备案号"/>
-                                            <field name="customer_contract_no" string="合同号"/>
-                                            <field name="licenseNo" string="许可证号"/>
-                                            <field name="business_company_id" string="收发货人"/>
-                                            <field name="input_company_id" string="生产消费单位"/>
-                                        </group>
-                                        <group>
-                                            <field name="declare_company_id" string="申报单位"/>
-                                            <field name="transport_mode_id" string="运输方式"/>
-                                            <field name="transport_name" string="运输工具"/>
-                                            <field name="VoyageNo" string="航次号"/>
-                                            <field name="trade_terms_id" string="成交方式"/>
-                                            <field name="trade_mode_id" string="监管方式"/>
-                                            <field name="CutMode_id" string="征免性质"/>
-                                            <field name="packing_id" string="包装方式"/>
-                                        </group>
-                                        <group>
-                                            <field name="trade_country_id" string="贸易国别"/>
-                                            <field name="origin_arrival_country_id" string="启运抵达国"/>
-                                            <field name="port_id" string="装货/指运港"/>
-                                            <field name="region_id" string="境内目的/货源地"/>
-                                            <field name="qty" string="件数"/>
-                                            <field name="gross_weight" string="毛重(KG)"/>
-                                            <field name="net_weight" string="净重(KG)"/>
-                                            <field name="marks" string="备注"/>
-                                        </group>
-                                    </group>
-                                </page>
-                            </notebook>
+                            <page string="报关信息">
+                                <div class="row" style="padding-top:20px">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="inout" string="进出口类型"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="inout"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="customs_id" string="进出口岸" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="customs_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="ManualNo" string="备案号"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="ManualNo"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="customer_contract_no" string="合同号"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="customer_contract_no"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="licenseNo" string="许可证号"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="licenseNo"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="business_company_id" string="收发货人"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="business_company_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="input_company_id" string="生产消费单位" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="input_company_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="declare_company_id" string="申报单位" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="declare_company_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="transport_mode_id" string="运输方式" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="transport_mode_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="transport_name" string="运输工具"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="transport_name"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="VoyageNo" string="航次号"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="VoyageNo"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="origin_arrival_country_id" string="启运/抵达国" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="origin_arrival_country_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="port_id" string="装货/指运港" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="port_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="region_id" string="境内目的/货源地" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="region_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="trade_country_id" string="贸易国别" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="trade_country_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="trade_terms_id" string="成交方式" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="trade_terms_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="qty" string="件数"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="qty"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="packing_id" string="包装方式" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="packing_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="gross_weight" string="毛重(KG)"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="gross_weight"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="net_weight" string="净重(KG)"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="net_weight"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding-bottom:10px">
+                                    <div class="col-lg-8 col-md-8">
+                                        <div class="col-lg-2 col-md-2" style="width:16%">
+                                            <label for="marks" string="备注" />
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="marks"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </page>
+                        </notebook>
 
                             <notebook>
                                  <page string="商品列表">
@@ -162,6 +340,28 @@
                 </xpath>
 
             </field>
+        </record>
+
+        <!--通关清单 搜索视图-->
+        <record id="view_customs_order_search" model="ir.ui.view">
+           <field name="name">customs order search</field>
+           <field name="model">customs_center.customs_order</field>
+            <field name="arch" type="xml">
+                <search string="customs order search">
+                    <field name="name" string="通关清单号" domain="[('customs_center.customs_order.name', '=', self)]"/>
+                    <field name="work_sheet_id" string="工作单号" domain="[('customs_center.customs_order.work_sheet_id', '=', self)]"/>
+                    <field name="business_company_id" string="收发货人" domain="[('customs_center.customs_order.business_company_id', '=', self)]"/>
+                    <separator/>
+                    <filter string="进口" name="in" domain="[('inout','=','i')]"/>
+                    <filter string="出口" name="export" domain="[('inout','=','e')]"/>
+                    <separator/>
+                    <filter string="当天清单" name="today"  domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                    <filter string="本周清单" name="last_week"  domain="[('create_date','&gt;', (context_today() - datetime.timedelta(weeks=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                    <filter string="本月清单" name="month" domain="[('create_date','&gt;=', time.strftime('%Y-%m-01 00:00:00')),('create_date','&lt;',  (context_today() + relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="上月清单" name="month2"  domain="[('create_date','&lt;', time.strftime('%Y-%m-01 00:00:00')),('create_date','&gt;=',  (context_today() - relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="本年清单" name="year"  domain="[('create_date','&lt;=', time.strftime('%Y-12-31 23:59:59')),('create_date','&gt;=', time.strftime('%Y-01-01 00:00:00'))]"/>
+                </search>
+           </field>
         </record>
 
 
