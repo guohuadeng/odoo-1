@@ -117,3 +117,4 @@ class DecLicenseDocType(models.Model):
 
     Code = fields.Char(string='Filing Bill Type Code', required=True)       # 随附单证类型代码
     NameCN = fields.Char(string='Chinese Name', size=50, required=True)     # 中文名称
+

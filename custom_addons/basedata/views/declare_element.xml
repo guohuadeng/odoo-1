@@ -8,11 +8,11 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="HSCode_TS"/>
-                            <field name="Orders"/>
+                            <field name="cus_goods_tariff_id"/>
+                            <field name="name"/>
                         </group>
                         <group>
-                            <field name="CriterionName"/>
+                            <field name="sequence"/>
                         </group>
                     </group>
                 </sheet>
@@ -26,9 +26,9 @@
         <field name="arch" type="xml">                        <!--固定格式-->
             <tree>
                 <field name="id"/>
-                <field name="HSCode_TS"/>
-                <field name="Orders" style="text-align:center !important;"/>
-                <field name="CriterionName"/>
+                <field name="cus_goods_tariff_id"/>
+                <field name="sequence"/>
+                <field name="name"/>
             </tree>
         </field>
     </record>

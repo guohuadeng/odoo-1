@@ -34,7 +34,7 @@
         'views/country.xml',
         # 'views/currency_system.xml',
         'views/customs.xml',
-        # 'views/declare_element.xml',
+        'views/declare_element.xml',
         # 'views/exemption.xml',
         # 'views/hs_code.xml',
         'views/packing.xml',

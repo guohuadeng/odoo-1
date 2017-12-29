@@ -16,16 +16,16 @@ from odoo import models, fields, api
 #     # Control_Ma = fields.Char('Regulatory Tag', size=255)  # 监管标识
 
 
-# class DeclareElement(models.Model):
-#     """报关商品申报要素"""
-#     _name = 'declare_element'
-#     _description = 'add declare element to delegation'
-#     _rec_name = 'HSCode_TS'
-#     _table = 'b_hg_complex_criterion'
-#
-#     HSCode_TS = fields.Char('HS Code', size=255)   # 海关编码
-#     CriterionName = fields.Char('Element Name', size=255)   # 要素名
-#     Orders = fields.Char('Num', size=255)   # 序号
+class DeclareElement(models.Model):
+    """报关商品申报要素"""
+    _name = 'declare_element'
+    _description = 'declare element'
+    _rec_name = 'name'
+    _table = 'b_hg_complex_criterion'
+
+    cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="Customs Goods Tariff", required=True, )
+    name = fields.Char('Element Name', size=255, required=True)   # 要素名
+    sequence = fields.Integer('Num', required=True)   # 序号
 
 
 class Country(models.Model):

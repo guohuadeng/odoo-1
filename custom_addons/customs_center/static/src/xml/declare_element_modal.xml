@@ -9,7 +9,15 @@
                         <h4 class="modal-title">规格型号</h4>
                     </div>
                     <div class="modal-body">
-                        <p>规格型号输入框</p>
+                        <div class="o_view_manager_content">
+                            <div class="o_form_view o_form_editable oe_form_dirty">
+                                <div class="o_form_sheet_bg">
+                                    <div class="o_form_sheet" id="declare-element-names">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <footer>

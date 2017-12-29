@@ -640,7 +640,7 @@
                                     <label for="goods_model" string="规格模型"/>
                                 </div>
                                 <div class="col-md-6">
-                                    <field name="goods_model" widget="declare_element"/>
+                                    <field name="goods_model" widget="declare_element" options="{'tariff': 'cus_goods_tariff_id'}"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
