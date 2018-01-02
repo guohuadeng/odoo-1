@@ -21,6 +21,27 @@ class CusDutyMode(models.Model):
     Code = fields.Char(string='DutyMode Code', required=True)  # 征免方式代码
     NameCN = fields.Char(string='Chinese Name', size=50, required=True)  # 中文名称
 
+    @api.multi
+    @api.depends('Code', 'NameCN')
+    def name_get(self):
+        result = []
+        for record in self:
+            result.append(
+                (record.id, u"%s %s"%(record.Code, record.NameCN))
+            )
+        return result
+
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
+        """重写模型name字段搜索方法"""
+        args = args or []
+        if not (name == '' and operator == 'ilike'):
+            args += ['|', ('Code', operator, name), ('NameCN', operator, name)]
+
+        return super(CusDutyMode, self)._name_search(
+            name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
+        )
+
 
 class CusUnit(models.Model):
     """ 单位表 """
@@ -28,8 +49,29 @@ class CusUnit(models.Model):
     _description = 'customs unit'
     _rec_name = 'NameCN'
 
-    Code = fields.Char(string='unit Code', required=True)     # 计量单位代码
+    Code = fields.Char(string='unit Code', required=True)     # 计量单位
     NameCN = fields.Char(string='Chinese Name', size=50, required=True)   # 中文名称
+
+    @api.multi
+    @api.depends('Code', 'NameCN')
+    def name_get(self):
+        result = []
+        for record in self:
+            result.append(
+                (record.id, u"%s %s"%(record.Code, record.NameCN))
+            )
+        return result
+
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
+        """重写模型name字段搜索方法"""
+        args = args or []
+        if not (name == '' and operator == 'ilike'):
+            args += ['|', ('Code', operator, name), ('NameCN', operator, name)]
+
+        return super(CusUnit, self)._name_search(
+            name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
+        )
 
 
 class CusCurrency(models.Model):
@@ -41,6 +83,27 @@ class CusCurrency(models.Model):
     Code = fields.Char(string='Currency Code', required=True)       # 币制代码
     symbol = fields.Char(string='Symbol',)     # 符号
     NameCN = fields.Char(string='Chinese Name', size=50, required=True)   # 中文名称
+
+    @api.multi
+    @api.depends('Code', 'NameCN')
+    def name_get(self):
+        result = []
+        for record in self:
+            result.append(
+                (record.id, u"%s %s"%(record.Code, record.NameCN))
+            )
+        return result
+
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
+        """重写模型name字段搜索方法"""
+        args = args or []
+        if not (name == '' and operator == 'ilike'):
+            args += ['|', ('Code', operator, name), ('NameCN', operator, name)]
+
+        return super(CusCurrency, self)._name_search(
+            name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
+        )
 
 
 class CusEntryType(models.Model):

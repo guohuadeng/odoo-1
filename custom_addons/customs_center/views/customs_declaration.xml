@@ -30,7 +30,8 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"  type="object" />
+                        <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"
+                                type="object" confirm="确定将当前报文，发送至单一窗口么?"/>
                         <!--<button name="send_message" string="Resend Message" class="oe_highlight" states="failure" type="object"-->
                             <!--attrs="{'invisible': ['|',('state', '=', 'cancel')]}"/>-->
                         <!--<field name="state" widget="statusbar" statusbar_visible="draft,succeed"-->
@@ -583,8 +584,8 @@
                                             <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1}"/>
                                             <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1}"/>
                                             <field name="supervision_condition" string="监管标识" options="{'no_create_edit': 1}"/>
-                                            <field name="create_uid" string="创建人" readonly="1"/>
-                                            <field name="create_date" string="创建时间" readonly="1" widget="date"/>
+                                            <!--<field name="create_uid" string="创建人" readonly="1"/>-->
+                                            <!--<field name="create_date" string="创建时间" readonly="1" widget="date"/>-->
                                         </tree>
                                     </field>
 

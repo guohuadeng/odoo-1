@@ -164,7 +164,7 @@ class CustomsDeclaration(models.Model):
 
     # 关联报关单商品列表 1对多关系
     # dec_goods_list_ids = fields.One2many(comodel_name="customs_center.dec_goods_list",
-    #                                      inverse_name="customs_declaration_id", string="dec goods name")
+    #                                     inverse_name="customs_declaration_id", string="dec goods name")
     # 通关清单 和报关单共用一张商品表的时候 下方的写法
     dec_goods_list_ids = fields.One2many(comodel_name="customs_center.cus_goods_list",
                                          inverse_name="customs_declaration_id", string="dec goods name")
