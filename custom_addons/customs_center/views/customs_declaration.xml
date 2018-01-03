@@ -588,7 +588,7 @@
                                             <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1}"/>
                                             <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1}"/>
                                             <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1}"/>
-                                            <field name="supervision_condition" string="监管标识" options="{'no_create_edit': 1}"/>
+                                            <field name="supervision_condition" string="监管标识" options="{'no_create_edit': 1}" readonly="1"/>
                                             <!--<field name="create_uid" string="创建人" readonly="1"/>-->
                                             <!--<field name="create_date" string="创建时间" readonly="1" widget="date"/>-->
                                         </tree>
