@@ -102,6 +102,7 @@ class CustomsOrder(models.Model):
                 'gross_weight': line.gross_weight,
                 'net_weight': line.net_weight,
                 'remarks': line.marks,
+                'work_sheet_id': line.work_sheet_id.id,
                #  'dec_goods_list_ids': goods_dic,
                #  'dec_goods_list_ids': cus_goods_list_ids,
             }

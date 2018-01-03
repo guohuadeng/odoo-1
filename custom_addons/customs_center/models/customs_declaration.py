@@ -43,7 +43,7 @@ class CustomsDeclaration(models.Model):
 
     entry_type_id = fields.Many2one(comodel_name="basedata.cus_entry_type", string="Entry Type")  # 报关单类型 关联报关单类型字典表，待新增
     bill_type_id = fields.Many2one(comodel_name="basedata.cus_filing_bill_type", string="bill Type")    # 备案清单 待新建，备案清单类型表
-    inout = fields.Selection(string="InOut", selection=[('i', 'Import'), ('e', 'Export'), ], required=True)  # 进出口类型
+    inout = fields.Selection(string="InOut", selection=[('i', u'进口'), ('e', u'出口'), ], required=True)  # 进出口类型
     dec_seq_no = fields.Char(string="DecSeqNo")  # 统一编号
     pre_entry_id = fields.Char(string="PreEntryId")  # 预录入编号
     entry_id = fields.Char(string="EntryId")  # 海关编号
@@ -143,6 +143,13 @@ class CustomsDeclaration(models.Model):
     declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
     input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
     business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
+
+    @api.onchange('business_company_id')
+    def _compute_input_company(self):
+        """根据当前选中的收发货人 改变 消费使用单位"""
+        for customs_dec in self:
+            if customs_dec.business_company_id != 0:
+                customs_dec.input_company_id = customs_dec.business_company_id
 
     cop_code = fields.Char(string="cop code")  # 录入单位企业组织机构代码
     cop_name = fields.Char(string="cop name")  # 录入单位企业名称

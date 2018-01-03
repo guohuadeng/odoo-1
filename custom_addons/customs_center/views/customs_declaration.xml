@@ -3,7 +3,7 @@
     <data>
 
         <record id="action_customs_declaration" model="ir.actions.act_window">
-            <field name="name">Customs Declaration</field>
+            <field name="name">报关单</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">customs_center.customs_dec</field>
             <field name="view_mode">tree,form</field>
@@ -14,12 +14,17 @@
             <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
                 <tree default_order="create_date desc">
-                    <field name="name"/>
-                    <!--<field name="work_sheet_id"/>-->
-                    <field name="customer_id"/>
-                    <field name="transport_mode_id"/>
-                    <field name="customs_id"/>
-                    <field name="customs_order_id"  string="关联的通关清单"/>
+                    <field name="name" string="报关单流水号"/>
+                    <field name="work_sheet_id" string="工作单号"/>
+                    <field name="cus_ciq_No" string="关检关联号"/>
+                    <field name="dec_seq_no" string="统一编号"/>
+                    <field name="pre_entry_id" string="预录入号"/>
+                    <field name="inout" string="进出口类型"/>
+                    <field name="business_company_id" string="收发货人"/>
+                    <field name="custom_master_id" string="申报地海关"/>
+                    <field name="create_uid" readonly="1" string="创建人"/>
+                    <field name="create_date" string="创建时间" widget="date"/>
+                    <!--<field name="customs_order_id"  string="关联的通关清单"/>-->
                 </tree>
             </field>
         </record>
@@ -31,7 +36,7 @@
                 <form>
                     <header>
                         <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"
-                                type="object" confirm="确定将当前报文，发送至单一窗口么?"/>
+                                type="object" confirm="确定生成报文，发送至单一窗口么?"/>
                         <!--<button name="send_message" string="Resend Message" class="oe_highlight" states="failure" type="object"-->
                             <!--attrs="{'invisible': ['|',('state', '=', 'cancel')]}"/>-->
                         <!--<field name="state" widget="statusbar" statusbar_visible="draft,succeed"-->
@@ -649,15 +654,33 @@
         </record>
 
         <!--报关单搜索视图-->
+        <!--支持按工作单号、关检关联号、统一编号、预录入号、海关编号、收发货人、创建人搜索-->
         <record id="view_customs_declaration_search" model="ir.ui.view">
            <field name="name">customs declaration search</field>
            <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
                 <search string="customs declaration search">
-                    <field name="customs_order_id" string="通关清单" domain="[('customs_center.customs_dec.customs_order_id', '=', self)]"/>
+                    <field name="name" string="报关单流水号" domain="[('customs_center.customs_dec.name', '=', self)]"/>
+                    <field name="work_sheet_id" string="工作单号" domain="[('customs_center.customs_dec.work_sheet_id', '=', self)]"/>
+                    <field name="cus_ciq_No" string="关检关联号" domain="[('customs_center.customs_dec.cus_ciq_No', '=', self)]"/>
+                    <field name="dec_seq_no" string="统一编号" domain="[('customs_center.customs_dec.dec_seq_no', '=', self)]"/>
+                    <field name="pre_entry_id" string="预录入编号" domain="[('customs_center.customs_dec.pre_entry_id', '=', self)]"/>
+                    <field name="custom_master_id" string="申报地海关" domain="[('customs_center.customs_dec.custom_master_id', '=', self)]"/>
+                    <field name="business_company_id" string="收发货人" domain="[('customs_center.customs_dec.business_company_id', '=', self)]"/>
+                    <field name="create_uid" string="创建人" domain="[('customs_center.customs_dec.create_uid', '=', self)]"/>
+                    <separator/>
+                    <filter string="进口" name="in" domain="[('inout','=','i')]"/>
+                    <filter string="出口" name="export" domain="[('inout','=','e')]"/>
+                    <separator/>
+                    <filter string="当天清单" name="today"  domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                    <filter string="本周清单" name="last_week"  domain="[('create_date','&gt;', (context_today() - datetime.timedelta(weeks=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                    <filter string="本月清单" name="month" domain="[('create_date','&gt;=', time.strftime('%Y-%m-01 00:00:00')),('create_date','&lt;',  (context_today() + relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="上月清单" name="month2"  domain="[('create_date','&lt;', time.strftime('%Y-%m-01 00:00:00')),('create_date','&gt;=',  (context_today() - relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="本年清单" name="year"  domain="[('create_date','&lt;=', time.strftime('%Y-12-31 23:59:59')),('create_date','&gt;=', time.strftime('%Y-01-01 00:00:00'))]"/>
                 </search>
            </field>
         </record>
+
 
     </data>
 </odoo>

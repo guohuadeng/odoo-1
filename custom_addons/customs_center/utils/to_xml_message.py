@@ -38,10 +38,12 @@ def delegate_to_xml(self):
     head_node_dic['CustomMaster'] = str(self.custom_master_id.Code)  # u'申报地海关'
     head_node_dic['CutMode'] = str(self.CutMode_id.Code)  # u'征免性质'
     head_node_dic['DataSource'] = None
-    head_node_dic['DeclTrnRel'] = str(self.decl_trn_rel)  # u'报关/转关关系标志'
+    # head_node_dic['DeclTrnRel'] = str(self.decl_trn_rel)  # u'报关/转关关系标志'
+    head_node_dic['DeclTrnRel'] = u'0'  # u'报关/转关关系标志 # 玉斌建议 写入固定值0'
     head_node_dic['DistinatePort'] = str(self.port_id.Code)  # 装货港 delegate_port(2,)  ok
     head_node_dic['DistrictCode'] = str(self.region_id.Code)  # str(self.region_id.Code)  # u'境内目的地'  ok
-    head_node_dic['EntryId'] = str(self.ediId)  # u'报关标志'   # 增加选择字段
+    # head_node_dic['EntryId'] = str(self.ediId)  # u'报关标志'   # 增加选择字段
+    head_node_dic['EntryId'] = None  # u'报关标志'   # 玉斌建议 先配置为空
     head_node_dic['EntryType'] = str(self.entry_type_id.Code)  # u'报关单类型'
     head_node_dic['FeeCurr'] = self.fee_currency_id.Code   # u'运费币制'
     head_node_dic['FeeMark'] = self.fee_mark.Code  # u'运费标记'
