@@ -688,6 +688,30 @@
                 <form string="Customs Goods">
                     <sheet>
                         <div class="row">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="goods_classification_id" string="客户料号"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="goods_classification_id"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="supervision_condition " string="监管标识"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="supervision_condition" readonly="1"/>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="col-md-3">
@@ -771,7 +795,7 @@
                                         <label for="first_unit" string="第一单位"/>
                                     </div>
                                     <div class="col-md-6">
-                                        <field name="first_unit"/>
+                                        <field name="first_unit" readonly="1"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -790,7 +814,7 @@
                                         <label for="second_unit" string="第二单位"/>
                                     </div>
                                     <div class="col-md-6">
-                                        <field name="second_unit"/>
+                                        <field name="second_unit" readonly="1"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -820,6 +844,10 @@
                                         <field name="duty_mode_id"/>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row">
+
                             </div>
 
                         </div>

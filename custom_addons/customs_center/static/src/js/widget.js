@@ -49,6 +49,8 @@ odoo.define('customs_center', function (require) {
         show_ele_modal: function () {
             $('#' + this.modal_id).modal();
             var self = this;
+            if(self.element_names == [])
+                self.get_element_name();
             var display_board = $('#declare-element-names');
             display_board.empty();
             var input_tags = [];
@@ -80,7 +82,9 @@ odoo.define('customs_center', function (require) {
             if (this.get('tariff')){
                 var DeclareElement = new Model('declare_element');
                 var self = this;
-                self.$input.val('');
+                if(self.$input)
+                    self.$input.val('');
+                self.element_names = [];
                 DeclareElement.query(['name', 'sequence']).filter([['cus_goods_tariff_id', '=', self.get('tariff')]])
                     .order_by('sequence')
                     .all()
@@ -99,7 +103,6 @@ odoo.define('customs_center', function (require) {
             inputs.each(function () {
                values.push($(this).val());
             });
-            console.log(values);
             var target_string = _.reduce(values, function (meno, value) {
                 return meno + '|' + value;
             }, '');

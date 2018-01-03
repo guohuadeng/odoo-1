@@ -33,6 +33,9 @@
                             <group>
                                 <field name="second_unit" string="second Unit"/>
                             </group>
+                            <group>
+                                <field name="supervision_condition"/>
+                            </group>
                         </group>
                     </sheet>
                 </form>

@@ -30,14 +30,13 @@ class GoodsClassification(models.Model):
                 goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
 
     goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
-    # first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
-    # second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
-    # supervision_condition = fields.Many2one(comodel_name="basedata.cus_unit",
-    #                                         string="supervision condition")  # 监管标识/监管标识
+    first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
+    second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
+    supervision_condition = fields.Char (string="supervision condition")  # 监管标识/监管标识
 
-    first_unit = fields.Char(string="First Unit")  # 第一计量单位
-    second_unit = fields.Char(string="second Unit")  # 第二计量单位
-    supervision_condition = fields.Char(string="supervision condition", required=False, )  # 监管标识/监管标识
+    # first_unit = fields.Char(string="First Unit")  # 第一计量单位
+    # second_unit = fields.Char(string="second Unit")  # 第二计量单位
+    # supervision_condition = fields.Char(string="supervision condition", required=False, )  # 监管标识/监管标识
 
     deal_unit_price = fields.Monetary(string="deal unit price", )  # 成交单价/申报单价
     currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )  # 币制
@@ -52,6 +51,8 @@ class GoodsClassification(models.Model):
         for goods_list in self:
             if goods_list.cus_goods_tariff_id:
                 goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
+                goods_list.first_unit = goods_list.cus_goods_tariff_id.first_unit
+                goods_list.second_unit = goods_list.cus_goods_tariff_id.second_unit
                 goods_list.supervision_condition = goods_list.cus_goods_tariff_id.supervision_condition
 
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式

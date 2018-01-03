@@ -363,7 +363,8 @@ class GoodsWizard(models.TransientModel):
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", required=False, )
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", required=False, )
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", required=False, )
-    goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False, )
+    goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False, )    # 客户料号
+    supervision_condition = fields.Char(string="supervision condition", required=False, )
 
 
     @api.onchange('deal_qty', 'deal_unit_price')

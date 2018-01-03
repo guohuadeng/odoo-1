@@ -55,7 +55,7 @@
                         <group col="3" colspan="1">
                             <group>
                                 <field name="cus_goods_tariff_id"  string="商品编号"/>
-                                <field name="goods_model"  string="规格型号"/>
+                                <field name="goods_model"  string="规格型号" widget="declare_element" options="{'tariff': 'cus_goods_tariff_id'}"/>
                                 <field name="business_company_id" string="经营单位"/>
                                 <field name="origin_country_id"  string="原产国"/>
                                 <field name="destination_country_id"  string="目的国"/>
