@@ -43,7 +43,7 @@ class CustomsDeclaration(models.Model):
 
     entry_type_id = fields.Many2one(comodel_name="basedata.cus_entry_type", string="Entry Type")  # 报关单类型 关联报关单类型字典表，待新增
     bill_type_id = fields.Many2one(comodel_name="basedata.cus_filing_bill_type", string="bill Type")    # 备案清单 待新建，备案清单类型表
-    inout = fields.Selection(string="InOut", selection=[('i', 'Import'), ('e', 'Export'), ], required=True)  # 进出口类型
+    inout = fields.Selection(string="InOut", selection=[('i', u'进口'), ('e', u'出口'), ], required=True)  # 进出口类型
     dec_seq_no = fields.Char(string="DecSeqNo")  # 统一编号
     pre_entry_id = fields.Char(string="PreEntryId")  # 预录入编号
     entry_id = fields.Char(string="EntryId")  # 海关编号
@@ -66,29 +66,54 @@ class CustomsDeclaration(models.Model):
     licenseNo_id = fields.One2many(comodel_name="customs_center.dec_lic_doc",
                                 inverse_name="customs_declaration_id", string="License No")  # 许可证号    一对多 关联随附单证模型
 
-    payment_mark = fields.Selection(string="payment mark", selection=[('1', u'经营单位'),
-                                                        ('2', u'收货单位'),
-                                                        ('3', u'申报单位')], )  # 纳税单位
-
     origin_arrival_country_id = fields.Many2one(comodel_name="delegate_country",
                                                 string="Origin Arrival Country")  # 启运/抵达国
     port_id = fields.Many2one(comodel_name="delegate_port", string="Port", )  # 装货/指运港
     region_id = fields.Many2one(comodel_name="delegate_region", string="Region")  # 境内目的/货源地
     trade_terms_id = fields.Many2one(comodel_name="delegate_trade_terms", string="Trade Term")  # 成交方式 or 贸易条款
 
-    fee_mark = fields.Selection(string="FeeMark", selection=[('1', u'1-率'),
-                                                        ('2', u'2-单价'),
-                                                        ('3', u'3-总价')], )  # 运费标记
+
+    # payment_mark = fields.Selection(string="payment mark", selection=[('1', u'经营单位'),
+    #                                                     ('2', u'收货单位'),
+    #                                                     ('3', u'申报单位')], )  # 纳税单位
+
+    # 关联 纳税单位标识类型 替换 上边注释
+    payment_mark = fields.Many2one(comodel_name="customs_center.pay_mark_type", string="payment mark")   # 纳税单位
+
+    # fee_mark = fields.Selection(string="FeeMark", selection=[('1', u'1-率'),
+    #                                                     ('2', u'2-单价'),
+    #                                                     ('3', u'3-总价')], )  # 运费标记
+    # insurance_mark = fields.Selection(string="InsurMark", selection=[('1', '1-率'),
+    #                                                     ('3', '3-总价')], )  # 保险费标记
+    # other_mark = fields.Selection(string="OtherMark", selection=[('1', u'1-率'),
+    #                                                     ('3', u'3-总价')], )  # 杂费标记
+
+    # 关联 费用标识类型 替换 上边注释
+    fee_mark = fields.Many2one(comodel_name="customs_center.exp_mark_type", string="FeeMark")  # 运费标记
+    insurance_mark = fields.Many2one(comodel_name="customs_center.exp_mark_type", string="insurance_mark") # 保险费标记
+    other_mark = fields.Many2one(comodel_name="customs_center.exp_mark_type", string="other_mark") # 杂费标记
+
+    # promise1 = fields.Selection(string="promise1", selection=[('0', u'0-否'),
+    #                                                     ('1', u'1-是'),
+    #                                                     ('9', u'9-空')], )  # 特殊关系确认
+    # promise2 = fields.Selection(string="promise2", selection=[('0', u'0-否'),
+    #                                                     ('1', u'1-是'),
+    #                                                     ('9', u'9-空')], )  # 价格影响确认
+    # promise3 = fields.Selection(string="promise3", selection=[('0', u'0-否'),
+    #                                                     ('1', u'1-是'),
+    #                                                     ('9', u'9-空')], )  # 支付特许权使用费确认
+
+    # 关联 是否标识类型 替换 上边注释
+    promise1 = fields.Many2one(comodel_name="customs_center.whet_mark_type", string="promise1") # 特殊关系确认
+    promise2 = fields.Many2one(comodel_name="customs_center.whet_mark_type", string="promise2") # 价格影响确认
+    promise3 = fields.Many2one(comodel_name="customs_center.whet_mark_type", string="promise3") # 支付特许权使用费确认
+
     fee_rate = fields.Float(string="FeeRate", digits=dp.get_precision('Product Price'),)  # 运费/率
     fee_currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="FeeCurrency", required=False, )  # 运费币制
 
-    insurance_mark = fields.Selection(string="InsurMark", selection=[('1', '1-率'),
-                                                        ('3', '3-总价')], )  # 保险费标记
     insurance_rate = fields.Float(string="InsurRate", digits=dp.get_precision('Product Price'),)  # 保险费/率
     insurance_currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="InsurCurrency_id", required=False, )  # 保险费币制
 
-    other_mark = fields.Selection(string="OtherMark", selection=[('1', u'1-率'),
-                                                        ('3', u'3-总价')], )  # 杂费标记
     other_rate = fields.Float(string="OtherRate", digits=dp.get_precision('Product Price'),)  # 杂费/率
     other_currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="OtherCurrency_id", required=False, )  # 杂费币制
 
@@ -100,15 +125,7 @@ class CustomsDeclaration(models.Model):
     trade_country_id = fields.Many2one(comodel_name="delegate_country",
                                        string="Trade Country")  # 贸易国别
 
-    promise1 = fields.Selection(string="promise1", selection=[('0', u'0-否'),
-                                                        ('1', u'1-是'),
-                                                        ('9', u'9-空')], )  # 特殊关系确认
-    promise2 = fields.Selection(string="promise2", selection=[('0', u'0-否'),
-                                                        ('1', u'1-是'),
-                                                        ('9', u'9-空')], )  # 价格影响确认
-    promise3 = fields.Selection(string="promise3", selection=[('0', u'0-否'),
-                                                        ('1', u'1-是'),
-                                                        ('9', u'9-空')], )  # 支付特许权使用费确认
+
 
     rel_dec_No = fields.Char(string="RelDec No")  # 关联报关单
     rel_man_No = fields.Char(string="License No")  # 关联 备案
@@ -126,6 +143,13 @@ class CustomsDeclaration(models.Model):
     declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
     input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
     business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
+
+    @api.onchange('business_company_id')
+    def _compute_input_company(self):
+        """根据当前选中的收发货人 改变 消费使用单位"""
+        for customs_dec in self:
+            if customs_dec.business_company_id != 0:
+                customs_dec.input_company_id = customs_dec.business_company_id
 
     cop_code = fields.Char(string="cop code")  # 录入单位企业组织机构代码
     cop_name = fields.Char(string="cop name")  # 录入单位企业名称
@@ -147,7 +171,7 @@ class CustomsDeclaration(models.Model):
 
     # 关联报关单商品列表 1对多关系
     # dec_goods_list_ids = fields.One2many(comodel_name="customs_center.dec_goods_list",
-    #                                      inverse_name="customs_declaration_id", string="dec goods name")
+    #                                     inverse_name="customs_declaration_id", string="dec goods name")
     # 通关清单 和报关单共用一张商品表的时候 下方的写法
     dec_goods_list_ids = fields.One2many(comodel_name="customs_center.cus_goods_list",
                                          inverse_name="customs_declaration_id", string="dec goods name")
