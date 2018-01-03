@@ -363,6 +363,40 @@ class GoodsWizard(models.TransientModel):
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", required=False, )
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", required=False, )
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", required=False, )
+    goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False, )
+
+
+    @api.onchange('deal_qty', 'deal_unit_price')
+    def _compute_total_goods_price(self):
+        """根据当前商品列表的成交单价 X 成交数量数量 计算出商品单行总价"""
+        if self.deal_qty != 0:
+            self.deal_total_price = self.deal_qty * self.deal_unit_price
+
+
+    @api.onchange('cus_goods_tariff_id')
+    def _generate_about_name(self):
+        """根据当前海关税则编码的变化 改变商品名称 并通过onchange装饰器，自动执行_generate_about_name方法"""
+        if self.cus_goods_tariff_id:
+            self.goods_name = self.cus_goods_tariff_id.NameCN
+            self.first_unit = self.cus_goods_tariff_id.first_unit
+            self.second_unit = self.cus_goods_tariff_id.second_unit
+            self.supervision_condition = self.cus_goods_tariff_id.supervision_condition
+
+    @api.onchange('goods_classification_id')
+    def _generate_about_goods_info(self):
+        """根据当前合规客户料号的变化 改变商品名称 商品编码等信息 并通过onchange装饰器，自动执行_generate_about_name方法"""
+        if self.goods_classification_id:
+            self.cus_goods_tariff_id = self.goods_classification_id.cus_goods_tariff_id
+            self.goods_name = self.goods_classification_id.goods_name
+            self.goods_model = self.goods_classification_id.goods_model
+            self.first_unit = self.goods_classification_id.first_unit
+            self.second_unit = self.goods_classification_id.second_unit
+            self.origin_country_id = self.goods_classification_id.origin_country_id
+            self.destination_country_id = self.goods_classification_id.destination_country_id
+            self.duty_mode_id = self.goods_classification_id.duty_mode_id
+            self.ManualSN = self.goods_classification_id.ManualSN
+            self.supervision_condition = self.goods_classification_id.supervision_condition
+
 
     @api.multi
     def create_goods_list(self):
