@@ -31,12 +31,19 @@ odoo.define('customs_center', function (require) {
 
         renderElement: function () {
           this._super();
-          this.modal_id = _.uniqueId("dec-ele-");
+          var self = this;
+          this.modal_id = _.uniqueId("dec-modal-");
           var temp = $(QWeb.render("declare_element_modal"));
           temp.prop('id', this.modal_id);
           setTimeout(function () {
-              $('body').delay(1000).append(temp);
-          });
+              $('body').append(temp);
+              $('#'+self.modal_id+' button.oe_highlight').on('click', self, self.generate_string)
+          }, 1000);
+        },
+
+        destroy: function () {
+            $('#'+this.modal_id).remove();
+            this._super.apply(this, arguments)
         },
 
         show_ele_modal: function () {
@@ -44,14 +51,24 @@ odoo.define('customs_center', function (require) {
             var self = this;
             var display_board = $('#declare-element-names');
             display_board.empty();
+            var input_tags = [];
             _.each(self.element_names, function (element_name) {
                 var ele_name = element_name[1];
                 var sequence = element_name[0];
                 var temp = _.template(self.input_temp);
-                console.log(temp);
                 var field = temp({field_id: 'dec-ele-'+sequence, name: ele_name});
-                display_board.append($(field))
-            })
+                var input_tag = $(field);
+                display_board.append(input_tag);
+                input_tags.push(input_tag)
+            });
+            var input_vals = self.$input.val();
+            if(input_vals)
+            {
+                var vals = input_vals.split('|');
+                $.each(input_tags, function (idx, obj) {
+                    obj.find('input').val(vals[idx+1])
+                })
+            }
         },
 
         remove_field: function () {
@@ -63,6 +80,7 @@ odoo.define('customs_center', function (require) {
             if (this.get('tariff')){
                 var DeclareElement = new Model('declare_element');
                 var self = this;
+                self.$input.val('');
                 DeclareElement.query(['name', 'sequence']).filter([['cus_goods_tariff_id', '=', self.get('tariff')]])
                     .order_by('sequence')
                     .all()
@@ -70,21 +88,26 @@ odoo.define('customs_center', function (require) {
                         _.each(elements, function (element) {
                             self.element_names.push([element.sequence, element.name])
                         });
-                        console.log(self.element_names);
                     })
             }
         },
         
-        generate_string: function () {
-            var names = this.element_names;
-            var target_string = _.reduce($.find('#declare-element-names input'), function (meno, input) {
-                meno += '|';
-                meno += input.val();
+        generate_string: function (event) {
+            var self = event.data;
+            var inputs = $('#declare-element-names input');
+            var values = [];
+            inputs.each(function () {
+               values.push($(this).val());
+            });
+            console.log(values);
+            var target_string = _.reduce(values, function (meno, value) {
+                return meno + '|' + value;
             }, '');
             if (target_string){
                 target_string += '|';
             }
-            this.$el.val(target_string)
+            self.$input.val(target_string);
+            $('#'+self.modal_id).modal('hide');
         }
     });
 
