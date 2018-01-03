@@ -41,12 +41,16 @@ class CusGoodsList(models.Model):
 
     currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )  # 币制
     first_qty = fields.Integer(string="first quantity", required=False,)  # 第一法定数量
-    first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
+    second_qty = fields.Integer(string="second quantity", )  # 第二法定数量
 
-    second_qty = fields.Integer(string="second quantity",)  # 第二法定数量
-    second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
+    # first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
+    # second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
     # supervision_condition = fields.Many2one(comodel_name="basedata.cus_unit", string="supervision condition")  # 监管标识/监管标识
+
+    first_unit = fields.Char(string="First Unit")  # 第一计量单位
+    second_unit = fields.Char(string="second Unit")  # 第二计量单位
     supervision_condition = fields.Char(string="supervision condition", required=False, )  # 监管标识/监管标识
+
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
