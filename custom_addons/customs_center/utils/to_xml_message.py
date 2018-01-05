@@ -68,7 +68,7 @@ def delegate_to_xml(self):
     head_node_dic['OwnerName'] = None  # u'货主单位名称'
     head_node_dic['PackNo'] = str(self.qty)  # u'件数'
     head_node_dic['PartenerID'] = None  # u'申报人标识'
-    head_node_dic['PayWay'] = None   # u'征税比例'
+    head_node_dic['PayWay'] = self.in_ratio   # u'征税比例' in_ratio  报文PayWay
     head_node_dic['PaymentMark'] = self.payment_mark.Code  # u'纳税单位'
     head_node_dic['PDate'] = None  # u'首次进行暂存操作的系统时间'  非必填
     head_node_dic['PreEntryId'] = self.pre_entry_id  # u'预录入编号'
@@ -76,7 +76,7 @@ def delegate_to_xml(self):
     head_node_dic['SeqNo'] = self.dec_seq_no   # u'报关单统一编号'
     head_node_dic['TgdNo'] = None   # u'通关申请单号'
     head_node_dic['TradeCode'] = self.business_company_id.register_code   # u'经营单位编号/收发货人海关10位编号'
-    head_node_dic['TradeCountry'] = self.trade_country_id.Code   # u'贸易国别'
+    head_node_dic['TradeCountry'] = self.origin_arrival_country_id.Code   # u'贸易国别'  启运/抵达国
     head_node_dic['TradeMode'] = self.trade_mode_id.Code  # u'监管方式'
     head_node_dic['TradeName'] = self.business_company_id.register_name_cn    # u'经营单位名称'  # self.business_company_id.register_name_cn
     head_node_dic['TrafMode'] = self.transport_mode_id.code   # u'运输方式代码'
@@ -86,7 +86,7 @@ def delegate_to_xml(self):
     head_node_dic['TypistNo'] = self.ic_code  # u'录入员IC卡号'   # 必填配置界面
     head_node_dic['WrapType'] = self.packing_id.Code  # u'包装种类'
     head_node_dic['ChkSurety'] = None  # u'担保验放标志'
-    head_node_dic['BillType'] = self.bill_type_id.Code  # u'备案清单类型'
+    head_node_dic['BillType'] = None  # u'备案清单类型' self.bill_type_id.Code
     head_node_dic['AgentCodeScc'] = str(self.dec_seq_no)  # u'申报单位统一编码'
     head_node_dic['CopCodeScc'] = self.cop_code_scc  # u'录入单位统一编码'    # 设置界面
     head_node_dic['OwnerCodeScc'] = self.input_company_id.unified_social_credit_code      # u'货主单位/消费生产单位 社会统一编码'

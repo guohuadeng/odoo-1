@@ -37,6 +37,10 @@
                     <header>
                         <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"
                                 type="object" confirm="确定生成报文，发送至单一窗口么?"/>
+                        <button name="parse_original_xml" string="解析新光报文入库" class="oe_highlight"
+                                type="object" confirm="确认解析么"/>
+
+
                         <!--<button name="send_message" string="Resend Message" class="oe_highlight" states="failure" type="object"-->
                             <!--attrs="{'invisible': ['|',('state', '=', 'cancel')]}"/>-->
                         <!--<field name="state" widget="statusbar" statusbar_visible="draft,succeed"-->
@@ -310,7 +314,7 @@
                                                        options="{'no_create_edit': 1, 'no_create': 1}"/>
                                             </div>
                                             <div class="col-lg-3 col-md-3">
-                                                <field name="other_rate" placeholder="运费/率"/>
+                                                <field name="fee_rate" placeholder="运费/率"/>
                                             </div>
                                             <div class="col-lg-3 col-md-3">
                                                 <field class="oe_inline" name="other_currency_id" placeholder="运费币制"/>
