@@ -6,7 +6,7 @@ import odoo.addons.decimal_precision as dp
 import odoo.addons.queue_job.job as q_job
 from odoo.tools import config
 import logging, os, shutil
-from lxml import etree
+# from lxml import etree
 from collections import OrderedDict
 import uuid
 from datetime import datetime, timedelta
@@ -14,16 +14,23 @@ from datetime import datetime, timedelta
 from ..utils.to_xml_message import delegate_to_xml
 _logger = logging.getLogger(__name__)
 
+# try:
+#     import xml.etree.cElementTree as ET
+# except ImportError:
+#     import xml.etree.ElementTree as ET
+
+from lxml import etree
+
 RECV_XML_BASE_PATH = config.options.get('recv_xml_message_path', '/var/log/customs_message/recv_xml_message')
 ERROR_XML_BASE_PATH = config.options.get('error_xml_message_path','/var/log/customs_message/error_xml_message')
 BAKUP_XML_BASE_PATH = config.options.get('bakup_xml_message_path','/var/log/customs_message/bakup_xml_message')
 
-PARSE_XG_TO_WLY_PATH = config.options.get('parse_xg_to_wly_path')
-PARSE_XG_TO_WLY_ATTACH_PATH = config.options.get('parse_xg_to_wly_attach_path')
-PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path')
-GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_xg_path')
-GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_xg_attach_path')
-BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path')   # 新光原始报文备份目录
+PARSE_XG_TO_WLY_PATH = config.options.get('parse_xg_to_wly_path','/mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly')
+PARSE_XG_TO_WLY_ATTACH_PATH = config.options.get('parse_xg_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly_attach_send')
+PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/send/error_xml_message')
+GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_xg_path', '/mnt/odooshare/about_wly_xml_data/send/wly_to_xinguang')
+GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_xg_attach_path', '/mnt/odooshare/about_wly_xml_data/send/wly_to_xinguang_attach_rec')
+BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/odooshare/about_wly_xml_data/send/backup_send_xml')   # 新光原始报文备份目录
 
 
 # parse_xg_to_wly_path = /mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly
@@ -47,6 +54,8 @@ def check_and_mkdir(*path):
     for p in path:
         if not os.path.exists(p):
             os.mkdir(p)
+            print("XXXXXXXXXXXXXXXXXXX hahahahahahahah XXXXXXXXXXXXXXXXXXXXXXXXXX")
+            print("XXXXXXXXXXXXXXXXXXX hahahahahahahah XXXXXXXXXXXXXXXXXXXXXXXXXX")
 
 
 class CustomsDeclaration(models.Model):
@@ -227,15 +236,21 @@ class CustomsDeclaration(models.Model):
 
         return result
 
-
-    @api.model
+    @api.multi
+    # @api.model
     # @q_job.job
     def parse_original_xml(self):
         """解析原始报文入库 生成报关单"""
-
         # 设置文件路径path
+        # PARSE_XG_TO_WLY_PATH = config.options.get('parse_xg_to_wly_path')
+        # PARSE_XG_TO_WLY_ATTACH_PATH = config.options.get('parse_xg_to_wly_attach_path')
+        # PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path')
+        # GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_xg_path')
+        # GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_xg_attach_path')
+        # BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path')  # 新光原始报文备份目录
+
         # company_xml_parse_path = self.env['customs_center.customs_dec'].browse(cus_dec_dir) #  做成前端界面可配置
-        company_xml_parse_path = u'BYJC_DXPENT0000016165' #  做成前端界面可配置
+        company_xml_parse_path = 'BYJC_DXPENT0000016165' #  做成前端界面可配置
         parse_xml_path = os.path.join(PARSE_XG_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文解析目录
         parse_attach_path = os.path.join(PARSE_XG_TO_WLY_ATTACH_PATH, company_xml_parse_path.encode('utf-8')) # 新光随附单据解析目录
         error_xml_path = os.path.join(PARSE_SEND_ERROR_XML_PATH, company_xml_parse_path.encode('utf-8'))
@@ -252,12 +267,19 @@ class CustomsDeclaration(models.Model):
 
         # 读文件，用lxml解析报文
         for xml_message in files:
+
             with open(xml_message, 'r') as f:
-                tree = etree.parse(f)
-                root = tree.getroot()
-                # response_dic = {}
+                # tree = etree.parse(f)
+                # root = tree.getroot()
+                xml_str = str(f.read())
+                xml_str = xml_str.replace('xmlns="http://www.chinaport.gov.cn/dec"', '')
+                # print xml_str
+                root = etree.fromstring(xml_str)  # 打开xml文档
+
                 customs_dec_dic = {}
                 root_name = etree.QName(root).localname
+                # iter()
+                print(root_name) # DecMessage
                 if root_name == u'DecMessage':
                     head_node = root.find('DecHead')
                     body_list = root.find('DecLists')
@@ -273,7 +295,7 @@ class CustomsDeclaration(models.Model):
 
                     # customs_dec_dic = OrderedDict()
                     customs_dec_dic['DecHead'] = {}
-                    for child in head_node.iterchildren():
+                    for child in head_node:
                         if child.text:
                             customs_dec_dic['DecHead'][child.tag] = child.text
                     print("*************************************************************************")
@@ -281,67 +303,70 @@ class CustomsDeclaration(models.Model):
 
                     # 报文中的商品列表
                     customs_dec_dic['DecLists'] = {}
-                    for child in body_list.iterchildren():
-                        d_list = 0
+                    d_list = 0
+                    for child in body_list:
                         customs_dec_dic['DecLists'][d_list] = {}
-                        for child_son in child.iterchildren():
+                        for child_son in child:
                             if child_son.text:
                                 customs_dec_dic['DecLists'][d_list][child_son.tag] = child_son.text
-                                d_list += 1
+                        d_list += 1
+                    print("******************** 66666666666666666666666 *****************************************************")
+                    print(customs_dec_dic['DecLists'])
+
 
                     customs_dec_dic['DecContainers'] = {}
-                    for child in body_containers_list.iterchildren():
+                    for child in body_containers_list:
                         if child.text:
                             customs_dec_dic['DecContainers'][child.tag] = child.text
 
                     customs_dec_dic['DecLicenseDocus'] = {}
-                    for child in body_license_docus_list.iterchildren():
+                    for child in body_license_docus_list:
                         if child.text:
                             customs_dec_dic['DecLicenseDocus'][child.tag] = child.text
 
                     customs_dec_dic['DecFreeTxt'] = {}
-                    for child in body_free_test_list.iterchildren():
+                    for child in body_free_test_list:
                         if child.text:
                             customs_dec_dic['DecFreeTxt'][child.tag] = child.text
 
                     customs_dec_dic['DecFreeTxt'] = {}
-                    for child in body_free_test_list.iterchildren():
+                    for child in body_free_test_list:
                         if child.text:
                             customs_dec_dic['DecFreeTxt'][child.tag] = child.text
 
                     customs_dec_dic['DecSign'] = {}
-                    for child in body_dec_sign.iterchildren():
+                    for child in body_dec_sign:
                         if child.text:
                             customs_dec_dic['DecSign'][child.tag] = child.text
 
                     customs_dec_dic['TrnHead'] = {}
-                    for child in trn_head_info.iterchildren():
+                    for child in trn_head_info:
                         if child.text:
                             customs_dec_dic['TrnHead'][child.tag] = child.text
 
                     customs_dec_dic['TrnList'] = {}
-                    for child in trn_list_info.iterchildren():
+                    for child in trn_list_info:
                         if child.text:
                             customs_dec_dic['TrnList'][child.tag] = child.text
 
                     customs_dec_dic['TrnContainers'] = {}
-                    for child in trn_containers_info.iterchildren():
+                    for child in trn_containers_info:
                         if child.text:
                             customs_dec_dic['TrnContainers'][child.tag] = child.text
 
                     customs_dec_dic['TrnContaGoodsList'] = {}
-                    for child in trn_conta_goods_list.iterchildren():
+                    for child in trn_conta_goods_list:
                         if child.text:
                             customs_dec_dic['TrnContaGoodsList'][child.tag] = child.text
 
                     customs_dec_dic['EdocRealation'] = {}
-                    for child in e_doc_realation_info.iterchildren():
+                    for child in e_doc_realation_info:
                         if child.text:
                             customs_dec_dic['EdocRealation'][child.tag] = child.text
 
                 else:
                     _logger.error(u'Find error format xml message: %s' % xml_message.decode('utf-8'))
-                    shutil.move(xml_message, error_path)
+                    shutil.move(xml_message, error_xml_path)
                     continue
 
             if customs_dec_dic:
@@ -512,17 +537,16 @@ class CustomsDeclaration(models.Model):
                     'ic_code': ic_code,  # 操作员IC卡号/录入员IC卡号
                 }
 
-            # 报文中的商品列表
-            # customs_dec_dic['DecLists'] = {}
-            # for child in body_list.iterchildren():
-            #     d_list = 0
-            #     customs_dec_dic['DecLists'][d_list] = {}
-            #     for child_son in child.iterchildren():
-            #         if child_son.text:
-            #             customs_dec_dic['DecLists'][d_list][child_son.tag] = child_son.text
-            #             d_list += 1
+            try:
+                customs_declaration_obj = self.env['customs_center.customs_dec'].create(customs_dec_dic)
+            except Exception, error_info:
+                _logger.error(u'{} {}'.format(xml_message.decode('utf-8'), str(error_info).decode('utf-8')))
+                shutil.move(xml_message, error_xml_path)
+                continue
 
-            # customs_dec_dic['DecLists']
+
+            # 报文中的商品列表 解析后 字典格式
+            # dec_goods_list_dic = customs_dec_dic['DecLists']
             # {
             # 0: {'ClassMark':'888','CodeTS':'aaa','ContrItem':'bbb','DeclPrice':'ccc'},
             # 1: {'ClassMark':'888','CodeTS':'aaa','ContrItem':'bbb','DeclPrice':'ccc'},
@@ -531,62 +555,61 @@ class CustomsDeclaration(models.Model):
 
             # 商品列表 字典
             dec_goods_list_dic = customs_dec_dic['DecLists']
+            if dec_goods_list_dic:
+                for keys, values_dic in dec_goods_list_dic.items():
+                    if values_dic:
+                        for k,values in values_dic.items():
+                            dec_goods_list = {}
+                            if k == 'CodeTS':
+                                cus_goods_tariff_code_t = values  # u'商品编号'
+                                cus_goods_tariff_id = self.env['basedata.cus_goods_tariff'].search([('Code_t', '=', cus_goods_tariff_code_t)])
+                                dec_goods_list['cus_goods_tariff_id'] = cus_goods_tariff_id
+                            elif k == 'DeclPrice':
+                                deal_unit_price = values  # u'申报单价'
+                                dec_goods_list['deal_unit_price'] = deal_unit_price
+                            elif k == 'DeclTotal':
+                                deal_total_price = values  # u'申报总价'
+                                dec_goods_list['deal_total_price'] = deal_total_price
+                            elif k == 'DutyMode':
+                                duty_mode_code = values  # u'征减免税方式'
+                                duty_mode_id = self.env['basedata.cus_duty_mode'].search([('Code', '=', duty_mode_code)])
+                                dec_goods_list['duty_mode_id'] = duty_mode_id
+                            elif k == 'GModel':
+                                goods_model = values  # u'商品规格、型号'
+                                dec_goods_list['goods_model'] = goods_model
+                            elif k == 'GQty':
+                                deal_qty = values  # u'申报数量'
+                                dec_goods_list['deal_qty'] = deal_qty
+                            elif k == 'OriginCountry':
+                                origin_country_code = values  # u'原产地'
+                                origin_country_id = self.env['delegate_country'].search([('Code', '=', origin_country_code)])
+                                dec_goods_list['origin_country_id'] = origin_country_id
+                            elif k == 'DestinationCountry':
+                                destination_country_code = values  # u'最终目的国'
+                                destination_country_id= self.env['delegate_country'].search([('Code', '=', destination_country_code)])
+                                dec_goods_list['destination_country_id'] = destination_country_id
+                            try:
+                                customs_declaration_id = customs_declaration_obj.id
+                                dec_goods_list['customs_declaration_id'] = customs_declaration_id
+                                cus_goods_list_obj = self.env['customs_center.cus_goods_list'].create(dec_goods_list)
+                            except Exception, error_info:
+                                _logger.error(
+                                    u'{} {}'.format(xml_message.decode('utf-8'), str(error_info).decode('utf-8')))
+                                shutil.move(xml_message, error_xml_path)
+                                continue
 
-            try:
-                customs_declaration_obj = self.env['customs_center.customs_dec'].create(customs_dec_dic)
-                customs_declaration_obj.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search(
-                    [('id', 'in', cus_goods_list_ids)])
 
-
-
-
-            # 报关单 关联合规模型 一对多 冗余字段 用于修改历史商品列表 通过关联报关单 确认是否已归类
-            dec_goods_classified_ids = fields.One2many(comodel_name="customs_center.goods_classify",
-                                                       inverse_name="customs_declaration_id", string="goods classified")
-            product_node_name = OrderedDict()
-            product_node_name['ClassMark'] = None  # u'归类标志'
-            product_node_name['CodeTS'] = str(item.cus_goods_tariff_id.Code_t)  # u'商品编号'
-            product_node_name['ContrItem'] = None  # u'备案序号'
-            product_node_name['DeclPrice'] = str(item.deal_unit_price)  # u'申报单价'
-            product_node_name['DeclTotal'] = str(item.deal_total_price)  # u'申报总价'
-            product_node_name['DutyMode'] = str(item.duty_mode_id.Code)  # u'征减免税方式'
-            product_node_name['ExgNo'] = None  # u'货号'
-            product_node_name['ExgVersion'] = None  # u'版本号'
-            product_node_name['Factor'] = None  # u'申报计量单位与法定单位比例因子'
-            product_node_name['FirstQty'] = str(item.first_qty)  # u'第一法定数量'
-            # product_node_name['FirstUnit'] = item.first_unit.Code   # u'第一计量单位'
-            product_node_name['FirstUnit'] = item.first_unit  # u'第一计量单位'
-            product_node_name['GUnit'] = item.deal_unit.Code  # u'申报/成交计量单位'
-            product_node_name['GModel'] = str(item.goods_model)  # u'商品规格、型号'
-            product_node_name['GName'] = item.goods_name  # u'商品名称'
-            product_node_name['GNo'] = str(i)  # u'商品序号'
-            product_node_name['GQty'] = str(item.deal_qty)  # u'申报数量（成交计量单位）'
-            product_node_name['OriginCountry'] = item.origin_country_id.Code  # u'原产地'
-            # product_node_name['SecondUnit'] = item.second_unit.Code   # u'第二计量单位'
-            product_node_name['SecondUnit'] = item.second_unit  # u'第二计量单位'
-            product_node_name['SecondQty'] = str(item.second_qty)  # u'第二法定数量'
-            product_node_name['TradeCurr'] = item.currency_id.Code  # u'成交币制'
-            product_node_name['UseTo'] = None  # u'用途/生产厂家'
-            product_node_name['WorkUsd'] = None  # u'工缴费'
-            product_node_name['DestinationCountry'] = item.destination_country_id.Code  # u'最终目的国(地区)'
-
-            except Exception, error_info:
-                _logger.error(u'{} {}'.format(xml_message.decode('utf-8'), str(error_info).decode('utf-8')))
-                shutil.move(xml_message, error_path)
-                continue
             else:
-                shutil.move(xml_message, bakup_path)
+                shutil.move(xml_message, backup_xml_path)
                 _logger.info(u'Had parsed the xml message %s' % xml_message.decode('utf-8'))
-
-
 
 
     @api.multi
     def customs_delegate_to_xml(self):
         """ 根据报关单生成xml报文 存放到指定目录 """
-        self.update({'cus_dec_sent_state': 'succeed'})
         for line in self:
             delegate_to_xml(line)
+        self.update({'cus_dec_sent_state': 'succeed'})
         return True
 
     @api.multi
@@ -599,7 +622,6 @@ class CustomsDeclaration(models.Model):
     @q_job.job
     def parse_receipt_xml(self):
         """解析回执报文"""
-
         # 设置文件路径path
         company_name = self.env.user.company_id.name
         recv_path = os.path.join(RECV_XML_BASE_PATH, company_name.encode('utf-8'))

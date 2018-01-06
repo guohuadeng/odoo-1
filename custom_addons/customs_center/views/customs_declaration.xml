@@ -38,7 +38,7 @@
                         <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"
                                 type="object" confirm="确定生成报文，发送至单一窗口么?"/>
                         <button name="parse_original_xml" string="解析新光报文入库" class="oe_highlight"
-                                type="object" confirm="确认解析么"/>
+                                type="object"/>
 
 
                         <!--<button name="send_message" string="Resend Message" class="oe_highlight" states="failure" type="object"-->
