@@ -28,9 +28,9 @@ class CusGoodsList(models.Model):
     goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
 
     deal_qty = fields.Integer(string="deal quantity", required=False, default=1)  # 成交数量
-    deal_unit_price = fields.Monetary(string="deal unit price", )    # 成交单价/申报单价
+    deal_unit_price = fields.Float(string="deal unit price", )    # 成交单价/申报单价
     deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )    # 成交单位
-    deal_total_price = fields.Monetary(compute='_compute_total_goods_price', string="deal total price", )  # 成交总价
+    deal_total_price = fields.Float(compute='_compute_total_goods_price', string="deal total price", )  # 成交总价
 
     @api.onchange('deal_qty', 'deal_unit_price')
     def _compute_total_goods_price(self):

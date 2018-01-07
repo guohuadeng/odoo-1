@@ -68,7 +68,7 @@ def delegate_to_xml(self):
     head_node_dic['OwnerName'] = None  # u'货主单位名称'
     head_node_dic['PackNo'] = str(self.qty)  # u'件数'
     head_node_dic['PartenerID'] = None  # u'申报人标识'
-    head_node_dic['PayWay'] = self.in_ratio   # u'征税比例' in_ratio  报文PayWay
+    head_node_dic['PayWay'] = str(self.in_ratio)   # u'征税比例' in_ratio  报文PayWay
     head_node_dic['PaymentMark'] = self.payment_mark.Code  # u'纳税单位'
     head_node_dic['PDate'] = None  # u'首次进行暂存操作的系统时间'  非必填
     head_node_dic['PreEntryId'] = self.pre_entry_id  # u'预录入编号'
@@ -116,7 +116,7 @@ def delegate_to_xml(self):
         product_node_name['Factor'] = None   # u'申报计量单位与法定单位比例因子'
         product_node_name['FirstQty'] = str(item.first_qty)   # u'第一法定数量'
         # product_node_name['FirstUnit'] = item.first_unit.Code   # u'第一计量单位'
-        product_node_name['FirstUnit'] = item.first_unit   # u'第一计量单位'
+        product_node_name['FirstUnit'] = item.first_unit.Code   # u'第一计量单位'
         product_node_name['GUnit'] = item.deal_unit.Code    # u'申报/成交计量单位'
         product_node_name['GModel'] = str(item.goods_model)    # u'商品规格、型号'
         product_node_name['GName'] = item.goods_name   # u'商品名称'
@@ -124,7 +124,7 @@ def delegate_to_xml(self):
         product_node_name['GQty'] = str(item.deal_qty)     # u'申报数量（成交计量单位）'
         product_node_name['OriginCountry'] = item.origin_country_id.Code    # u'原产地'
         # product_node_name['SecondUnit'] = item.second_unit.Code   # u'第二计量单位'
-        product_node_name['SecondUnit'] = item.second_unit   # u'第二计量单位'
+        product_node_name['SecondUnit'] = item.second_unit.Code   # u'第二计量单位'
         product_node_name['SecondQty'] = str(item.second_qty)    # u'第二法定数量'
         product_node_name['TradeCurr'] = item.currency_id.Code   # u'成交币制'
         product_node_name['UseTo'] = None   # u'用途/生产厂家'
@@ -219,12 +219,12 @@ def delegate_to_xml(self):
 
     # 转关相关报文列表信息
     trn_list = OrderedDict()
-    trn_list['BillNo'] = None  # u'提单号'
+    trn_list['BillNo'] = self.bill_no  # u'提单号'
     trn_list['IEDate'] = None  # u'实际进出境日期'
     trn_list['ShipId'] = None  # u'进出境运输工具编号'
-    trn_list['ShipNameEn'] = None  # u'进出境运输工具名称（船舶名称）'
+    trn_list['ShipNameEn'] = self.NativeShipName  # u'进出境运输工具名称（船舶名称）'
     trn_list['TrafMode'] = None  # u'进出境运输方式'
-    trn_list['VoyageNo'] = None  # u'进出境运输工具航次'
+    trn_list['VoyageNo'] = self.VoyageNo  # u'进出境运输工具航次'
 
     for node in trn_list:
         _node = etree.SubElement(trn_list_info, node)
@@ -283,7 +283,9 @@ def delegate_to_xml(self):
 
     # change the root to xml file
     string = etree.tostring(root, xml_declaration=True, encoding='utf-8')
-    base_dir = config.options['xml_files_path']
+    # base_dir = config.options['xml_files_path']
+
+    base_dir = config.options.get('xml_files_path', '/mnt/odooshare/customs_declaration_xml')
 
     # # 企业报关单 存放目录 前端界面配置
     # et_dec_catalog_name = str(self.et_dec_catalog_ids.et_dec_catalog_name)

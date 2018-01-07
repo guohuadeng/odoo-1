@@ -556,7 +556,7 @@
                                                     <field name="deal_qty" string="成交数量"/>
                                                     <field name="deal_unit_price" string="成交单价"/>
                                                     <field name="deal_unit" string="成交单位" options="{'no_create_edit': 1}"/>
-                                                    <field name="deal_total_price" string="成交总价" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                                    <field name="deal_total_price" string="成交总价"/>
                                                     <field name="currency_id" string="币制" options="{'no_create_edit': 1}"/>
                                                     <field name="first_qty" string="第一数量"/>
                                                     <field name="first_unit" string="第一单位" options="{'no_create_edit': 1}"/>
@@ -583,7 +583,7 @@
                                             <field name="deal_qty" string="成交数量"/>
                                             <field name="deal_unit_price" string="成交单价"/>
                                             <field name="deal_unit" string="成交单位"/>
-                                            <field name="deal_total_price" string="成交总价" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                            <field name="deal_total_price" string="成交总价"/>
                                             <field name="currency_id" string="币制" options="{'no_create_edit': 1}"/>
                                             <field name="first_qty" string="第一数量"/>
                                             <field name="first_unit" string="第一单位" options="{'no_create_edit': 1}"/>
