@@ -31,6 +31,7 @@ GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_xg_
 BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/odooshare/about_wly_xml_data/send/backup_send_xml')   # 新光原始报文备份目录
 
 
+
 # parse_xg_to_wly_path = /mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly
 # parse_xg_to_wly_attach_path = /mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly_attach_send
 # parse_send_error_xml_path = /mnt/odooshare/about_wly_xml_data/send/error_xml_message
@@ -291,9 +292,10 @@ class CustomsDeclaration(models.Model):
 
                     # customs_dec_dic = OrderedDict()
                     customs_dec_dic['DecHead'] = {}
-                    for child in head_node:
-                        if child.text:
-                            customs_dec_dic['DecHead'][child.tag] = child.text
+                    if head_node:
+                        for child in head_node:
+                            if child.text:
+                                customs_dec_dic['DecHead'][child.tag] = child.text
                     # print("*************************************************************************")
                     # print(customs_dec_dic)
 
@@ -312,54 +314,64 @@ class CustomsDeclaration(models.Model):
 
 
                     customs_dec_dic['DecContainers'] = {}
-                    for child in body_containers_list:
-                        if child.text:
-                            customs_dec_dic['DecContainers'][child.tag] = child.text
+                    if body_containers_list:
+                        for child in body_containers_list:
+                            if child.text:
+                                customs_dec_dic['DecContainers'][child.tag] = child.text
 
                     customs_dec_dic['DecLicenseDocus'] = {}
-                    for child in body_license_docus_list:
-                        if child.text:
-                            customs_dec_dic['DecLicenseDocus'][child.tag] = child.text
+                    if body_license_docus_list:
+                        for child in body_license_docus_list:
+                            if child.text:
+                                customs_dec_dic['DecLicenseDocus'][child.tag] = child.text
 
                     customs_dec_dic['DecFreeTxt'] = {}
-                    for child in body_free_test_list:
-                        if child.text:
-                            customs_dec_dic['DecFreeTxt'][child.tag] = child.text
+                    if body_free_test_list:
+                        for child in body_free_test_list:
+                            if child.text:
+                                customs_dec_dic['DecFreeTxt'][child.tag] = child.text
 
                     customs_dec_dic['DecFreeTxt'] = {}
-                    for child in body_free_test_list:
-                        if child.text:
-                            customs_dec_dic['DecFreeTxt'][child.tag] = child.text
+                    if body_free_test_list:
+                        for child in body_free_test_list:
+                            if child.text:
+                                customs_dec_dic['DecFreeTxt'][child.tag] = child.text
 
                     customs_dec_dic['DecSign'] = {}
-                    for child in body_dec_sign:
-                        if child.text:
-                            customs_dec_dic['DecSign'][child.tag] = child.text
+                    if body_dec_sign:
+                        for child in body_dec_sign:
+                            if child.text:
+                                customs_dec_dic['DecSign'][child.tag] = child.text
 
                     customs_dec_dic['TrnHead'] = {}
-                    for child in trn_head_info:
-                        if child.text:
-                            customs_dec_dic['TrnHead'][child.tag] = child.text
+                    if trn_head_info:
+                        for child in trn_head_info:
+                            if child.text:
+                                customs_dec_dic['TrnHead'][child.tag] = child.text
 
                     customs_dec_dic['TrnList'] = {}
-                    for child in trn_list_info:
-                        if child.text:
-                            customs_dec_dic['TrnList'][child.tag] = child.text
+                    if trn_list_info:
+                        for child in trn_list_info:
+                            if child.text:
+                                customs_dec_dic['TrnList'][child.tag] = child.text
 
                     customs_dec_dic['TrnContainers'] = {}
-                    for child in trn_containers_info:
-                        if child.text:
-                            customs_dec_dic['TrnContainers'][child.tag] = child.text
+                    if trn_containers_info:
+                        for child in trn_containers_info:
+                            if child.text:
+                                customs_dec_dic['TrnContainers'][child.tag] = child.text
 
                     customs_dec_dic['TrnContaGoodsList'] = {}
-                    for child in trn_conta_goods_list:
-                        if child.text:
-                            customs_dec_dic['TrnContaGoodsList'][child.tag] = child.text
+                    if trn_conta_goods_list:
+                        for child in trn_conta_goods_list:
+                            if child.text:
+                                customs_dec_dic['TrnContaGoodsList'][child.tag] = child.text
 
                     customs_dec_dic['EdocRealation'] = {}
-                    for child in e_doc_realation_info:
-                        if child.text:
-                            customs_dec_dic['EdocRealation'][child.tag] = child.text
+                    if e_doc_realation_info:
+                        for child in e_doc_realation_info:
+                            if child.text:
+                                customs_dec_dic['EdocRealation'][child.tag] = child.text
 
                 else:
                     _logger.error(u'Find error format xml message: %s' % xml_message.decode('utf-8'))
@@ -367,163 +379,165 @@ class CustomsDeclaration(models.Model):
                     continue
 
             if customs_dec_dic:
-                client_seq_no = customs_dec_dic['DecSign']['ClientSeqNo']  # 报关单客户端编号
-                inout = customs_dec_dic['DecHead']['IEFlag']  # u'进出口标志'
+                client_seq_no = customs_dec_dic['DecSign'].get('ClientSeqNo',None)  # 报关单客户端编号
+                inout = customs_dec_dic['DecHead'].get('IEFlag',None)  # u'进出口标志'
 
-                custom_master_code = customs_dec_dic['DecHead']['CustomMaster']  # u'申报地海关'
+                custom_master_code = customs_dec_dic['DecHead'].get('CustomMaster',None)  # u'申报地海关'
                 custom_master_id = self.env['delegate_customs'].search([('Code', '=', custom_master_code)])
 
-                dec_seq_no = customs_dec_dic['DecHead']['AgentCodeScc'] # u'统一编号'  申报单位统一编码
+                dec_seq_no = customs_dec_dic['DecHead'].get('AgentCodeScc',None) # u'统一编号'  申报单位统一编码
                 pre_entry_id = customs_dec_dic['DecHead']['PreEntryId'] # u'预录入编号'
 
                 # customs_code = customs_dec_dic.get('DecHead')['IEPort']  # u'进出口岸'
-                customs_code = customs_dec_dic['DecHead']['IEPort']  # u'进出口岸'
+                customs_code = customs_dec_dic['DecHead'].get('IEPort',None)  # u'进出口岸'
                 customs_id = self.env['delegate_customs'].search([('Code', '=', customs_code)])
 
-                ManualNo = customs_dec_dic['DecHead']['ManualNo']  # u'备案号'
-                customer_contract_no = customs_dec_dic['DecHead']['ContrNo']  # u'合同编号'
+                ManualNo = customs_dec_dic['DecHead'].get('ManualNo',None)  # u'备案号'
+                customer_contract_no = customs_dec_dic['DecHead'].get('ContrNo',None)  # u'合同编号'
 
-                in_out_date = customs_dec_dic['DecHead']['IEDate']  # u'进出口日期'
+                in_out_date = customs_dec_dic['DecHead'].get('IEDate',None)  # u'进出口日期'
 
-                business_company_register_code = customs_dec_dic['DecHead']['TradeCode']   # 收发货人
+                business_company_register_code = customs_dec_dic['DecHead'].get('TradeCode',None)   # 收发货人
                 business_company_id = self.env['basedata.cus_register_company'].search([('register_code', '=', business_company_register_code)])
 
-                input_company_unified_code = customs_dec_dic['DecHead']['OwnerCodeScc']   # 消费使用单位 货主单位
+                input_company_unified_code = customs_dec_dic['DecHead'].get('OwnerCodeScc',None)   # 消费使用单位 货主单位
                 input_company_id = self.env['basedata.cus_register_company'].search([('unified_social_credit_code', '=', input_company_unified_code)])
 
-                declare_company_register_code = customs_dec_dic['DecHead']['AgentCode']   # 申报单位
+                declare_company_register_code = customs_dec_dic['DecHead'].get('AgentCode',None)   # 申报单位
                 declare_company_id = self.env['basedata.cus_register_company'].search([('register_code', '=', declare_company_register_code)])
 
-                transport_mode_code = customs_dec_dic['DecHead']['TrafMode']  # u'运输方式'
+
+                transport_mode_code = customs_dec_dic['DecHead'].get('TrafMode',None)  # u'运输方式'
                 transport_mode_id = self.env['delegate_transport_mode'].search([('code', '=', transport_mode_code)])
 
-                NativeShipName = customs_dec_dic['DecHead']['TrafName']  # u'运输工具名称'
-                VoyageNo = customs_dec_dic['TrnList']['VoyageNo']  # u'航次号'
-                bill_no = customs_dec_dic['DecHead']['BillNo']  # u'提运单号'
+                NativeShipName = customs_dec_dic['DecHead'].get('TrafName',None)  # u'运输工具名称'
+                VoyageNo = customs_dec_dic['TrnList'].get('VoyageNo',None)  # u'航次号'
+                bill_no = customs_dec_dic['DecHead'].get('BillNo',None)  # u'提运单号'
 
-                trade_mode_code = customs_dec_dic['DecHead']['TradeMode']  # u'监管方式'
+                trade_mode_code = customs_dec_dic['DecHead'].get('TradeMode',None)  # u'监管方式'
                 trade_mode_id = self.env['delegate_trade_mode'].search([('Code', '=', trade_mode_code)])
 
-                CutMode_code = customs_dec_dic['DecHead']['CutMode']  # u'征免性质'
+                CutMode_code = customs_dec_dic['DecHead'].get('CutMode',None)  # u'征免性质'
                 CutMode_id = self.env['basedata.cus_cut_mode'].search([('Code', '=', CutMode_code)])
 
-                payment_mark_code = customs_dec_dic['DecHead']['PaymentMark']  # u'纳税单位'
+                payment_mark_code = customs_dec_dic['DecHead'].get('PaymentMark',None) # u'纳税单位'
                 payment_mark = self.env['customs_center.pay_mark_type'].search([('Code', '=', payment_mark_code)])
 
-                licenseNo = customs_dec_dic['DecHead']['LicenseNo']  # u'许可证编号'
+                licenseNo = customs_dec_dic['DecHead'].get('LicenseNo',None)  # u'许可证编号'
 
-                origin_arrival_country_code = customs_dec_dic['DecHead']['TradeCountry']  # u'启运国/抵达国'
+                origin_arrival_country_code = customs_dec_dic['DecHead'].get('TradeCountry',None)  # u'启运国/抵达国'
                 origin_arrival_country_id = self.env['delegate_country'].search([('Code', '=', origin_arrival_country_code)])
 
-                port_code = customs_dec_dic['DecHead']['DistinatePort']  # u'装货/指运港'
+                port_code = customs_dec_dic['DecHead'].get('DistinatePort',None)  # u'装货/指运港'
                 port_id = self.env['delegate_port'].search([('Code', '=', port_code)])
 
-                region_code = customs_dec_dic['DecHead']['DistrictCode']  # u'境内目的/货源地'
+                region_code = customs_dec_dic['DecHead'].get('DistrictCode',None)  # u'境内目的/货源地'
                 region_id = self.env['delegate_region'].search([('Code', '=', region_code)])
 
-                trade_terms_code = customs_dec_dic['DecHead']['TransMode']  # u'成交方式 or 贸易条款'
+                trade_terms_code = customs_dec_dic['DecHead'].get('TransMode',None)  # u'成交方式 or 贸易条款'
                 trade_terms_id = self.env['delegate_trade_terms'].search([('Code', '=', trade_terms_code)])
 
-                fee_mark_code = customs_dec_dic['DecHead']['FeeMark']  # u'运费标记'
+                fee_mark_code = customs_dec_dic['DecHead'].get('FeeMark',None)  # u'运费标记'
                 fee_mark = self.env['customs_center.exp_mark_type'].search([('Code', '=', fee_mark_code)])
-                fee_rate = customs_dec_dic['DecHead']['FeeRate']  # u'运费／率'
+                fee_rate = customs_dec_dic['DecHead'].get('FeeRate',None)  # u'运费／率'
 
-                fee_currency_code = customs_dec_dic['DecHead']['FeeCurr']  # u'运费币制'
+                fee_currency_code = customs_dec_dic['DecHead'].get('FeeCurr',None)  # u'运费币制'
                 fee_currency_id = self.env['basedata.cus_currency'].search([('Code', '=', fee_currency_code)])
 
-                insurance_mark_code = customs_dec_dic['DecHead']['InsurMark']  # u'保险费标记'
+                insurance_mark_code = customs_dec_dic['DecHead'].get('InsurMark',None)  # u'保险费标记'
                 insurance_mark = self.env['customs_center.exp_mark_type'].search([('Code', '=', insurance_mark_code)])
-                insurance_rate = customs_dec_dic['DecHead']['InsurRate']  # u'保险费／率'
+                insurance_rate = customs_dec_dic['DecHead'].get('InsurRate',None)  # u'保险费／率'
 
-                insurance_currency_code = customs_dec_dic['DecHead']['InsurCurr']  # u'保险费币制'
+                insurance_currency_code = customs_dec_dic['DecHead'].get('InsurCurr',None)  # u'保险费币制'
                 insurance_currency_id = self.env['basedata.cus_currency'].search([('Code', '=', insurance_currency_code)])
 
-                other_mark_code = customs_dec_dic['DecHead']['OtherMark']  # u'杂费标记'
+                other_mark_code = customs_dec_dic['DecHead'].get('OtherMark',None)  # u'杂费标记'
                 other_mark = self.env['customs_center.exp_mark_type'].search([('Code', '=', other_mark_code)])
-                other_rate = customs_dec_dic['DecHead']['OtherRate']  # u'杂费／率'
+                other_rate = customs_dec_dic['DecHead'].get('OtherRate',None)  # u'杂费／率'
 
-                other_currency_code = customs_dec_dic['DecHead']['OtherCurr']  # u'杂费币制'
+                other_currency_code = customs_dec_dic['DecHead'].get('OtherCurr',None)  # u'杂费币制'
                 other_currency_id = self.env['basedata.cus_currency'].search([('Code', '=', other_currency_code)])
 
-                qty = customs_dec_dic['DecHead']['PackNo']  # u'件数'
+                qty = customs_dec_dic['DecHead'].get('PackNo',None)  # u'件数'
 
-                packing_code = customs_dec_dic['DecHead']['WrapType']  # u'包装种类'
+                packing_code = customs_dec_dic['DecHead'].get('WrapType',None)  # u'包装种类'
                 packing_id = self.env['delegate_packing'].search([('Code', '=', packing_code)])
 
-                gross_weight = customs_dec_dic['DecHead']['GrossWet']  # u'毛重'
-                net_weight = customs_dec_dic['DecHead']['NetWt']  # u'净重'
+                gross_weight = customs_dec_dic['DecHead'].get('GrossWet',None)  # u'毛重'
+                net_weight = customs_dec_dic['DecHead'].get('NetWt',None)  # u'净重'
 
-                trade_country_code = customs_dec_dic['DecHead']['TradeAreaCode']  # u'贸易国别'
+                trade_country_code = customs_dec_dic['DecHead'].get('TradeAreaCode',None)  # u'贸易国别'
                 trade_country_id = self.env['delegate_country'].search([('Code', '=', trade_country_code)])
 
-                in_ratio = customs_dec_dic['DecHead']['PayWay']  # u'征税比例' in_ratio  报文PayWay
+                in_ratio = customs_dec_dic['DecHead'].get('PayWay',None)  # u'征税比例' in_ratio  报文PayWay
 
-                promise1_promise2_promise3_code = customs_dec_dic['DecHead']['PromiseItmes']  # u'承诺事项'  字符串拼接
-                promise1_code = str(promise1_promise2_promise3_code)[0]
-                promise2_code = str(promise1_promise2_promise3_code)[1]
-                promise3_code = str(promise1_promise2_promise3_code)[2]
+                promise1_promise2_promise3_code = customs_dec_dic['DecHead'].get('PromiseItmes',None)  # u'承诺事项'  字符串拼接
+
+                promise1_code = str(promise1_promise2_promise3_code)[0] if promise1_promise2_promise3_code else None
+                promise2_code = str(promise1_promise2_promise3_code)[1] if promise1_promise2_promise3_code else None
+                promise3_code = str(promise1_promise2_promise3_code)[2] if promise1_promise2_promise3_code else None
                 promise1 = self.env['customs_center.whet_mark_type'].search([('Code', '=', promise1_code)])  # 特殊关系确认
                 promise2 = self.env['customs_center.whet_mark_type'].search([('Code', '=', promise2_code)])  # 价格影响确认
                 promise3 = self.env['customs_center.whet_mark_type'].search([('Code', '=', promise3_code)])  # 支付特许权使用费确认
 
-                entry_type_code = customs_dec_dic['DecHead']['EntryType']  # u'报关单类型'
+                entry_type_code = customs_dec_dic['DecHead'].get('EntryType',None)  # u'报关单类型'
                 entry_type_id = self.env['basedata.cus_entry_type'].search([('Code', '=', entry_type_code)])
 
-                remarks = customs_dec_dic['DecHead']['NoteS']  # u'备注'
+                remarks = customs_dec_dic['DecHead'].get('NoteS',None)  # u'备注'
 
-                cop_code = customs_dec_dic['DecHead']['CopCode']  # u'录入单位企业组织机构代码'
-                cop_name = customs_dec_dic['DecHead']['CopName']  # u'录入单位名称'
-                cop_code_scc = customs_dec_dic['DecHead']['CopCodeScc']  # u'录入单位社会信用统一编码'
-                inputer_name = customs_dec_dic['DecHead']['InputerName']  # u'录入员姓名'
-                oper_name = customs_dec_dic['DecSign']['OperName']  # u'操作员姓名'
-                certificate = customs_dec_dic['DecSign']['Certificate']  # u'操作员卡的证书号'
-                ic_code = customs_dec_dic['DecHead']['TypistNo']  # u'操作员IC卡号/录入员IC卡号'
+                cop_code = customs_dec_dic['DecHead'].get('CopCode',None)  # u'录入单位企业组织机构代码'
+                cop_name = customs_dec_dic['DecHead'].get('CopName',None) # u'录入单位名称'
+                cop_code_scc = customs_dec_dic['DecHead'].get('CopCodeScc',None) # u'录入单位社会信用统一编码'
+                inputer_name = customs_dec_dic['DecHead'].get('InputerName',None) # u'录入员姓名'
+                oper_name = customs_dec_dic['DecSign'].get('OperName',None)  # u'操作员姓名'
+                certificate = customs_dec_dic['DecSign'].get('Certificate',None)  # u'操作员卡的证书号'
+                ic_code = customs_dec_dic['DecHead'].get('TypistNo',None)  # u'操作员IC卡号/录入员IC卡号'
 
                 # print(customs_dec_dic)
                 customs_dec_dic = {
                     'client_seq_no': client_seq_no,  # 报关单客户端编号
                     'inout': inout,  # u'进出口标志'
-                    'custom_master_id': custom_master_id[0].id,  # 申报口岸 / 申报地海关
+                    'custom_master_id': custom_master_id[0].id if len(custom_master_id) else None,  # 申报口岸 / 申报地海关
                     'dec_seq_no': dec_seq_no,  # u'统一编号'
                     'pre_entry_id': pre_entry_id,  # u'预录入编号'
-                    'customs_id': customs_id[0].id,  # u'进出口岸'
+                    'customs_id': customs_id[0].id if len(customs_id) else None,  # u'进出口岸'
                     'ManualNo': ManualNo,  # u'备案号'
                     'customer_contract_no': customer_contract_no,  # u'合同协议号'
                     'in_out_date': in_out_date,  # u'进出口日期'
-                    'business_company_id': business_company_id[0].id,  # 收发货人
-                    'input_company_id': input_company_id[0].id,  # 消费使用单位 货主单位
-                    'declare_company_id': declare_company_id[0].id,  # 申报单位
-                    'transport_mode_id': transport_mode_id[0].id,  # u'运输方式'
+                    'business_company_id': business_company_id[0].id if len(business_company_id) else None,  # 收发货人
+                    'input_company_id': input_company_id[0].id if len(input_company_id) else None,  # 消费使用单位 货主单位
+                    'declare_company_id': declare_company_id[0].id if len(declare_company_id) else None,  # 申报单位
+                    'transport_mode_id': transport_mode_id[0].id if len(transport_mode_id) else None,  # u'运输方式'
                     'NativeShipName': NativeShipName,  # u'运输工具名称'
                     'VoyageNo': VoyageNo,  # u'航次号'
                     'bill_no': bill_no,  # u'提运单号'
-                    'trade_mode_id': trade_mode_id[0].id,  # u'监管方式'
-                    'CutMode_id': CutMode_id[0].id,  # u'征免性质'
-                    'payment_mark': payment_mark[0].id,  # 纳税单位 id
+                    'trade_mode_id': trade_mode_id[0].id if len(trade_mode_id) else None,  # u'监管方式'
+                    'CutMode_id': CutMode_id[0].id if len(CutMode_id) else None,  # u'征免性质'
+                    'payment_mark': payment_mark[0].id if len(payment_mark) else None,  # 纳税单位 id
                     'licenseNo': licenseNo,  # u'许可证编号'
-                    'origin_arrival_country_id': origin_arrival_country_id[0].id, # 启运国/抵达国
-                    'port_id': port_id[0].id,  # 装货/指运港 id
-                    'region_id': region_id[0].id,  # 境内目的/货源地 id
-                    'trade_terms_id': trade_terms_id[0].id,  # 成交方式 or 贸易条款 id
-                    'fee_mark': fee_mark[0].id,  # # 运费标记 id
+                    'origin_arrival_country_id': origin_arrival_country_id[0].id if len(origin_arrival_country_id) else None, # 启运国/抵达国
+                    'port_id': port_id[0].id if len(port_id) else None,  # 装货/指运港 id
+                    'region_id': region_id[0].id if len(region_id) else None,  # 境内目的/货源地 id
+                    'trade_terms_id': trade_terms_id[0].id if len(trade_terms_id) else None,  # 成交方式 or 贸易条款 id
+                    'fee_mark': fee_mark[0].id if len(fee_mark) else None,  # # 运费标记 id
                     'fee_rate': fee_rate,  # 运费/率
-                    'fee_currency_id': fee_currency_id[0].id,  # 运费币制
-                    'insurance_mark': insurance_mark[0].id,  # 保险费标记
+                    'fee_currency_id': fee_currency_id[0].id if len(fee_currency_id) else None,  # 运费币制
+                    'insurance_mark': insurance_mark[0].id if len(insurance_mark) else None,  # 保险费标记
                     'insurance_rate': insurance_rate,  # 保险费/率
-                    'insurance_currency_id': insurance_currency_id[0].id,  # 保险费币制
-                    'other_mark': other_mark[0].id,  # 杂费标记
+                    'insurance_currency_id': insurance_currency_id[0].id if len(insurance_currency_id) else None,  # 保险费币制
+                    'other_mark': other_mark[0].id if len(other_mark) else None,  # 杂费标记
                     'other_rate': other_rate,  # 杂费/率
-                    'other_currency_id': other_currency_id[0].id,  # 杂费币制
+                    'other_currency_id': other_currency_id[0].id if len(other_currency_id) else None,  # 杂费币制
                     'qty': qty,  # 件数
-                    'packing_id': packing_id[0].id,  # 包装种类、方式 id
+                    'packing_id': packing_id[0].id if len(packing_id) else None,  # 包装种类、方式 id
                     'gross_weight': gross_weight,  # 毛重
                     'net_weight': net_weight,  # 净重
-                    'trade_country_id': trade_country_id[0].id,  # 贸易国别
+                    'trade_country_id': trade_country_id[0].id if len(trade_country_id) else None,  # 贸易国别
                     'in_ratio': in_ratio,  #  u'征税比例' in_ratio  报文PayWay
-                    'promise1': promise1[0].id,  # 特殊关系确认
-                    'promise2': promise2[0].id,   # 价格影响确认
-                    'promise3': promise3[0].id,    # 支付特许权使用费确认
-                    'entry_type_id': entry_type_id[0].id,  # 报关单类型 关联报关单类型字典表
+                    'promise1': promise1[0].id if len(promise1) else None,  # 特殊关系确认
+                    'promise2': promise2[0].id if len(promise2) else None,   # 价格影响确认
+                    'promise3': promise3[0].id if len(promise3) else None,    # 支付特许权使用费确认
+                    'entry_type_id': entry_type_id[0].id if len(entry_type_id) else None,  # 报关单类型 关联报关单类型字典表
                     'remarks': remarks,  # 备注
                     'cop_code': cop_code,  # 录入单位企业组织机构代码
                     'cop_name': cop_name,  # 录入单位名称
@@ -554,7 +568,7 @@ class CustomsDeclaration(models.Model):
                             if k == 'CodeTS':
                                 cus_goods_tariff_code_t = values  # u'商品编号'
                                 cus_goods_tariff_id = self.env['basedata.cus_goods_tariff'].search([('Code_t', '=', cus_goods_tariff_code_t)])
-                                dec_goods_list['cus_goods_tariff_id'] = cus_goods_tariff_id[0].id
+                                dec_goods_list['cus_goods_tariff_id'] = cus_goods_tariff_id[0].id if len(cus_goods_tariff_id) else None
                             elif k == 'GName':
                                 goods_name = values  # u'商品名称'
                                 dec_goods_list['goods_name'] = goods_name
@@ -567,27 +581,43 @@ class CustomsDeclaration(models.Model):
                             elif k == 'DeclPrice':
                                 deal_unit_price = values  # u'申报单价 成交单价'
                                 dec_goods_list['deal_unit_price'] = deal_unit_price
+                            elif k == 'GUnit':
+                                deal_unit_code = values  # u'申报/成交计量单位'
+                                deal_unit_id = self.env['basedata.cus_unit'].search([('Code', '=', deal_unit_code)])
+                                dec_goods_list['deal_unit'] = deal_unit_id[0].id if len(deal_unit_id) else None
                             elif k == 'DeclTotal':
                                 deal_total_price = values  # u'申报总价 成交总价'
                                 dec_goods_list['deal_total_price'] = deal_total_price
+                            elif k == 'TradeCurr':
+                                currency_code = values  # u'成交币制'
+                                currency_id = self.env['basedata.cus_currency'].search([('Code', '=', currency_code)])
+                                dec_goods_list['currency_id'] = currency_id[0].id if len(currency_id) else None
                             elif k == 'FirstQty':
                                 first_qty = values  # u'第一法定数量'
                                 dec_goods_list['first_qty'] = first_qty
+                            elif k == 'FirstUnit':
+                                first_unit_code = values  # u'第一计量单位'
+                                first_unit_id = self.env['basedata.cus_unit'].search([('Code', '=', first_unit_code)])
+                                dec_goods_list['first_unit'] = first_unit_id[0].id if len(first_unit_id) else None
                             elif k == 'SecondQty':
                                 second_qty = values  # u'第二法定数量'
                                 dec_goods_list['second_qty'] = second_qty
+                            elif k == 'SecondUnit':
+                                second_unit_code = values  # u'第二计量单位'
+                                second_unit_id = self.env['basedata.cus_unit'].search([('Code', '=', second_unit_code)])
+                                dec_goods_list['second_unit'] = second_unit_id[0].id if len(second_unit_id) else None
                             elif k == 'DutyMode':
                                 duty_mode_code = values  # u'征减免税方式'
                                 duty_mode_id = self.env['basedata.cus_duty_mode'].search([('Code', '=', duty_mode_code)])
-                                dec_goods_list['duty_mode_id'] = duty_mode_id[0].id
+                                dec_goods_list['duty_mode_id'] = duty_mode_id[0].id if len(duty_mode_id) else None
                             elif k == 'OriginCountry':
                                 origin_country_code = values  # u'原产地'
                                 origin_country_id = self.env['delegate_country'].search([('Code', '=', origin_country_code)])
-                                dec_goods_list['origin_country_id'] = origin_country_id[0].id
+                                dec_goods_list['origin_country_id'] = origin_country_id[0].id if len(origin_country_id) else None
                             elif k == 'DestinationCountry':
                                 destination_country_code = values  # u'最终目的国'
                                 destination_country_id= self.env['delegate_country'].search([('Code', '=', destination_country_code)])
-                                dec_goods_list['destination_country_id'] = destination_country_id[0].id
+                                dec_goods_list['destination_country_id'] = destination_country_id[0].id if len(destination_country_id) else None
 
                             dec_goods_list = {item: dec_goods_list[item] for item in dec_goods_list if dec_goods_list[item]}
 
