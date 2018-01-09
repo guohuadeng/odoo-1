@@ -539,7 +539,7 @@
                                         <!--</group>-->
                                     <!--</group>-->
                                     <span class="oe_right">
-                                        <button name="customs_center.action_customs_dec_goods_wizard" type="action" string="Create"/>
+                                        <button name="customs_center.action_customs_dec_goods_wizard" type="action" string="Create" class="oe_highlight" context="{'dec_id': active_id}"/>
                                     </span>
                                     <field name="dec_goods_list_ids" mode="tree">
                                         <form string="Declearation Goods">

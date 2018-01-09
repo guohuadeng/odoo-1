@@ -402,5 +402,28 @@ class GoodsWizard(models.TransientModel):
     @api.multi
     def create_goods_list(self):
         """创建报关单商品列表"""
+        self.ensure_one()
+        vals = {}
+        vals['cus_goods_tariff_id '] = self.cus_goods_tariff_id.id
+        vals['goods_model '] = self.goods_model
+        vals['deal_qty'] = self.deal_qty
+        vals['deal_unit_price'] = self.deal_unit_price
+        vals['deal_unit'] = self.deal_unit and self.deal_unit.id
+        vals['deal_total_price'] = self.deal_total_price
+        vals['currency_id'] = self.currency_id and self.currency_id.id
+        vals['first_qty'] = self.first_qty
+        vals['first_unit'] = self.first_unit and self.first_unit.id
+        vals['second_qty'] = self.second_qty
+        vals['second_unit'] = self.second_unit and self.second_unit.id
+        vals['origin_country_id'] = self.origin_country_id and self.origin_country_id.id
+        vals['destination_country_id'] = self.destination_country_id and self.destination_country_id.id
+        vals['duty_mode_id'] = self.duty_mode_id and self.duty_mode_id.id
+        vals['goods_classification_id'] = self.goods_classification_id and self.goods_classification_id.id
+        vals['supervision_condition'] = self.supervision_condition
+
+        obj = self.env['customs_center.cus_goods_list'].create(vals)
+        dec_id = self._context['dec_id']
+        dec_obj = self.env['customs_center.customs_dec'].browse(dec_id)
+        dec_obj.dec_goods_list_ids |= obj
 
         return True

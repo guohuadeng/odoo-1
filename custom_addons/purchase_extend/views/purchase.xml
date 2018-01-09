@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <record id="purchase_order_form_extend" model="ir.ui.view">
+           <field name="name">purchase.order.form.extend</field>
+           <field name="model">purchase.order</field>
+           <field name="inherit_id" ref="purchase.purchase_order_form"/>
+           <field name="arch" type="xml">
+
+               <xpath expr="//field[@name='partner_id']" position="after">
+                   <field name="contact_id"/>
+               </xpath>
+
+               <xpath expr="//field[@name='currency_id']" position="after">
+                   <field name="business_type_id"/>
+               </xpath>
+
+               <xpath expr="//field[@name='date_order']" position="after">
+                   <field name="validity_date"/>
+               </xpath>
+
+               <xpath expr="//field[@name='origin']" position="after">
+                   <field name="customer_service_id"/>
+                   <field name="sale_person_id"/>
+               </xpath>
+
+               <xpath expr="//field[@name='order_line']//field[@name='date_planned']" position="attributes">
+                   <attribute name="invisible">1</attribute>
+               </xpath>
+
+               <xpath expr="//field[@name='incoterm_id']" position="replace">
+               </xpath>
+
+               <xpath expr="//notebook" position="inside">
+                   <page string="Inquiry">
+                       <group>
+                           <group>
+                               <field name="departure_place"/>
+                               <field name="destination_place"/>
+                               <field name="goods_attribute"/>
+                               <field name="remarks"/>
+                           </group>
+                           <group>
+                               <field name="customs_id"/>
+                               <field name="incoterm_id"/>
+                               <field name="goods_name"/>
+                           </group>
+                       </group>
+                   </page>
+               </xpath>
+
+               <!--<xpath expr="//label[@for='date_planned']" position="attributes">-->
+                   <!--<attribute name="invisible">1</attribute>-->
+               <!--</xpath>-->
+
+               <!--<xpath expr="//notebook//field[@name='date_planned']" position="attributes">-->
+                   <!--<attribute name="required">False</attribute>-->
+                   <!--<attribute name="invisible">1</attribute>-->
+                   <!--<attribute name="attrs">{}</attribute>-->
+               <!--</xpath>-->
+
+               <xpath expr="//notebook/page/group/group/div" position="replace">
+               </xpath>
+
+               <xpath expr="//field[@name='order_line']//field[@name='price_unit']" position="before">
+                   <field name="purchase_price_unit"/>
+                   <field name="purchase_currency_id"/>
+                   <field name="rate"/>
+               </xpath>
+
+               <!--<xpath expr="//button[@name='action_set_date_planned']" position="attributes">-->
+                   <!--<attribute name="invisible">1</attribute>-->
+               <!--</xpath>v-->
+
+
+
+           </field>
+       </record>
+
+        <record id="purchase_order_tree_extend" model="ir.ui.view">
+            <field name="name">purchase.order.tree.extend</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='date_planned']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_planned']" position="after">
+                    <field name="business_type_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

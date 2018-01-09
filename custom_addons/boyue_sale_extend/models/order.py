@@ -13,7 +13,7 @@ class Order(models.Model):
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type", required=True, )
     contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, copy=False)
     servicer = fields.Many2one(comodel_name="res.partner", string="Servicer")
-    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", index=True, track_visibility='always')
+    customer_service = fields.Many2one(comodel_name="res.users", string="customer service", index=True, track_visibility='always')
     goods_name = fields.Text(string="Goods Name", required=False, )
     delivery_info = fields.One2many(comodel_name="boyue_sale_extend.delivery_info", inverse_name="order",
                                     string="Delivery Info", )
