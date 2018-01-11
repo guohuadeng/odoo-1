@@ -640,9 +640,9 @@ class CustomsDeclaration(models.Model):
                             dec_goods_list = {}
                             for k, values in values_dic.items():
                                 if k == 'CodeTS':
-                                    cus_goods_tariff_code_t = values  # u'商品编号'
+                                    cus_goods_tariff_code_ts = values  # u'商品编号'
                                     cus_goods_tariff_id = self.env['basedata.cus_goods_tariff'].search(
-                                        [('Code_t', '=', cus_goods_tariff_code_t)])
+                                        [('Code_ts', '=', cus_goods_tariff_code_ts)])
                                     dec_goods_list['cus_goods_tariff_id'] = cus_goods_tariff_id[0].id if len(
                                         cus_goods_tariff_id) else None
                                 elif k == 'GName':
