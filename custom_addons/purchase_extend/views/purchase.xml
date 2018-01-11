@@ -50,9 +50,9 @@
                    </page>
                </xpath>
 
-               <!--<xpath expr="//label[@for='date_planned']" position="attributes">-->
-                   <!--<attribute name="invisible">1</attribute>-->
-               <!--</xpath>-->
+               <xpath expr="//div/field[@name='date_planned']" position="attributes">
+                   <attribute name="required">0</attribute>
+               </xpath>
 
                <!--<xpath expr="//notebook//field[@name='date_planned']" position="attributes">-->
                    <!--<attribute name="required">False</attribute>-->
@@ -60,8 +60,8 @@
                    <!--<attribute name="attrs">{}</attribute>-->
                <!--</xpath>-->
 
-               <xpath expr="//notebook/page/group/group/div" position="replace">
-               </xpath>
+               <!--<xpath expr="//notebook/page/group/group/div" position="replace">-->
+               <!--</xpath>-->
 
                <xpath expr="//field[@name='order_line']//field[@name='price_unit']" position="before">
                    <field name="purchase_price_unit"/>
