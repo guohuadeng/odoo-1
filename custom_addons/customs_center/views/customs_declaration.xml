@@ -35,19 +35,13 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"
-                                type="object" confirm="确定生成报文，发送至单一窗口么?"/>
+                        <!--<button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"-->
+                                <!--type="object" confirm="确定生成报文，发送至单一窗口么?"/>-->
                         <!--<button name="parse_original_xml" string="解析新光报文入库" class="oe_highlight" type="object"/>-->
                         <button name="parse_attach_message_xml" string="解析新光报文+随附单据入库" class="oe_highlight" type="object"/>
-                        <button name="generate_xinguang_xml" string="生成新光报文" class="oe_highlight" type="object"/>
-                        <button name="generate_xinguang_attach_xml" string="生成新光随附单据报文" class="oe_highlight" type="object"/>
+                        <button name="generate_customer_xml" string="生成报文发送QP" class="oe_highlight" type="object"/>
+                        <!--<button name="generate_customer_attach_xml" string="生成随附单据报文" class="oe_highlight" type="object"/>-->
 
-
-
-                        <!--<button name="send_message" string="Resend Message" class="oe_highlight" states="failure" type="object"-->
-                            <!--attrs="{'invisible': ['|',('state', '=', 'cancel')]}"/>-->
-                        <!--<field name="state" widget="statusbar" statusbar_visible="draft,succeed"-->
-                               <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
                     </header>
                     <sheet>
                         <field name="client_seq_no" string="报关单客户端编号" invisible="1"/>
@@ -648,6 +642,11 @@
                                         </group>
                                     </group>
                                 </page>
+
+                                <page string="随附单据">
+                                    <field name="information_attachment_ids" widget="many2many_binary"/>
+                                </page>
+
 
                             </notebook>
 

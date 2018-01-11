@@ -11,7 +11,7 @@ from collections import OrderedDict
 import uuid
 from datetime import datetime, timedelta
 # from custom_addons.customs_center.utils.to_xml_message import delegate_to_xml
-from ..utils.to_xml_message import delegate_to_xml
+from ..utils.to_xml_message import delegate_to_xml , generate_xml_to_qp
 _logger = logging.getLogger(__name__)
 
 # try:
@@ -19,12 +19,13 @@ _logger = logging.getLogger(__name__)
 # except ImportError:
 #     import xml.etree.ElementTree as ET
 
+
 RECV_XML_BASE_PATH = config.options.get('recv_xml_message_path', '/mnt/odooshare/recv_xml_message')
 ERROR_XML_BASE_PATH = config.options.get('error_xml_message_path','/mnt/odooshare/error_xml_message')
 BAKUP_XML_BASE_PATH = config.options.get('bakup_xml_message_path','/mnt/odooshare/bakup_xml_message')
 
-PARSE_XG_TO_WLY_PATH = config.options.get('parse_xg_to_wly_path','/mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly')
-PARSE_XG_TO_WLY_ATTACH_PATH = config.options.get('parse_xg_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly_attach_send')
+PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly')
+PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly_attach_send')
 PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/send/error_xml_message')
 GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_xg_path', '/mnt/odooshare/about_wly_xml_data/send/wly_to_xinguang')
 GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_xg_attach_path', '/mnt/odooshare/about_wly_xml_data/send/wly_to_xinguang_attach_rec')
@@ -33,7 +34,7 @@ BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', 
 
 
 
-# parse_xg_to_wly_path = /mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly
+# parse_cus_to_wly_path = /mnt/odooshare/about_wly_xml_data/send/cus_to_wly
 # parse_xg_to_wly_attach_path = /mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly_attach_send
 # parse_send_error_xml_path = /mnt/odooshare/about_wly_xml_data/send/error_xml_message
 # generate_rec_wly_to_xg_path = /mnt/odooshare/about_wly_xml_data/send/wly_to_xinguang
@@ -224,14 +225,16 @@ class CustomsDeclaration(models.Model):
                                                                       ('succeed', 'Success'),
                                                                       ('cancel', 'Cancel'),
                                                                       ('failure', 'Failure')],default='draft')  # 报关单发送单一窗口状态
+    # 报关单关联附件模型
+    information_attachment_ids = fields.Many2many('ir.attachment', compute='_get_attachment_ids', string='attach')
 
-    information_attachment = fields.Many2many('ir.attachment', compute='_get_attachment_ids', string=u'附件')
-
+    @api.multi
     def _get_attachment_ids(self):
         att_model = self.env['ir.attachment']  # 获取附件模型
         for obj in self:
-            query = [('res_model', '=', self._name), ('res_id', '=', obj.id)]  # 根据res_model和res_id查询附件
-            obj.information_attachment = att_model.search(query)  # 取得附件list
+            query = [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', obj.id)]  # 根据res_model和res_id查询附件
+            obj.information_attachment_ids = att_model.search(query)  # 取得附件list
+
 
     @api.model
     def create(self, vals):
@@ -255,8 +258,8 @@ class CustomsDeclaration(models.Model):
     def parse_attach_message_xml(self):
         """解析新光报文 + 随附单据入库"""
         company_xml_parse_path = 'BYJC_DXPENT0000016165'  # 做成前端界面可配置
-        parse_xml_path = os.path.join(PARSE_XG_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文解析目录
-        parse_attach_path = os.path.join(PARSE_XG_TO_WLY_ATTACH_PATH,
+        parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文解析目录
+        parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
                                          company_xml_parse_path.encode('utf-8'))  # 新光随附单据解析目录
         parse_error_xml_path = os.path.join(PARSE_SEND_ERROR_XML_PATH, company_xml_parse_path.encode('utf-8'))
         backup_xml_path = os.path.join(BACKUP_SEND_XML_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文备份目录
@@ -725,20 +728,24 @@ class CustomsDeclaration(models.Model):
 
 
 
-    # 生成新光报文
+
     @api.multi
-    def generate_xinguang_xml(self):
-        pass
+    def generate_customer_xml(self):
+        """生成客户报文 发送给QP"""
+        for line in self:
+            generate_xml_to_qp(line)
+        self.update({'cus_dec_sent_state': 'succeed'})
+        return True
+
 
     # 生成新光随附单据报文
     @api.multi
-    def generate_xinguang_attach_xml(self):
+    def generate_customer_attach_xml(self):
         pass
-
 
     @api.multi
     def customs_delegate_to_xml(self):
-        """ 根据报关单生成xml报文 存放到指定目录 """
+        """ 发送 单一窗口 根据报关单生成xml报文 存放到指定目录 """
         for line in self:
             delegate_to_xml(line)
         self.update({'cus_dec_sent_state': 'succeed'})
