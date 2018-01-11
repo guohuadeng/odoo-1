@@ -29,6 +29,10 @@ class PurchaseOrder(models.Model):
             result.message_subscribe_users(users.ids, subtype_ids=[])
         return result
 
+    @api.model
+    def _change_sale_person(self):
+        """当供应商改变时"""
+
 
 
 class PurchaseOrderLine(models.Model):
@@ -48,4 +52,5 @@ class PurchaseOrderLine(models.Model):
     def onchange_product_id(self):
         result = super(PurchaseOrderLine, self).onchange_product_id()
         self.purchase_price_unit = 0.0
+        self.purchase_currency_id = self.product_id.currency_id
         return result
