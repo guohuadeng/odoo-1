@@ -10,8 +10,8 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 
-def generate_xml_to_qp(self):
-    """ 根据报关单生成xml报文 存放到指定目录 """
+def generate_attach_xml(self):
+    """ 生成随附单据报文xml报文 存放到指定目录 """
     root = etree.Element("DecMessage",  version="3.1", xmlns="http://www.chinaport.gov.cn/dec")
     head = etree.SubElement(root, "DecHead")
     body_list = etree.SubElement(root, "DecLists")
@@ -321,6 +321,4 @@ def generate_xml_to_qp(self):
     obj_dir = os.path.join(dec_catalog_path, 'DECDATA' + str(self.client_seq_no) + '.xml')
     with open(obj_dir, 'w') as fp:
         fp.write(string.encode('utf8'))
-
-
 

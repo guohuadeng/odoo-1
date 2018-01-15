@@ -11,7 +11,7 @@ from collections import OrderedDict
 import uuid
 from datetime import datetime, timedelta
 # from custom_addons.customs_center.utils.to_xml_message import delegate_to_xml
-from ..utils.to_xml_message import delegate_to_xml , generate_xml_to_qp
+from ..utils.to_xml_message import delegate_to_xml
 _logger = logging.getLogger(__name__)
 
 # try:
@@ -20,35 +20,34 @@ _logger = logging.getLogger(__name__)
 #     import xml.etree.ElementTree as ET
 
 
+PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/odooshare/about_wly_xml_data/send/cus_to_wly')
+PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/send/cus_to_wly_attach_send')
+PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/send/send_error_xml_message')
+GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/odooshare/about_wly_xml_data/send/rec_wly_to_cus')
+GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/odooshare/about_wly_xml_data/send/rec_wly_to_cus_attach')
+BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/odooshare/about_wly_xml_data/send/send_backup_xml')   # 新光原始报文备份目录
+BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/odooshare/about_wly_xml_data/send/send_backup_xml_attach')   # 新光原始报文备份目录
+
+
 RECV_XML_BASE_PATH = config.options.get('recv_xml_message_path', '/mnt/odooshare/recv_xml_message')
 ERROR_XML_BASE_PATH = config.options.get('error_xml_message_path','/mnt/odooshare/error_xml_message')
 BAKUP_XML_BASE_PATH = config.options.get('bakup_xml_message_path','/mnt/odooshare/bakup_xml_message')
 
-PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly')
-PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly_attach_send')
-PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/send/error_xml_message')
-GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_xg_path', '/mnt/odooshare/about_wly_xml_data/send/wly_to_xinguang')
-GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_xg_attach_path', '/mnt/odooshare/about_wly_xml_data/send/wly_to_xinguang_attach_rec')
-BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/odooshare/about_wly_xml_data/send/backup_send_xml')   # 新光原始报文备份目录
-BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/odooshare/about_wly_xml_data/send/backup_attach_send_xml')   # 新光原始报文备份目录
-
-
 
 # parse_cus_to_wly_path = /mnt/odooshare/about_wly_xml_data/send/cus_to_wly
-# parse_xg_to_wly_attach_path = /mnt/odooshare/about_wly_xml_data/send/xinguang_to_wly_attach_send
-# parse_send_error_xml_path = /mnt/odooshare/about_wly_xml_data/send/error_xml_message
-# generate_rec_wly_to_xg_path = /mnt/odooshare/about_wly_xml_data/send/wly_to_xinguang
-# generate_rec_wly_to_xg_attach_path = /mnt/odooshare/about_wly_xml_data/send/wly_to_xinguang_attach_rec
-# backup_send_xml_path = /mnt/odooshare/about_wly_xml_data/send/backup_send_xml
-# backup_attach_send_xml_path = /mnt/odooshare/about_wly_xml_data/send/backup_attach_send_xml
+# parse_cus_to_wly_attach_path = /mnt/odooshare/about_wly_xml_data/send/cus_to_wly_attach_send
+# parse_send_error_xml_path = /mnt/odooshare/about_wly_xml_data/send/send_error_xml_message
+# generate_rec_wly_to_cus_path = /mnt/odooshare/about_wly_xml_data/send/rec_wly_to_cus
+# generate_rec_wly_to_cus_attach_path = /mnt/odooshare/about_wly_xml_data/send/rec_wly_to_cus_attach
+# backup_send_xml_path = /mnt/odooshare/about_wly_xml_data/send/send_backup_xml
+# backup_attach_send_xml_path = /mnt/odooshare/about_wly_xml_data/send/send_backup_xml_attach
 #
-# generate_wly_to_ex_path = /mnt/odooshare/about_wly_xml_data/receive/wly_to_ex
-# generate_wly_to_ex_attach_path = /mnt/odooshare/about_wly_xml_data/receive/wly_to_ex_attach_send
-# parse_rec_ex_to_wly = /mnt/odooshare/about_wly_xml_data/receive/ex_to_wly
-# parse_rec_ex_to_wly_attach = /mnt/odooshare/about_wly_xml_data/receive/ex_to_wly_attach_rec
+# generate_wly_to_ex_path = /mnt/odooshare/about_wly_xml_data/receive/send_wly_to_ex
+# generate_wly_to_ex_attach_path = /mnt/odooshare/about_wly_xml_data/receive/send_wly_to_ex_attach
+# parse_rec_ex_to_wly = /mnt/odooshare/about_wly_xml_data/receive/rec_ex_to_wly
+# parse_rec_ex_to_wly_attach = /mnt/odooshare/about_wly_xml_data/receive/rec_ex_to_wly_attach
 # parse_rec_error_xml_path = /mnt/odooshare/about_wly_xml_data/receive/error_xml_message
 # backup_rec_xml_path = /mnt/odooshare/about_wly_xml_data/receive/backup_rec_xml
-
 
 
 
@@ -194,6 +193,7 @@ class CustomsDeclaration(models.Model):
     certificate = fields.Char(string="oper card certificate")   # 操作员卡的证书号
     ic_code = fields.Char(string="IC number")  # 操作员IC卡号/录入员IC卡号
     cus_dec_dir = fields.Char(string="customs dec path")  # 企业报文服务器存放路径
+    declare_company_id_dir = fields.Char(string="declare company path")  # 申报单位海关编号
 
     # cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
     # owner_code_scc = fields.Char(string="owner Social credit uniform coding")   # 货主单位/生产消费单位 社会信用统一编码
@@ -255,9 +255,9 @@ class CustomsDeclaration(models.Model):
     @api.multi
     # @api.model
     # @q_job.job
-    def parse_attach_message_xml(self):
+    def parse_cus_message_xml(self):
         """解析新光报文 + 随附单据入库"""
-        company_xml_parse_path = 'BYJC_DXPENT0000016165'  # 做成前端界面可配置
+        company_xml_parse_path = '0000016165'  # 做成前端界面可配置
         parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文解析目录
         parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
                                          company_xml_parse_path.encode('utf-8'))  # 新光随附单据解析目录
@@ -567,33 +567,33 @@ class CustomsDeclaration(models.Model):
 
             try:
                 customs_declaration_obj = self.env['customs_center.customs_dec'].create(customs_dec_dic)
-                # 创建报关单后 同时创建 随附单据
+                # 创建报关单后 同时创建 空的 随附单据
                 # 首先解析随附单据目录的文件  可能多个附件
-                attach_files = os.listdir(parse_attach_path)
-                attach_files_list = [attach_filename for attach_filename in attach_files if attach_filename.endswith('.xml')]
+                # attach_files = os.listdir(parse_attach_path)
+                # attach_files_list = [attach_filename for attach_filename in attach_files if attach_filename.endswith('.xml')]
+                #
+                # if not attach_files_list:
+                #     return True
+                # attach_files = [os.path.join(parse_attach_path, i) for i in attach_files_list]
 
-                if not attach_files_list:
-                    return True
-                attach_files = [os.path.join(parse_attach_path, i) for i in attach_files_list]
-
-                # 读文件，用lxml解析报文
-                xml_attach_message_list = []
-                for xml_attach_message in attach_files:
-                    with open(xml_attach_message, 'r') as f:
-                        attach_xml_str = str(f.read())
-                        attach_xml_str1 = attach_xml_str.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
-                        attach_xml_str = attach_xml_str1.replace('xsi:nil="true"', '')
-                        # print xml_str
-                        root = etree.fromstring(attach_xml_str)  # 打开xml文档
-
-                        root_name = etree.QName(root).localname
-                        print(root_name)  # Data
-                        xml_attach_message_dic = {}  # 随附单据报文中的数据
-                        if root_name == u'Data':
-                            attach_data_node = root.xpath('.//TcsData')
-                            for child in attach_data_node[0]:
-                                xml_attach_message_dic[child.tag] = child.text
-                            xml_attach_message_list.append(xml_attach_message_dic)
+                # # 读文件，用lxml解析报文
+                # xml_attach_message_list = []
+                # for xml_attach_message in attach_files:
+                #     with open(xml_attach_message, 'r') as f:
+                #         attach_xml_str = str(f.read())
+                #         attach_xml_str1 = attach_xml_str.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
+                #         attach_xml_str = attach_xml_str1.replace('xsi:nil="true"', '')
+                #         # print xml_str
+                #         root = etree.fromstring(attach_xml_str)  # 打开xml文档
+                #
+                #         root_name = etree.QName(root).localname
+                #         print(root_name)  # Data
+                #         xml_attach_message_dic = {}  # 随附单据报文中的数据
+                #         if root_name == u'Data':
+                #             attach_data_node = root.xpath('.//TcsData')
+                #             for child in attach_data_node[0]:
+                #                 xml_attach_message_dic[child.tag] = child.text
+                #             xml_attach_message_list.append(xml_attach_message_dic)
 
                 # 生成附件
                 if attach_list_dic:  # 报关单中的随附单据数据 attach_list_dic
@@ -605,12 +605,13 @@ class CustomsDeclaration(models.Model):
                                     attach_id = values  # u'随附单据编号'
                                     genarate_attach_list_dic['name'] = attach_id
                                     genarate_attach_list_dic['datas_fname'] = attach_id
-                                    # genarate_attach_list_dic['datas'] = self.get_attach_binary(attach_id,xml_attach_message_list)
-                                    # 查询和文件名匹配的二进制数据
-                                    for attach_dic in xml_attach_message_list:
-                                        if attach_dic.get('FILE_NAME') == attach_id:
-                                            binary_data = attach_dic.get('BINARY_DATA', None)
-                                            genarate_attach_list_dic['datas'] = binary_data
+
+                                    # # 查询和文件名匹配的二进制数据
+                                    # if xml_attach_message_list:
+                                    #     for attach_dic in xml_attach_message_list:
+                                    #         if attach_dic.get('FILE_NAME') == attach_id:
+                                    #             binary_data = attach_dic.get('BINARY_DATA', None)
+                                    #             genarate_attach_list_dic['datas'] = binary_data
                                 if k == 'EdocCode':
                                     edoc_code = values  # u'随附单据类别'
                                     genarate_attach_list_dic['description'] = edoc_code
@@ -623,17 +624,18 @@ class CustomsDeclaration(models.Model):
 
                                 new_attachment = self.env['ir.attachment'].create(genarate_attach_list_dic)
 
-                                if not attach_files_list or not new_attachment:
+                                #if not attach_files_list or not new_attachment:
+                                if not new_attachment:
                                     return True
-                                for xml_attach_message in attach_files_list:  # xml_attach_message是单据名
-                                    if xml_attach_message:
-                                        strlist = xml_attach_message.split('$')
-                                        filename = strlist[0]
-                                        if genarate_attach_list_dic.get('name' , None) == filename:  # 如果解析出的随附单据名 和 生成的随附单据名相同 就把报文移动到附件报文备份目录
-                                            # 这里 其实物流云不必放到备份目录再生成一遍随附单据报文 可以直接丢到 wly_to_ex_atach目录
-                                            xml_attach_message_path = os.path.join(parse_attach_path, xml_attach_message)
-                                            shutil.move(xml_attach_message_path, backup_attach_xml_path)
-                                            _logger.info(u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
+                                # for xml_attach_message in attach_files_list:  # xml_attach_message是单据名
+                                #     if xml_attach_message:
+                                #         strlist = xml_attach_message.split('$')
+                                #         filename = strlist[0]
+                                #         if genarate_attach_list_dic.get('name' , None) == filename:  # 如果解析出的随附单据名 和 生成的随附单据名相同 就把报文移动到附件报文备份目录
+                                #             # 这里 其实物流云不必放到备份目录再生成一遍随附单据报文 可以直接丢到 wly_to_ex_atach目录
+                                #             xml_attach_message_path = os.path.join(parse_attach_path, xml_attach_message)
+                                #             shutil.move(xml_attach_message_path, backup_attach_xml_path)
+                                #             _logger.info(u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
 
                 # 商品列表 字典
                 # dec_goods_list_dic = customs_dec_dic['DecLists']
@@ -728,20 +730,103 @@ class CustomsDeclaration(models.Model):
 
 
 
+    @api.multi
+    # @api.model
+    # @q_job.job
+    def parse_attach_message_xml(self):
+        """ 解析随附单据入库 """
+        company_xml_parse_path = '0000016165'  # 做成前端界面可配置
+        parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文解析目录
+        parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
+                                         company_xml_parse_path.encode('utf-8'))  # 新光随附单据解析目录
+        parse_error_xml_path = os.path.join(PARSE_SEND_ERROR_XML_PATH, company_xml_parse_path.encode('utf-8'))
+        backup_xml_path = os.path.join(BACKUP_SEND_XML_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文备份目录
+        backup_attach_xml_path = os.path.join(BACKUP_SEND_ATTACH_XML_PATH,
+                                              company_xml_parse_path.encode('utf-8'))  # 新光随附单据报文备份目录
+
+        # 检查并生成相应的目录
+        check_and_mkdir(parse_xml_path, parse_attach_path, parse_error_xml_path, backup_xml_path,
+                        backup_attach_xml_path)
+
+        # 首先解析随附单据目录的文件  可能多个附件
+        attach_files = os.listdir(parse_attach_path)
+        attach_files_list = [attach_filename for attach_filename in attach_files if attach_filename.endswith('.xml')]
+
+        if not attach_files_list:
+            return True
+        attach_files = [os.path.join(parse_attach_path, i) for i in attach_files_list]
+
+        # 读文件，用lxml解析报文
+        xml_attach_message_list = []
+        attach_name_list = []
+        for xml_attach_message in attach_files:
+            with open(xml_attach_message, 'r') as f:
+                attach_xml_str = str(f.read())
+                attach_xml_str1 = attach_xml_str.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
+                attach_xml_str = attach_xml_str1.replace('xsi:nil="true"', '')
+                # print xml_str
+                root = etree.fromstring(attach_xml_str)  # 打开xml文档
+
+                root_name = etree.QName(root).localname
+                print(root_name)  # Data
+                xml_attach_message_dic = {}  # 随附单据报文中的数据
+                if root_name == u'Data':
+                    attach_data_node = root.xpath('.//TcsData')
+                    for child in attach_data_node[0]:
+                        xml_attach_message_dic[child.tag] = child.text
+                    xml_attach_message_list.append(xml_attach_message_dic)
+                print("********************************88888888888888888888888************************************")
+
+                genarate_attach_list_dic = {}
+
+                for obj in self:
+                    # 获取附件模型 根据res_model和res_id查询附件
+                    information_attachment_ids = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('res_id', '=', obj.id)])  # 取得附件list
+                    print(information_attachment_ids)    # ir.attachment(2738, 2737, 2736, 2735)
+                    for i in information_attachment_ids:
+                        attach_name = i.name
+                        attach_id = i.id
+                        attach_name_list.append(attach_name)
+                        print(attach_id)
+                        print(attach_name)
+                        if xml_attach_message_list:
+                            for attach_dic in xml_attach_message_list:
+                                if attach_dic.get('FILE_NAME') == attach_name:
+                                    binary_data = attach_dic.get('BINARY_DATA', None)
+                                    genarate_attach_list_dic['datas'] = binary_data
+                                    if genarate_attach_list_dic:
+                                        new_attachment = self.env['ir.attachment'].search([('res_id', '=',attach_id)]).update(genarate_attach_list_dic)
+
+        for xml_attach_message in attach_files_list:  # xml_attach_message是单据名
+            if xml_attach_message:
+                strlist = xml_attach_message.split('$')
+                filename = strlist[0]
+                if filename in attach_name_list:
+                    xml_attach_message_path = os.path.join(parse_attach_path, xml_attach_message)
+                    shutil.move(xml_attach_message_path, backup_attach_xml_path)
+                    _logger.info(
+                        u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
+
+
+    @api.multi
+    def generate_customer_attach_xml(self):
+        """生成客户随附单据报文 发送给QP or single"""
+        for line in self:
+            generate_attach_xml(line)
+            pass
+        self.update({'cus_dec_sent_state': 'succeed'})
+        return True
+
 
     @api.multi
     def generate_customer_xml(self):
         """生成客户报文 发送给QP"""
         for line in self:
-            generate_xml_to_qp(line)
+            #generate_xml_to_qp(line)
+            pass
         self.update({'cus_dec_sent_state': 'succeed'})
         return True
 
-
-    # 生成新光随附单据报文
-    @api.multi
-    def generate_customer_attach_xml(self):
-        pass
 
     @api.multi
     def customs_delegate_to_xml(self):
