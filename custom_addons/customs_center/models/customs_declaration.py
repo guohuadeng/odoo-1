@@ -10,8 +10,11 @@ from lxml import etree
 from collections import OrderedDict
 import uuid
 from datetime import datetime, timedelta
+from odoo.exceptions import UserError
+
 # from custom_addons.customs_center.utils.to_xml_message import delegate_to_xml
 from ..utils.to_xml_message import delegate_to_xml
+from ..utils.to_attach_xml_message import generate_attach_xml_to_single
 _logger = logging.getLogger(__name__)
 
 # try:
@@ -67,6 +70,7 @@ class CustomsDeclaration(models.Model):
     name = fields.Char(string="Name")  # 报关单流水号
     client_seq_no = fields.Char(string="client seq No")  # 报关单客户端编号
     synergism_seq_no = fields.Char(string="Synergism seq No")  # 客户协同单号
+
     # 关联工作单
     work_sheet_id = fields.Many2one(comodel_name="work_sheet", string="Work Sheet")  # 工作单ID
 
@@ -193,7 +197,7 @@ class CustomsDeclaration(models.Model):
     certificate = fields.Char(string="oper card certificate")   # 操作员卡的证书号
     ic_code = fields.Char(string="IC number")  # 操作员IC卡号/录入员IC卡号
     cus_dec_dir = fields.Char(string="customs dec path")  # 企业报文服务器存放路径
-    declare_company_id_dir = fields.Char(string="declare company path")  # 申报单位海关编号
+    dec_company_customs_code = fields.Char(string="declare company path")  # 申报单位海关编号
 
     # cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
     # owner_code_scc = fields.Char(string="owner Social credit uniform coding")   # 货主单位/生产消费单位 社会信用统一编码
@@ -256,14 +260,19 @@ class CustomsDeclaration(models.Model):
     # @api.model
     # @q_job.job
     def parse_cus_message_xml(self):
-        """解析新光报文 + 随附单据入库"""
-        company_xml_parse_path = '0000016165'  # 做成前端界面可配置
-        parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文解析目录
+        """解析报文 + 空随附单据入库"""
+        # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
+        # company_xml_parse_path = self.dec_company_customs_code  # 获取配置信息中的 申报单位海关编码 作为解析路径
+
+        customs_dec_model_dic = self.env['customs_center.settings'].default_get(['default_dec_company_customs_code']) # 获取报关单模型对象
+        company_xml_parse_path = customs_dec_model_dic.get('default_dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
+
+        parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 原始报文解析目录
         parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
-                                         company_xml_parse_path.encode('utf-8'))  # 新光随附单据解析目录
+                                         company_xml_parse_path.encode('utf-8'))  # 随附单据解析目录
         parse_error_xml_path = os.path.join(PARSE_SEND_ERROR_XML_PATH, company_xml_parse_path.encode('utf-8'))
-        backup_xml_path = os.path.join(BACKUP_SEND_XML_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文备份目录
-        backup_attach_xml_path = os.path.join(BACKUP_SEND_ATTACH_XML_PATH, company_xml_parse_path.encode('utf-8'))  # 新光随附单据报文备份目录
+        backup_xml_path = os.path.join(BACKUP_SEND_XML_PATH, company_xml_parse_path.encode('utf-8'))  # 原始报文备份目录
+        backup_attach_xml_path = os.path.join(BACKUP_SEND_ATTACH_XML_PATH, company_xml_parse_path.encode('utf-8'))  # 随附单据报文备份目录
 
         # 检查并生成相应的目录
         check_and_mkdir(parse_xml_path, parse_attach_path, parse_error_xml_path, backup_xml_path, backup_attach_xml_path)
@@ -505,7 +514,7 @@ class CustomsDeclaration(models.Model):
                 ic_code = customs_dec_dic['DecHead'].get('TypistNo', None)  # u'操作员IC卡号/录入员IC卡号'
 
                 customs_dec_dic = {
-                    'client_seq_no': client_seq_no,  # 报关单客户端编号
+                    'synergism_seq_no': client_seq_no,  # 报关单客户端编号
                     'inout': inout,  # u'进出口标志'
                     'custom_master_id': custom_master_id[0].id if len(custom_master_id) else None,  # 申报口岸 / 申报地海关
                     'dec_seq_no': dec_seq_no,  # u'统一编号'
@@ -775,7 +784,6 @@ class CustomsDeclaration(models.Model):
                     for child in attach_data_node[0]:
                         xml_attach_message_dic[child.tag] = child.text
                     xml_attach_message_list.append(xml_attach_message_dic)
-                print("********************************88888888888888888888888************************************")
 
                 genarate_attach_list_dic = {}
 
@@ -787,15 +795,15 @@ class CustomsDeclaration(models.Model):
                         attach_name = i.name
                         attach_id = i.id
                         attach_name_list.append(attach_name)
-                        print(attach_id)
-                        print(attach_name)
                         if xml_attach_message_list:
                             for attach_dic in xml_attach_message_list:
                                 if attach_dic.get('FILE_NAME') == attach_name:
                                     binary_data = attach_dic.get('BINARY_DATA', None)
                                     genarate_attach_list_dic['datas'] = binary_data
+                                    genarate_attach_list_dic['res_id'] = attach_id
                                     if genarate_attach_list_dic:
-                                        new_attachment = self.env['ir.attachment'].search([('res_id', '=',attach_id)]).update(genarate_attach_list_dic)
+                                        new_attachment = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('res_id', '=',obj.id),('name', '=',attach_name)]).update({'datas': binary_data})
+
 
         for xml_attach_message in attach_files_list:  # xml_attach_message是单据名
             if xml_attach_message:
@@ -809,18 +817,37 @@ class CustomsDeclaration(models.Model):
 
 
     @api.multi
-    def generate_customer_attach_xml(self):
-        """生成客户随附单据报文 发送给QP or single"""
+    def customs_single_delegate_to_xml(self):
+        """ 生成报文+随附单据报文 发送单一窗口 存放到指定目录 """
         for line in self:
-            generate_attach_xml(line)
-            pass
-        self.update({'cus_dec_sent_state': 'succeed'})
-        return True
+            # 判断当前报关单的随附单据中是否有数据
+            attach_list = []
+            for attach in self.information_attachment_ids:
+                attach_data = attach.datas
+                print('ooooooooooooooooppppp ppppp pppppppp pppooooooooooooooo')
+                print(attach_data)
+                attach_list.append(attach_data)
+            # 如果第一个附件中有值，说明随附单据解析入库成功
+            if attach_list[0]:
+                delegate_to_xml(line)
+                generate_attach_xml_to_single(line)
+                self.update({'cus_dec_sent_state': 'succeed'})
+                return True
+            else:
+                raise UserError(_("该报关单关联的随附单据附件无效，请检查!"))
 
 
     @api.multi
-    def generate_customer_xml(self):
-        """生成客户报文 发送给QP"""
+    def generate_single_customer_attach_xml(self):
+        """生成随附单据报文 发送给单一窗口"""
+        for line in self:
+            generate_attach_xml_to_single(line)
+        self.update({'cus_dec_sent_state': 'succeed'})
+        return True
+
+    @api.multi
+    def generate_qp_customer_xml(self):
+        """ 生成报文发送QP  存放到指定目录 """
         for line in self:
             #generate_xml_to_qp(line)
             pass
@@ -829,12 +856,14 @@ class CustomsDeclaration(models.Model):
 
 
     @api.multi
-    def customs_delegate_to_xml(self):
-        """ 发送 单一窗口 根据报关单生成xml报文 存放到指定目录 """
+    def generate_qp_customer_attach_xml(self):
+        """生成随附单据报文 发送给QP"""
         for line in self:
-            delegate_to_xml(line)
+            # generate_attach_xml_to_qp(line)
+            pass
         self.update({'cus_dec_sent_state': 'succeed'})
         return True
+
 
     @api.multi
     def dec_send_success(self):

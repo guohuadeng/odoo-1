@@ -10,315 +10,148 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 
-def generate_attach_xml(self):
-    """ 生成随附单据报文xml报文 存放到指定目录 """
-    root = etree.Element("DecMessage",  version="3.1", xmlns="http://www.chinaport.gov.cn/dec")
-    head = etree.SubElement(root, "DecHead")
-    body_list = etree.SubElement(root, "DecLists")
-    body_containers_list = etree.SubElement(root, "DecContainers")
-    body_license_docus_list = etree.SubElement(root, "DecLicenseDocus")
-    body_free_test_list = etree.SubElement(root, "DecFreeTxt")
-    body_dec_sign = etree.SubElement(root, "DecSign")
-    trn_head_info = etree.SubElement(root, "TrnHead")
-    trn_list_info = etree.SubElement(root, "TrnList")
-    trn_containers_info = etree.SubElement(root, "TrnContainers")
-    trn_conta_goods_list = etree.SubElement(root, "TrnContaGoodsList")
-    # e_doc_realation_info = etree.SubElement(root, "EdocRealation")
+def generate_attach_xml_to_single(self):
+    """ 生成单一窗口 随附单据报文xml报文 存放到指定目录 """
+    for attach in self.information_attachment_ids:
+        attach_name = attach.name
+        attach_data = attach.datas
+        print("**************************666666666666666666******************************************")
+        print(attach_data)
+        if attach_name and attach_data:
+            root = etree.Element("Data")
+            tcs_flow201 = etree.SubElement(root, "TcsFlow201")
+            tcs_user = etree.SubElement(tcs_flow201, "TcsUser")
+            user_id = etree.SubElement(tcs_user, "UserId")
+            tcs_flow = etree.SubElement(tcs_flow201, "TcsFlow")
+            message_id = etree.SubElement(tcs_flow, "MessageId")
+            bp_no = etree.SubElement(tcs_flow, "BpNo")
+            action_list = etree.SubElement(tcs_flow, "ActionList")
+            action_id = etree.SubElement(action_list, "ActionId")
+            task_note = etree.SubElement(tcs_flow, "TaskNote")
+            task_note.text = "0"
+            corp_task_id = etree.SubElement(tcs_flow, "CorpTaskId")
+            task_control = etree.SubElement(tcs_flow, "TaskControl")
+            tcs_data = etree.SubElement(tcs_flow201, "TcsData", nsmap={"xsi": "http://www.w3.org/2001/XMLSchema-instance"})
 
-    # client_seq_no = str(uuid.uuid1())  # 客户端唯一编号
+            tcs_data_dic = OrderedDict()
+            tcs_data_dic['FILE_NAME'] = attach_name if attach_name else None # u'随附单据名称'
+            tcs_data_dic['BINARY_DATA'] = attach_data if attach_data else None  # u'PDF二进制数据'
+            tcs_data_dic['AGENTCODE'] = self.declare_company_id.register_code if self.declare_company_id.register_code else None # 申报单位代码
+            tcs_data_dic['AGENTNAME'] = self.declare_company_id.register_name_cn if self.declare_company_id.register_name_cn else None # u'申报单位名称'
+            tcs_data_dic['OWNERCODE'] = self.input_company_id.register_code  # u'货主单位代码'
+            tcs_data_dic['OWNERNAME'] = self.input_company_id.register_name_cn  # 货主单位名称
+            tcs_data_dic['TRADECODE'] = self.business_company_id.register_code  # u'经营单位编号'
+            tcs_data_dic['TRADENAME'] = self.business_company_id.register_name_cn  # u'经营单位名称'
+            tcs_data_dic['PRE_ENTRY_ID'] = None  # u'报关单预录入号'
+            tcs_data_dic['ENTRY_ID'] = None  # u'报关单号'
+            tcs_data_dic['FORMAT_TYPE'] = 'US' # u'格式类型'
+            tcs_data_dic['TRADE_CODE'] = self.input_company_id.register_code if self.input_company_id.register_code else None # u'企业编号'
+            tcs_data_dic['MASTER_CUSTOMS_CODE'] = str(self.custom_master_id.Code)  # u'申报口岸关区代码'
+            tcs_data_dic['GROUP_ID'] = None  # u'分组标识'
+            tcs_data_dic['TRADE_FILE_NAME'] = attach_name if attach_name else None  # u'文件原始名称'
+            tcs_data_dic['DECL_TYPE'] = 'F'  # u'上传类型'
+            tcs_data_dic['DECL_TIME'] = (datetime.now()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')   # u'上传时间'
+            tcs_data_dic['DECL_CODE'] = self.ic_code if self.ic_code else None  # u'上传人员代码'   操作员IC卡号
+            tcs_data_dic['DECL_NAME'] = self.oper_name if self.oper_name else None  # u'上传人员名称'
+            tcs_data_dic['FILE_TYPE'] = '00000001'  # u'随附单据类型'
+            tcs_data_dic['FILE_SOURCE'] = None  # u'数据来源'
+            tcs_data_dic['FILE_DIGEST'] = None  # u'文件摘要'
+            tcs_data_dic['SIGN_CERT'] = None  # u'证书名称'
+            tcs_data_dic['FILE_SIGN'] = None  # u'外网签名'
+            tcs_data_dic['OP_NOTE'] = None  # u'操作说明'
 
-    head_node_dic = OrderedDict()
-    head_node_dic['AgentCode'] = self.declare_company_id.register_code     # u'申报单位代码'
-    head_node_dic['AgentName'] = self.declare_company_id.register_name_cn  # u'申报单位名称'
-    head_node_dic['ApprNo'] = None
-    head_node_dic['BillNo'] = str(self.bill_no)    # u'提单号'
-    head_node_dic['ContrNo'] = str(self.customer_contract_no)   # u'合同编号'
-    head_node_dic['CopCode'] = self.cop_code  # u'录入单位代码'   # 后台配置
-    head_node_dic['CopName'] = self.cop_name   # u'录入单位名称'   # 后台配置   不能加str()
-    head_node_dic['CustomMaster'] = str(self.custom_master_id.Code)  # u'申报地海关'
-    head_node_dic['CutMode'] = str(self.CutMode_id.Code)  # u'征免性质'
-    head_node_dic['DataSource'] = None
-    # head_node_dic['DeclTrnRel'] = str(self.decl_trn_rel)  # u'报关/转关关系标志'
-    head_node_dic['DeclTrnRel'] = u'0'  # u'报关/转关关系标志 # 玉斌建议 写入固定值0'
-    head_node_dic['DistinatePort'] = str(self.port_id.Code)  # 装货港 delegate_port(2,)  ok
-    head_node_dic['DistrictCode'] = str(self.region_id.Code)  # str(self.region_id.Code)  # u'境内目的地'  ok
-    # head_node_dic['EntryId'] = str(self.ediId)  # u'报关标志'   # 增加选择字段
-    head_node_dic['EntryId'] = None  # u'报关标志'   # 玉斌建议 先配置为空
-    head_node_dic['EntryType'] = str(self.entry_type_id.Code)  # u'报关单类型'
-    head_node_dic['FeeCurr'] = self.fee_currency_id.Code   # u'运费币制'
-    head_node_dic['FeeMark'] = self.fee_mark.Code  # u'运费标记'
-    head_node_dic['FeeRate'] = str(self.fee_rate)  # u'运费／率'
-    head_node_dic['GrossWet'] = str(self.gross_weight)  # u'毛重'
-    head_node_dic['IEDate'] = self.in_out_date   # u'进出日期'
-    head_node_dic['IEFlag'] = self.inout   # u'进出口标志'
-    head_node_dic['IEPort'] = self.customs_id.Code  # u'进出口岸'
-    head_node_dic['InputerName'] = self.inputer_name  # u'录入员姓名'   # 设置界面和操作员同值  不能加str()
-    head_node_dic['InRatio'] = None
-    head_node_dic['InsurCurr'] = self.insurance_currency_id.Code  # u'保险费币制'
-    head_node_dic['InsurMark'] = self.insurance_mark.Code  # u'保险费标记'
-    head_node_dic['InsurRate'] = str(self.insurance_rate)  # u'保险费／率'
-    head_node_dic['LicenseNo'] = self.licenseNo   # u'许可证编号'
-    head_node_dic['ManualNo'] = self.ManualNo     # u'备案号'
-    head_node_dic['NetWt'] = str(self.net_weight)      # u'净重'
-    head_node_dic['NoteS'] = self.remarks      # u'备注'
-    head_node_dic['OtherCurr'] = self.other_currency_id.Code   # u'杂费币制'
-    head_node_dic['OtherMark'] = self.other_mark.Code  # u'杂费标志'
-    head_node_dic['OtherRate'] = str(self.other_rate)   # u'杂费／率'
-    head_node_dic['OwnerCode'] = None  # u'货主单位代码'
-    head_node_dic['OwnerName'] = None  # u'货主单位名称'
-    head_node_dic['PackNo'] = str(self.qty)  # u'件数'
-    head_node_dic['PartenerID'] = None  # u'申报人标识'
-    head_node_dic['PayWay'] = str(self.in_ratio)   # u'征税比例' in_ratio  报文PayWay
-    head_node_dic['PaymentMark'] = self.payment_mark.Code  # u'纳税单位'
-    head_node_dic['PDate'] = None  # u'首次进行暂存操作的系统时间'  非必填
-    head_node_dic['PreEntryId'] = self.pre_entry_id  # u'预录入编号'
-    head_node_dic['Risk'] = None   # u'风险评估参数'
-    head_node_dic['SeqNo'] = self.dec_seq_no   # u'报关单统一编号'
-    head_node_dic['TgdNo'] = None   # u'通关申请单号'
-    head_node_dic['TradeCode'] = self.business_company_id.register_code   # u'经营单位编号/收发货人海关10位编号'
-    head_node_dic['TradeCountry'] = self.origin_arrival_country_id.Code   # u'贸易国别'  启运/抵达国
-    head_node_dic['TradeMode'] = self.trade_mode_id.Code  # u'监管方式'
-    head_node_dic['TradeName'] = self.business_company_id.register_name_cn    # u'经营单位名称'  # self.business_company_id.register_name_cn
-    head_node_dic['TrafMode'] = self.transport_mode_id.code   # u'运输方式代码'
-    head_node_dic['TrafName'] = self.NativeShipName  # u'运输工具代码及名称'
-    head_node_dic['TransMode'] = self.trade_terms_id.Code   # u'成交方式'
-    head_node_dic['Type'] = None   # u'EDI申报备注'
-    head_node_dic['TypistNo'] = self.ic_code  # u'录入员IC卡号'   # 必填配置界面
-    head_node_dic['WrapType'] = self.packing_id.Code  # u'包装种类'
-    head_node_dic['ChkSurety'] = None  # u'担保验放标志'
-    head_node_dic['BillType'] = None  # u'备案清单类型' self.bill_type_id.Code
-    head_node_dic['AgentCodeScc'] = str(self.dec_seq_no)  # u'申报单位统一编码'
-    head_node_dic['CopCodeScc'] = self.cop_code_scc  # u'录入单位统一编码'    # 设置界面
-    head_node_dic['OwnerCodeScc'] = self.input_company_id.unified_social_credit_code      # u'货主单位/消费生产单位 社会统一编码'
-    head_node_dic['TradeCodeScc'] = self.business_company_id.unified_social_credit_code   # u'经营单位社会统一编码18位'
-    head_node_dic['PromiseItmes'] = str(self.promise1.Code+self.promise2.Code+self.promise3.Code)       # u'承诺事项'  字符串拼接
-    head_node_dic['TradeAreaCode'] = self.trade_country_id.Code  # u'贸易国别'
+            for node in tcs_data_dic:
+                _node = etree.SubElement(tcs_data, node)
+                # node_list = ['PRE_ENTRY_ID', 'ENTRY_ID', 'GROUP_ID', 'FILE_SOURCE', 'FILE_DIGEST', 'SIGN_CERT','OP_NOTE']
+                # if node in node_list:
+                #     _node.set('xsi:nil', "True")
+                value = tcs_data_dic[node]
+                if value:
+                    _node.text = value
+            # change the root to xml file
+            string = etree.tostring(root, xml_declaration=True, encoding='utf-8')
+            # base_dir = config.options['xml_files_path']
+            base_dir = config.options.get('xml_files_path', '/mnt/odooshare/customs_declaration_xml')
 
-    for node in head_node_dic:
-        _node = etree.SubElement(head, node)
-        value = head_node_dic[node]
-        if value:
-            _node.text = value
+            # # 企业报关单 存放目录 前端界面配置
+            # 报文生成路径 用户配置界面自定义
+            company_name = str(self.cus_dec_dir)
+            dec_catalog_path = os.path.join(base_dir, company_name)
+            # 检查并生成相应的目录
+            if not os.path.exists(dec_catalog_path):
+                os.mkdir(dec_catalog_path)
+            obj_dir = os.path.join(dec_catalog_path, attach_name +'$'+ (datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S') + '.xml')
+            with open(obj_dir, 'w') as fp:
+                fp.write(string.encode('utf8'))
 
-    # edit the bodylist
-    i = 0
-    for item in self.dec_goods_list_ids:
-        i += 1
-        product_node_name = OrderedDict()
-        product_node_name['ClassMark'] = None  # u'归类标志'
-        product_node_name['CodeTS'] = item.cus_goods_tariff_id.Code_ts if item.cus_goods_tariff_id.Code_ts else None   # u'商品编号'
-        product_node_name['ContrItem'] = None   # u'备案序号'
-        product_node_name['DeclPrice'] = str(item.deal_unit_price)  if item.deal_unit_price else None # u'申报单价'
-        product_node_name['DeclTotal'] = str(item.deal_total_price) if item.deal_total_price else None # u'申报总价'
-        product_node_name['DutyMode'] = item.duty_mode_id.Code if item.duty_mode_id.Code else None  # u'征减免税方式'
-        product_node_name['ExgNo'] = None   # u'货号'
-        product_node_name['ExgVersion'] = None  # u'版本号'
-        product_node_name['Factor'] = None   # u'申报计量单位与法定单位比例因子'
-        product_node_name['FirstQty'] = str(item.first_qty) if item.first_qty else None  # u'第一法定数量'
-        product_node_name['FirstUnit'] = item.first_unit.Code  if item.first_unit.Code else None # u'第一计量单位'
-        product_node_name['GUnit'] = item.deal_unit.Code  if item.deal_unit.Code else None  # u'申报/成交计量单位'
-        product_node_name['GModel'] = item.goods_model if item.goods_model else None   # u'商品规格、型号'
-        product_node_name['GName'] = item.goods_name  if item.goods_name else None  # u'商品名称'
-        product_node_name['GNo'] = str(i)   # u'商品序号'
-        product_node_name['GQty'] = str(item.deal_qty)  if item.deal_qty else None   # u'申报数量'
-        product_node_name['OriginCountry'] = item.origin_country_id.Code if item.origin_country_id.Code else None   # u'原产地'
-        product_node_name['SecondUnit'] = item.second_unit.Code if item.second_unit.Code else None   # u'第二计量单位'
-        product_node_name['SecondQty'] = str(item.second_qty)  if item.second_qty else None  # u'第二法定数量'
-        product_node_name['TradeCurr'] = item.currency_id.Code if item.currency_id.Code else None  # u'成交币制'
-        product_node_name['UseTo'] = None   # u'用途/生产厂家'
-        product_node_name['WorkUsd'] = None  # u'工缴费'
-        product_node_name['DestinationCountry'] = item.destination_country_id.Code  if item.destination_country_id.Code else None  # u'最终目的国(地区)'
 
-        body = etree.SubElement(body_list, "DecList")
-        for node in product_node_name:
-            _node = etree.SubElement(body, node)
-            value = product_node_name[node]
-            if value:
-                _node.text = value
 
-    # # 集装箱
-    # dec_containers = OrderedDict()
-    # dec_containers['ContainerId'] = u'集装箱号'
-    # dec_containers['ContainerMd'] = u'集装箱规格'
-    # dec_containers['ContainerWt'] = u'集装箱自重'
-    # body1 = etree.SubElement(body_containers_list, "Container")
-    # for node in dec_containers:
-    #     _node = etree.SubElement(body1, node)
-    #     value = dec_containers[node]
-    #     if value:
-    #         _node.text = value
 
-    dec_license_docus = OrderedDict()
-    dec_license_docus['DocuCode'] = str(self.licenseNo_id.dec_license_doc_type_id)   # u'单证代码/类型'
-    dec_license_docus['CertCode'] = str(self.licenseNo_id.dec_license_no)   # u'单证编号'
-    body2 = etree.SubElement(body_license_docus_list, "LicenseDocu")
-    for node in dec_license_docus:
-        _node = etree.SubElement(body2, node)
-        value = dec_license_docus[node]
-        if value:
-            _node.text = value
 
-    # dec_free_test = OrderedDict()
-    # dec_free_test['BonNo'] = u'监管仓号'
-    # dec_free_test['CusFie'] = u'货场代码'
-    # dec_free_test['DecBpNo'] = u'报关员联系方式'
-    # dec_free_test['DecNo'] = u'报关员号'
-    # dec_free_test['RelId'] = u'关联报关单号'
-    # dec_free_test['RelManNo'] = u'关联备案号'
-    # dec_free_test['VoyNo'] = u'航次号'
 
-    # for node in dec_free_test:
-    #     _node = etree.SubElement(body_free_test_list, node)
-    #     value = dec_free_test[node]
-    #     if value:
-    #         _node.text = value
 
-    dec_sign = OrderedDict()
-    # dec_sign['ClientSeqNo'] = client_seq_no.encode('utf8')
-    dec_sign['ClientSeqNo'] = str(self.client_seq_no)
-    dec_sign['CopCode'] = self.cop_code  # u'操作企业组织机构代码'   # 配置界面设置   不能加str()否则报编码 可能原因，设置默认值渲染到页面之后 已经是unicode
-    dec_sign['ICCode'] = self.ic_code  # u'操作员IC卡号'   # 配置界面配置
-    dec_sign['OperType'] = 'G'              # u'操作类型'
-    dec_sign['OperName'] = self.oper_name  # u'操作员姓名'    # 配置界面
-    dec_sign['Sign'] = 'abcdff'  # u'报关单签名'
-    dec_sign['SignDate'] = (datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S00')  # u'签名时间'
-    dec_sign['HostId'] = None  # u'邮箱ID'
-    dec_sign['Certificate'] = self.certificate  # u'操作员卡对应的证书号'   # 配置界面
 
-    for node in dec_sign:
-        _node = etree.SubElement(body_dec_sign, node)
-        value = dec_sign[node]
-        if value:
-            _node.text = value
-
-    # 转关相关报文头部信息
-    # trn_head = OrderedDict()
-    # trn_head['ContractorName'] = None  # u'承运单位名称'
-    # trn_head['ContractorCode'] = None  # u'承运单位组织机构代码'
-    # trn_head['ESealFlag'] = None  # u'是否启用电子关锁标志'
-    # trn_head['NativeTrafMode'] = None   # u'境内运输方式'
-    # trn_head['NativeShipName'] = None  # u'境内运输工具名称'
-    # trn_head['NativeVoyageNo'] = None  # u'境内运输工具航次'
-    # trn_head['TrnPreId'] = None   # u'转关单统一编号'
-    # trn_head['TransNo'] = None  # u'南方模式中的载货清单号'
-    # trn_head['TransFlag'] = None  # u'转关类型'
-    # trn_head['TrafCustomsNo'] = None  # u'境内运输工具编号'
-    # trn_head['TurnNo'] = None  # u'转关申报单号'
-    # trn_head['ValidTime'] = None  # u'预计运抵指运地时间'
-    # trn_head['Notes'] = None  # u'备注'
-    # trn_head['TrnType'] = None  # u'转关单类型'
-    # # trn_head['ApplCodeScc'] = u'转关申报单位统一代码'
+    # root = etree.Element("Data")
+    # tcs_flow201 = etree.SubElement(root, "TcsFlow201")
+    # tcs_user = etree.SubElement(tcs_flow201, "TcsUser")
+    # user_id = etree.SubElement(tcs_user, "UserId")
+    # tcs_flow = etree.SubElement(tcs_flow201, "TcsFlow")
+    # message_id = etree.SubElement(tcs_flow, "MessageId")
+    # bp_no = etree.SubElement(tcs_flow, "BpNo")
+    # action_list = etree.SubElement(tcs_flow, "ActionList")
+    # action_id = etree.SubElement(action_list, "ActionId")
+    # task_note = etree.SubElement(tcs_flow, "TaskNote")
+    # task_note.text = "0"
+    # corp_task_id = etree.SubElement(tcs_flow, "CorpTaskId")
+    # task_control = etree.SubElement(tcs_flow, "TaskControl")
+    # tcs_data = etree.SubElement(tcs_flow201, "TcsData", nsmap={"xsi": "http://www.w3.org/2001/XMLSchema-instance"})
     #
-    # for node in trn_head:
-    #     _node = etree.SubElement(trn_head_info, node)
-    #     value = trn_head[node]
-    #     if value:
-    #         _node.text = value
-
-    # 转关相关报文列表信息
-    trn_list = OrderedDict()
-    trn_list['BillNo'] = self.bill_no  # u'提单号'
-    trn_list['IEDate'] = None  # u'实际进出境日期'
-    trn_list['ShipId'] = None  # u'进出境运输工具编号'
-    trn_list['ShipNameEn'] = self.NativeShipName  # u'进出境运输工具名称（船舶名称）'
-    trn_list['TrafMode'] = None  # u'进出境运输方式'
-    trn_list['VoyageNo'] = self.VoyageNo  # u'进出境运输工具航次'
-
-    for node in trn_list:
-        _node = etree.SubElement(trn_list_info, node)
-        value = trn_list[node]
-        if value:
-            _node.text = value
-
-    # # 转关相关报文 集装箱信息
-    # trn_containers = OrderedDict()
-    # trn_containers['ContaNo'] = u'集装箱号'
-    # trn_containers['ContaSn'] = u'集装箱序号'
-    # trn_containers['ContaModel'] = u'集装箱规格'
-    # trn_containers['SealNo'] = u'电子关锁号'
-    # trn_containers['TransName'] = u'境内运输工具名称'
-    # trn_containers['TransWeight'] = u'运输工具实际重量'
-    # body3 = etree.SubElement(trn_containers_info, "TrnContainer")
+    # tcs_data_dic = OrderedDict()
+    # tcs_data_dic['FILE_NAME'] = self.declare_company_id.register_code     # u'随附单据名称'
+    # tcs_data_dic['BINARY_DATA'] = self.declare_company_id.register_name_cn  # u'PDF二进制数据'
+    # tcs_data_dic['AGENTCODE'] = None   # 申报单位代码
+    # tcs_data_dic['AGENTNAME'] = str(self.bill_no)    # u'申报单位名称'
+    # tcs_data_dic['OWNERCODE'] = str(self.customer_contract_no)   # u'货主单位代码'
+    # tcs_data_dic['OWNERNAME'] = self.cop_code  # u'录入单位代码'   # 货主单位名称
+    # tcs_data_dic['TRADECODE'] = self.cop_name   # u'经营单位编号'
+    # tcs_data_dic['TRADENAME'] = str(self.custom_master_id.Code)  # u'经营单位名称'
+    # tcs_data_dic['PRE_ENTRY_ID'] = str(self.custom_master_id.Code)  # u'报关单预录入号'
+    # tcs_data_dic['ENTRY_ID'] = str(self.custom_master_id.Code)  # u'报关单号'
+    # tcs_data_dic['FORMAT_TYPE'] = str(self.custom_master_id.Code)  # u'格式类型'
+    # tcs_data_dic['TRADE_CODE'] = str(self.custom_master_id.Code)  # u'企业编号'
+    # tcs_data_dic['MASTER_CUSTOMS_CODE'] = str(self.custom_master_id.Code)  # u'申报口岸关区代码'
+    # tcs_data_dic['GROUP_ID'] = str(self.custom_master_id.Code)  # u'分组标识'
+    # tcs_data_dic['TRADE_FILE_NAME'] = str(self.custom_master_id.Code)  # u'文件原始名称'
+    # tcs_data_dic['DECL_TYPE'] = str(self.custom_master_id.Code)  # u'上传类型'
+    # tcs_data_dic['DECL_TIME'] = str(self.custom_master_id.Code)  # u'上传时间'
+    # tcs_data_dic['DECL_CODE'] = str(self.custom_master_id.Code)  # u'上传人员代码'
+    # tcs_data_dic['DECL_NAME'] = str(self.custom_master_id.Code)  # u'上传人员名称'
+    # tcs_data_dic['FILE_TYPE'] = str(self.custom_master_id.Code)  # u'随附单据类型'
+    # tcs_data_dic['FILE_SOURCE'] = str(self.custom_master_id.Code)  # u'数据来源'
+    # tcs_data_dic['FILE_DIGEST'] = str(self.custom_master_id.Code)  # u'证书名称'
+    # tcs_data_dic['SIGN_CERT'] = str(self.custom_master_id.Code)  # u'外网签名'
+    # tcs_data_dic['FILE_SIGN'] = str(self.custom_master_id.Code)  # u'申报地海关'
+    # tcs_data_dic['OP_NOTE'] = str(self.custom_master_id.Code)  # u'操作说明'
     #
-    # for node in trn_containers:
-    #     _node = etree.SubElement(body3, node)
-    #     value = trn_containers[node]
+    # for node in tcs_data_dic:
+    #     _node = etree.SubElement(tcs_data, node)
+    #     value = tcs_data_dic[node]
     #     if value:
     #         _node.text = value
-
-    # 转关相关报文 商品信息
-    # rn_conta_goods = OrderedDict()
-    # rn_conta_goods['ContaNo'] = u'集装箱号'
-    # rn_conta_goods['ContaGoodsCount'] = u'商品件数'
-    # rn_conta_goods['ContaGoodsWeight'] = u'商品重量'
-    # rn_conta_goods['GNo'] = u'商品序号'
-    # body4 = etree.SubElement(trn_conta_goods_list, "TrnContaGoods")
     #
-    # for node in rn_conta_goods:
-    #     _node = etree.SubElement(body4, node)
-    #     value = rn_conta_goods[node]
-    #     if value:
-    #         _node.text = value
-
-    # 随附单据信息
-    attach_list = []
-    for item in self.information_attachment_ids:
-        e_doc_realation = OrderedDict()
-        e_doc_realation['EdocID'] = item.name if item.name else None  # u'随附单据编号'
-        e_doc_realation['EdocCode'] = item.description if item.description else None  # u'随附单据类别' 必填
-        e_doc_realation['EdocFomatType'] = 'US'  # u'随附单据格式类型'  必填
-        e_doc_realation['OpNote'] = None  # u'操作说明'
-        e_doc_realation['EdocCopId'] = None  # u'随附单据文件企业名'
-        e_doc_realation['EdocOwnerCode'] = str(self.custom_master_id.Code)  # u'所属单位海关编号' 必填
-        e_doc_realation['SignUnit'] = self.declare_company_id.register_code  # u'签名单位代码'
-        e_doc_realation['SignTime'] = str((datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S')) # u'签名时间' 必填
-        e_doc_realation['EdocOwnerName'] = self.business_company_id.register_name_cn  # u'所属单位名称'
-        e_doc_realation['EdocSize'] = None  # u'随附单据文件大小'
-        attach_list.append(e_doc_realation)
-
-    for e_doc_realation in attach_list:
-        attach_tag = etree.SubElement(root, "EdocRealation")
-        for node in e_doc_realation:
-            _node = etree.SubElement(attach_tag, node)
-            value = e_doc_realation[node]
-            if value:
-                _node.text = value
-
-        # body = etree.SubElement(body_list, "EdocRealation")
-        # for node in e_doc_realation:
-        #     _node = etree.SubElement(body, node)
-        #     value = product_node_name[node]
-        #     if value:
-        #         _node.text = value
-
-
-    # change the root to xml file
-    string = etree.tostring(root, xml_declaration=True, encoding='utf-8')
-    # base_dir = config.options['xml_files_path']
-
-    base_dir = config.options.get('xml_files_path', '/mnt/odooshare/customs_declaration_xml')
-
-    # # 企业报关单 存放目录 前端界面配置
-    # et_dec_catalog_name = str(self.et_dec_catalog_ids.et_dec_catalog_name)
-    # dec_catalog_path = os.path.join(base_dir, et_dec_catalog_name)
+    #
+    # # change the root to xml file
+    # string = etree.tostring(root, xml_declaration=True, encoding='utf-8')
+    # # base_dir = config.options['xml_files_path']
+    # base_dir = config.options.get('xml_files_path', '/mnt/odooshare/customs_declaration_xml')
+    #
+    # # # 企业报关单 存放目录 前端界面配置
+    # # 报文生成路径 用户配置界面自定义
+    # company_name = str(self.cus_dec_dir)
+    # dec_catalog_path = os.path.join(base_dir, company_name)
     # # 检查并生成相应的目录
     # if not os.path.exists(dec_catalog_path):
     #     os.mkdir(dec_catalog_path)
-    # obj_dir = os.path.join(dec_catalog_path, 'DECDATA' + client_seq_no + '.xml')
+    # obj_dir = os.path.join(dec_catalog_path, 'attach' + str(self.client_seq_no) + '.xml')
     # with open(obj_dir, 'w') as fp:
     #     fp.write(string.encode('utf8'))
-
-    ############################################################
-    # 报文生成路径 方式1：: 根据当前公司名 自动生成
-    # company_name = self.env.user.company_id.name
-
-    # 报文生成路径 方式1： 用户配置界面自定义
-    company_name = str(self.cus_dec_dir)
-    dec_catalog_path = os.path.join(base_dir, company_name)
-    # 检查并生成相应的目录
-    if not os.path.exists(dec_catalog_path):
-        os.mkdir(dec_catalog_path)
-    obj_dir = os.path.join(dec_catalog_path, 'DECDATA' + str(self.client_seq_no) + '.xml')
-    with open(obj_dir, 'w') as fp:
-        fp.write(string.encode('utf8'))
-

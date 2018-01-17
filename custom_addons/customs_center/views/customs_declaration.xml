@@ -7,6 +7,8 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">customs_center.customs_dec</field>
             <field name="view_mode">tree,form</field>
+            <!--报关单列表视图界面过滤掉协同报关单 即不显示-->
+            <field name="domain">[('synergism_seq_no','=', False)]</field>
         </record>
 
         <record id="customs_declaration_tree" model="ir.ui.view">
@@ -15,6 +17,7 @@
             <field name="arch" type="xml">
                 <tree default_order="create_date desc">
                     <field name="name" string="报关单流水号"/>
+                    <!--<field name="synergism_seq_no" string="协同报关单号" attrs="{'invisible':[('synergism_seq_no','=',False)]}"/>-->
                     <field name="work_sheet_id" string="工作单号"/>
                     <field name="cus_ciq_No" string="关检关联号"/>
                     <field name="dec_seq_no" string="统一编号"/>
@@ -40,13 +43,17 @@
                         <!--<button name="parse_original_xml" string="解析新光报文入库" class="oe_highlight" type="object"/>-->
                         <button name="parse_cus_message_xml" string="解析富士康报文+空随附单据入库" class="oe_highlight" type="object"/>
                         <button name="parse_attach_message_xml" string="解析随附单据入库" class="oe_highlight" type="object"/>
-                        <button name="generate_customer_xml" string="生成报文发送QP" class="oe_highlight" type="object"/>
+                        <button name="customs_single_delegate_to_xml" string="报文发送单一窗口" class="oe_highlight" type="object"/>
+                        <button name="generate_single_customer_attach_xml" string="单据发送单一窗口" class="oe_highlight" type="object"/>
+                        <button name="generate_qp_customer_xml" string="报文发送QP" class="oe_highlight" type="object"/>
+                        <button name="generate_qp_customer_attach_xml" string="单据发送QP" class="oe_highlight" type="object"/>
                         <!--<button name="generate_customer_attach_xml" string="生成随附单据报文" class="oe_highlight" type="object"/>-->
 
                     </header>
                     <sheet>
                         <field name="client_seq_no" string="报关单客户端编号" invisible="1"/>
                         <field name="customs_order_id" string="关联的通关清单" invisible="1"/>
+                        <field name="synergism_seq_no" string="协同报关单号"/>
 
                         <div class="row" style="padding-bottom: 15px; padding-top: 11px;">
                             <div class="col-lg-4 col-md-6">
@@ -640,6 +647,7 @@
                                             <field name="oper_name" string="操作员姓名"/>
                                             <field name="certificate" string="操作员卡的证书号"/>
                                             <field name="ic_code" string="操作员IC卡号"/>
+                                            <field name="dec_company_customs_code" string="申报单位海关编码"/>
                                         </group>
                                     </group>
                                 </page>
@@ -660,6 +668,53 @@
                 </form>
             </field>
         </record>
+
+
+        <!--协同报关单菜单-->
+        <record id="action_sync_customs_declaration" model="ir.actions.act_window">
+            <field name="name">协同报关单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.customs_dec</field>
+            <field name="view_mode">tree,form</field>
+            <!--协同报关单列表视图界面 只显示协同报关单-->
+            <field name="domain">[('synergism_seq_no','&lt;&gt;', False)]</field>
+        </record>
+
+        <record id="customs_sync_declaration_tree" model="ir.ui.view">
+            <field name="name">Customs Sync Declaration tree view</field>
+            <field name="model">customs_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="name" string="报关单流水号"/>
+                    <field name="synergism_seq_no" string="协同报关单号"/>
+                    <field name="work_sheet_id" string="工作单号"/>
+                    <field name="cus_ciq_No" string="关检关联号"/>
+                    <field name="dec_seq_no" string="统一编号"/>
+                    <field name="pre_entry_id" string="预录入号"/>
+                    <field name="inout" string="进出口类型"/>
+                    <field name="business_company_id" string="收发货人"/>
+                    <field name="custom_master_id" string="申报地海关"/>
+                    <field name="create_uid" readonly="1" string="创建人"/>
+                    <field name="create_date" string="创建时间" widget="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sync_customs_declaration_tree" model="ir.actions.act_window.view">
+                   <field name="view_mode">tree</field>
+                   <field name="sequence">1</field>
+                   <field name="view_id" ref="customs_center.customs_sync_declaration_tree" />
+                   <field name="act_window_id" ref="customs_center.action_sync_customs_declaration" />
+        </record>
+
+        <record id="sync_customs_declaration_form" model="ir.actions.act_window.view">
+                    <field name="view_mode">form</field>
+                    <field name="sequence">2</field>
+                   <field name="view_id" ref="customs_center.customs_declaration_form" />
+                   <field name="act_window_id" ref="customs_center.action_sync_customs_declaration" />
+        </record>
+
+
 
         <!--报关单搜索视图-->
         <!--支持按工作单号、关检关联号、统一编号、预录入号、海关编号、收发货人、创建人搜索-->

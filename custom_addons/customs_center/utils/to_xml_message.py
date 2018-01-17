@@ -64,8 +64,8 @@ def delegate_to_xml(self):
     head_node_dic['OtherCurr'] = self.other_currency_id.Code   # u'杂费币制'
     head_node_dic['OtherMark'] = self.other_mark.Code  # u'杂费标志'
     head_node_dic['OtherRate'] = str(self.other_rate)   # u'杂费／率'
-    head_node_dic['OwnerCode'] = None  # u'货主单位代码'
-    head_node_dic['OwnerName'] = None  # u'货主单位名称'
+    head_node_dic['OwnerCode'] = self.input_company_id.register_code  # u'货主单位代码'
+    head_node_dic['OwnerName'] = self.input_company_id.register_name_cn  # u'货主单位名称'
     head_node_dic['PackNo'] = str(self.qty)  # u'件数'
     head_node_dic['PartenerID'] = None  # u'申报人标识'
     head_node_dic['PayWay'] = str(self.in_ratio)   # u'征税比例' in_ratio  报文PayWay

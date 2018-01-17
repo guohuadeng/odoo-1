@@ -30,6 +30,7 @@
                                 <field name="default_oper_name" string="操作员姓名" required="1"/>
                                 <field name="default_certificate" string="操作员卡的证书号" required="1"/>
                                 <field name="default_ic_code" string="操作员IC卡号" required="1"/>
+                                <field name="default_dec_company_customs_code" string="申报单位海关编码" required="1"/>
                                 <!--<field name="default_cus_dec_dir" string="企业报文目录名" required="1"/>-->
                                 <!--<field name="declare_company_id_dir" string="企业报文目录名" required="1"/>-->
                             </group>
