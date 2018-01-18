@@ -151,8 +151,8 @@ def delegate_to_xml(self):
     #         _node.text = value
 
     dec_license_docus = OrderedDict()
-    dec_license_docus['DocuCode'] = str(self.licenseNo_id.dec_license_doc_type_id)   # u'单证代码/类型'
-    dec_license_docus['CertCode'] = str(self.licenseNo_id.dec_license_no)   # u'单证编号'
+    dec_license_docus['DocuCode'] = str(self.licenseNo_id.dec_license_doc_type_id)  if self.licenseNo_id.dec_license_doc_type_id else None  # u'单证代码/类型'
+    dec_license_docus['CertCode'] = str(self.licenseNo_id.dec_license_no) if self.licenseNo_id.dec_license_no else None  # u'单证编号'
     body2 = etree.SubElement(body_license_docus_list, "LicenseDocu")
     for node in dec_license_docus:
         _node = etree.SubElement(body2, node)
@@ -287,7 +287,7 @@ def delegate_to_xml(self):
                 _node.text = value
 
     # change the root to xml file
-    string = etree.tostring(root, pretty_print=True, xml_declaration=True, encoding='utf-8')
+    string = etree.tostring(root, pretty_print=True, xml_declaration=True, encoding='utf-8')  # pretty_print=True, 该参数可以生成格式化后的XML
     # base_dir = config.options['xml_files_path']
 
     # 单一窗口报文发送根目录

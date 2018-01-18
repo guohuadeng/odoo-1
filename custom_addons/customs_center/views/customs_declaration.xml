@@ -38,18 +38,17 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <!--<button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"-->
-                                <!--type="object" confirm="确定生成报文，发送至单一窗口么?"/>-->
-                        <!--<button name="parse_original_xml" string="解析新光报文入库" class="oe_highlight" type="object"/>-->
-                        <button name="parse_cus_message_xml" string="解析富士康报文+空随附单据入库" class="oe_highlight" type="object"/>
-                        <button name="parse_attach_message_xml" string="解析随附单据入库" class="oe_highlight" type="object"/>
-                        <button name="generate_single_customer_xml" string="报文发送单一窗口" class="oe_highlight" type="object"/>
-                        <button name="generate_qp_customer_xml" string="报文发送QP" class="oe_highlight" type="object"/>
+                        <!--<button name="parse_cus_message_xml" string="解析富士康报文+空随附单据入库" class="oe_highlight" type="object"/>-->
+                        <!--<button name="auto_parse_attach_message_xml" string="解析随附单据入库" class="oe_highlight" type="object"/>-->
+                        <!--<button name="parse_receipt_xml" string="解析报关单回执" class="oe_highlight" type="object"/>-->
+                        <button name="generate_single_customer_xml" string="报文发送单一窗口" class="oe_highlight" type="object" attrs="{'invisible': [('cus_dec_sent_way', 'in', ['QP',])]}"/>
+                        <button name="generate_qp_customer_xml" string="报文发送QP" class="oe_highlight" type="object" attrs="{'invisible': [('cus_dec_sent_way', 'in', ['single',])]}"/>
+                        <field name="cus_dec_sent_way" widget="statusbar" invisible="1" statusbar_visible="single,QP"/>
                     </header>
                     <sheet>
                         <field name="client_seq_no" string="报关单客户端编号" invisible="1"/>
                         <field name="customs_order_id" string="关联的通关清单" invisible="1"/>
-                        <field name="synergism_seq_no" string="协同报关单号"/>
+                        <field name="synergism_seq_no" string="协同报关单号" invisible="1"/>
 
                         <div class="row" style="padding-bottom: 15px; padding-top: 11px;">
                             <div class="col-lg-4 col-md-6">
@@ -611,7 +610,7 @@
                                     </field>
                                 </page>
 
-                                <page string="Receipt">
+                                <page string="回执信息">
                                     <field name="receipt_ids" mode="tree" readonly="1">
                                         <tree>
                                             <field name="sequence" invisible="1"/>
@@ -633,24 +632,24 @@
                                     </field>
                                 </page>
 
-                                <page string="配置信息(字段确认后，该page页面删除)">
-                                    <group>
-                                        <group>
-                                            <field name="cop_code" string="录入单位企业组织机构代码"/>
-                                            <field name="cop_name" string="录入单位名称"/>
-                                            <field name="cop_code_scc" string="录入单位社会信用统一编码"/>
-                                            <field name="inputer_name" string="录入员姓名" required="1"/>
-                                            <field name="oper_name" string="操作员姓名"/>
-                                            <field name="certificate" string="操作员卡的证书号"/>
-                                            <field name="ic_code" string="操作员IC卡号"/>
-                                            <field name="dec_company_customs_code" string="申报单位海关编码"/>
-                                        </group>
-                                    </group>
-                                </page>
+                                <!--<page string="配置信息(字段确认后，该page页面删除)">-->
+                                    <!--<group>-->
+                                        <!--<group>-->
+                                            <!--<field name="cop_code" string="录入单位企业组织机构代码"/>-->
+                                            <!--<field name="cop_name" string="录入单位名称"/>-->
+                                            <!--<field name="cop_code_scc" string="录入单位社会信用统一编码"/>-->
+                                            <!--<field name="inputer_name" string="录入员姓名" required="1"/>-->
+                                            <!--<field name="oper_name" string="操作员姓名"/>-->
+                                            <!--<field name="certificate" string="操作员卡的证书号"/>-->
+                                            <!--<field name="ic_code" string="操作员IC卡号"/>-->
+                                            <!--<field name="dec_company_customs_code" string="申报单位海关编码"/>-->
+                                        <!--</group>-->
+                                    <!--</group>-->
+                                <!--</page>-->
 
-                                <page string="随附单据">
-                                    <field name="information_attachment_ids" widget="many2many_binary"/>
-                                </page>
+                                <!--<page string="随附单据">-->
+                                    <!--<field name="information_attachment_ids" widget="many2many_binary"/>-->
+                                <!--</page>-->
 
 
                             </notebook>

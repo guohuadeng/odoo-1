@@ -152,5 +152,11 @@
             <field name="sequence">24</field>
        </record>
 
+        <record id="result_status_dec_pass" model="customs_center.dec_res_status">
+            <field name="code">P</field>
+            <field name="name">报关单放行</field>
+            <field name="sequence">25</field>
+       </record>
+
     </data>
 </odoo>
