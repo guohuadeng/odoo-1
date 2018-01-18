@@ -26,6 +26,8 @@ def delegate_to_xml(self):
     # e_doc_realation_info = etree.SubElement(root, "EdocRealation")
 
     # client_seq_no = str(uuid.uuid1())  # 客户端唯一编号
+    # 报关单发送通道
+    dec_send_way = self.cus_dec_sent_way
 
     head_node_dic = OrderedDict()
     head_node_dic['AgentCode'] = self.declare_company_id.register_code     # u'申报单位代码'
@@ -284,43 +286,35 @@ def delegate_to_xml(self):
             if value:
                 _node.text = value
 
-        # body = etree.SubElement(body_list, "EdocRealation")
-        # for node in e_doc_realation:
-        #     _node = etree.SubElement(body, node)
-        #     value = product_node_name[node]
-        #     if value:
-        #         _node.text = value
-
-
     # change the root to xml file
-    string = etree.tostring(root, xml_declaration=True, encoding='utf-8')
+    string = etree.tostring(root, pretty_print=True, xml_declaration=True, encoding='utf-8')
     # base_dir = config.options['xml_files_path']
 
-    base_dir = config.options.get('xml_files_path', '/mnt/odooshare/customs_declaration_xml')
+    # 单一窗口报文发送根目录
+    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
+    # QP 报文发送根目录
+    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
 
-    # # 企业报关单 存放目录 前端界面配置
-    # et_dec_catalog_name = str(self.et_dec_catalog_ids.et_dec_catalog_name)
-    # dec_catalog_path = os.path.join(base_dir, et_dec_catalog_name)
-    # # 检查并生成相应的目录
-    # if not os.path.exists(dec_catalog_path):
-    #     os.mkdir(dec_catalog_path)
-    # obj_dir = os.path.join(dec_catalog_path, 'DECDATA' + client_seq_no + '.xml')
-    # with open(obj_dir, 'w') as fp:
-    #     fp.write(string.encode('utf8'))
+    # 企业报关单 报文生成路径  用户配置界面自定义
+    company_name = str(self.dec_company_customs_code)  # 申报单位海关编码 用作报文存放路径
+    if dec_send_way:
+        if dec_send_way == 'single':
+            dec_catalog_path = os.path.join(base_dir_send_single, company_name)
+            # 检查并生成相应的目录
+            if not os.path.exists(dec_catalog_path):
+                os.mkdir(dec_catalog_path)
+            obj_dir = os.path.join(dec_catalog_path, 'DECDATA-SINGLE-' + str(self.client_seq_no) + '.xml')
+            with open(obj_dir, 'w') as fp:
+                fp.write(string.encode('utf8'))
+        elif dec_send_way == 'QP':
+            dec_catalog_path = os.path.join(base_dir_send_qp, company_name)
+            # 检查并生成相应的目录
+            if not os.path.exists(dec_catalog_path):
+                os.mkdir(dec_catalog_path)
+            obj_dir = os.path.join(dec_catalog_path, 'DECDATA-QP-' + str(self.client_seq_no) + '.xml')
+            with open(obj_dir, 'w') as fp:
+                fp.write(string.encode('utf8'))
 
-    ############################################################
-    # 报文生成路径 方式1：: 根据当前公司名 自动生成
-    # company_name = self.env.user.company_id.name
-
-    # 报文生成路径 方式1： 用户配置界面自定义
-    company_name = str(self.cus_dec_dir)
-    dec_catalog_path = os.path.join(base_dir, company_name)
-    # 检查并生成相应的目录
-    if not os.path.exists(dec_catalog_path):
-        os.mkdir(dec_catalog_path)
-    obj_dir = os.path.join(dec_catalog_path, 'DECDATA' + str(self.client_seq_no) + '.xml')
-    with open(obj_dir, 'w') as fp:
-        fp.write(string.encode('utf8'))
 
 
 # #####################################################################

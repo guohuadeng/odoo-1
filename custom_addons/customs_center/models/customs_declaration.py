@@ -23,34 +23,18 @@ _logger = logging.getLogger(__name__)
 #     import xml.etree.ElementTree as ET
 
 
-PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/odooshare/about_wly_xml_data/send/cus_to_wly')
-PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/send/cus_to_wly_attach_send')
-PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/send/send_error_xml_message')
-GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/odooshare/about_wly_xml_data/send/rec_wly_to_cus')
-GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/odooshare/about_wly_xml_data/send/rec_wly_to_cus_attach')
-BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/odooshare/about_wly_xml_data/send/send_backup_xml')   # 新光原始报文备份目录
-BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/odooshare/about_wly_xml_data/send/send_backup_xml_attach')   # 新光原始报文备份目录
+PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
+PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
 
 
 RECV_XML_BASE_PATH = config.options.get('recv_xml_message_path', '/mnt/odooshare/recv_xml_message')
 ERROR_XML_BASE_PATH = config.options.get('error_xml_message_path','/mnt/odooshare/error_xml_message')
 BAKUP_XML_BASE_PATH = config.options.get('bakup_xml_message_path','/mnt/odooshare/bakup_xml_message')
-
-
-# parse_cus_to_wly_path = /mnt/odooshare/about_wly_xml_data/send/cus_to_wly
-# parse_cus_to_wly_attach_path = /mnt/odooshare/about_wly_xml_data/send/cus_to_wly_attach_send
-# parse_send_error_xml_path = /mnt/odooshare/about_wly_xml_data/send/send_error_xml_message
-# generate_rec_wly_to_cus_path = /mnt/odooshare/about_wly_xml_data/send/rec_wly_to_cus
-# generate_rec_wly_to_cus_attach_path = /mnt/odooshare/about_wly_xml_data/send/rec_wly_to_cus_attach
-# backup_send_xml_path = /mnt/odooshare/about_wly_xml_data/send/send_backup_xml
-# backup_attach_send_xml_path = /mnt/odooshare/about_wly_xml_data/send/send_backup_xml_attach
-#
-# generate_wly_to_ex_path = /mnt/odooshare/about_wly_xml_data/receive/send_wly_to_ex
-# generate_wly_to_ex_attach_path = /mnt/odooshare/about_wly_xml_data/receive/send_wly_to_ex_attach
-# parse_rec_ex_to_wly = /mnt/odooshare/about_wly_xml_data/receive/rec_ex_to_wly
-# parse_rec_ex_to_wly_attach = /mnt/odooshare/about_wly_xml_data/receive/rec_ex_to_wly_attach
-# parse_rec_error_xml_path = /mnt/odooshare/about_wly_xml_data/receive/error_xml_message
-# backup_rec_xml_path = /mnt/odooshare/about_wly_xml_data/receive/backup_rec_xml
 
 
 
@@ -196,8 +180,8 @@ class CustomsDeclaration(models.Model):
     oper_name = fields.Char(string="oper name")     # 操作员姓名
     certificate = fields.Char(string="oper card certificate")   # 操作员卡的证书号
     ic_code = fields.Char(string="IC number")  # 操作员IC卡号/录入员IC卡号
-    cus_dec_dir = fields.Char(string="customs dec path")  # 企业报文服务器存放路径
-    dec_company_customs_code = fields.Char(string="declare company path")  # 申报单位海关编号
+    # cus_dec_dir = fields.Char(string="customs dec path")  # 企业报文服务器存放路径
+    dec_company_customs_code = fields.Char(string="declare company path")  # 申报单位海关编号/ 报文存放路径
 
     # cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
     # owner_code_scc = fields.Char(string="owner Social credit uniform coding")   # 货主单位/生产消费单位 社会信用统一编码
@@ -228,7 +212,10 @@ class CustomsDeclaration(models.Model):
     cus_dec_sent_state = fields.Selection(string="Sent State", selection=[('draft', 'Draft'),
                                                                       ('succeed', 'Success'),
                                                                       ('cancel', 'Cancel'),
-                                                                      ('failure', 'Failure')],default='draft')  # 报关单发送单一窗口状态
+                                                                      ('failure', 'Failure')],default='draft')  # 报关单发送状态
+
+    cus_dec_sent_way = fields.Selection(string="Sent way", selection=[('single', 'single windows'),('QP', 'quick pass')],default='single')  # 报关单发送通道选择
+
     # 报关单关联附件模型
     information_attachment_ids = fields.Many2many('ir.attachment', compute='_get_attachment_ids', string='attach')
 
@@ -817,53 +804,43 @@ class CustomsDeclaration(models.Model):
 
 
     @api.multi
-    def customs_single_delegate_to_xml(self):
-        """ 生成报文+随附单据报文 发送单一窗口 存放到指定目录 """
+    def generate_single_customer_xml(self):
+        """ 生成报关单报文+随附单据报文 发送单一窗口 存放到指定目录 """
         for line in self:
             # 判断当前报关单的随附单据中是否有数据
             attach_list = []
             for attach in self.information_attachment_ids:
                 attach_data = attach.datas
-                print('ooooooooooooooooppppp ppppp pppppppp pppooooooooooooooo')
-                print(attach_data)
                 attach_list.append(attach_data)
             # 如果第一个附件中有值，说明随附单据解析入库成功
             if attach_list[0]:
+                self.update({'cus_dec_sent_way': 'single'})
                 delegate_to_xml(line)
                 generate_attach_xml_to_single(line)
                 self.update({'cus_dec_sent_state': 'succeed'})
                 return True
             else:
-                raise UserError(_("该报关单关联的随附单据附件无效，请检查!"))
+                raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
 
-
-    @api.multi
-    def generate_single_customer_attach_xml(self):
-        """生成随附单据报文 发送给单一窗口"""
-        for line in self:
-            generate_attach_xml_to_single(line)
-        self.update({'cus_dec_sent_state': 'succeed'})
-        return True
 
     @api.multi
     def generate_qp_customer_xml(self):
         """ 生成报文发送QP  存放到指定目录 """
         for line in self:
-            #generate_xml_to_qp(line)
-            pass
-        self.update({'cus_dec_sent_state': 'succeed'})
-        return True
-
-
-    @api.multi
-    def generate_qp_customer_attach_xml(self):
-        """生成随附单据报文 发送给QP"""
-        for line in self:
-            # generate_attach_xml_to_qp(line)
-            pass
-        self.update({'cus_dec_sent_state': 'succeed'})
-        return True
-
+            # 判断当前报关单的随附单据中是否有数据
+            attach_list = []
+            for attach in self.information_attachment_ids:
+                attach_data = attach.datas
+                attach_list.append(attach_data)
+            # 如果第一个附件中有值，说明随附单据解析入库成功
+            if attach_list[0]:
+                self.update({'cus_dec_sent_way': 'QP'})
+                delegate_to_xml(line)
+                generate_attach_xml_to_single(line)
+                self.update({'cus_dec_sent_state': 'succeed'})
+                return True
+            else:
+                raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
 
     @api.multi
     def dec_send_success(self):
