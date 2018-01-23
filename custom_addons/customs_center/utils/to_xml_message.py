@@ -93,9 +93,9 @@ def delegate_to_xml(self):
     head_node_dic['CopCodeScc'] = self.cop_code_scc if self.cop_code_scc else None # u'录入单位统一编码'    # 设置界面
     head_node_dic['OwnerCodeScc'] = self.input_company_id.unified_social_credit_code if self.input_company_id.unified_social_credit_code else None    # u'货主单位/消费生产单位 社会统一编码'
     head_node_dic['TradeCodeScc'] = self.business_company_id.unified_social_credit_code if self.business_company_id.unified_social_credit_code else None  # u'经营单位社会统一编码18位'
-    promise1 = self.promise1.Code if self.promise1.Code else None
-    promise2 = self.promise2.Code if self.promise2.Code else None
-    promise3 = self.promise3.Code if self.promise3.Code else None
+    promise1 = self.promise1.Code if self.promise1.Code else '0'
+    promise2 = self.promise2.Code if self.promise2.Code else '0'
+    promise3 = self.promise3.Code if self.promise3.Code else '0'
     head_node_dic['PromiseItmes'] = str(promise1+promise2+promise3)  # u'承诺事项'  字符串拼接
     head_node_dic['TradeAreaCode'] = self.trade_country_id.Code if self.trade_country_id.Code else None  # u'贸易国别'
 

@@ -15,7 +15,7 @@
             <field name="name">Customs Declaration tree view</field>
             <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
-                <tree default_order="create_date desc">
+                <tree default_order="create_date desc" decoration-info="cus_dec_rec_state=='申报成功'">
                     <field name="name" string="报关单流水号"/>
                     <!--<field name="synergism_seq_no" string="协同报关单号" attrs="{'invisible':[('synergism_seq_no','=',False)]}"/>-->
                     <field name="work_sheet_id" string="工作单号"/>
@@ -28,7 +28,7 @@
                     <field name="create_uid" readonly="1" string="创建人"/>
                     <field name="create_date" string="创建时间" widget="date"/>
                     <field name="cus_dec_rec_state" string="回执状态"/>
-                    <!--<field name="customs_order_id"  string="关联的通关清单"/>-->
+                    <field name="customs_order_id"  string="关联的通关清单" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -742,6 +742,7 @@
            <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
                 <search string="customs declaration search">
+                    <field name="customs_order_id" string="通关清单" domain="[('customs_center.customs_dec.customs_order_id', '=', self)]"/>
                     <field name="name" string="报关单流水号" domain="[('customs_center.customs_dec.name', '=', self)]"/>
                     <field name="work_sheet_id" string="工作单号" domain="[('customs_center.customs_dec.work_sheet_id', '=', self)]"/>
                     <field name="cus_ciq_No" string="关检关联号" domain="[('customs_center.customs_dec.cus_ciq_No', '=', self)]"/>
