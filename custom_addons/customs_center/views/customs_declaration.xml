@@ -21,7 +21,7 @@
                     <field name="work_sheet_id" string="工作单号"/>
                     <field name="cus_ciq_No" string="关检关联号"/>
                     <field name="dec_seq_no" string="统一编号"/>
-                    <field name="pre_entry_id" string="预录入号"/>
+                    <field name="entry_id" string="海关编号"/>
                     <field name="inout" string="进出口类型"/>
                     <field name="business_company_id" string="收发货人"/>
                     <field name="custom_master_id" string="申报地海关"/>
@@ -614,7 +614,7 @@
                                 </page>
 
                                 <page string="随附单证">
-                                    <field name="licenseNo_id" mode="tree">
+                                    <field name="licenseNo_ids" mode="tree">
                                         <tree string="license_No_tree" editable="bottom">
                                             <field name="dec_license_no" string="单证编号"/>
                                             <field name="dec_license_doc_type_id" string="单证类型"/>
@@ -708,7 +708,7 @@
                     <field name="work_sheet_id" string="工作单号"/>
                     <field name="cus_ciq_No" string="关检关联号"/>
                     <field name="dec_seq_no" string="统一编号"/>
-                    <field name="pre_entry_id" string="预录入号"/>
+                    <field name="entry_id" string="海关编号"/>
                     <field name="inout" string="进出口类型"/>
                     <field name="business_company_id" string="收发货人"/>
                     <field name="custom_master_id" string="申报地海关"/>
@@ -746,7 +746,7 @@
                     <field name="work_sheet_id" string="工作单号" domain="[('customs_center.customs_dec.work_sheet_id', '=', self)]"/>
                     <field name="cus_ciq_No" string="关检关联号" domain="[('customs_center.customs_dec.cus_ciq_No', '=', self)]"/>
                     <field name="dec_seq_no" string="统一编号" domain="[('customs_center.customs_dec.dec_seq_no', '=', self)]"/>
-                    <field name="pre_entry_id" string="预录入编号" domain="[('customs_center.customs_dec.pre_entry_id', '=', self)]"/>
+                    <field name="entry_id" string="海关编号" domain="[('customs_center.customs_dec.entry_id', '=', self)]"/>
                     <field name="custom_master_id" string="申报地海关" domain="[('customs_center.customs_dec.custom_master_id', '=', self)]"/>
                     <field name="business_company_id" string="收发货人" domain="[('customs_center.customs_dec.business_company_id', '=', self)]"/>
                     <field name="create_uid" string="创建人" domain="[('customs_center.customs_dec.create_uid', '=', self)]"/>

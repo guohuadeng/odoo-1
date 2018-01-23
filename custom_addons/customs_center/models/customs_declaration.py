@@ -35,6 +35,25 @@ ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/odoosh
 BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
+
+# # # 118测试环境路径
+# # pre_ex_client 前置交换客户端路径
+# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odootest/about_wly_xml_data/pre_ex_client/cus_to_wly')
+# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odootest/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odootest/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odootest/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odootest/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odootest/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odootest/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+#
+# # post_ex_client 后置交换客户端路径
+# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odootest/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odootest/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odootest/about_wly_xml_data/post_ex_client/error_xml_message')
+# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odootest/about_wly_xml_data/post_ex_client/backup_rec_xml')
+
+
+
 # 正式环境路径
 # # pre_ex_client 前置交换客户端路径
 # PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/aeotrade/about_wly_xml_data/pre_ex_client/cus_to_wly')
@@ -50,7 +69,7 @@ BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/odooshare/a
 # RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/aeotrade/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
 # ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/aeotrade/about_wly_xml_data/post_ex_client/error_xml_message')
 # BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/aeotrade/about_wly_xml_data/post_ex_client/backup_rec_xml')
-#
+
 
 
 
@@ -101,7 +120,7 @@ class CustomsDeclaration(models.Model):
     CutMode_id = fields.Many2one(comodel_name="basedata.cus_cut_mode", string="CutMode id")  # 征免性质   征免性质表待新建
     in_ratio = fields.Integer(string="In ratio")  # 征免比例
     licenseNo = fields.Char(string="Bill No")  # 许可证号
-    licenseNo_id = fields.One2many(comodel_name="customs_center.dec_lic_doc",
+    licenseNo_ids = fields.One2many(comodel_name="customs_center.dec_lic_doc",
                                 inverse_name="customs_declaration_id", string="License No")  # 许可证号    一对多 关联随附单证模型
 
     origin_arrival_country_id = fields.Many2one(comodel_name="delegate_country",
@@ -164,7 +183,7 @@ class CustomsDeclaration(models.Model):
                                        string="Trade Country")  # 贸易国别
 
 
-
+    # 报关单关联信息
     rel_dec_No = fields.Char(string="RelDec No")  # 关联报关单
     rel_man_No = fields.Char(string="License No")  # 关联 备案
     bonded_No = fields.Char(string="Bonded No")  # 监管场所
@@ -179,7 +198,7 @@ class CustomsDeclaration(models.Model):
     # custom_master = fields.Char(string="Custom Master", required=True, )  # 申报地海关代码
 
     declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
-    input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
+    input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 货主单位 消费使用单位 新建企业库表
     business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
 
     @api.onchange('business_company_id')
@@ -218,7 +237,7 @@ class CustomsDeclaration(models.Model):
     dec_goods_classified_ids = fields.One2many(comodel_name="customs_center.goods_classify",
                                          inverse_name="customs_declaration_id", string="goods classified")
 
-    # 报关单 关联集装箱模型 一对多
+    # 集装箱信息 报关单 关联集装箱模型 一对多
     dec_container_ids = fields.One2many(comodel_name="customs_center.dec_container",
                                          inverse_name="customs_declaration_id", string="container info")
 
@@ -264,9 +283,9 @@ class CustomsDeclaration(models.Model):
         return result
 
 
-    @api.multi
     # @api.model
     # @q_job.job
+    @api.multi
     def parse_cus_message_xml(self):
         """解析报文 + 空随附单据入库"""
         # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
@@ -274,8 +293,8 @@ class CustomsDeclaration(models.Model):
 
         customs_dec_model_dic = self.env['customs_center.settings'].default_get(['default_dec_company_customs_code']) # 获取报关单模型对象
         company_xml_parse_path = customs_dec_model_dic.get('default_dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
-        print("**************************77777777777777***********************")
-        print(company_xml_parse_path)
+        # print("**************************77777777777777***********************")
+        # print(company_xml_parse_path)
         parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 原始报文解析目录
         parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
                                          company_xml_parse_path.encode('utf-8'))  # 随附单据解析目录
@@ -916,8 +935,8 @@ class CustomsDeclaration(models.Model):
                 attach_data = attach.datas
                 attach_list.append(attach_data)
             # 如果第一个附件中有值，说明随附单据解析入库成功
-            if attach_list[0]:
-                delegate_to_xml(line)
+            delegate_to_xml(line)
+            if attach_list:
                 generate_attach_xml_to_single(line)
                 self.update({'cus_dec_sent_state': 'succeed'})
                 return True
@@ -935,9 +954,9 @@ class CustomsDeclaration(models.Model):
             for attach in self.information_attachment_ids:
                 attach_data = attach.datas
                 attach_list.append(attach_data)
+            delegate_to_xml(line)
             # 如果第一个附件中有值，说明随附单据解析入库成功
-            if attach_list[0]:
-                delegate_to_xml(line)
+            if attach_list:
                 generate_attach_xml_to_single(line)
                 self.update({'cus_dec_sent_state': 'succeed'})
                 return True
@@ -950,8 +969,9 @@ class CustomsDeclaration(models.Model):
         return True
 
 
-    @api.model
-    @q_job.job
+    # @api.model
+    # @q_job.job
+    @api.multi
     def parse_receipt_xml(self):
         """解析回执报文"""
         # 设置文件路径path
