@@ -51,7 +51,8 @@ def delegate_to_xml(self):
     head_node_dic['FeeMark'] = self.fee_mark.Code if self.fee_mark.Code else None  # u'运费标记'
     head_node_dic['FeeRate'] = str(self.fee_rate) if self.fee_rate or self.fee_rate == '0.0' else None   # u'运费／率'
     head_node_dic['GrossWet'] = str(self.gross_weight) if self.gross_weight else None  # u'毛重'
-    head_node_dic['IEDate'] = self.in_out_date if self.in_out_date else None  # u'进出日期'
+    ie_date = self.in_out_date.split(' ')[0] if self.in_out_date else None  # 日期格式 精确到日 2017-11-24
+    head_node_dic['IEDate'] = ie_date  # u'进出日期'
     head_node_dic['IEFlag'] = self.inout if self.inout else None  # u'进出口标志'
     head_node_dic['IEPort'] = self.customs_id.Code if self.customs_id.Code else None # u'进出口岸'
     head_node_dic['InputerName'] = self.inputer_name if self.inputer_name else None  # u'录入员姓名'   # 设置界面和操作员同值  不能加str()
@@ -301,9 +302,9 @@ def delegate_to_xml(self):
     # base_dir = config.options['xml_files_path']
 
     # 单一窗口报文发送根目录
-    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
+    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
     # QP 报文发送根目录
-    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
+    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
 
     # 企业报关单 报文生成路径  用户配置界面自定义
     company_name = str(self.dec_company_customs_code)  # 申报单位海关编码 用作报文存放路径

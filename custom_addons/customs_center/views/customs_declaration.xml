@@ -32,7 +32,7 @@
                 </tree>
             </field>
         </record>
-
+ <!--dd-->
         <record id="customs_declaration_form" model="ir.ui.view">
             <field name="name">Customs Declaration Form</field>
             <field name="model">customs_center.customs_dec</field>
