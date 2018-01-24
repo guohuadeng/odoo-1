@@ -101,13 +101,13 @@ class CustomsDeclaration(models.Model):
 
     entry_type_id = fields.Many2one(comodel_name="basedata.cus_entry_type", string="Entry Type")  # 报关单类型 关联报关单类型字典表，待新增
     bill_type_id = fields.Many2one(comodel_name="basedata.cus_filing_bill_type", string="bill Type")    # 备案清单 待新建，备案清单类型表
-    inout = fields.Selection(string="InOut", selection=[('I', u'进口'), ('E', u'出口'), ], required=True)  # 进出口类型
+    inout = fields.Selection(string="InOut", selection=[('I', u'进口'), ('E', u'出口'), ])  # 进出口类型
     dec_seq_no = fields.Char(string="DecSeqNo")  # 统一编号
     pre_entry_id = fields.Char(string="PreEntryId")  # 预录入编号
     entry_id = fields.Char(string="EntryId")  # 海关编号
     ManualNo = fields.Char(string="Manual No")  # 备案号
     customer_contract_no = fields.Char(string="Customer Contract No")  # 合同协议号
-    in_out_date = fields.Datetime(string="InoutDate", required=True)   # 进出口日期
+    in_out_date = fields.Datetime(string="InoutDate")   # 进出口日期
     dec_date = fields.Datetime(string="DecDate")   # 申报日期
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")  # 进出口岸
 
@@ -167,13 +167,13 @@ class CustomsDeclaration(models.Model):
     promise3 = fields.Many2one(comodel_name="customs_center.whet_mark_type", string="promise3") # 支付特许权使用费确认
 
     fee_rate = fields.Float(string="FeeRate", digits=dp.get_precision('Product Price'),)  # 运费/率
-    fee_currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="FeeCurrency", required=False, )  # 运费币制
+    fee_currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="FeeCurrency")  # 运费币制
 
     insurance_rate = fields.Float(string="InsurRate", digits=dp.get_precision('Product Price'),)  # 保险费/率
-    insurance_currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="InsurCurrency_id", required=False, )  # 保险费币制
+    insurance_currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="InsurCurrency_id")  # 保险费币制
 
     other_rate = fields.Float(string="OtherRate", digits=dp.get_precision('Product Price'),)  # 杂费/率
-    other_currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="OtherCurrency_id", required=False, )  # 杂费币制
+    other_currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="OtherCurrency_id")  # 杂费币制
 
     qty = fields.Integer(string="Qty")  # 件数
     gross_weight = fields.Float(string="Gross Weight")  # 毛重
@@ -1126,7 +1126,7 @@ class GoodsWizard(models.TransientModel):
 
     cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )
     goods_model = fields.Char(string="goods model", required=False, )
-    deal_qty = fields.Integer(string="deal quantity", default=1, required=False, )
+    deal_qty = fields.Integer(string="deal quantity", default=1, )
     deal_unit_price = fields.Monetary(string="deal unit price")
     deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )
     deal_total_price = fields.Monetary(string="deal total price")
