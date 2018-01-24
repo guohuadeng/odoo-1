@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 class mail_compose_message(models.TransientModel):
     _inherit = 'mail.compose.message'
 
-    send_only_internal = fields.Boolean(string='Send only for selected users')
+    send_only_internal = fields.Boolean(string='Send only for selected users', default=True)
 
     @api.multi
     def send_mail(self, auto_commit=False):
