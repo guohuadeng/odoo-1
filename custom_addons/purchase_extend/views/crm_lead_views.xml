@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <!-- Inherit Form View to Modify it -->
+       <record id="crm_case_form_view_oppor_extend" model="ir.ui.view">
+           <field name="name">crm.lead.form.opportunity.extend</field>
+           <field name="model">crm.lead</field>
+           <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+           <field name="arch" type="xml">
+
+               <xpath expr="//field[@name='%(crm.crm_activity_log_action)d']" position="before">
+                   <button name="%()d" string="Purchase Order" type="action" class="btn-link"
+                           attrs="{'invisible': [('active', '=', False)]}"/>
+               </xpath>
+
+           </field>
+       </record>
+
+    </data>
+</odoo>
