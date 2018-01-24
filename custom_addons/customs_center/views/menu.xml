@@ -7,6 +7,9 @@
           sequence="20" action="action_customs_order"/>
        <menuitem id="sw_customs_declaration" string="Customs Declaration" name="报关单" parent="sw_making_document_menu"
           sequence="30" action="action_customs_declaration"/>
+       <menuitem id="sw_sync_customs_declaration" string="Sync Customs Declaration" name="协同报关单" parent="sw_making_document_menu"
+          sequence="31" action="action_sync_customs_declaration"/>
+
 
     <menuitem id="sw_goods_classification_menu" string="goods classification menu" name="商品归类" parent="customs_center_menu" sequence="12"/>
        <menuitem id="sw_goods_classification" string="goods classification" name="商品归类" parent="sw_goods_classification_menu"

@@ -17,11 +17,7 @@
                         <group>
                             <group>
                                 <field name="register_code" string="register code"/>
-                            </group>
-                            <group>
                                 <field name="unified_social_credit_code" string="unified social credit code"/>
-                            </group>
-                            <group>
                                 <field name="register_name_cn" string="register name cn"/>
                             </group>
                         </group>

@@ -45,7 +45,7 @@
                             </h1>
                         </div>
                         <div class="oe_button_box" name="button_box">
-                            <button name="759" type="action" context="{'search_default_customs_order_id': active_id}"
+                            <button name="%(customs_center.action_customs_declaration)d" type="action" context="{'search_default_customs_order_id': active_id}"
                                     class="oe_stat_button" icon="fa-align-justify">
                                 <field name="custom_count" widget="statinfo" string="报关单"/>
                             </button>

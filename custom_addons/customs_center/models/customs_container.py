@@ -9,6 +9,9 @@ class DecContainer(models.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']
     _description = 'customs center container'
 
+    # 关联报关单 多对一
+    customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec", string="customs declaration",
+                                             copy=False)
     containerNo = fields.Char(string="container No")  # 集装箱号
     weight = fields.Float(string="Gross Weight")      # 自重
     spec_code = fields.Selection(string="State", selection=[('S', 'Small Container'),('L', 'Large Container')], default='S')  # 规格

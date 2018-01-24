@@ -77,7 +77,7 @@ class CustomsOrder(models.Model):
                 cus_goods_list_ids = [goods.copy().id for goods in line.cus_goods_list_ids]
 
             dic = {
-                'inout': line.inout,
+                'inout': str(line.inout).upper(),
                 'customs_order_id': line.id,
                 'customs_id': line.customs_id.id,
                 'custom_master_id': line.custom_master_id.id,

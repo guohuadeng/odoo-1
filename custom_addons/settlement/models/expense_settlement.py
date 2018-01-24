@@ -1333,7 +1333,7 @@ class PaymentApplicationSheet(models.Model):
 
     @api.multi
     def _compute_attachment_number(self):
-        """附件上传"""
+        """计算相关附件数量"""
         attachment_data = self.env['ir.attachment'].read_group([('res_model', '=', 'settlement.pay_apply_sheet'), ('res_id', 'in', self.ids)], ['res_id'], ['res_id'])
         attachment = dict((data['res_id'], data['res_id_count']) for data in attachment_data)
         for expense in self:

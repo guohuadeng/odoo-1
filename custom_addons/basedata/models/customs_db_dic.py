@@ -164,9 +164,9 @@ class CusGoodsTariff(models.Model):
     _description = 'Customs goods tariff'
     _rec_name = 'Code_ts'
 
-    Code_t = fields.Char(string='tax regulations Code', required=True)       # 税则号
+    Code_t = fields.Char(string='tax regulations Code',)       # 税则号
     Code_s = fields.Char(string='Attach Code',)       # 附加编号
-    Code_ts = fields.Char(string='goods Code',)       # 商品编号
+    Code_ts = fields.Char(string='goods Code', required=True)       # 商品编号
     NameCN = fields.Char(string='Chinese Name', size=50, required=True)     # 中文名称
     first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位

@@ -7,44 +7,49 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">customs_center.customs_dec</field>
             <field name="view_mode">tree,form</field>
+            <!--报关单列表视图界面过滤掉协同报关单 即不显示-->
+            <field name="domain">[('synergism_seq_no','=', False)]</field>
         </record>
 
         <record id="customs_declaration_tree" model="ir.ui.view">
             <field name="name">Customs Declaration tree view</field>
             <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
-                <tree default_order="create_date desc">
+                <tree default_order="create_date desc" decoration-info="cus_dec_rec_state=='申报成功'">
                     <field name="name" string="报关单流水号"/>
+                    <!--<field name="synergism_seq_no" string="协同报关单号" attrs="{'invisible':[('synergism_seq_no','=',False)]}"/>-->
                     <field name="work_sheet_id" string="工作单号"/>
                     <field name="cus_ciq_No" string="关检关联号"/>
                     <field name="dec_seq_no" string="统一编号"/>
-                    <field name="pre_entry_id" string="预录入号"/>
+                    <field name="entry_id" string="海关编号"/>
                     <field name="inout" string="进出口类型"/>
                     <field name="business_company_id" string="收发货人"/>
                     <field name="custom_master_id" string="申报地海关"/>
                     <field name="create_uid" readonly="1" string="创建人"/>
                     <field name="create_date" string="创建时间" widget="date"/>
-                    <!--<field name="customs_order_id"  string="关联的通关清单"/>-->
+                    <field name="cus_dec_rec_state" string="回执状态"/>
+                    <field name="customs_order_id"  string="关联的通关清单" invisible="1"/>
                 </tree>
             </field>
         </record>
-
+ <!--dd-->
         <record id="customs_declaration_form" model="ir.ui.view">
             <field name="name">Customs Declaration Form</field>
             <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="customs_delegate_to_xml" string="发送至单一窗口" class="oe_highlight"
-                                type="object" confirm="确定生成报文，发送至单一窗口么?"/>
-                        <!--<button name="send_message" string="Resend Message" class="oe_highlight" states="failure" type="object"-->
-                            <!--attrs="{'invisible': ['|',('state', '=', 'cancel')]}"/>-->
-                        <!--<field name="state" widget="statusbar" statusbar_visible="draft,succeed"-->
-                               <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
+                        <button name="parse_cus_message_xml" string="解析富士康报文+空随附单据入库" class="oe_highlight" type="object"/>
+                        <button name="auto_parse_attach_message_xml" string="解析随附单据入库" class="oe_highlight" type="object"/>
+                        <button name="parse_receipt_xml" string="解析报关单回执" class="oe_highlight" type="object"/>
+                        <button name="generate_single_customer_xml" string="报文发送单一窗口" class="oe_highlight" type="object" attrs="{'invisible': [('cus_dec_sent_way', 'in', ['QP',])]}"/>
+                        <button name="generate_qp_customer_xml" string="报文发送QP" class="oe_highlight" type="object" attrs="{'invisible': [('cus_dec_sent_way', 'in', ['single',])]}"/>
+                        <field name="cus_dec_sent_way" widget="statusbar" invisible="1" statusbar_visible="single,QP"/>
                     </header>
                     <sheet>
                         <field name="client_seq_no" string="报关单客户端编号" invisible="1"/>
                         <field name="customs_order_id" string="关联的通关清单" invisible="1"/>
+                        <field name="synergism_seq_no" string="协同报关单号" invisible="1"/>
 
                         <div class="row" style="padding-bottom: 15px; padding-top: 11px;">
                             <div class="col-lg-4 col-md-6">
@@ -57,6 +62,7 @@
                                 <div class="col-lg-4 col-md-4"><label for="custom_master_id" string="申报地海关"/></div>
                                 <div class="col-lg-8 col-md-8">
                                     <field name="custom_master_id"/>
+
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
@@ -75,7 +81,7 @@
                                     <div class="col-lg-4 col-md-6">
                                         <div class="col-lg-4 col-md-4"><label for="dec_seq_no" string="统一编号"/></div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="dec_seq_no" string="统一编号"/>
+                                            <field name="dec_seq_no" string="统一编号" readonly="1" placeholder="响应回执中获取"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6">
@@ -87,7 +93,7 @@
                                     <div class="col-lg-4 col-md-6">
                                         <div class="col-lg-4 col-md-4"><label for="entry_id" string="海关编号"/></div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="entry_id" string="海关编号"/>
+                                            <field name="entry_id" string="海关编号" readonly="1" placeholder="业务回执中获取"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6">
@@ -120,7 +126,8 @@
                                     <div class="col-lg-4 col-md-6">
                                         <div class="col-lg-4 col-md-4"><label for="dec_date" string="申报日期"/></div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="dec_date" string="申报日期" widget="date" style="width: 100%;"/>
+                                            <field name="dec_date" string="申报日期" widget="date" style="width: 100%;"
+                                                   readonly="1" placeholder="业务回执中获取"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6">
@@ -310,7 +317,7 @@
                                                        options="{'no_create_edit': 1, 'no_create': 1}"/>
                                             </div>
                                             <div class="col-lg-3 col-md-3">
-                                                <field name="other_rate" placeholder="运费/率"/>
+                                                <field name="fee_rate" placeholder="运费/率"/>
                                             </div>
                                             <div class="col-lg-3 col-md-3">
                                                 <field class="oe_inline" name="other_currency_id" placeholder="运费币制"/>
@@ -552,14 +559,14 @@
                                                     <field name="deal_qty" string="成交数量"/>
                                                     <field name="deal_unit_price" string="成交单价"/>
                                                     <field name="deal_unit" string="成交单位" options="{'no_create_edit': 1}"/>
-                                                    <field name="deal_total_price" string="成交总价" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                                    <field name="deal_total_price" string="成交总价"/>
                                                     <field name="currency_id" string="币制" options="{'no_create_edit': 1}"/>
                                                     <field name="first_qty" string="第一数量"/>
-                                                    <field name="first_unit" string="第一单位" options="{'no_create_edit': 1}"/>
+                                                    <field name="first_unit" string="第一单位" options="{'no_create_edit': 1}" />
                                                 </group>
                                                 <group>
                                                     <field name="second_qty" string="第二数量"/>
-                                                    <field name="second_unit" string="第二单位" options="{'no_create_edit': 1}"/>
+                                                    <field name="second_unit" string="第二单位" options="{'no_create_edit': 1}" />
                                                     <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1}"/>
                                                     <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1}"/>
                                                     <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1}"/>
@@ -579,16 +586,16 @@
                                             <field name="deal_qty" string="成交数量"/>
                                             <field name="deal_unit_price" string="成交单价"/>
                                             <field name="deal_unit" string="成交单位"/>
-                                            <field name="deal_total_price" string="成交总价" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                            <field name="deal_total_price" string="成交总价"/>
                                             <field name="currency_id" string="币制" options="{'no_create_edit': 1}"/>
                                             <field name="first_qty" string="第一数量"/>
-                                            <field name="first_unit" string="第一单位" options="{'no_create_edit': 1}"/>
+                                            <field name="first_unit" string="第一单位" options="{'no_create_edit': 1}" />
                                             <field name="second_qty" string="第二数量"/>
-                                            <field name="second_unit" string="第二单位" options="{'no_create_edit': 1}"/>
+                                            <field name="second_unit" string="第二单位" options="{'no_create_edit': 1}" />
                                             <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1}"/>
                                             <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1}"/>
                                             <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1}"/>
-                                            <field name="supervision_condition" string="监管标识" options="{'no_create_edit': 1}" readonly="1"/>
+                                            <field name="supervision_condition" string="监管标识" options="{'no_create_edit': 1}" />
                                             <!--<field name="create_uid" string="创建人" readonly="1"/>-->
                                             <!--<field name="create_date" string="创建时间" readonly="1" widget="date"/>-->
                                         </tree>
@@ -596,8 +603,18 @@
 
                                 </page>
 
+                                <page string="集装箱信息">
+                                    <field name="dec_container_ids" mode="tree">
+                                        <tree string="dec_container_tree" editable="bottom">
+                                            <field name="containerNo" string="集装箱号"/>
+                                            <field name="spec_code" string="集装箱规格"/>
+                                            <field name="weight" string="自重"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
                                 <page string="随附单证">
-                                    <field name="licenseNo_id" mode="tree">
+                                    <field name="licenseNo_ids" mode="tree">
                                         <tree string="license_No_tree" editable="bottom">
                                             <field name="dec_license_no" string="单证编号"/>
                                             <field name="dec_license_doc_type_id" string="单证类型"/>
@@ -605,7 +622,18 @@
                                     </field>
                                 </page>
 
-                                <page string="Receipt">
+                                <page string="关联信息">
+                                    <group>
+                                        <group>
+                                            <field name="rel_dec_No" string="关联报关单"/>
+                                            <field name="rel_man_No" string="关联备案"/>
+                                            <field name="bonded_No" string="保税/监管场所"/>
+                                            <field name="customs_field" string="货场代码"/>
+                                        </group>
+                                    </group>
+                                </page>
+
+                                <page string="回执信息">
                                     <field name="receipt_ids" mode="tree" readonly="1">
                                         <tree>
                                             <field name="sequence" invisible="1"/>
@@ -627,19 +655,25 @@
                                     </field>
                                 </page>
 
-                                <page string="配置信息(字段确认后，该page页面删除)">
-                                    <group>
-                                        <group>
-                                            <field name="cop_code" string="录入单位企业组织机构代码"/>
-                                            <field name="cop_name" string="录入单位名称"/>
-                                            <field name="cop_code_scc" string="录入单位社会信用统一编码"/>
-                                            <field name="inputer_name" string="录入员姓名" required="1"/>
-                                            <field name="oper_name" string="操作员姓名"/>
-                                            <field name="certificate" string="操作员卡的证书号"/>
-                                            <field name="ic_code" string="操作员IC卡号"/>
-                                        </group>
-                                    </group>
-                                </page>
+                                <!--<page string="配置信息(字段确认后，该page页面删除)">-->
+                                    <!--<group>-->
+                                        <!--<group>-->
+                                            <!--<field name="cop_code" string="录入单位企业组织机构代码"/>-->
+                                            <!--<field name="cop_name" string="录入单位名称"/>-->
+                                            <!--<field name="cop_code_scc" string="录入单位社会信用统一编码"/>-->
+                                            <!--<field name="inputer_name" string="录入员姓名" required="1"/>-->
+                                            <!--<field name="oper_name" string="操作员姓名"/>-->
+                                            <!--<field name="certificate" string="操作员卡的证书号"/>-->
+                                            <!--<field name="ic_code" string="操作员IC卡号"/>-->
+                                            <!--<field name="dec_company_customs_code" string="申报单位海关编码"/>-->
+                                        <!--</group>-->
+                                    <!--</group>-->
+                                <!--</page>-->
+
+                                <!--<page string="随附单据">-->
+                                    <!--<field name="information_attachment_ids" widget="many2many_binary"/>-->
+                                <!--</page>-->
+
 
                             </notebook>
 
@@ -653,6 +687,54 @@
             </field>
         </record>
 
+
+        <!--协同报关单菜单-->
+        <record id="action_sync_customs_declaration" model="ir.actions.act_window">
+            <field name="name">协同报关单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.customs_dec</field>
+            <field name="view_mode">tree,form</field>
+            <!--协同报关单列表视图界面 只显示协同报关单-->
+            <field name="domain">[('synergism_seq_no','&lt;&gt;', False)]</field>
+        </record>
+
+        <record id="customs_sync_declaration_tree" model="ir.ui.view">
+            <field name="name">Customs Sync Declaration tree view</field>
+            <field name="model">customs_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="name" string="报关单流水号"/>
+                    <field name="synergism_seq_no" string="协同报关单号"/>
+                    <field name="work_sheet_id" string="工作单号"/>
+                    <field name="cus_ciq_No" string="关检关联号"/>
+                    <field name="dec_seq_no" string="统一编号"/>
+                    <field name="entry_id" string="海关编号"/>
+                    <field name="inout" string="进出口类型"/>
+                    <field name="business_company_id" string="收发货人"/>
+                    <field name="custom_master_id" string="申报地海关"/>
+                    <field name="create_uid" readonly="1" string="创建人"/>
+                    <field name="create_date" string="创建时间" widget="date"/>
+                    <field name="cus_dec_rec_state" string="回执状态"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sync_customs_declaration_tree" model="ir.actions.act_window.view">
+                   <field name="view_mode">tree</field>
+                   <field name="sequence">1</field>
+                   <field name="view_id" ref="customs_center.customs_sync_declaration_tree" />
+                   <field name="act_window_id" ref="customs_center.action_sync_customs_declaration" />
+        </record>
+
+        <record id="sync_customs_declaration_form" model="ir.actions.act_window.view">
+                    <field name="view_mode">form</field>
+                    <field name="sequence">2</field>
+                   <field name="view_id" ref="customs_center.customs_declaration_form" />
+                   <field name="act_window_id" ref="customs_center.action_sync_customs_declaration" />
+        </record>
+
+
+
         <!--报关单搜索视图-->
         <!--支持按工作单号、关检关联号、统一编号、预录入号、海关编号、收发货人、创建人搜索-->
         <record id="view_customs_declaration_search" model="ir.ui.view">
@@ -660,11 +742,12 @@
            <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
                 <search string="customs declaration search">
+                    <field name="customs_order_id" string="通关清单" domain="[('customs_center.customs_dec.customs_order_id', '=', self)]"/>
                     <field name="name" string="报关单流水号" domain="[('customs_center.customs_dec.name', '=', self)]"/>
                     <field name="work_sheet_id" string="工作单号" domain="[('customs_center.customs_dec.work_sheet_id', '=', self)]"/>
                     <field name="cus_ciq_No" string="关检关联号" domain="[('customs_center.customs_dec.cus_ciq_No', '=', self)]"/>
                     <field name="dec_seq_no" string="统一编号" domain="[('customs_center.customs_dec.dec_seq_no', '=', self)]"/>
-                    <field name="pre_entry_id" string="预录入编号" domain="[('customs_center.customs_dec.pre_entry_id', '=', self)]"/>
+                    <field name="entry_id" string="海关编号" domain="[('customs_center.customs_dec.entry_id', '=', self)]"/>
                     <field name="custom_master_id" string="申报地海关" domain="[('customs_center.customs_dec.custom_master_id', '=', self)]"/>
                     <field name="business_company_id" string="收发货人" domain="[('customs_center.customs_dec.business_company_id', '=', self)]"/>
                     <field name="create_uid" string="创建人" domain="[('customs_center.customs_dec.create_uid', '=', self)]"/>
