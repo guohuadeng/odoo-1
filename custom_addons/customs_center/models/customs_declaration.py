@@ -980,12 +980,11 @@ class CustomsDeclaration(models.Model):
         # company_name = '0000016165'
         customs_dec_model_dic = self.env['customs_center.settings'].default_get(
             ['default_dec_company_customs_code'])  # 获取报关单模型对象
-        company_name = customs_dec_model_dic.get(
-            'default_dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
+        company_xml_parse_path = customs_dec_model_dic.get('default_dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
 
-        recv_path = os.path.join(RECV_XML_BASE_PATH, company_name.encode('utf-8'))
-        error_path = os.path.join(ERROR_XML_BASE_PATH, company_name.encode('utf-8'))
-        bakup_path = os.path.join(BAKUP_XML_BASE_PATH, company_name.encode('utf-8'))
+        recv_path = os.path.join(RECV_XML_BASE_PATH, company_xml_parse_path.encode('utf-8'))
+        error_path = os.path.join(ERROR_XML_BASE_PATH, company_xml_parse_path.encode('utf-8'))
+        bakup_path = os.path.join(BAKUP_XML_BASE_PATH, company_xml_parse_path.encode('utf-8'))
         # 检查并生成相应的目录
         check_and_mkdir(recv_path, error_path, bakup_path)
 
