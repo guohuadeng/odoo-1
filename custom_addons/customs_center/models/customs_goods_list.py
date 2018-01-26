@@ -27,7 +27,7 @@ class CusGoodsList(models.Model):
 
     goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
 
-    deal_qty = fields.Integer(string="deal quantity", required=False, default=1)  # 成交数量
+    deal_qty = fields.Float(string="deal quantity", required=False, default=1)  # 成交数量
     deal_unit_price = fields.Float(string="deal unit price", )    # 成交单价/申报单价
     deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )    # 成交单位
     deal_total_price = fields.Float(compute='_compute_total_goods_price', string="deal total price", )  # 成交总价
@@ -40,8 +40,8 @@ class CusGoodsList(models.Model):
                 goods_list.deal_total_price = goods_list.deal_qty * goods_list.deal_unit_price
 
     currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )  # 币制
-    first_qty = fields.Integer(string="first quantity", required=False,)  # 第一法定数量
-    second_qty = fields.Integer(string="second quantity", )  # 第二法定数量
+    first_qty = fields.Float(string="first quantity", required=False,)  # 第一法定数量
+    second_qty = fields.Float(string="second quantity", )  # 第二法定数量
 
     first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位

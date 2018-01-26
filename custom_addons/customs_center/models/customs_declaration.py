@@ -33,7 +33,7 @@ _logger = logging.getLogger(__name__)
 # RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
 # ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
 # BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
-
+#
 
 
 # # # 118测试环境路径
@@ -292,8 +292,9 @@ class CustomsDeclaration(models.Model):
         # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
         # company_xml_parse_path = self.dec_company_customs_code  # 获取配置信息中的 申报单位海关编码 作为解析路径
 
-        customs_dec_model_dic = self.env['customs_center.settings'].default_get(['default_dec_company_customs_code']) # 获取报关单模型对象
-        company_xml_parse_path = customs_dec_model_dic.get('default_dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
+        customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(['dec_company_customs_code']) # 获取报关单模型对象
+        company_xml_parse_path = customs_dec_model_dic.get('dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
+
         # print("**************************77777777777777***********************")
         # print(company_xml_parse_path)
         parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 原始报文解析目录
@@ -851,10 +852,10 @@ class CustomsDeclaration(models.Model):
     def auto_parse_attach_message_xml(self):
         """ 自动 解析随附单据入库 从随附单据报文到报关单 反向查找"""
         # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
-        customs_dec_model_dic = self.env['customs_center.settings'].default_get(
-            ['default_dec_company_customs_code'])  # 获取报关单模型对象
+        customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(
+            ['dec_company_customs_code'])  # 获取报关单模型对象
         company_xml_parse_path = customs_dec_model_dic.get(
-            'default_dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
+            'dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
 
         parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文解析目录
         parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
@@ -978,9 +979,9 @@ class CustomsDeclaration(models.Model):
         # 设置文件路径path
         # company_name = self.env.user.company_id.name
         # company_name = '0000016165'
-        customs_dec_model_dic = self.env['customs_center.settings'].default_get(
-            ['default_dec_company_customs_code'])  # 获取报关单模型对象
-        company_xml_parse_path = customs_dec_model_dic.get('default_dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
+        customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(
+            ['dec_company_customs_code'])  # 获取报关单模型对象
+        company_xml_parse_path = customs_dec_model_dic.get('dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
 
         recv_path = os.path.join(RECV_XML_BASE_PATH, company_xml_parse_path.encode('utf-8'))
         error_path = os.path.join(ERROR_XML_BASE_PATH, company_xml_parse_path.encode('utf-8'))
@@ -1125,14 +1126,14 @@ class GoodsWizard(models.TransientModel):
 
     cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )
     goods_model = fields.Char(string="goods model", required=False, )
-    deal_qty = fields.Integer(string="deal quantity", default=1, )
+    deal_qty = fields.Float(string="deal quantity", default=1, )
     deal_unit_price = fields.Monetary(string="deal unit price")
     deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )
     deal_total_price = fields.Monetary(string="deal total price")
     currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )
-    first_qty = fields.Integer(string="first quantity", required=False, )
+    first_qty = fields.Float(string="first quantity", required=False, )
     first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", required=False, )
-    second_qty = fields.Integer(string="second quantity", required=False, )
+    second_qty = fields.Float(string="second quantity", required=False, )
     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", required=False, )
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", required=False, )
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", required=False, )
