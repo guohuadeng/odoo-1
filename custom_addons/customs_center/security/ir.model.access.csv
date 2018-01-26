@@ -4,3 +4,5 @@ access_customs_center_cus_goods_list,customs_center.cus_goods_list,model_customs
 access_customs_center_customs_order,customs_center.customs_order,model_customs_center_customs_order,,1,1,1,1
 access_customs_center_dec_result,customs_center.dec_result,model_customs_center_dec_result,,1,1,1,1
 access_customs_center_dec_res_status,customs_center.dec_res_status,model_customs_center_dec_res_status,,1,1,1,1
+access_customs_center_dec_lic_doc,customs_center.dec_lic_doc,model_customs_center_dec_lic_doc,,1,1,1,1
+access_customs_center_dec_container,customs_center.dec_container,model_customs_center_dec_container,1,1,1,1
