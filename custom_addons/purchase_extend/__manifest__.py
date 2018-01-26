@@ -28,7 +28,8 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/purchase.xml',
-        'views/res_config.xml'
+        'views/res_config.xml',
+        'views/crm_lead_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

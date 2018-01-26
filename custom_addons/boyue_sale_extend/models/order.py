@@ -47,9 +47,9 @@ class Order(models.Model):
     state = fields.Selection([
         ('draft', 'Quotation'),
         ('sent', 'Quotation Sent'),
-        ('signed', 'Signed Contract'),
+        # ('signed', 'Signed Contract'),
         ('sale', 'Sales Order'),
-        ('sheet', 'Work Sheet'),
+        # ('sheet', 'Work Sheet'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
@@ -233,7 +233,7 @@ class Order(models.Model):
             obj.work_sheet_id |= self.env['work_sheet']\
                 .with_context(default_business_type=obj.business_type.id)\
                 .create(vals)
-        self.write({'state': 'sheet'})
+        # self.write({'state': 'sheet'})
 
         return True
 
@@ -467,7 +467,7 @@ class ContractWizard(models.TransientModel):
             'contract_failure_date': self.contract_failure_date,
         }
         contract = self.env['contract.sale_contract'].create(vals)
-        order.write({'contract': contract.id, 'state': 'signed'})
+        order.write({'contract': contract.id, 'state': 'sale'})
 
         return True
 
@@ -477,7 +477,7 @@ class ContractWizard(models.TransientModel):
         if not self.selected_contract:
             raise UserError(_('Please select contract'))
         order = self.env['sale.order'].browse(self._context.get('sale_order'))
-        order.write({'contract': self.selected_contract.id, 'state': 'signed'})
+        order.write({'contract': self.selected_contract.id, 'state': 'sale'})
 
         return True
 

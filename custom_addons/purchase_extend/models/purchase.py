@@ -18,6 +18,7 @@ class PurchaseOrder(models.Model):
     goods_name = fields.Char(string="Goods Name", required=False, )
     remarks = fields.Text(string="Remarks", required=False, )
     goods_attribute = fields.Many2one(comodel_name="goods_attribute", string="Goods Type", required=False, )
+    crm_lead_id = fields.Many2one(comodel_name="crm.lead", string="Lead", )
 
     @api.model
     def create(self, vals):
