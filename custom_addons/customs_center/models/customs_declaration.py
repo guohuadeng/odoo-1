@@ -54,7 +54,7 @@ _logger = logging.getLogger(__name__)
 
 
 
-# 应用服务器 测试环境路径
+# # 应用服务器 测试环境路径
 # pre_ex_client 前置交换客户端路径
 PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
 PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')

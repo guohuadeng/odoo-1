@@ -287,6 +287,7 @@
                                  <page string="商品列表">
                                     <field name="cus_goods_list_ids" mode="tree">
                                         <tree string="cus_goods_list_tree" editable="bottom">
+                                            <field name="sequence" widget="handle"/>
                                             <field name="goods_classification_id" string="客户料号"/>
                                             <field name="cus_goods_tariff_id" string="商品编码"/>
                                             <field name="goods_name" string="商品名称"/>

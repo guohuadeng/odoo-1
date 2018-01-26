@@ -545,6 +545,10 @@
                                             <!--<field name="promise3" string="特许权使用费支付确认"/>-->
                                         <!--</group>-->
                                     <!--</group>-->
+
+
+                                    <!--<field name="dec_goods_list_ids"/>-->
+                                    <!--新增加注释-->
                                     <span class="oe_right">
                                         <button name="customs_center.action_customs_dec_goods_wizard" type="action" string="Create"/>
                                     </span>
