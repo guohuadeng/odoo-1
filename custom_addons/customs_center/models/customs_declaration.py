@@ -247,6 +247,7 @@ class CustomsDeclaration(models.Model):
                                                         ('succeed', 'Success'),
                                                         ('cancel', 'Cancel'),
                                                         ('failure', 'Failure')], default='draft')  # 报关单状态
+    # 回执状态
     receipt_ids = fields.One2many(comodel_name="customs_center.dec_result", inverse_name="customs_declaration_id",
                                   string="Recipts", required=False, )
 
@@ -290,6 +291,28 @@ class CustomsDeclaration(models.Model):
         return res
     #############################################################################################
 
+
+    ##############################################################################################
+    # 报关单列表视图 回执状态 查看历史回执按钮
+    @api.multi
+    def btn_review_receipt(self):
+        """ 查看历史回执按钮 """
+        # for line in self:
+        #     cus_goods_list_ids = []
+        #     if line.cus_goods_list_ids:
+        #         cus_goods_list_ids = [goods.copy().id for goods in line.cus_goods_list_ids]
+
+        return {
+            'name': u"回执历史状态",
+            'type': "ir.actions.act_window",
+            'view_type': 'tree',
+            'view_mode': 'tree',
+            'res_model': 'customs_center.dec_result',
+            'views': [[False, 'tree']],
+            'res_id': self.ids,
+            "domain": [["customs_declaration_id", "=", self.id]],
+            'target': 'new'
+        }
 
     @api.model
     def create(self, vals):

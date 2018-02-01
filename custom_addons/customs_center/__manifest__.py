@@ -34,6 +34,7 @@
         'views/customs_declaration.xml',
         'views/customs_order.xml',
         'views/result_status.xml',
+        'views/customs_receipt.xml',
         'views/setting_declaration.xml',
         'views/menu.xml',
         'views/template.xml'

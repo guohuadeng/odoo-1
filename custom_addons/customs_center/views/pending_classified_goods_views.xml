@@ -15,20 +15,42 @@
             <field name="model">customs_center.cus_goods_list</field>
             <field name="arch" type="xml">
                 <tree string="pending classified goods lists" default_order="create_date desc">
-                    <field name="customs_declaration_id" string="报关单ID"/>
-                    <field name="cus_goods_tariff_id" string="商品编号"/>
-                    <field name="goods_name" string="商品名称"/>
+                    <!--原tree视图-->
+                    <!--<field name="customs_declaration_id" string="报关单ID"/>-->
+                    <!--<field name="cus_goods_tariff_id" string="商品编号"/>-->
+                    <!--<field name="goods_name" string="商品名称"/>-->
+                    <!--<field name="goods_classification_id" string="客户料号"/>-->
+                    <!--<field name="goods_model" string="规格型号"/>-->
+                    <!--&lt;!&ndash;<field name="deal_unit_price" string="成交单价"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="deal_qty" string="成交数量"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="deal_total_price" string="成交总价"/>&ndash;&gt;-->
+                    <!--<field name="origin_country_id" string="原产国"/>-->
+                    <!--<field name="destination_country_id" string="目的国"/>-->
+                    <!--<field name="ManualSN" string="备案序号"/>-->
+                    <!--&lt;!&ndash;<field name="classify_status" string="是否已归类" invisible="1"/>&ndash;&gt;-->
+                    <!--<field name="classify_status" string="是否已归类/调试字段-没问题后隐藏"/>-->
+                    <!--&lt;!&ndash;<field name="customs_dec_goods_own" string="是否属于报关单" invisible="1"/>&ndash;&gt;-->
+
+                    <!--新的tree视图-->
                     <field name="goods_classification_id" string="客户料号"/>
-                    <field name="goods_model" string="规格型号"/>
-                    <!--<field name="deal_unit_price" string="成交单价"/>-->
-                    <!--<field name="deal_qty" string="成交数量"/>-->
-                    <!--<field name="deal_total_price" string="成交总价"/>-->
-                    <field name="origin_country_id" string="原产国"/>
-                    <field name="destination_country_id" string="目的国"/>
-                    <field name="ManualSN" string="备案序号"/>
-                    <!--<field name="classify_status" string="是否已归类" invisible="1"/>-->
-                    <field name="classify_status" string="是否已归类/调试字段-没问题后隐藏"/>
-                    <!--<field name="customs_dec_goods_own" string="是否属于报关单" invisible="1"/>-->
+                    <field name="cus_goods_tariff_id" string="商品编码" options="{'no_create_edit': 1}"/>
+                    <field name="goods_name" string="商品名称"/>
+                    <field name="goods_model" string="规格模型"/>
+                    <field name="deal_qty" string="成交数量"/>
+                    <field name="deal_unit_price" string="成交单价"/>
+                    <field name="deal_unit" string="成交单位"/>
+                    <field name="deal_total_price" string="成交总价"/>
+                    <field name="currency_id" string="币制" options="{'no_create_edit': 1}"/>
+                    <field name="first_qty" string="第一数量"/>
+                    <field name="first_unit" string="第一单位" options="{'no_create_edit': 1}" />
+                    <field name="second_qty" string="第二数量"/>
+                    <field name="second_unit" string="第二单位" options="{'no_create_edit': 1}" />
+                    <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1}"/>
+                    <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1}"/>
+                    <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1}"/>
+                    <field name="supervision_condition" string="监管标识" options="{'no_create_edit': 1}" />
+                    <!--<field name="create_uid" string="创建人" readonly="1"/>-->
+                    <!--<field name="create_date" string="创建时间" readonly="1" widget="date"/>-->
                 </tree>
             </field>
         </record>
