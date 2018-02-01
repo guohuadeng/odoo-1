@@ -19,10 +19,10 @@ def delegate_to_xml(self):
     body_license_docus_list = etree.SubElement(root, "DecLicenseDocus")
     body_free_test_list = etree.SubElement(root, "DecFreeTxt")
     body_dec_sign = etree.SubElement(root, "DecSign")
-    trn_head_info = etree.SubElement(root, "TrnHead")
-    trn_list_info = etree.SubElement(root, "TrnList")
-    trn_containers_info = etree.SubElement(root, "TrnContainers")
-    trn_conta_goods_list = etree.SubElement(root, "TrnContaGoodsList")
+    # trn_head_info = etree.SubElement(root, "TrnHead")
+    # trn_list_info = etree.SubElement(root, "TrnList")
+    # trn_containers_info = etree.SubElement(root, "TrnContainers")
+    # trn_conta_goods_list = etree.SubElement(root, "TrnContaGoodsList")
     # e_doc_realation_info = etree.SubElement(root, "EdocRealation")
 
     # client_seq_no = str(uuid.uuid1())  # 客户端唯一编号
@@ -45,6 +45,7 @@ def delegate_to_xml(self):
     head_node_dic['DistinatePort'] = str(self.port_id.Code) if self.port_id.Code else None # 装货港 delegate_port(2,)  ok
     head_node_dic['DistrictCode'] = str(self.region_id.Code) if self.region_id.Code else None # str(self.region_id.Code)  # u'境内目的地'  ok
     # head_node_dic['EdiId'] = str(self.ediId)  # u'报关标志'   # 增加选择字段
+    head_node_dic['EdiId'] = '1'  # u'报关标志'   # 增加选择字段
     head_node_dic['EntryId'] = None  # u'海关编号'   # 玉斌建议 先配置为空
     head_node_dic['EntryType'] = str(self.entry_type_id.Code) if self.entry_type_id.Code else None # u'报关单类型'
     head_node_dic['FeeCurr'] = self.fee_currency_id.Code if self.fee_currency_id.Code else None  # u'运费币制'
@@ -90,8 +91,8 @@ def delegate_to_xml(self):
     head_node_dic['WrapType'] = self.packing_id.Code if self.packing_id.Code else None # u'包装种类'
     head_node_dic['ChkSurety'] = None  # u'担保验放标志'
     head_node_dic['BillType'] = None  # u'备案清单类型' self.bill_type_id.Code
-    head_node_dic['AgentCodeScc'] = str(self.dec_seq_no) if self.dec_seq_no else None # u'申报单位统一编码'
-    head_node_dic['CopCodeScc'] = self.cop_code_scc if self.cop_code_scc else None # u'录入单位统一编码'    # 设置界面
+    head_node_dic['AgentCodeScc'] = str(self.dec_seq_no).strip().strip("\n").strip("\t") if self.dec_seq_no else None # u'申报单位统一编码'
+    head_node_dic['CopCodeScc'] = str(self.cop_code_scc).strip().strip("\n").strip("\t") if self.cop_code_scc else None # u'录入单位统一编码'    # 设置界面
     head_node_dic['OwnerCodeScc'] = self.input_company_id.unified_social_credit_code if self.input_company_id.unified_social_credit_code else None    # u'货主单位/消费生产单位 社会统一编码'
     head_node_dic['TradeCodeScc'] = self.business_company_id.unified_social_credit_code if self.business_company_id.unified_social_credit_code else None  # u'经营单位社会统一编码18位'
     promise1 = self.promise1.Code if self.promise1.Code else '0'
@@ -115,7 +116,12 @@ def delegate_to_xml(self):
         product_node_name['CodeTS'] = item.cus_goods_tariff_id.Code_ts if item.cus_goods_tariff_id.Code_ts else None   # u'商品编号'
         product_node_name['ContrItem'] = None   # u'备案序号'
         product_node_name['DeclPrice'] = str(item.deal_unit_price)  if item.deal_unit_price else None # u'申报单价'
-        product_node_name['DeclTotal'] = str(item.deal_total_price) if item.deal_total_price else None # u'申报总价'
+        dec_total = ("%.2f" % item.deal_total_price) if item.deal_total_price else None
+        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        print(type(item.deal_total_price))
+        print(dec_total)
+        product_node_name['DeclTotal'] = dec_total # u'申报总价'
+        # product_node_name['DeclTotal'] = dec_total # u'申报总价'
         product_node_name['DutyMode'] = item.duty_mode_id.Code if item.duty_mode_id.Code else None  # u'征减免税方式'
         product_node_name['ExgNo'] = None   # u'货号'
         product_node_name['ExgVersion'] = None  # u'版本号'
@@ -229,19 +235,19 @@ def delegate_to_xml(self):
     #         _node.text = value
 
     # 转关相关报文列表信息
-    trn_list = OrderedDict()
-    trn_list['BillNo'] = self.bill_no  # u'提单号'
-    trn_list['IEDate'] = None  # u'实际进出境日期'
-    trn_list['ShipId'] = None  # u'进出境运输工具编号'
-    trn_list['ShipNameEn'] = self.NativeShipName  # u'进出境运输工具名称（船舶名称）'
-    trn_list['TrafMode'] = None  # u'进出境运输方式'
-    trn_list['VoyageNo'] = self.VoyageNo  # u'进出境运输工具航次'
-
-    for node in trn_list:
-        _node = etree.SubElement(trn_list_info, node)
-        value = trn_list[node]
-        if value:
-            _node.text = value
+    # trn_list = OrderedDict()
+    # trn_list['BillNo'] = self.bill_no  # u'提单号'
+    # trn_list['IEDate'] = None  # u'实际进出境日期'
+    # trn_list['ShipId'] = None  # u'进出境运输工具编号'
+    # trn_list['ShipNameEn'] = self.NativeShipName  # u'进出境运输工具名称（船舶名称）'
+    # trn_list['TrafMode'] = None  # u'进出境运输方式'
+    # trn_list['VoyageNo'] = self.VoyageNo  # u'进出境运输工具航次'
+    #
+    # for node in trn_list:
+    #     _node = etree.SubElement(trn_list_info, node)
+    #     value = trn_list[node]
+    #     if value:
+    #         _node.text = value
 
     # # 转关相关报文 集装箱信息
     # trn_containers = OrderedDict()
@@ -302,9 +308,9 @@ def delegate_to_xml(self):
     # base_dir = config.options['xml_files_path']
 
     # 单一窗口报文发送根目录
-    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
+    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
     # QP 报文发送根目录
-    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
+    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
 
     # 企业报关单 报文生成路径  用户配置界面自定义
     company_name = str(self.dec_company_customs_code)  # 申报单位海关编码 用作报文存放路径

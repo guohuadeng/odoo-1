@@ -28,6 +28,7 @@
         'data/parse_message.xml',
         'data/result_status.xml',
         'views/pending_review_goods_views.xml',
+        'views/customs_dec_attachs.xml',
         'views/goods_classification_views.xml',
         'views/pending_classified_goods_views.xml',
         'views/customs_declaration.xml',
