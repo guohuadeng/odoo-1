@@ -14,7 +14,7 @@
 
         <!--报关单界面添加服务器动作 复制当前报关单全部数据-->
         <record model="ir.actions.server" id="action_duplicate_dec_all_data">
-            <field name="name">复制报关单全部</field>
+            <field name="name">复制全部</field>
             <field name="type">ir.actions.server</field>
             <field name="model_id" ref="model_customs_center_customs_dec"/>
             <field name="state">code</field>
@@ -26,14 +26,12 @@ if records:
 
         <!--添加服务器动作 指定上边的id-->
         <record model="ir.values" id="duplicate_dec_all_data">
-            <field name="name">复制报关单全部</field>
+            <field name="name">复制全部</field>
             <field name="model_id" ref="model_customs_center_customs_dec" />
             <field name="model">customs_center.customs_dec</field>
             <field name="key2">client_action_multi</field>
             <field eval="'ir.actions.server,%d'%action_duplicate_dec_all_data" name="value"/>
         </record>
-
-
 
 
         <record id="customs_declaration_tree" model="ir.ui.view">

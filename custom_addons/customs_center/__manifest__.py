@@ -39,6 +39,9 @@
         'views/menu.xml',
         'views/template.xml'
     ],
+    'qweb': [
+        'static/src/xml/declare_element_modal.xml',
+    ],
     # only loaded in demonstration mode
     'demo': [
         # 'demo/demo.xml',

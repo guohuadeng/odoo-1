@@ -102,12 +102,12 @@ class CustomsDeclaration(models.Model):
 
     entry_type_id = fields.Many2one(comodel_name="basedata.cus_entry_type", string="Entry Type")  # 报关单类型 关联报关单类型字典表，待新增
     bill_type_id = fields.Many2one(comodel_name="basedata.cus_filing_bill_type", string="bill Type")    # 备案清单 待新建，备案清单类型表
-    inout = fields.Selection(string="InOut", selection=[('I', u'进口'), ('E', u'出口'), ])  # 进出口类型
+    inout = fields.Selection(string="InOut", selection=[('I', u'进口'), ('E', u'出口'), ], track_visibility='always',)  # 进出口类型
     dec_seq_no = fields.Char(string="DecSeqNo")  # 统一编号
     pre_entry_id = fields.Char(string="PreEntryId")  # 预录入编号
     entry_id = fields.Char(string="EntryId")  # 海关编号
-    ManualNo = fields.Char(string="Manual No")  # 备案号
-    customer_contract_no = fields.Char(string="Customer Contract No")  # 合同协议号
+    ManualNo = fields.Char(string="Manual No", track_visibility='always',)  # 备案号
+    customer_contract_no = fields.Char(string="Customer Contract No", track_visibility='onchange',)  # 合同协议号
     in_out_date = fields.Datetime(string="InoutDate")   # 进出口日期
     dec_date = fields.Datetime(string="DecDate")   # 申报日期
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")  # 进出口岸
