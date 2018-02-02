@@ -436,7 +436,8 @@ class OrderLine(models.Model):
                 fiscal_position=self.env.context.get('fiscal_position')
             )
             self.price_unit = self.env['account.tax']._fix_tax_included_price(self._get_display_price(product), product.taxes_id, self.tax_id)
-            self.quote_price_unit = self.price_unit     # 同时更改报价单价
+            # self.quote_price_unit = self.price_unit     # 同时更改报价单价
+            self.price_unit = self.quote_price_unit     # 同时更改报价单价
 
 
 class ContractWizard(models.TransientModel):
