@@ -15,9 +15,17 @@ class PurchaseOrder(models.Model):
     departure_place = fields.Char(string="Departure Place", required=False, )
     destination_place = fields.Char(string="Destination Place", required=False, )
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs", required=False, )
-    goods_name = fields.Char(string="Goods Name", required=False, )
-    remarks = fields.Text(string="Remarks", required=False, )
-    goods_attribute = fields.Many2one(comodel_name="goods_attribute", string="Goods Type", required=False, )
+    goods_name = fields.Char(string="Goods Name", required=False, )         # 货物名称
+    remarks = fields.Text(string="Remarks", required=False, )               # 备注
+    goods_attribute_id = fields.Many2one(comodel_name="goods_attribute", string="Goods Type", required=False, )
+    crm_lead_id = fields.Many2one(comodel_name="crm.lead", string="Lead", )     # 商机线索
+    loading_port_id = fields.Many2one(comodel_name="basedata.internation_port", string="Loading Port",)     # 起运港
+    transition_port_id = fields.Many2one(comodel_name="basedata.internation_port", string="Transition Port",)   # 中转港
+    destination_port_id = fields.Many2one(comodel_name="basedata.internation_port", string="Destination Port",) # 目的港
+    qty = fields.Integer(string="Qty")      # 件数
+    packing_id = fields.Many2one(comodel_name="delegate_packing", string="Pack")        # 包装方式
+    delivery_info_id = fields.One2many(comodel_name="purchase.order_delivery_info", inverse_name="purchase_order_id", string="Delivery Info", required=False, )
+
 
     @api.model
     def create(self, vals):
@@ -29,11 +37,6 @@ class PurchaseOrder(models.Model):
             result.message_subscribe_users(users.ids, subtype_ids=[])
         return result
 
-    @api.model
-    def _change_sale_person(self):
-        """当供应商改变时"""
-
-
 
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
@@ -41,6 +44,7 @@ class PurchaseOrderLine(models.Model):
     purchase_price_unit = fields.Float(string="Purchase Price",  required=False, )
     purchase_currency_id = fields.Many2one(comodel_name="res.currency", string="Purchase Currency", required=False, )
     rate = fields.Float(string="Rate",  related='purchase_currency_id.rate' )
+    tag_ids = fields.Many2one(comodel_name="purchase.order_tag", string="Tag", required=False, )
 
     @api.onchange('rate', 'purchase_price_unit')
     def _compute_price_unit(self):
@@ -54,3 +58,26 @@ class PurchaseOrderLine(models.Model):
         self.purchase_price_unit = 0.0
         self.purchase_currency_id = self.product_id.currency_id
         return result
+
+
+class OrderTag(models.Model):
+    _name = 'purchase.order_tag'
+    _rec_name = 'name'
+    _description = 'Purchase Order Tag'
+
+    name = fields.Char(string='Name', required=True)
+    color = fields.Integer(string="Color Index",)
+
+    _sql_constraints = [
+        ('name_uniq', 'unique (name)', "Tag name already exists !"),
+    ]
+
+
+class OrderLineTag(models.Model):
+    _name = 'purchase.order_line_tag'
+    _rec_name = 'name'
+    _description = 'Service Item Tag'
+
+    name = fields.Char(string='Name', required=True)
+    color = fields.Integer(string="Color Index", required=False, )
+

@@ -12,6 +12,7 @@ class Order(models.Model):
     contract = fields.Many2one(comodel_name="contract.sale_contract", string="Contract", required=False, copy=False)
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type", required=True, )
     contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, copy=False)
+    contact_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=False, coyp=False)
     servicer = fields.Many2one(comodel_name="res.partner", string="Servicer")
     customer_service = fields.Many2one(comodel_name="res.users", string="customer service", index=True, track_visibility='always')
     goods_name = fields.Text(string="Goods Name", required=False, )
@@ -47,9 +48,9 @@ class Order(models.Model):
     state = fields.Selection([
         ('draft', 'Quotation'),
         ('sent', 'Quotation Sent'),
-        ('signed', 'Signed Contract'),
+        # ('signed', 'Signed Contract'),
         ('sale', 'Sales Order'),
-        ('sheet', 'Work Sheet'),
+        # ('sheet', 'Work Sheet'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
@@ -62,6 +63,11 @@ class Order(models.Model):
     message_follower_ids = fields.One2many(
         'mail.followers', 'res_id', string='Followers', copy=False,
         domain=lambda self: [('res_model', '=', self._name)])
+    load_port_id = fields.Many2one(comodel_name="basedata.internation_port", string="Loading Port")     # 起运港
+    trans_port_id = fields.Many2one(comodel_name="basedata.internation_port", string="Transition Port") # 中转港
+    dest_port_id = fields.Many2one(comodel_name="basedata.internation_port", string="Destination Port") # 目的港
+    decl_custom_id = fields.Many2one(comodel_name="delegate_customs", string="Declare Customs")         # 申报口岸
+
 
     @api.model
     def create(self, vals):
@@ -233,7 +239,7 @@ class Order(models.Model):
             obj.work_sheet_id |= self.env['work_sheet']\
                 .with_context(default_business_type=obj.business_type.id)\
                 .create(vals)
-        self.write({'state': 'sheet'})
+        # self.write({'state': 'sheet'})
 
         return True
 
@@ -467,7 +473,7 @@ class ContractWizard(models.TransientModel):
             'contract_failure_date': self.contract_failure_date,
         }
         contract = self.env['contract.sale_contract'].create(vals)
-        order.write({'contract': contract.id, 'state': 'signed'})
+        order.write({'contract': contract.id, 'state': 'sale'})
 
         return True
 
@@ -477,7 +483,7 @@ class ContractWizard(models.TransientModel):
         if not self.selected_contract:
             raise UserError(_('Please select contract'))
         order = self.env['sale.order'].browse(self._context.get('sale_order'))
-        order.write({'contract': self.selected_contract.id, 'state': 'signed'})
+        order.write({'contract': self.selected_contract.id, 'state': 'sale'})
 
         return True
 

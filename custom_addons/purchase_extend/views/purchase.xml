@@ -6,6 +6,7 @@
            <field name="name">purchase.order.form.extend</field>
            <field name="model">purchase.order</field>
            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+           <field name="mode">primary</field>
            <field name="arch" type="xml">
 
                <xpath expr="//field[@name='partner_id']" position="after">
@@ -14,6 +15,7 @@
 
                <xpath expr="//field[@name='currency_id']" position="after">
                    <field name="business_type_id"/>
+                   <field name="crm_lead_id" readonly="1"/>
                </xpath>
 
                <xpath expr="//field[@name='date_order']" position="after">
@@ -32,23 +34,54 @@
                <xpath expr="//field[@name='incoterm_id']" position="replace">
                </xpath>
 
-               <xpath expr="//notebook/page[1]" position="after">
-                   <page string="Inquiry">
-                       <group>
-                           <group>
-                               <field name="departure_place"/>
-                               <field name="destination_place"/>
-                               <field name="goods_attribute"/>
-                               <field name="remarks"/>
-                           </group>
-                           <group>
-                               <field name="customs_id"/>
-                               <field name="incoterm_id"/>
-                               <field name="goods_name"/>
-                           </group>
-                       </group>
-                   </page>
+               <xpath expr="//group[field[@name='date_order']]" position="after">
+                   <group string="Inquiry">
+                       <field name="loading_port_id"/>
+                       <field name="transition_port_id"/>
+                       <field name="destination_port_id"/>
+                       <field name="incoterm_id"/>
+                       <field name="goods_attribute_id"/>
+                       <field name="qty"/>
+                       <field name="packing_id"/>
+                       <field name="goods_name"/>
+                       <field name="remarks"/>
+                   </group>
                </xpath>
+
+               <xpath expr="//notebook" position="before">
+                   <label for="delivery_info_id"/>
+                   <field name="delivery_info_id">
+                       <tree string="Delivery Info">
+                           <field name="name"/>
+                           <field name="type_id"/>
+                           <field name="address"/>
+                           <field name="qty"/>
+                           <field name="wrap_type_id"/>
+                           <field name="gross_weight"/>
+                           <field name="remark"/>
+                       </tree>
+                   </field>
+               </xpath>
+
+
+
+               <!--<xpath expr="//notebook/page[1]" position="after">-->
+                   <!--<page string="Inquiry">-->
+                       <!--<group>-->
+                           <!--<group>-->
+                               <!--<field name="departure_place"/>-->
+                               <!--<field name="destination_place"/>-->
+                               <!--<field name="goods_attribute"/>-->
+                               <!--<field name="remarks"/>-->
+                           <!--</group>-->
+                           <!--<group>-->
+                               <!--<field name="customs_id"/>-->
+                               <!--<field name="incoterm_id"/>-->
+                               <!--<field name="goods_name"/>-->
+                           <!--</group>-->
+                       <!--</group>-->
+                   <!--</page>-->
+               <!--</xpath>-->
 
                <xpath expr="//div/field[@name='date_planned']" position="attributes">
                    <attribute name="required">0</attribute>
@@ -73,7 +106,9 @@
                    <!--<attribute name="invisible">1</attribute>-->
                <!--</xpath>v-->
 
-
+               <xpath expr="//page[group/group/label[@for='date_planned']]" position="attributes">
+                   <attribute name="invisible">1</attribute>
+               </xpath>
 
            </field>
        </record>
@@ -82,6 +117,7 @@
             <field name="name">purchase.order.tree.extend</field>
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="mode">primary</field>
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='date_planned']" position="attributes">
@@ -93,6 +129,25 @@
                 </xpath>
 
             </field>
+        </record>
+
+        <record id="service_procurment_order_action" model="ir.actions.act_window">
+            <field name="name">Service Quotation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="veiw_action_service_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="purchase_order_tree_extend"/>
+            <field name="act_window_id" ref="service_procurment_order_action"/>
+        </record>
+
+        <record id="view_action-service_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="purchase_order_form_extend"/>
+            <field name="act_window_id" ref="service_procurment_order_action"/>
         </record>
 
     </data>
