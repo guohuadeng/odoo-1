@@ -72,9 +72,9 @@
             </xpath>
 
             <!--当合同为空时，隐藏确认销售按钮-->
-            <xpath expr="//header/button[@class='o_sale_confirm']" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', ('contract', '=', False)]}</attribute>
-            </xpath>
+            <!--<xpath expr="//header/button[@class='o_sale_confirm']" position="attributes">-->
+                <!--<attribute name="attrs">{'invisible': ['|', ('contract', '=', False)]}</attribute>-->
+            <!--</xpath>-->
 
             <!--当合同为空时，隐藏确认销售按钮-->
             <xpath expr="//header/button[@class='btn-primary o_sale_confirm']" position="attributes">
@@ -82,10 +82,10 @@
             </xpath>
 
             <!--当状态为签订合同时，加入确认按钮-->
-            <xpath expr="//header/button[@name='print_quotation']" position="before">
-                <button name="action_confirm" type="object" states="signed" class="btn-primary o_sale_confirm"
-                        string="Confirm Sale"/>
-            </xpath>
+            <!--<xpath expr="//header/button[@name='print_quotation']" position="before">-->
+                <!--<button name="action_confirm" type="object" states="sent" class="btn-primary o_sale_confirm"-->
+                        <!--string="Confirm Sale"/>-->
+            <!--</xpath>-->
 
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="domain">[('customer','=',True), ('is_company', '=', True)]</attribute>

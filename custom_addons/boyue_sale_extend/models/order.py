@@ -473,7 +473,8 @@ class ContractWizard(models.TransientModel):
             'contract_failure_date': self.contract_failure_date,
         }
         contract = self.env['contract.sale_contract'].create(vals)
-        order.write({'contract': contract.id, 'state': 'sale'})
+        # order.write({'contract': contract.id, 'state': 'sale'})
+        order.write({'contract': contract.id, })
 
         return True
 
@@ -483,7 +484,8 @@ class ContractWizard(models.TransientModel):
         if not self.selected_contract:
             raise UserError(_('Please select contract'))
         order = self.env['sale.order'].browse(self._context.get('sale_order'))
-        order.write({'contract': self.selected_contract.id, 'state': 'sale'})
+        # order.write({'contract': self.selected_contract.id, 'state': 'sale'})
+        order.write({'contract': self.selected_contract.id, })
 
         return True
 
