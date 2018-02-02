@@ -27,12 +27,12 @@
 
             <!--加入签订合同,生成工作单按钮-->
             <xpath expr="//header/button[@name='action_quotation_send']" position="before">
+                <button name="create_work_sheet" type="object" string="Create Work Sheet"
+                    class="btn-primary" states="sale,sheet"/>
                 <button name="%(boyue_sale_extend.action_order_contract_wizard)d" string="Signed Contract"
                         type="action"
                         attrs="{'invisible': ['|', ('state', 'not in', ('sale',)), ('contract', '!=', False)]}"
                         context="{'sale_order': active_id, 'default_customer': partner_id}"/>
-                <button name="create_work_sheet" type="object" string="Create Work Sheet"
-                    class="btn-primary" states="sale,sheet"/>
             </xpath>
 
             <xpath expr="//header/button[@name='action_cancel']" position="attributes">
