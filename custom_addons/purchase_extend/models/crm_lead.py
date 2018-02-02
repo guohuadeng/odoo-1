@@ -35,5 +35,5 @@ class Lead(models.Model):
         """得到采购订单数"""
 
         for obj in self:
-            print('------------------the nums:', len(obj.purchase_order_ids))
+            # print('------------------the nums:', len(obj.purchase_order_ids))
             obj.purchase_order_nums = len(obj.purchase_order_ids)

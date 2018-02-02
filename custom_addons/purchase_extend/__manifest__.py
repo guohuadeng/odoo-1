@@ -29,7 +29,11 @@
         # 'security/ir.model.access.csv',
         'views/purchase.xml',
         'views/res_config.xml',
-        'views/crm_lead_views.xml'
+        'views/crm_lead_views.xml',
+        'views/delivery_info.xml',
+        'views/contract.xml',
+        'views/supplierinfo.xml',
+        'views/menu.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
