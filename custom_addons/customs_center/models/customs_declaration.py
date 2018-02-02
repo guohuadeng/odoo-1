@@ -88,7 +88,7 @@ class CustomsDeclaration(models.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']
     _description = 'Customs Declaration'
 
-    name = fields.Char(string="Name")  # 报关单流水号
+    name = fields.Char(string="Name", copy=False)   # 报关单流水号   # copy=False 防止服务器动作复制报关单信息时复制
     client_seq_no = fields.Char(string="client seq No")  # 报关单客户端编号
     synergism_seq_no = fields.Char(string="Synergism seq No")  # 客户协同单号
 
@@ -261,7 +261,7 @@ class CustomsDeclaration(models.Model):
 
 
     #####################################################################################################
-    # 报关单关联的附件 该字段生成报文的时候需要
+    # 报关单关联的附件 该字段生成报文发送单一窗口QP的时候需要
     information_attachment_ids = fields.Many2many('ir.attachment', compute='_get_attachment_ids', string='attach')
     @api.multi
     def _get_attachment_ids(self):
@@ -290,6 +290,52 @@ class CustomsDeclaration(models.Model):
         res['context'] = {'default_res_model': 'customs_center.customs_dec', 'default_res_id': self.id}
         return res
     #############################################################################################
+
+    # 服务器动作 复制当前报关单全部数据
+    @api.multi
+    def duplicate_current_all_data(self):
+        """ 复制当前报关单全部数据 """
+        self.ensure_one()
+        customs_declaration_obj_copy = self.copy()
+        # cus_goods_list_ids_list = []
+        for line in self:
+            if line.dec_goods_list_ids:
+                cus_goods_list_ids_list = [goods.copy().id for goods in line.dec_goods_list_ids]
+                customs_declaration_obj_copy.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search([('id', 'in', cus_goods_list_ids_list)])
+        if customs_declaration_obj_copy:
+            return {
+                'type': 'ir.actions.act_window',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'customs_center.customs_dec',
+                'res_id': customs_declaration_obj_copy.id,
+                'context': self.env.context,
+                'flags': {'initial_mode': 'edit'},
+            }
+
+        # 自己实现方式2
+        # ref_id = self._context.get('active_id')
+        # customs_declaration_obj = self.env['customs_center.customs_dec'].browse(ref_id).copy()
+        #
+        # cus_goods_list_ids_list = []
+        # for line in self:
+        #     if line.dec_goods_list_ids:
+        #         cus_goods_list_ids_list = [goods.copy().id for goods in line.dec_goods_list_ids]
+        # customs_declaration_obj.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search([('id', 'in', cus_goods_list_ids_list)])
+        #
+        # return {
+        #     'name': "Customs Center Clearance",
+        #     'type': "ir.actions.act_window",
+        #     'view_type': 'form',
+        #     'view_mode': 'form, tree',
+        #     'res_model': 'customs_center.customs_dec',
+        #     'views': [[False, 'form']],
+        #     'res_id': customs_declaration_obj.id,
+        #     'target': 'current',
+        #     'flags': {'form': {'action_buttons': True, 'options': {'mode': 'edit'}}}
+        #     # 'target': 'main'
+        # }
+
 
 
     ##############################################################################################

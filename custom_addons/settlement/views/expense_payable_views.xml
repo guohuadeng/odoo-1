@@ -46,6 +46,7 @@ if records:
             </field>
         </record>
 
+        <!--增加服务器动作 指定上边的id-->
         <record model="ir.values" id="batch_generate_pay_apply_sheet">
             <field name="name">生成付款申请单</field>
             <field name="model_id" ref="model_settlement_expense_payable" />
