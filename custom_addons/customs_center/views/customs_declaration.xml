@@ -12,6 +12,27 @@
         </record>
 
 
+        <record id="action_import_customs_declaration" model="ir.actions.act_window">
+            <field name="name">进口报关单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.customs_dec</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context" eval="{
+                        'default_inout': 'I'}"/>
+            <field name="domain">[('inout', '=', 'I'), ('synergism_seq_no','=', False)]</field>
+        </record>
+
+        <record id="action_export_customs_declaration" model="ir.actions.act_window">
+            <field name="name">出口报关单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.customs_dec</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context" eval="{
+                        'default_inout': 'E'}"/>
+            <field name="domain">[('inout', '=', 'E'), ('synergism_seq_no','=', False)]</field>
+        </record>
+
+
         <!--报关单界面添加服务器动作 复制当前报关单全部数据-->
         <record model="ir.actions.server" id="action_duplicate_dec_all_data">
             <field name="name">复制全部</field>
@@ -42,6 +63,7 @@ if records:
                     <field name="name" string="报关单流水号"/>
                     <!--<field name="synergism_seq_no" string="协同报关单号" attrs="{'invisible':[('synergism_seq_no','=',False)]}"/>-->
                     <field name="work_sheet_id" string="工作单号"/>
+                    <field name="inout" string="进出口类型" invisible="1"/>
                     <field name="cus_ciq_No" string="关检关联号"/>
                     <field name="dec_seq_no" string="统一编号"/>
                     <field name="entry_id" string="海关编号"/>
@@ -83,17 +105,17 @@ if records:
                         </div>
 
                         <div class="row" style="padding-bottom: 15px; padding-top: 11px;">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="col-lg-4 col-md-4"><label for="inout" string="进出口类型"/></div>
-                                <div class="col-lg-8 col-md-8">
-                                    <field name="inout" class="oe_inline" required="1"/>
-                                </div>
-                            </div>
+                            <!--<div class="col-lg-4 col-md-6">-->
+                                <!--<div class="col-lg-4 col-md-4"><label for="inout" string="进出口类型"/></div>-->
+                                <!--<div class="col-lg-8 col-md-8">-->
+                                    <!--<field name="inout" class="oe_inline" readonly="1" invisible="1"/>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             <div class="col-lg-4 col-md-6">
                                 <div class="col-lg-4 col-md-4"><label for="custom_master_id" string="申报地海关"/></div>
                                 <div class="col-lg-8 col-md-8">
                                     <field name="custom_master_id"/>
-
+                                    <field name="inout" class="oe_inline" invisible="1"/>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
