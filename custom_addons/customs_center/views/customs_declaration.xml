@@ -599,7 +599,8 @@ if records:
                                         <!--</group>-->
                                     <!--</group>-->
 
-
+                                    <div>
+                                    </div>
                                     <field name="dec_goods_list_ids" string="商品信息"/>
                                     <!--新增加注释-->
                                     <!--<span class="oe_right">-->
