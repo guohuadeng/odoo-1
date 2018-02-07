@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 
 class Order(models.Model):
     """继承销售订单，添加通关数据字段"""
-    _description = 'quote order'
     _inherit = 'sale.order'
 
     contract = fields.Many2one(comodel_name="contract.sale_contract", string="Contract", required=False, copy=False)
@@ -19,8 +18,6 @@ class Order(models.Model):
     delivery_info = fields.One2many(comodel_name="boyue_sale_extend.delivery_info", inverse_name="order",
                                     string="Delivery Info", )
     # partner_id = fields.Many2one('res.partner', string='Customer', readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, required=True, change_default=True, index=True, track_visibility='onchange')
-
-
 
     # 进出口类型
     # import_and_export = fields.Selection(
@@ -321,6 +318,39 @@ class Order(models.Model):
         if template.note:
             self.note = template.note
 
+    @api.onchange('business_type')
+    def _change_business_type(self):
+        """根据业务类型改变单号规则"""
+        if self.name and self.name != _('New'):
+            de_time_name = self.name[0:-7]
+            time = self.name[-7:]
+            name = de_time_name.split('-')[0] + '-' + self.business_type.code + time
+            self.name = name
+
+
+    @api.multi
+    def write(self, vals):
+        """根据业务类型改变单号规则"""
+        for obj in self:
+            if 'business_type' in vals:
+                business_type = self.env['business_type'].browse(vals['business_type'])
+                de_time_name = self.name[0:-7]
+                time = self.name[-7:]
+                name = de_time_name.split('-')[0] + '-' + business_type.code + time
+                order_sets = self.env['sale.order'].search([('name', '=', name)])
+                if len(order_sets) == 0:
+                    vals['name'] = name
+                else:
+                    q_name = name[0:-3]
+                    order_sets = self.env['sale.order'].search([('name', 'like', q_name+'%')])
+                    numbers_char = order_sets.mapped(lambda r: r.name[-3:])
+                    numbers = [int(i) for i in numbers_char]
+                    max_num = max(numbers) + 1
+                    name = (name[0: -3] + '%03d') % max_num
+                    vals['name'] = name
+
+        return super(Order, self).write(vals)
+
 class delivery_info(models.Model):
     """收发货信息"""
     _name = 'boyue_sale_extend.delivery_info'
@@ -394,7 +424,7 @@ class OrderLine(models.Model):
         )
 
         self.quote_currency_id = self.product_id.currency_id    # 把产品的货币带到询价货币中去
-        self.quote_price_unit = self.product_id.list_price      # 当产品发生改变时，报价单价也要发生改变
+        self.quote_price_unit = self.product_id.list_price * self.rate      # 当产品发生改变时，报价单价也要发生改变
 
         name = ' '
         if product.description_sale:
