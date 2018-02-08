@@ -30,7 +30,7 @@
                         <div class="oe_title">
                             <label string="Purchase Contract"/>
                             <h1>
-                                <field name="name"/>
+                                <field name="name" readonly="1"/>
                             </h1>
                         </div>
                         <group>
@@ -43,7 +43,7 @@
                                 <field name="remark"/>
                             </group>
                             <group>
-                                <field name="create_date" string="Create Date"/>
+                                <field name="sign_date" string="Create Date"/>
                                 <field name="effective_date"/>
                                 <field name="failure_date"/>
                             </group>
