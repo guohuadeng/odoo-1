@@ -100,7 +100,7 @@
                             <field name="dest_port_id" options="{'no_create_edit': 1}"/>              <!-- 目的港 -->
                             <field name="incoterm" options="{'no_create_edit': 1}"/>              <!-- 成交方式 -->
                             <field name="trade_country" options="{'no_create_edit': 1}"/>           <!-- 贸易国别 -->
-                            <field name="port" options="{'no_create_edit': 1}"/>                    <!-- 装货/指运港 -->
+                            <!--<field name="port" options="{'no_create_edit': 1}"/>                    &lt;!&ndash; 装货/指运港 &ndash;&gt;-->
                             <field name="num"/>                     <!-- 件数 -->
                             <field name="goods_name"/>
                             <field name="remarks"/>
@@ -131,6 +131,9 @@
                             <!--<field name="net_weight"/>              &lt;!&ndash; 净重 &ndash;&gt;-->
                             <!--<field name="remarks"/>                 &lt;!&ndash; 备注 &ndash;&gt;-->
                         </group>
+                        <h1>
+                            <label for="delivery_info"/>
+                        </h1>
                         <field name="delivery_info" nolabel="1">
                             <tree string="Delivery Info" editable="bottom">
                                 <field name="type_id"/>

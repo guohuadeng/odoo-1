@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 
 class PurchaseOrder(models.Model):
@@ -25,7 +26,17 @@ class PurchaseOrder(models.Model):
     qty = fields.Integer(string="Qty")      # 件数
     packing_id = fields.Many2one(comodel_name="delegate_packing", string="Pack")        # 包装方式
     delivery_info_id = fields.One2many(comodel_name="purchase.order_delivery_info", inverse_name="purchase_order_id", string="Delivery Info", required=False, )
-
+    is_service = fields.Boolean(string="Service")           # 标志采购单是服务或是辅材
+    contract_id = fields.Many2one(comodel_name="purchase_extend.contract", string="Contract", required=False, )
+    state = fields.Selection([
+        ('draft', 'RFQ'),
+        ('sent', 'RFQ Sent'),
+        ('confirm', 'Confirm'),
+        ('to approve', 'To Approve'),
+        ('purchase', 'Purchase Order'),
+        ('done', 'Locked'),
+        ('cancel', 'Cancelled')
+        ], string='Status', readonly=True, index=True, copy=False, default='draft', track_visibility='onchange')
 
     @api.model
     def create(self, vals):
@@ -80,4 +91,60 @@ class OrderLineTag(models.Model):
 
     name = fields.Char(string='Name', required=True)
     color = fields.Integer(string="Color Index", required=False, )
+
+
+class ContractWizard(models.TransientModel):
+    _name = 'purchase_extend.contract_wizard'
+    _description = 'Purchase Contract'
+
+    contract_type_id = fields.Many2one(comodel_name="purchase_extend.contract_type", string="Type", required=True, )
+    our_signatory_id = fields.Many2one(comodel_name="res.users", string="Our Signatory",)
+    customer_signatory_id = fields.Many2one(comodel_name="res.partner", string="Customer signatory",
+                                         required=True)  # 客户签约人
+    supplier_order_no = fields.Char(string="SupplierQuoteOrderNo", required=False, )
+    supplier_id = fields.Many2one(comodel_name="res.partner", string="Supplier", domain="[('supplier', '=', True)]")
+    sign_date = fields.Date(string="Create Date", required=False, )
+    effective_date = fields.Date(string="Effective Date", required=False, )
+    failure_date = fields.Date(string="Failure Date", required=False, )
+    remark = fields.Text(string="Remark", required=False, )
+
+    create_contract_select = fields.Selection(string="Select Contract",
+                                        selection=[('create', 'Create Contract'), ('selecte', 'Selecte Contract'), ],
+                                        default='create')
+    selected_contract_id = fields.Many2one(comodel_name="purchase_extend.contract", string="Selecte Contract", required=False, )
+
+    @api.multi
+    def create_contract(self):
+        """生成合同"""
+        order = self.env['purchase.order'].browse(self._context.get('purchase_order'))
+        print(order)
+
+        vals = {
+            'supplier_id': self.supplier_id.id,
+            'contract_type_id': self.contract_type_id.id,
+            'customer_signatory_id': self.customer_signatory_id.id,
+            'our_signatory_id': self.our_signatory_id.id,
+            'supplier_order_no': self.supplier_order_no,
+            'sign_date': self.sign_date,
+            'effective_date': self.effective_date,
+            'failure_date': self.failure_date,
+            'remark': self.remark
+        }
+
+        contract = self.env["purchase_extend.contract"].create(vals)
+        print(contract)
+        order.write({'contract_id': contract.id})
+
+        return True
+
+    @api.multi
+    def choose_contract(self):
+        """选择合同"""
+        if not self.selected_contract_id:
+            raise UserError(_('Please select contract'))
+        order = self.env['sale.order'].browse(self._context.get('purchase_order'))
+        # order.write({'contract': self.selected_contract.id, 'state': 'sale'})
+        order.write({'contract_id': self.selected_contract_id.id, })
+
+        return True
 

@@ -5,9 +5,10 @@
         <menuitem id="menu_procurment_service" name="Service" parent="purchase.menu_procurement_management" sequence="1"/>
         <menuitem id="menu_procurment_meterials" name="Materials" parent="purchase.menu_procurement_management" sequence="2"/>
         <menuitem id="menu_procurment_service_order" name="Quotation" parent="menu_procurment_service" action="purchase_extend.service_procurment_order_action" sequence="1"/>
-        <menuitem id="menu_procurment_contract" name="Purchase Contract" parent="menu_procurment_service" action="purchase_extend.contract_action" sequence="2"/>
-        <menuitem id="menu_procurment_meterials_order" name="Quotation" parent="menu_procurment_meterials" action="purchase.purchase_rfq" sequence="1"/>
-        <menuitem id="purchase.menu_purchase_form_action" name="Purchase Order" parent="menu_procurment_meterials" action="purchase.purchase_form_action" sequence="2"/>
+        <menuitem id="menu_procurment_form_action_service" name="Purchase Order" parent="menu_procurment_service" action="purchase_extend.purchase_form_action_service" sequence="2"/>
+        <menuitem id="menu_procurment_contract" name="Purchase Contract" parent="menu_procurment_service" action="purchase_extend.contract_action" sequence="3"/>
+        <menuitem id="menu_procurment_meterials_order" name="Quotation" parent="menu_procurment_meterials" action="purchase_extend.purchase_rfq_material" sequence="1"/>
+        <menuitem id="purchase.menu_purchase_form_action" name="Purchase Order" parent="menu_procurment_meterials" action="purchase_extend.purchase_form_action_materail" sequence="2"/>
         <delete id="purchase.menu_purchase_rfq" model="ir.ui.menu"/>
 
     </data>
