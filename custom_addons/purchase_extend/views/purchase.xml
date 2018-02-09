@@ -145,7 +145,7 @@
                </xpath>
 
                 <xpath expr="//field[@name='state']" position="attributes">
-                    <attribute name="statusbar_visible">draft,sent,confirm,purchase</attribute>
+                    <attribute name="statusbar_visible">draft,sent,purchase</attribute>
                 </xpath>
 
             </field>
@@ -174,7 +174,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">purchase.order</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain" eval="[('is_service', '=', True), ('state','not in',('draft','sent','bid', 'confirmed'))]"/>
+            <field name="domain" eval="[('is_service', '=', True)]"/>
             <field name="context" eval="{'default_is_service': True, 'search_default_todo':1, 'show_purchase': True}"/>
         </record>
 
@@ -212,6 +212,7 @@
             </field>
         </record>
 
+        <!--采购订单窗口视图 服务询价单不需要-->
         <record id="purchase_form_action_service" model="ir.actions.act_window">
             <field name="name">Purchase Orders</field>
             <field name="type">ir.actions.act_window</field>
