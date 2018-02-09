@@ -9,7 +9,7 @@
 
             <xpath expr="//field[@name='partner_shipping_id']" position="after">
                 <field name="contract" readonly="1"/>
-                <field name="business_type" attrs="{'readonly': [('state', 'not in', ('draft', 'sent'))]}"
+                <field name="business_type" attrs="{'readonly': ['|', ('state', 'not in', ('draft', 'sent')), ('name', '!=', '新建'), ('name', '!=', 'New')]}"
                        options="{'no_open': True, 'no_create_edit': 1}"/>
                 <field name="contact_id" options="{'no_create_edit': 1}"
                        domain="[('parent_id', '=', partner_id), ('is_company', '=', False), ('type', '=', 'contact')]"
