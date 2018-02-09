@@ -9,10 +9,38 @@
            <field name="mode">primary</field>
            <field name="arch" type="xml">
 
+               <xpath expr="//button[@name='action_rfq_send'][2]" position="attributes">
+                   <attribute name="states">sent,confirm</attribute>
+               </xpath>
+
+               <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
+                   <attribute name="states">sent,confirm</attribute>
+               </xpath>
+
+               <xpath expr="//button[@name='button_confirm'][1]" position="attributes">
+                   <attribute name="invisible">1</attribute>
+               </xpath>
+
+               <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
+                   <attribute name="invisible">1</attribute>
+               </xpath>
+
+               <xpath expr="//button[@name='button_cancel']" position="attributes">
+                   <attribute name="states">draft,to approve,sent,confirm,purchase</attribute>
+               </xpath>
+
+               <xpath expr="//field[@name='state']" position="attributes">
+                   <attribute name="statusbar_visible">draft,sent,confirm</attribute>
+               </xpath>
+
+               <xpath expr="//button[@name='button_confirm'][2]" position="before">
+                   <button name="confirm_price" class="oe_highlight" type="object" string="Confirm Price" states="sent"/>
+                </xpath>
+
                <xpath expr="//field[@name='partner_id']" position="after">
                    <field name="contact_id"/>
                    <field name="is_service" invisible="1"/>
-                   <field name="contract_id" attrs="{'invisible': [('state', '!=', 'purchase')]}"/>
+                   <field name="contract_id" attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
                </xpath>
 
                <xpath expr="//field[@name='currency_id']" position="after">
@@ -122,7 +150,7 @@
 
                <xpath expr="//button[@name='action_rfq_send'][1]" position="before">
                    <button name="%(purchase_extend.action_purchase_contract_wizard)d" type="action" string="Sign Contract"
-                   attrs="{'invisible': ['|', ('state', 'not in', ('purchase',)), ('contract_id', '!=', False)]}"
+                   attrs="{'invisible': ['|', ('state', 'not in', ('confirm',)), ('contract_id', '!=', False)]}"
                    context="{'purchase_order': active_id, 'default_supplier_id': partner_id}"/>
                </xpath>
 
@@ -134,18 +162,31 @@
             <field name="name">purchase.order.form.material.extend</field>
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="mode">primary</field>
             <field name="arch" type="xml">
 
-               <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-                   <attribute name="domain">[('type', '!=', 'service')]</attribute>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                   <field name="is_service" invisible="1"/>
                </xpath>
 
-               <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                <xpath expr="//button[@id='bid_confirm']" position="attributes">
+                   <attribute name="states">confirm</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='button_confirm'][2]" position="before">
+                   <button name="confirm_price" type="object" class="oe_highlight" string="Confirm Price" attrs="{'invisible': ['|',('is_service', '=', True),('state', 'not in', ['sent'])]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
                    <attribute name="domain">[('type', '!=', 'service')]</attribute>
-               </xpath>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                   <attribute name="domain">[('type', '!=', 'service')]</attribute>
+                </xpath>
 
                 <xpath expr="//field[@name='state']" position="attributes">
-                    <attribute name="statusbar_visible">draft,sent,purchase</attribute>
+                    <attribute name="statusbar_visible">draft,sent,confirm,purchase</attribute>
                 </xpath>
 
             </field>
@@ -195,7 +236,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">purchase.order</field>
             <field name="context">{'search_default_todo':1, 'default_is_service': False}</field>
-            <field name="domain">[('state','in',('draft','sent','bid','cancel', 'confirmed')), ('is_service', '=', False)]</field>
+            <field name="domain">[('state','in',('draft','sent','confirm','bid','cancel', 'confirmed')), ('is_service', '=', False)]</field>
             <field name="view_mode">tree,kanban,form,pivot,graph,calendar</field>
             <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
             <field name="help" type="html">
@@ -210,6 +251,18 @@
                 by Odoo based on inventory needs.
               </p>
             </field>
+        </record>
+
+        <record id="veiw_action_material_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="purchase.purchase_order_tree"/>
+            <field name="act_window_id" ref="purchase_rfq_material"/>
+        </record>
+
+        <record id="view_action_material_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="purchase_order_form_extend_materail"/>
+            <field name="act_window_id" ref="purchase_rfq_material"/>
         </record>
 
         <!--采购订单窗口视图 服务询价单不需要-->
