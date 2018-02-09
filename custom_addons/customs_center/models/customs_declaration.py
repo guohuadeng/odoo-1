@@ -1024,7 +1024,15 @@ class CustomsDeclaration(models.Model):
 
     @api.multi
     def generate_single_customer_xml_after(self):
+        """报文已发送至单一窗口"""
         pass
+
+    @api.multi
+    def generate_qp_customer_xml_after(self):
+        """报文已发送至QP"""
+        pass
+
+
 
     @api.multi
     def generate_single_customer_xml(self):
