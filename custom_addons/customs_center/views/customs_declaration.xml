@@ -84,12 +84,13 @@ if records:
             <field name="name">Customs Declaration Form</field>
             <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
-                <form>
+                <form create="false">
                     <header>
                         <button name="parse_cus_message_xml" string="解析富士康报文+空随附单据入库" class="oe_highlight" type="object"/>
                         <button name="auto_parse_attach_message_xml" string="解析随附单据入库" class="oe_highlight" type="object"/>
                         <button name="parse_receipt_xml" string="解析报关单回执" class="oe_highlight" type="object"/>
-                        <button name="generate_single_customer_xml" string="报文发送单一窗口" class="oe_highlight" type="object" attrs="{'invisible': [('cus_dec_sent_way', 'in', ['QP',])]}"/>
+                        <button name="generate_single_customer_xml" string="报文发送单一窗口" class="oe_highlight" type="object" attrs="{'invisible': [('cus_dec_sent_way', 'in', ['QP','single'])]}"/>
+                        <button name="generate_single_customer_xml_after" string="报文发送单一窗口"  type="object" attrs="{'readonly': [('cus_dec_sent_way', 'in', ['single',])], 'invisible': [('cus_dec_sent_way', 'not in', ['single','QP'])]}"/>
                         <button name="generate_qp_customer_xml" string="报文发送QP" class="oe_highlight" type="object" attrs="{'invisible': [('cus_dec_sent_way', 'in', ['single',])]}"/>
                         <field name="cus_dec_sent_way" widget="statusbar" invisible="1" statusbar_visible="single,QP"/>
                     </header>
@@ -764,7 +765,7 @@ if records:
             <field name="name">Customs Sync Declaration tree view</field>
             <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
-                <tree decoration-success="cus_dec_rec_state == '申报成功'" decoration-danger="cus_dec_rec_state == '导入失败'" default_order="create_date desc">
+                <tree decoration-success="cus_dec_rec_state == '申报成功'" create="false" decoration-danger="cus_dec_rec_state == '导入失败'" default_order="create_date desc">
                     <field name="name" string="报关单流水号"/>
                     <field name="synergism_seq_no" string="协同报关单号"/>
                     <field name="work_sheet_id" string="工作单号"/>

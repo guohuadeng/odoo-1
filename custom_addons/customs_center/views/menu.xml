@@ -2,6 +2,7 @@
 <odoo>
 
     <menuitem id="customs_center_menu" name="关务中心" web_icon="customs_center,static/description/icon.png" />
+    <menuitem id="sw_making_dashboard_menu" string="Dashboard Menu" name="仪表板" parent="customs_center_menu" sequence="8" action="action_dec_dashboard_menu"/>
     <menuitem id="sw_making_document_menu" string="Makeing Document" name="通关" parent="customs_center_menu" sequence="10"/>
        <menuitem id="sw_customs_order" string="Customs Order" name="通关清单" parent="sw_making_document_menu"
           sequence="20" action="action_customs_order"/>

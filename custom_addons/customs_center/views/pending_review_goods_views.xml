@@ -15,7 +15,7 @@
             <field name="model">customs_center.goods_classify</field>
             <!--<field name="priority">2</field>-->
             <field name="arch" type="xml">
-                <tree default_order="create_date desc">
+                <tree default_order="create_date desc" create="false">
                     <field name="cus_goods_code" string="客户料号"/>
                     <field name="cus_goods_tariff_id" string="商品编号"/>
                     <field name="goods_name" string="商品名称"/>
@@ -35,7 +35,7 @@
             <field name="name">pending goods classify Form view</field>
             <field name="model">customs_center.goods_classify</field>
             <field name="arch" type="xml">
-                <form>
+                <form create="false">
                     <header>
                         <button name="already_reviewed_btn" string="审核通过" type="object" class="oe_highlight"
                                 attrs="{'invisible': [('state', 'in', ['draft','refused','approve'])]}"/>

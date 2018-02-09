@@ -55,7 +55,7 @@ BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/odooshare/a
 
 
 # # 应用服务器 测试环境路径
-# pre_ex_client 前置交换客户端路径
+# # pre_ex_client 前置交换客户端路径
 # PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
 # PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
 # PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
@@ -1022,6 +1022,9 @@ class CustomsDeclaration(models.Model):
                     _logger.info(
                         u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
 
+    @api.multi
+    def generate_single_customer_xml_after(self):
+        pass
 
     @api.multi
     def generate_single_customer_xml(self):

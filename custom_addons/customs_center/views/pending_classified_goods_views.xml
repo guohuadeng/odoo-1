@@ -10,11 +10,12 @@
             <!--过滤条件：由于报关单和通关清单共用一个商品列表模型 第一个过滤条件过滤掉通关清单的商品 第二个过滤条件 过滤掉已经归类的商品-->
         </record>
 
+        <!--通关清单 报关单 通用商品列表视图-->
         <record id="pending_classified_goods_tree" model="ir.ui.view">
             <field name="name">pending classified goods tree view</field>
             <field name="model">customs_center.cus_goods_list</field>
             <field name="arch" type="xml">
-                <tree string="pending classified goods lists" default_order="create_date desc">
+                <tree string="pending classified goods lists">
                     <!--原tree视图-->
                     <!--<field name="customs_declaration_id" string="报关单ID"/>-->
                     <!--<field name="cus_goods_tariff_id" string="商品编号"/>-->
@@ -32,6 +33,7 @@
                     <!--&lt;!&ndash;<field name="customs_dec_goods_own" string="是否属于报关单" invisible="1"/>&ndash;&gt;-->
 
                     <!--新的tree视图-->
+                    <field name="sequence" widget="handle"/>
                     <field name="goods_classification_id" string="客户料号"/>
                     <field name="cus_goods_tariff_id" string="商品编码" options="{'no_create_edit': 1}"/>
                     <field name="goods_name" string="商品名称"/>
@@ -49,17 +51,17 @@
                     <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1}"/>
                     <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1}"/>
                     <field name="supervision_condition" string="监管标识" options="{'no_create_edit': 1}" />
-                    <!--<field name="create_uid" string="创建人" readonly="1"/>-->
-                    <!--<field name="create_date" string="创建时间" readonly="1" widget="date"/>-->
                 </tree>
             </field>
         </record>
+
+
 
         <record id="pending_classified_goods_form" model="ir.ui.view">
             <field name="name">pending classified goods Form view</field>
             <field name="model">customs_center.cus_goods_list</field>
             <field name="arch" type="xml">
-                <form>
+                <form create="false">
                     <header>
                         <button name="goods_classified_btn" string="归类" type="object" class="oe_highlight"/>
                         <!--<field name="customs_order_state" widget="statusbar" statusbar_visible="draft,succeed"-->

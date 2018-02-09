@@ -13,7 +13,10 @@ class CusGoodsList(models.Model):
     # rec_name = 'goods_name'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
     _description = 'Customs cus Goods List'
+    _order = "sequence, id"
 
+    sequence = fields.Integer(string='Sequence')
+    # sequence = fields.Integer(string='Sequence', default=10)
     goods_name = fields.Char(string="goods name")  # 商品名称
     # 关联通关清单 多对一
     customs_order_id = fields.Many2one(comodel_name="customs_center.customs_order", string="customs Order", copy=False)
