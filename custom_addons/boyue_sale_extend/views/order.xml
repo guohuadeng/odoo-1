@@ -99,9 +99,10 @@
                             <field name="trans_port_id" options="{'no_create_edit': 1}"/>              <!-- 中转港 -->
                             <field name="dest_port_id" options="{'no_create_edit': 1}"/>              <!-- 目的港 -->
                             <field name="incoterm" options="{'no_create_edit': 1}"/>              <!-- 成交方式 -->
-                            <field name="trade_country" options="{'no_create_edit': 1}"/>           <!-- 贸易国别 -->
                             <!--<field name="port" options="{'no_create_edit': 1}"/>                    &lt;!&ndash; 装货/指运港 &ndash;&gt;-->
                             <field name="num"/>                     <!-- 件数 -->
+                            <field name="packing" options="{'no_create_edit': 1}"/>                 <!-- 包装方式 -->
+                            <field name="goods_attribute_id"/>
                             <field name="goods_name"/>
                             <field name="remarks"/>
 
@@ -118,9 +119,9 @@
                             <field name="customs" widget="many2many_tags" options="{'no_create_edit': 1}"/>                 <!-- 进出口岸 -->
                             <field name="decl_custom_id" options="{'no_create_edit': 1}"/>                 <!-- 申报口岸 -->
                             <field name="trade_mode" options="{'no_create_edit': 1}"/>              <!-- 监管方式 -->
-                            <field name="origin_arrival_country" options="{'no_create_edit': 1}"/>  <!-- 启运/抵达国 -->
-                            <field name="region" options="{'no_create_edit': 1}"/>                  <!-- 境内目的/货源地 -->
-                            <field name="packing" options="{'no_create_edit': 1}"/>                 <!-- 包装方式 -->
+                            <field name="trade_country" options="{'no_create_edit': 1}"/>           <!-- 贸易国别 -->
+                            <!--<field name="origin_arrival_country" options="{'no_create_edit': 1}"/>  &lt;!&ndash; 启运/抵达国 &ndash;&gt;-->
+                            <!--<field name="region" options="{'no_create_edit': 1}"/>                  &lt;!&ndash; 境内目的/货源地 &ndash;&gt;-->
 
                             <!--<field name="customs"/>                 &lt;!&ndash; 进出口岸 &ndash;&gt;-->
                             <!--<field name="trade_mode"/>              &lt;!&ndash; 监管方式 &ndash;&gt;-->
