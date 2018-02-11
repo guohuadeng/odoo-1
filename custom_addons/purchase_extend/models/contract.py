@@ -24,7 +24,7 @@ class PurchaseContract(models.Model):
     supplier_id = fields.Many2one(comodel_name="res.partner", string="Supplier", domain="[('supplier', '=', True)]")
     contract_type_id = fields.Many2one(comodel_name="purchase_extend.contract_type", string="Type", required=True, )
     customer_signatory_id = fields.Many2one(comodel_name="res.partner", string="Customer Signatory",
-                                            domain="[('parent_id', '=', supplier_id.id), ('is_company', '=', False), ('type', '=', 'contact')]")
+                                            domain="[('parent_id', '=', supplier_id), ('is_company', '=', False), ('type', '=', 'contact')]")
     our_signatory_id = fields.Many2one(comodel_name="res.users", string="Our Signatory",)
     supplier_order_no = fields.Char(string="SupplierQuoteOrderNo", required=False, )
     sign_date = fields.Date(string="Create Date", required=False, )
