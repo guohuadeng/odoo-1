@@ -37,6 +37,7 @@ class Order(models.Model):
     customs = fields.Many2many(comodel_name="delegate_customs", string="Custom", )    # 进出口岸
     trade_mode = fields.Many2one('delegate_trade_mode', string='Trade Mode')         # 监管方式
     trade_country = fields.Many2one('delegate_country', string=' Country')         # 贸易国别
+    goods_attribute_id = fields.Many2one(comodel_name="goods_attribute", string="Goods Type", )     # 货物类型
     origin_arrival_country = fields.Many2one('delegate_country', string='Nation')
     region = fields.Many2one('delegate_region', string='Region')
     packing = fields.Many2one('delegate_packing', string='Wrap Type')
