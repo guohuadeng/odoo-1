@@ -264,10 +264,10 @@ class Order(models.Model):
 
         order_lines = [(5, 0, 0)]
         for line in template.quote_line:
-            if self.pricelist_id:
-                price = self.pricelist_id.with_context(uom=line.product_uom_id.id).get_product_price(line.product_id, 1, False)
-            else:
-                price = line.price_unit
+            # if self.pricelist_id:
+            #     price = self.pricelist_id.with_context(uom=line.product_uom_id.id).get_product_price(line.product_id, 1, False)
+            # else:
+            price = line.price_unit         # 废掉价格表功能
 
             data = {
                 'name': line.name,
@@ -283,8 +283,8 @@ class Order(models.Model):
                 'state': 'draft',
                 'customer_lead': self._get_customer_lead(line.product_id.product_tmpl_id),
             }
-            if self.pricelist_id:
-                data.update(self.env['sale.order.line']._get_purchase_price(self.pricelist_id, line.product_id, line.product_uom_id, fields.Date.context_today(self)))
+            # if self.pricelist_id:
+            #     data.update(self.env['sale.order.line']._get_purchase_price(self.pricelist_id, line.product_id, line.product_uom_id, fields.Date.context_today(self)))
             order_lines.append((0, 0, data))
 
         self.order_line = order_lines
@@ -292,10 +292,10 @@ class Order(models.Model):
 
         option_lines = []
         for option in template.options:
-            if self.pricelist_id:
-                price = self.pricelist_id.with_context(uom=option.uom_id.id).get_product_price(option.product_id, 1, False)
-            else:
-                price = option.price_unit
+            # if self.pricelist_id:
+            #     price = self.pricelist_id.with_context(uom=option.uom_id.id).get_product_price(option.product_id, 1, False)
+            # else:
+            price = option.price_unit
             data = {
                 'product_id': option.product_id.id,
                 'layout_category_id': option.layout_category_id,

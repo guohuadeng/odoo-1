@@ -25,3 +25,4 @@ access_basedata_cus_filing_bill_type,basedata.cus_filing_bill_type,model_basedat
 access_basedata_cus_register_company,basedata.cus_register_company,model_basedata_cus_register_company,,1,1,1,1
 access_basedata_cus_goods_tariff,basedata.cus_goods_tariff,model_basedata_cus_goods_tariff,,1,1,1,1
 access_basedata.dec_license_doc_type,basedata.dec_license_doc_type,model_basedata_dec_license_doc_type,,1,1,1,1
+access_declare_element,access_declare_element,model_declare_element,,1,1,1,1

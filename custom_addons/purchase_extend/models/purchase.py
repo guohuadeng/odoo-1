@@ -72,6 +72,7 @@ class PurchaseOrder(models.Model):
         return True
 
 
+
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
