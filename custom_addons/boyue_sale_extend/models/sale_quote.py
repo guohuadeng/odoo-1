@@ -58,7 +58,7 @@ class SaleOrder(models.Model):
                 'discount': line.discount,
                 'product_uom_qty': line.product_uom_qty,
                 'product_id': line.product_id.id,
-                'quote_currency_id': line.product_id.currency_id,    # 把产品的货币带到询价货币中去
+                'quote_currency_id': line.quote_currency_id,    # 把产品的货币带到询价货币中去
                 'quote_price_unit': line.quote_price_unit,      # 当产品发生改变时，报价单价也要发生改变
                 'layout_category_id': line.layout_category_id,
                 'product_uom': line.product_uom_id.id,
