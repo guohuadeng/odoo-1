@@ -19,10 +19,6 @@
                    <field name="quote_currency_id"/>
                </xpath>
 
-               <xpath expr="//field[@name='quote_line']/tree//field[@name='price_unit']" position="attributes">
-                   <attribute name="invisible">0</attribute>
-               </xpath>
-
            </field>
        </record>
 
