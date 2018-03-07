@@ -5,7 +5,7 @@ from odoo import models, fields, api, _
 class Lead(models.Model):
     _inherit = 'crm.lead'
 
-    purchase_order_ids = fields.One2many(comodel_name="purchase.order", inverse_name="crm_lead_id", string="Purchase Order", )
+    purchase_order_ids = fields.One2many(comodel_name="purchase.service_quote_order", inverse_name="crm_lead_id", string="Purchase Order", )
     purchase_order_nums = fields.Integer(string="PO Nums", compute='_get_purchase_orders_nums')
 
     @api.multi

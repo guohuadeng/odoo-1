@@ -29,7 +29,7 @@
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
         'views/contract_wizard.xml',
-        'views/purchase.xml',
+        'views/quote_order.xml',
         'views/res_config.xml',
         'views/crm_lead_views.xml',
         'views/delivery_info.xml',

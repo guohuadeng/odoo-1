@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--服务询价单窗口-->
+       <record id="quote_service_order_acton" model="ir.actions.act_window">
+           <field name="name">Service Quote Order</field>
+           <field name="type">ir.actions.act_window</field>
+           <field name="res_model">purchase.service_quote_order</field>
+           <field name="view_mode">tree,form</field>
+       </record>
+
+        <record id="service_quote_order_form" model="ir.ui.view">
+            <field name="name">service quote order form view</field>
+            <field name="model">purchase.service_quote_order</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="action_rfq_send" states="draft" string="Send RFQ by Email" type="object" context="{'send_rfq':True}" class="oe_highlight"/>
+                        <button name="print_quotation" string="Print RFQ" type="object" states="draft" class="oe_highlight" groups="base.group_user"/>
+                        <button name="button_confirm" type="object" states="draft" string="Confirm Order" id="draft_confirm"/>
+                        <button name="button_draft" states="cancel" string="Set to Draft" type="object" />
+                        <button name="button_cancel" states="draft,sent,comfired" string="Cancel" type="object" />
+                        <button name="%(purchase_extend.action_purchase_contract_wizard)d" type="action" string="Sign Contract"
+                            attrs="{'invisible': ['|', ('state', 'not in', ('comfired',)), ('contract_id', '!=', False)]}"
+                            context="{'service_quote_order': active_id, 'default_supplier_id': partner_id}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,comfired" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" invisible="1"/>
+                                <field name="partner_id"/>
+                                <field name="contact_id" domain="[('parent_id', '=', partner_id), ('customer', '=', True), ('is_company', '=', False)]"/>
+                                <field name="contract_id" readonly="1"/>
+                                <field name="partner_ref"/>
+                                <field name="business_type_id"/>
+                                <field name="crm_lead_id"/>
+                            </group>
+                            <group>
+                                <field name="quote_date"/>
+                                <field name="validity_date"/>
+                                <field name="customer_service_id"/>
+                                <field name="sale_person_id"/>
+                                <field name="payment_term_id"/>
+                            </group>
+                        </group>
+                        <group>
+                                <group string="Quotes Require">
+                                    <field name="loading_port_id"/>
+                                    <field name="transition_port_id"/>
+                                    <field name="destination_port_id"/>
+                                    <field name="incoterm_id"/>
+                                    <field name="qty"/>
+                                    <field name="packing_id"/>
+                                    <field name="goods_name"/>
+                                    <field name="remarks"/>
+                                </group>
+                        </group>
+
+                        <label for="delivery_info_id"/>
+                        <field name="delivery_info_id">
+                            <tree string="Delivery Info">
+                               <field name="type_id"/>
+                                <field name="name"/>
+                                <field name="address"/>
+                                <field name="qty"/>
+                                <field name="wrap_type_id"/>
+                                <field name="gross_weight"/>
+                                <field name="remark"/>
+                            </tree>
+                        </field>
+
+                        <label for="order_line"/>
+                        <field name="order_line">
+                            <tree>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="state" invisible="1"/>
+                                <field name="sequence" widget="handle"/>
+                                <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}"/>
+                                <field name="name"/>
+                                <field name="product_qty"/>
+                                <field name="purchase_price_unit"/>
+                                <field name="purchase_currency_id" options="{'no_create_edit': True}"/>
+                                <field name="rate"/>
+                                <field name="price_unit"/>
+                                <field name="price_subtotal" widget="monetary"/>
+                            </tree>
+                            <form string="Purchase Order Line">
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="product_id"
+                                                       context="{'partner_id': parent.partner_id}" domain="[('type', '=', 'service')]"/>
+                                                <label for="product_qty"/>
+                                                <div>
+                                                    <field name="product_qty" class="oe_inline"/>
+                                                    <span class="oe_inline">&#160;</span>
+                                                    <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
+                                                </div>
+                                                <field name="price_unit"/>
+                                            </group>
+                                            <group>
+                                                <label for="purchase_price_unit"/>
+                                                <div>
+                                                    <field name="purchase_price_unit" class="oe_inline"/>
+                                                    <field name="purchase_currency_id" class="oe_inline" options="{'no_create_edit': True}"/>
+                                                </div>
+                                                <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase')]"/>
+                                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                            </form>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <div class="oe_subtotal_footer_separator oe_inline">
+                                <label for="amount_total"/>
+                                </div>
+                            <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                            <field name="notes" class="oe_inline" placeholder="An administrator can set up default Terms and conditions in your Company settings."/>
+                            <div class="oe_clear"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="service_tree_order_tree" model="ir.ui.view">
+            <field name="name">service quote order tree view</field>
+            <field name="model">purchase.service_quote_order</field>
+            <field name="arch" type="xml">
+                <tree default_order="quote_date">
+                    <field name="name"/>
+                    <field name="quote_date"/>
+                    <field name="partner_id"/>
+                    <field name="business_type_id"/>
+                    <field name="amount_untaxed"/>
+                    <field name="amount_tax"/>
+                    <field name="amount_total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>
