@@ -8,7 +8,7 @@
             <field name="email_from">${(object.create_uid.email and '%s &lt;%s&gt;' % (object.create_uid.name, object.create_uid.email) or '')|safe}</field>
             <field name="subject">${object.company_id.name} Order (Ref ${object.name or 'n/a' })</field>
             <field name="partner_to">${object.partner_id.id}</field>
-            <field name="model_id" ref="purchase.service_quote_order"/>
+            <field name="model_id" ref="model_purchase_service_quote_order"/>
             <field name="auto_delete" eval="True"/>
             <field name="report_template" ref="report_purchase_service_quotation"/>
             <field name="report_name">${(object.name or '').replace('/','_')}</field>

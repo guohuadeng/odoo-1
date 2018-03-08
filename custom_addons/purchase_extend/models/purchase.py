@@ -107,6 +107,8 @@ class ServiceQuoteOrder(models.Model):
     packing_id = fields.Many2one(comodel_name="delegate_packing", string="Pack")        # 包装方式
     goods_name = fields.Text(string="Goods Name", required=False, )         # 货物名称
     remarks = fields.Text(string="Remarks", required=False, )               # 备注
+    customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs", required=False, )
+    declare_customs_id = fields.Many2one(comodel_name="delegate_customs", string="Declare Customs", required=False, )
     delivery_info_id = fields.One2many(comodel_name="purchase.order_delivery_info", inverse_name="purchase_order_id",
                                        string="Delivery Info", required=False, )    # 收发货信息
     order_line = fields.One2many('purchase.order.line', 'order_id', string='Order Lines', copy=True)
@@ -153,10 +155,7 @@ class ServiceQuoteOrder(models.Model):
         self.ensure_one()
         ir_model_data = self.env['ir.model.data']
         try:
-            if self.env.context.get('send_rfq', False):
-                template_id = ir_model_data.get_object_reference('purchase', 'email_template_edi_purchase')[1]
-            else:
-                template_id = ir_model_data.get_object_reference('purchase', 'email_template_edi_purchase_done')[1]
+            template_id = ir_model_data.get_object_reference('purchase_extend', 'email_template_edi_service_quote_order')[1]
         except ValueError:
             template_id = False
         try:
@@ -170,6 +169,7 @@ class ServiceQuoteOrder(models.Model):
             'default_use_template': bool(template_id),
             'default_template_id': template_id,
             'default_composition_mode': 'comment',
+            'mark_so_as_sent': True
         })
         return {
             'name': _('Compose Email'),
@@ -185,12 +185,23 @@ class ServiceQuoteOrder(models.Model):
 
     @api.multi
     def print_quotation(self):
-        pass
+        self.write({'state': "sent"})
+        return self.env['report'].get_action(self, 'purchase_extend.report_purchase_service_quotation')
 
     @api.multi
     def button_draft(self):
-        pass
+        self.write({'state': 'draft'})
+        return True
 
+    @api.multi
+    def button_cancel(self):
+        self.write({'state': 'cancel'})
+        return True
+
+    @api.multi
+    def button_confirm(self):
+        self.write({'state': 'comfired'})
+        return True
 
 
 class PurchaseOrderLine(models.Model):
