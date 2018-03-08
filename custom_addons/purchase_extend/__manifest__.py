@@ -27,7 +27,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'report/service_quotation_templates.xml'
+        'report/service_quotation_templates.xml',
         'report/purchase_report.xml',
         'data/ir_sequence_data.xml',
         'data/mail_template_data.xml',
