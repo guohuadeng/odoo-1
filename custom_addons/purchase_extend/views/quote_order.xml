@@ -62,14 +62,15 @@
                                     <field name="remarks"/>
                                 </group>
                                 <group>
-                                    <field name="customs_id"/>
-                                    <field name="declare_customs_id"/>
+                                    <field name="customs_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                                    <field name="declare_customs_id" options="{'no_create_edit': True}"/>
                                 </group>
                         </group>
 
                         <label for="delivery_info_id"/>
                         <field name="delivery_info_id">
                             <tree string="Delivery Info" editable="bottom">
+                                <field name="sequence" widget="handle"/>
                                <field name="type_id"/>
                                 <field name="name"/>
                                 <field name="address"/>

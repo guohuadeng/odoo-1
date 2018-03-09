@@ -36,7 +36,7 @@
         <record id="lead_to_purchase_order_action" model="ir.actions.act_window">
             <field name="name">Purchase Orders</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">purchase.order</field>
+            <field name="res_model">purchase.service_quote_order</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('crm_lead_id', '=', context.get('lead_id', 0))]</field>
         </record>

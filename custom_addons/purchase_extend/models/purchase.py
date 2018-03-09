@@ -109,7 +109,7 @@ class ServiceQuoteOrder(models.Model):
     packing_id = fields.Many2one(comodel_name="delegate_packing", string="Pack")        # 包装方式
     goods_name = fields.Text(string="Goods Name", required=False, )         # 货物名称
     remarks = fields.Text(string="Remarks", required=False, )               # 备注
-    customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs", required=False, )
+    customs_ids = fields.Many2many(comodel_name="delegate_customs", string="Customs", )
     declare_customs_id = fields.Many2one(comodel_name="delegate_customs", string="Declare Customs", required=False, )
     delivery_info_id = fields.One2many(comodel_name="purchase.order_delivery_info", inverse_name="purchase_order_id",
                                        string="Delivery Info", required=False, )    # 收发货信息

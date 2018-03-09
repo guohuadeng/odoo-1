@@ -22,7 +22,7 @@ class Lead(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'name': _('Purchase Order'),
-            'res_model': 'purchase.order',
+            'res_model': 'purchase.service_quote_order',
             'view_mode': 'form',
             'view_type': 'form',
             'target': 'current',

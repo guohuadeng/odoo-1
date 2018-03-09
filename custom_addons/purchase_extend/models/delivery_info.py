@@ -25,6 +25,7 @@ class OrderDeliveryInfo(models.Model):
     gross_weight = fields.Float(string="Gross Quantity",  required=False, digits=dp.get_precision('Stock Weight'))
     remark = fields.Text(string="Remark", required=False, )
     purchase_order_id = fields.Many2one(comodel_name="purchase.service_quote_order", string="Purchase Order", required=False, )
+    sequence = fields.Integer(string='Sequence', default=10)
 
 
 
