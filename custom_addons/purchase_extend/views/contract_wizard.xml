@@ -21,14 +21,14 @@
                         <group>
                             <field name="create_contract_select" widget="radio" options="{'horizontal': 1}"/>
                             <group attrs="{'invisible': [('create_contract_select', '=', 'selecte')]}">
-                                <field name="contract_type_id"/>
-                                <field name="our_signatory_id"/>
-                                <field name="customer_signatory_id" domain="[('parent_id', '=', supplier_id), ('customer', '=', True), ('is_company', '=', False)]"/>
+                                <field name="supplier_id"  options="{'no_create_edit': True}"/>
+                                <field name="contract_type_id"  options="{'no_create_edit': True}"/>
+                                <field name="customer_signatory_id" domain="[('parent_id', '=', supplier_id), ('customer', '=', True), ('is_company', '=', False)]"  options="{'no_create_edit': True}"/>
+                                <field name="our_signatory_id"  options="{'no_create_edit': True}"/>
                                 <field name="supplier_order_no"/>
                                 <field name="remark"/>
                             </group>
                             <group attrs="{'invisible': [('create_contract_select', '=', 'selecte')]}">
-                                <field name="supplier_id"/>
                                 <field name="sign_date"/>
                                 <field name="effective_date"/>
                                 <field name="failure_date"/>

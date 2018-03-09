@@ -81,7 +81,7 @@ class ServiceQuoteOrder(models.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']
     _description = 'Service Order'
 
-    name = fields.Char(string="Name", index=True, copy=False, default='New')
+    name = fields.Char(string="Quotation Num", index=True, copy=False, default='New')
     partner_id = fields.Many2one('res.partner', string='Vendor', required=True, track_visibility='always')  # 供应商
     contact_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=False,
                                  domain=[('customer', '=', True), ('is_company', '=', False)])  # 供应商联系人
@@ -94,7 +94,7 @@ class ServiceQuoteOrder(models.Model):
     business_type_id = fields.Many2one(comodel_name="business_type", string="Business Type", required=False, ) # 业务类型
     crm_lead_id = fields.Many2one(comodel_name="crm.lead", string="Lead", )     # 商机线索
     # tags_ids = fields.Many2many(comodel_name="purchase.order_tag", string="Tags", )  # 标签
-    quote_date = fields.Datetime(string="Quote Date", copy=False, index=True)  # 询价日期
+    quote_date = fields.Datetime(string="Quote Date", copy=False, index=True, default=fields.Datetime.now)  # 询价日期
     validity_date = fields.Datetime(string="Validity Date", copy=False)     # 有效日期
     customer_service_id = fields.Many2one(comodel_name="res.users", string="Customer Service", required=False, ) # 客服服务
     sale_person_id = fields.Many2one(comodel_name="res.users", string="Sale Person", required=False, )      # 销售

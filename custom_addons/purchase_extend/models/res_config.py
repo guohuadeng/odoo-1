@@ -6,4 +6,4 @@ from odoo import fields, models
 class PurchaseConfigSettings(models.TransientModel):
     _inherit = 'purchase.config.settings'
 
-    default_notes = fields.Text(default_model='purchase.order')
+    default_notes = fields.Text(default_model='purchase.service_quote_order')
