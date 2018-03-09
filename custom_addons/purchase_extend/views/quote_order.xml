@@ -159,7 +159,7 @@
             <field name="name">service quote order tree view</field>
             <field name="model">purchase.service_quote_order</field>
             <field name="arch" type="xml">
-                <tree default_order="quote_date">
+                <tree default_order="quote_date desc">
                     <field name="name"/>
                     <field name="quote_date"/>
                     <field name="partner_id"/>

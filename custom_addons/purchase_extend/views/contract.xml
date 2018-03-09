@@ -9,6 +9,13 @@
             <field name="arch" type="xml">
                 <tree >
                     <field name="name"/>
+                    <field name="supplier_id"/>
+                    <field name="contract_type_id"/>
+                    <field name="supplier_order_no"/>
+                    <field name="our_signatory_id"/>
+                    <field name="effective_date"/>
+                    <field name="failure_date"/>
+                    <field name="sign_date"/>
                     <!--<field name="supplier_id"/>-->
                     <!--<field name="contract_type_id"/>-->
                     <!--<field name="customer_signatory_id"/>-->
