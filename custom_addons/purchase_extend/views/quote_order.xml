@@ -39,7 +39,7 @@
                                 <field name="contract_id" readonly="1"/>
                                 <field name="partner_ref"/>
                                 <field name="business_type_id"/>
-                                <field name="crm_lead_id"/>
+                                <field name="crm_lead_id" readonly="1"/>
                             </group>
                             <group>
                                 <field name="quote_date"/>
@@ -85,7 +85,7 @@
                                 <field name="order_line">
                             <tree editable="bottom">
                                 <field name="currency_id" invisible="1"/>
-                                <field name="state" invisible="1"/>
+                                <!--<field name="state" invisible="1"/>-->
                                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                                 <field name="sequence" widget="handle"/>
                                 <field name="product_id" domain="[('type', '=', 'service')]" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom}"/>
@@ -172,6 +172,8 @@
             <field name="arch" type="xml">
                 <search string="">
                     <field name="partner_id" string="Vender"/>
+                    <field name="customer_service_id" string="Customer Service"/>
+                    <field name="sale_person_id" string="Sale Person"/>
                     <group string="Group By">
                         <filter string="Vendor" domain="[]" context="{'group_by': 'partner_id'}"/>
                         <filter string="Quotation Date" domain="[]" context="{'group_by': 'quote_date'}"/>

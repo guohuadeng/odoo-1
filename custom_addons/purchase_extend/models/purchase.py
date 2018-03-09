@@ -276,7 +276,7 @@ class PurchaseOrderLine(models.Model):
 
     order_id = fields.Many2one('purchase.service_quote_order', string='Service Quotation', index=True, required=True, ondelete='cascade')
     company_id = fields.Many2one('res.company', related='order_id.company_id', string='Company', store=True, readonly=True)
-    state = fields.Selection(related='order_id.state', store=True)
+    # state = fields.Selection(related='order_id.state', store=True)
 
     partner_id = fields.Many2one('res.partner', related='order_id.partner_id', string='Partner', readonly=True, store=True)
     currency_id = fields.Many2one(related='order_id.currency_id', store=True, string='Currency', readonly=True)
@@ -413,11 +413,27 @@ class ContractWizard(models.TransientModel):
     @api.multi
     def choose_contract(self):
         """选择合同"""
+        print('----------------------------- choose contract -----------------------------------')
         if not self.selected_contract_id:
             raise UserError(_('Please select contract'))
-        order = self.env['sale.order'].browse(self._context.get('purchase_order'))
+        order = self.env['purchase.service_quote_order'].browse(self._context.get('service_quote_order'))
+        print(self._context.get('service_quote_order'))
         # order.write({'contract': self.selected_contract.id, 'state': 'sale'})
         order.write({'contract_id': self.selected_contract_id.id, })
 
         return True
 
+    @api.multi
+    @api.onchange('selected_contract_id')
+    def _comput_contract(self):
+        for item in self:
+            if item.selected_contract_id:
+                item.contract_type_id = item.selected_contract_id.contract_type_id
+                item.our_signatory_id = item.selected_contract_id.our_signatory_id
+                item.customer_signatory_id  = item.selected_contract_id.customer_signatory_id
+                item.supplier_order_no = item.selected_contract_id.supplier_order_no
+                item.supplier_id = item.selected_contract_id.supplier_id
+                item.sign_date = item.selected_contract_id.sign_date
+                item.effective_date = item.selected_contract_id.effective_date
+                item.failure_date = item.selected_contract_id.failure_date
+                item.remark = item.selected_contract_id.remark
