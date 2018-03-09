@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.exceptions import UserError
+import odoo.addons.decimal_precision as dp
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 # class PurchaseOrder(models.Model):
@@ -111,12 +113,13 @@ class ServiceQuoteOrder(models.Model):
     declare_customs_id = fields.Many2one(comodel_name="delegate_customs", string="Declare Customs", required=False, )
     delivery_info_id = fields.One2many(comodel_name="purchase.order_delivery_info", inverse_name="purchase_order_id",
                                        string="Delivery Info", required=False, )    # 收发货信息
-    order_line = fields.One2many('purchase.order.line', 'order_id', string='Order Lines', copy=True)
+    order_line = fields.One2many('purchase.service_quote_line', 'order_id', string='Order Lines', copy=True)
     notes = fields.Text('Terms and Conditions')     # 默认条款
     amount_untaxed = fields.Monetary(string='Untaxed Amount', store=True, readonly=True, compute='_amount_all',
                                      track_visibility='always')     # 未含税金额
     amount_tax = fields.Monetary(string='Taxes', store=True, readonly=True, compute='_amount_all')      # 含税金额
     amount_total = fields.Monetary(string='Total', store=True, readonly=True, compute='_amount_all')    # 总额
+    fiscal_position_id = fields.Many2one('account.fiscal.position', string='Fiscal Position')
     state = fields.Selection(string="State", selection=[('draft', 'Draft'),
                                                         ('sent', 'Sent'),
                                                         ('comfired', 'Comfired'),
@@ -203,14 +206,137 @@ class ServiceQuoteOrder(models.Model):
         self.write({'state': 'comfired'})
         return True
 
+#
+# class PurchaseOrderLine(models.Model):
+#     _inherit = 'purchase.order.line'
+#
+#     service_quote_id = fields.Many2one(comodel_name="purchase.service_quote_order", string="Service Quotation", required=False, )
+#     purchase_price_unit = fields.Float(string="Purchase Price",  required=False, )
+#     purchase_currency_id = fields.Many2one(comodel_name="res.currency", string="Purchase Currency", required=False, )
+#     rate = fields.Float(string="Rate",  related='purchase_currency_id.rate' )
+#     tag_ids = fields.Many2one(comodel_name="purchase.order_tag", string="Tag", required=False, )
+#
+#     @api.depends('product_qty', 'price_unit', 'taxes_id')
+#     def _compute_amount(self):
+#         if self.service_quote_id:
+#             for line in self:
+#                 taxes = line.taxes_id.compute_all(line.price_unit, line.service_quote_id .currency_id, line.product_qty, product=line.product_id, partner=line.service_quote_id.partner_id)
+#                 line.update({
+#                     'price_tax': taxes['total_included'] - taxes['total_excluded'],
+#                     'price_total': taxes['total_included'],
+#                     'price_subtotal': taxes['total_excluded'],
+#                 })
+#         else:
+#             super(PurchaseOrderLine, self)._compute_amount()
+#
+    # @api.onchange('rate', 'purchase_price_unit', 'purchase_currency_id')
+    # def _compute_price_unit(self):
+    #     """根据汇率计算单价"""
+    #     if self.rate != 0:
+    #         self.price_unit = self.purchase_price_unit / self.rate
+#
+#     @api.onchange('product_id')
+#     def onchange_product_id(self):
+#         result = super(PurchaseOrderLine, self).onchange_product_id()
+#         self.purchase_price_unit = 0.0
+#         self.purchase_currency_id = self.product_id.currency_id
+#         return result
+
 
 class PurchaseOrderLine(models.Model):
-    _inherit = 'purchase.order.line'
+    _name = 'purchase.service_quote_line'
+    _description = 'Service Quotation Order Line'
+
+    @api.depends('product_qty', 'price_unit', 'taxes_id')
+    def _compute_amount(self):
+        for line in self:
+            taxes = line.taxes_id.compute_all(line.price_unit, line.order_id.currency_id, line.product_qty, product=line.product_id, partner=line.order_id.partner_id)
+            line.update({
+                'price_tax': taxes['total_included'] - taxes['total_excluded'],
+                'price_total': taxes['total_included'],
+                'price_subtotal': taxes['total_excluded'],
+            })
+
 
     purchase_price_unit = fields.Float(string="Purchase Price",  required=False, )
     purchase_currency_id = fields.Many2one(comodel_name="res.currency", string="Purchase Currency", required=False, )
     rate = fields.Float(string="Rate",  related='purchase_currency_id.rate' )
-    tag_ids = fields.Many2one(comodel_name="purchase.order_tag", string="Tag", required=False, )
+
+    name = fields.Text(string='Description', required=True)
+    sequence = fields.Integer(string='Sequence', default=10)
+    product_qty = fields.Float(string='Quantity', digits=dp.get_precision('Product Unit of Measure'), required=True)
+    taxes_id = fields.Many2many('account.tax', string='Taxes', domain=['|', ('active', '=', False), ('active', '=', True)])
+    product_uom = fields.Many2one('product.uom', string='Product Unit of Measure', required=True)
+    product_id = fields.Many2one('product.product', string='Product', domain=[('purchase_ok', '=', True)], change_default=True, required=True)
+    price_unit = fields.Float(string='Unit Price', required=True, digits=dp.get_precision('Product Price'))
+
+    price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', store=True)
+    price_total = fields.Monetary(compute='_compute_amount', string='Total', store=True)
+    price_tax = fields.Monetary(compute='_compute_amount', string='Tax', store=True)
+
+    order_id = fields.Many2one('purchase.service_quote_order', string='Service Quotation', index=True, required=True, ondelete='cascade')
+    company_id = fields.Many2one('res.company', related='order_id.company_id', string='Company', store=True, readonly=True)
+    state = fields.Selection(related='order_id.state', store=True)
+
+    partner_id = fields.Many2one('res.partner', related='order_id.partner_id', string='Partner', readonly=True, store=True)
+    currency_id = fields.Many2one(related='order_id.currency_id', store=True, string='Currency', readonly=True)
+    date_order = fields.Datetime(related='order_id.quote_date', string='Order Date', readonly=True)
+
+
+
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        result = {}
+        if not self.product_id:
+            return result
+
+        # Reset date, price and quantity since _onchange_quantity will provide default values
+        self.price_unit = self.product_qty = 0.0
+        self.product_uom = self.product_id.uom_po_id or self.product_id.uom_id
+        result['domain'] = {'product_uom': [('category_id', '=', self.product_id.uom_id.category_id.id)]}
+
+        product_lang = self.product_id.with_context({
+            'lang': self.partner_id.lang,
+            'partner_id': self.partner_id.id,
+        })
+        self.name = product_lang.display_name
+        if product_lang.description_purchase:
+            self.name += '\n' + product_lang.description_purchase
+
+        fpos = self.order_id.fiscal_position_id
+        if self.env.uid == SUPERUSER_ID:
+            company_id = self.env.user.company_id.id
+            self.taxes_id = fpos.map_tax(self.product_id.supplier_taxes_id.filtered(lambda r: r.company_id.id == company_id))
+        else:
+            self.taxes_id = fpos.map_tax(self.product_id.supplier_taxes_id)
+
+        self.purchase_price_unit = 0.0
+        self.purchase_currency_id = self.product_id.currency_id
+
+        return result
+
+
+    @api.onchange('product_qty', 'product_uom')
+    def _onchange_quantity(self):
+        if not self.product_id:
+            return
+
+        seller = self.product_id._select_seller(
+            partner_id=self.partner_id,
+            quantity=self.product_qty,
+            uom_id=self.product_uom)
+
+        if not seller:
+            return
+
+        price_unit = self.env['account.tax']._fix_tax_included_price(seller.price, self.product_id.supplier_taxes_id, self.taxes_id) if seller else 0.0
+        if price_unit and seller and self.order_id.currency_id and seller.currency_id != self.order_id.currency_id:
+            price_unit = seller.currency_id.compute(price_unit, self.order_id.currency_id)
+
+        if seller and self.product_uom and seller.product_uom != self.product_uom:
+            price_unit = seller.product_uom._compute_price(price_unit, self.product_uom)
+
+        self.price_unit = price_unit
 
     @api.onchange('rate', 'purchase_price_unit', 'purchase_currency_id')
     def _compute_price_unit(self):
@@ -218,12 +344,6 @@ class PurchaseOrderLine(models.Model):
         if self.rate != 0:
             self.price_unit = self.purchase_price_unit / self.rate
 
-    @api.onchange('product_id')
-    def onchange_product_id(self):
-        result = super(PurchaseOrderLine, self).onchange_product_id()
-        self.purchase_price_unit = 0.0
-        self.purchase_currency_id = self.product_id.currency_id
-        return result
 
 
 class OrderTag(models.Model):

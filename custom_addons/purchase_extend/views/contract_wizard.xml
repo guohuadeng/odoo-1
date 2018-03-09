@@ -23,7 +23,7 @@
                             <group attrs="{'invisible': [('create_contract_select', '=', 'selecte')]}">
                                 <field name="contract_type_id"/>
                                 <field name="our_signatory_id"/>
-                                <field name="customer_signatory_id"/>
+                                <field name="customer_signatory_id" domain="[('parent_id', '=', supplier_id), ('customer', '=', True), ('is_company', '=', False)]"/>
                                 <field name="supplier_order_no"/>
                                 <field name="remark"/>
                             </group>
@@ -34,7 +34,7 @@
                                 <field name="failure_date"/>
                             </group>
                             <group>
-                                <field name="selected_contract_id" attrs="{'invisible': [('create_contract_select', '=', 'create')]}"/>
+                                <field name="selected_contract_id" domain="[('supplier_id', '=', context.get('default_supplier_id'))]" attrs="{'invisible': [('create_contract_select', '=', 'create')]}"/>
                             </group>
                         </group>
                         <footer>
