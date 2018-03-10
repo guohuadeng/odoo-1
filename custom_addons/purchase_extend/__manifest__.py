@@ -33,6 +33,7 @@
         'data/mail_template_data.xml',
         'views/contract_wizard.xml',
         'views/quote_order.xml',
+        'views/purchase.xml',
         'views/res_config.xml',
         'views/crm_lead_views.xml',
         'views/delivery_info.xml',
