@@ -206,6 +206,18 @@ class ServiceQuoteOrder(models.Model):
         self.write({'state': 'comfired'})
         return True
 
+    @api.onchange('partner_id', 'company_id')
+    def onchange_partner_id(self):
+        if not self.partner_id:
+            self.fiscal_position_id = False
+            self.payment_term_id = False
+            self.currency_id = False
+        else:
+            self.fiscal_position_id = self.env['account.fiscal.position'].with_context(company_id=self.company_id.id).get_fiscal_position(self.partner_id.id)
+            self.payment_term_id = self.partner_id.property_supplier_payment_term_id.id
+            self.currency_id = self.partner_id.property_purchase_currency_id.id or self.env.user.company_id.currency_id.id
+        return {}
+
 #
 # class PurchaseOrderLine(models.Model):
 #     _inherit = 'purchase.order.line'
