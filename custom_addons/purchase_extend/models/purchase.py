@@ -189,7 +189,7 @@ class ServiceQuoteOrder(models.Model):
     @api.multi
     def print_quotation(self):
         self.write({'state': "sent"})
-        return self.env['report'].get_action(self, 'purchase_extend.report_purchase_service_quotation')
+        return self.env['report'].get_action(self, 'purchase_extend.service_quotation_template')
 
     @api.multi
     def button_draft(self):
