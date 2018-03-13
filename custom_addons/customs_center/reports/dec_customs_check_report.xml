@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <report
+            id="report_dec_customs_check"
+            model="customs_center.customs_dec"
+            report_type="qweb-pdf"
+            string="report_dec_customs_check"
+            name="customs_center.report_dec_customs_check_template"
+            file="customs_center.report_dec_customs_check_template"
+        />
+        <report
+            id="print_dec_customs_invoice"
+            model="customs_center.customs_dec"
+            report_type="qweb-pdf"
+            string="print_dec_customs_invoice"
+            name="customs_center.print_dec_customs_invoice_template"
+            file="customs_center.print_dec_customs_invoice_template"
+        />
+    </data>
+</odoo>

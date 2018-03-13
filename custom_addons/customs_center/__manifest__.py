@@ -38,11 +38,14 @@
         'views/customs_receipt.xml',
         'views/setting_declaration.xml',
         'views/menu.xml',
-        'views/template.xml'
+        'views/template.xml',
+        'reports/dec_customs_check_report.xml',
+        'reports/dec_customs_check_report_template.xml',
     ],
     'qweb': [
         'static/src/xml/declare_element_modal.xml',
     ],
+    'css': ['static/src/css/customs_dec.css'],
     # only loaded in demonstration mode
     'demo': [
         # 'demo/demo.xml',

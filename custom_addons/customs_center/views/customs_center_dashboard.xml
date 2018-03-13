@@ -5,8 +5,9 @@
             <field name="name">customs dec kanban</field>
             <field name="model">customs_center.customs_dec</field>
             <field name="arch" type="xml">
-                <kanban create="false" class="o_kanban_dashboard o_account_kanban">
+                <kanban default_group_by="inout" create="false" class="o_kanban_dashboard o_account_kanban">
                     <field name="name"/>
+                    <field name="inout"/>
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="#{kanban_color(0)}">
@@ -95,7 +96,7 @@
         </record>
 
         <record id="action_dec_dashboard_menu" model="ir.actions.act_window">
-            <field name="name">Customs Center dashboard</field>
+            <field name="name">关务仪表板</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">customs_center.customs_dec</field>
             <field name="view_mode">kanban,form</field>

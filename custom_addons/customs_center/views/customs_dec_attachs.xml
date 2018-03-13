@@ -9,50 +9,17 @@
             <field name="view_id" ref="mail.view_document_file_kanban"/>
         </record>
         <!-- Attachment -->
-        <record id="view_dec_attachment_form" model="ir.ui.view">
-            <field name="name">dec attach form</field>
-            <field name="model">ir.attachment</field>
-            <field name="inherit_id" ref="base.view_attachment_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//form/sheet/group/group[1]/field[@name='datas']" position="after">
-                    <!--增加视图限制 只有在关务中心模型下 才显示单据类型-->
-                    <field name="res_model" invisible="1"/>
-                    <field name="attach_type" string="单据类型" placeholder="请选择单据类型" attrs="{'invisible':[('res_model','!=','customs_center.customs_dec')]}"/>
-                </xpath>
-            </field>
-        </record>
-
         <!--<record id="view_dec_attachment_form" model="ir.ui.view">-->
             <!--<field name="name">dec attach form</field>-->
             <!--<field name="model">ir.attachment</field>-->
             <!--<field name="inherit_id" ref="base.view_attachment_form"/>-->
             <!--<field name="arch" type="xml">-->
-                <!--<xpath expr="//form/sheet/group/group[3]" position="after">-->
+                <!--<xpath expr="//form/sheet/group/group[1]/field[@name='datas']" position="after">-->
                     <!--&lt;!&ndash;增加视图限制 只有在关务中心模型下 才显示单据类型&ndash;&gt;-->
                     <!--<field name="res_model" invisible="1"/>-->
-                    <!--<group name="description_group" string="随附单据类型" colspan="4" attrs="{'invisible':[('res_model','!=','customs_center.customs_dec')]}">-->
-                        <!--<field name="attach_type" nolabel="1" placeholder="请选择单据类型"/>-->
-                    <!--</group>-->
+                    <!--<field name="attach_type" string="单据类型" placeholder="请选择单据类型" attrs="{'invisible':[('res_model','!=','customs_center.customs_dec')]}"/>-->
                 <!--</xpath>-->
             <!--</field>-->
         <!--</record>-->
-
-        <!--<record id="view_dec_attachment_form" model="ir.ui.view">-->
-            <!--<field name="arch" type="xml">-->
-                <!--<xpath expr="//form/sheet/group/group[1]" position="replace">-->
-                    <!--<group>-->
-                        <!--<field name="type"/>-->
-                        <!--<field name="datas" filename="datas_fname" attrs="{'invisible':[('type','=','url')]}"/>-->
-                        <!--<field name="datas_fname" invisible="1" attrs="{'invisible':[('type','=','url')]}" class="oe_inline oe_right"/>-->
-                        <!--<field name="url" widget="url" attrs="{'invisible':[('type','=','binary')]}"/>-->
-                        <!--<field name="mimetype" groups="base.group_no_one"/>-->
-                        <!--&lt;!&ndash;增加视图限制 只有在关务中心模型下 才显示单据类型&ndash;&gt;-->
-                        <!--<field name="res_model" invisible="1"/>-->
-                        <!--<field name="attach_type" string="单据类型" placeholder="请选择单据类型" attrs="{'invisible':[('res_model','!=','customs_center.customs_dec')]}"/>-->
-                    <!--</group>-->
-                <!--</xpath>-->
-            <!--</field>-->
-        <!--</record>-->
-
 
 </odoo>

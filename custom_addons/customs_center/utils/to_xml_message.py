@@ -30,8 +30,13 @@ def delegate_to_xml(self):
     dec_send_way = self.cus_dec_sent_way
 
     head_node_dic = OrderedDict()
-    head_node_dic['AgentCode'] = self.declare_company_id.register_code if self.declare_company_id.register_code else None    # u'申报单位代码'
-    head_node_dic['AgentName'] = self.declare_company_id.register_name_cn if self.declare_company_id.register_name_cn else None # u'申报单位名称'
+    # head_node_dic['AgentCode'] = self.declare_company_id.register_code if self.declare_company_id.register_code else None    # u'申报单位代码'
+    # head_node_dic['AgentName'] = self.declare_company_id.register_name_cn if self.declare_company_id.register_name_cn else None # u'申报单位名称'
+
+    # 申报单位直接读取配置文件的写法
+    head_node_dic['AgentCode'] = self.dec_company_customs_code if self.dec_company_customs_code else None  # u'申报单位代码'
+    head_node_dic['AgentName'] = self.dec_company if self.dec_company else None   # u'申报单位名称'
+
     head_node_dic['ApprNo'] = None
     head_node_dic['BillNo'] = str(self.bill_no) if self.bill_no else None  # u'提单号'
     head_node_dic['ContrNo'] = str(self.customer_contract_no) if self.customer_contract_no else None  # u'合同编号'
@@ -308,9 +313,9 @@ def delegate_to_xml(self):
     # base_dir = config.options['xml_files_path']
 
     # 单一窗口报文发送根目录
-    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
+    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
     # QP 报文发送根目录
-    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
+    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
 
     # 企业报关单 报文生成路径  用户配置界面自定义
     company_name = str(self.dec_company_customs_code)  # 申报单位海关编码 用作报文存放路径

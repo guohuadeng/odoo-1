@@ -39,6 +39,7 @@ class GoodsClassification(models.Model):
     # supervision_condition = fields.Char(string="supervision condition", required=False, )  # 监管标识/监管标识
 
     deal_unit_price = fields.Monetary(string="deal unit price", )  # 成交单价/申报单价
+    deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )  # 成交单位
     currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )  # 币制
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国

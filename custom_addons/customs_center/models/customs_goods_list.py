@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 
 
 class CusGoodsList(models.Model):
-    """ 通关清单-商品列表 """
+    """ 通关清单 报关单 商品列表 """
     _name = 'customs_center.cus_goods_list'
     # rec_name = 'goods_name'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
@@ -16,7 +16,7 @@ class CusGoodsList(models.Model):
     _order = "sequence, id"
 
     sequence = fields.Integer(string='Sequence')
-    # sequence = fields.Integer(string='Sequence', default=10)
+    # sequence_add_one = fields.Integer(compute='_compute_sequence_add_one', string='Sequence')
     goods_name = fields.Char(string="goods name")  # 商品名称
     # 关联通关清单 多对一
     customs_order_id = fields.Many2one(comodel_name="customs_center.customs_order", string="customs Order", copy=False)
@@ -34,6 +34,15 @@ class CusGoodsList(models.Model):
     deal_unit_price = fields.Float(string="deal unit price", )    # 成交单价/申报单价
     deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )    # 成交单位
     deal_total_price = fields.Float(compute='_compute_total_goods_price', string="deal total price", )  # 成交总价
+
+    # @api.depends('sequence')
+    # def _compute_sequence_add_one(self):
+    #     """有序系统默认sequence 是从0开始，前端展示的时候获取当前sequence值 加1用于展示"""
+    #     for goods_list in self:
+    #         goods_list.sequence_add_one = goods_list.sequence + 1
+    #         print("*************00000lll***********")
+    #         print(goods_list.sequence)
+    #         print(goods_list.sequence_add_one)
 
     @api.onchange('deal_qty', 'deal_unit_price')
     def _compute_total_goods_price(self):
@@ -54,6 +63,8 @@ class CusGoodsList(models.Model):
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
     ManualSN = fields.Char(string="Manual SN")  # 备案序号
+    version_num = fields.Char(string="version num")  # 版本号
+    product_code = fields.Char(string="product code")  # 货号
 
     # # 是否属于报关单 已在视图层面action过滤 暂不需要该字段
     # customs_dec_goods_own = fields.Selection(selection=[('yes', 'YES'),    # 是否属于报关单
@@ -77,6 +88,10 @@ class CusGoodsList(models.Model):
         """根据当前海关税则编码的变化 改变商品名称 并通过onchange装饰器，自动执行_generate_about_name方法"""
         for goods_list in self:
             if goods_list.cus_goods_tariff_id:
+                # 增加一个判断goods_classification_id是否为真 因为如果料号变化之后 商品编号会变，商品名称也会变， 而本方法同样有这样的功能，如果料号变了，商品编号也变，商品名称显示的就是税则库中的名称
+                # 而不是归类库中的名称了
+                if goods_list.goods_classification_id:
+                    pass
                 goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
                 goods_list.first_unit = goods_list.cus_goods_tariff_id.first_unit
                 goods_list.second_unit = goods_list.cus_goods_tariff_id.second_unit
@@ -122,7 +137,8 @@ class CusGoodsList(models.Model):
                     'default_goods_name': line.goods_name,  # 商品名称
                     'default_first_unit': line.first_unit.id,  # 第一计量单位
                     'default_second_unit': line.second_unit.id,  # 第二计量单位
-                    'default_deal_unit_price': line.deal_unit.id,  # 成交单位
+                    'default_deal_unit_price': line.deal_unit_price,  # 成交单价
+                    'default_deal_unit': line.deal_unit.id,  # 成交单位
                     'default_currency_id': line.currency_id.id,  # 币制
                     # 'default_supervision_condition': line.inout,  # 监管条件
                     'default_duty_mode_id':line.duty_mode_id.id,  # 征免方式
