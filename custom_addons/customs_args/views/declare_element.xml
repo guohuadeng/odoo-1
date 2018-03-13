@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_declare_element_form" model="ir.ui.view">
+        <field name="name">delcare element form</field>         <!--自定义-->
+        <field name="model">cus_args.declare_element</field>   <!--固定格式-->
+        <field name="arch" type="xml">            <!--固定格式-->
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="cus_goods_tariff_id"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_declare_element_list" model="ir.ui.view">
+        <field name="name">declare element</field>                       <!--自定义-->
+        <field name="model">cus_args.declare_element</field>    <!--固定格式-->
+        <field name="arch" type="xml">                        <!--固定格式-->
+            <tree>
+                <field name="id"/>
+                <field name="cus_goods_tariff_id"/>
+                <field name="sequence"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action to open To-do Task list -->
+    <act_window id="declare_element_action"
+                name="declare element"
+                res_model="cus_args.declare_element"
+                view_mode="tree,form"/>
+</odoo>

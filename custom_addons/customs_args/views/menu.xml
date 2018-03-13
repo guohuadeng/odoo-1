@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <menuitem id="customs_args_menu" name="Customs Args"/>
+        <!--海关参数-->
+        <menuitem id="args_menu" name="Custom args" parent="customs_args_menu" sequence="50" />
+        <menuitem id="traf_mode_list_menu" name="Transport Mode" parent="args_menu" action="transport_mode_action" />
+        <menuitem id="trans_mode_list_menu" name="Trade Terms" parent="args_menu" action="trade_terms_action" />
+        <menuitem id="post_list_menu" name="Port" parent="args_menu" action="customs_port_action" />
+        <menuitem id="customs_list_menu" name="Customs" parent="args_menu" action="customs_action" />
+        <menuitem id="trade_mode_list_menu" name="Trade Mode" parent="args_menu" action="trade_mode_action" />
+        <menuitem id="district_list_menu" name="Region" parent="args_menu" action="delegation_region" />
+        <menuitem id="wrap_type_list_menu" name="Pack" parent="args_menu" action="delegation_packing" />
+        <menuitem id="country_list_menu" name="Country District" parent="args_menu" action="delegation_Country" />
+        <menuitem id="cus_cut_mode_menu" name="征免性质" parent="args_menu" action="delegation_cus_cut_mode" />
+        <menuitem id="cus_duty_mode_menu" name="征免方式" parent="args_menu" action="delegation_cus_duty_mode" />
+        <menuitem id="cus_unit_menu" name="单位表" parent="args_menu" action="delegation_cus_unit" />
+        <menuitem id="cus_currency_menu" name="币制" parent="args_menu" action="delegation_cus_currency" />
+        <menuitem id="cus_entry_type_menu" name="报关单类型表" parent="args_menu" action="delegation_cus_entry_type" />
+        <menuitem id="cus_filing_bill_type_menu" name="备案清单类型表" parent="args_menu" action="delegation_filing_bill_type" />
+        <menuitem id="cus_register_company_menu" name="企业库表" parent="args_menu" action="delegation_cus_register_company" />
+        <menuitem id="cus_goods_tariff_menu" name="海关税则" parent="args_menu" action="delegation_cus_goods_tariff" />
+        <menuitem id="dec_license_doc_type_menu" name="随附单证类型" parent="args_menu" action="delegation_dec_license_doc_type" />
+        <menuitem id="declare_element_menu" name="Declare Element" parent="args_menu" action="delegation_declare_element"/>
+
+
+    </data>
+</odoo>
