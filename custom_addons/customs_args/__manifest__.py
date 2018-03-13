@@ -43,6 +43,6 @@
         'views/trade_terms.xml',
         'views/transport_mode.xml',
         'views/unit.xml',
-        ''
+        'views/menu.xml'
     ],
 }

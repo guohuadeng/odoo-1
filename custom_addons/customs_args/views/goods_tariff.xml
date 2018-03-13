@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="customs_cus_goods_tariff_action" model="ir.actions.act_window">
-            <field name="name">customs goods tariff</field>
+            <field name="name">Customs Goods Tariff</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">cus_args.goods_tariff</field>
             <field name="view_mode">tree,form</field>
