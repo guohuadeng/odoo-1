@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="customs_dec_kanban_view" model="ir.ui.view">
+            <field name="name">customs dec kanban</field>
+            <field name="model">customs_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="inout" create="false" class="o_kanban_dashboard o_account_kanban">
+                    <field name="name"/>
+                    <field name="inout"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(0)}">
+                                <div class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary"><field name="name"/></div>
+                                    </div>
+                                    <div class="o_kanban_manage_button_section">
+                                        <a class="o_kanban_manage_toggle_button" href="#">More <i class="fa fa-caret-down"/></a>
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_content o_visible">
+                                    <div class="row">
+                                        <div class="col-xs-6 o_kanban_primary_left" name="to_replace_in_sale_crm">
+                                        </div>
+                                        <div class="col-xs-6 o_kanban_primary_right">
+                                        </div>
+                                    </div>
+                                </div><div class="container o_kanban_card_manage_pane o_invisible">
+                                    <div class="row">
+                                        <div class="col-xs-4 o_kanban_card_manage_section o_kanban_manage_view">
+                                            <div class="o_kanban_card_manage_title">
+                                                <span>View</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 o_kanban_card_manage_section o_kanban_manage_new">
+                                            <div class="o_kanban_card_manage_title">
+                                                <span>New</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 o_kanban_card_manage_section o_kanban_manage_reports">
+                                            <div class="o_kanban_card_manage_title">
+                                                <span>Reports</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </t>
+                        <!--<t t-name="kanban-box">-->
+                            <!--<div t-attf-class="#{kanban_color(0)}">-->
+                                <!--<div class="o_kanban_card_header">-->
+                                    <!--<div class="o_kanban_card_header_title">-->
+                                        <!--<div class="o_primary">-->
+                                            <!--<t t-set="action_name" t-value="record.code"/>-->
+                                            <!--<a type="object" name="open_work_sheet_action"-->
+                                               <!--t-attf-data-context="{'action_name': '#{action_name.raw_value}', 'default_business_type': active_id}">-->
+                                                <!--<field name="name"/>-->
+                                            <!--</a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                 <!--<div class="container o_kanban_card_content o_visible">-->
+                                    <!--<div class="row">-->
+                                        <!--<div class="col-xs-6 o_kanban_primary_left">-->
+                                            <!--<button type="object" name="create_work_sheet" class="btn btn-primary btn-sm"-->
+                                                    <!--t-attf-data-context="{'default_business_type': active_id}">-->
+                                                <!--New work sheet</button>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-6 o_kanban_primary_right">-->
+                                            <!--<div class="row">-->
+                                                <!--<div class="text-center">-->
+                                                    <!--<a type="object" name="open_work_sheet_action"-->
+                                                       <!--t-attf-data-context="{'action_name': '#{action_name.raw_value}', 'default_business_type': active_id, 'search_default_state': 'draft', 'search_default_customer_service': uid}">-->
+                                                        <!--<span title="Work Sheet"><t t-esc="record.draft_sheet_no.raw_value"/> draft Work Sheet</span>-->
+                                                    <!--</a>-->
+                                               <!--</div>-->
+                                            <!--</div>-->
+                                            <!--<div class="row">-->
+                                                <!--<div class="text-center">-->
+                                                    <!--<a type="object" name="open_work_sheet_action"-->
+                                                        <!--t-attf-data-context="{'action_name': '#{action_name.raw_value}', 'default_business_type': active_id, 'search_default_state': 'confirmed', 'search_default_customer_service': uid}">-->
+                                                        <!--<span title="Work Sheet"><t t-esc="record.confirmed_sheet_no.raw_value"/> confirmed Work Sheet</span>-->
+                                                    <!--</a>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</t>-->
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_dec_dashboard_menu" model="ir.actions.act_window">
+            <field name="name">关务仪表板</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.customs_dec</field>
+            <field name="view_mode">kanban,form</field>
+        </record>
+
+    </data>
+</odoo>

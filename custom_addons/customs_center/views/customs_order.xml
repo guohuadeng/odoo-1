@@ -38,12 +38,9 @@
                                <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
                     </header>
                     <sheet>
-                        <div class="oe_title">
-                            <h1>
-                                <field name="name" readonly="1"/>
-                                <field name="customs_declaration_ids" invisible="1"/>
-                            </h1>
-                        </div>
+                        <field name="name" readonly="1" invisible="1"/>
+                        <field name="customs_declaration_ids" invisible="1"/>
+
                         <div class="oe_button_box" name="button_box">
                             <button name="%(customs_center.action_customs_declaration)d" type="action" context="{'search_default_customs_order_id': active_id}"
                                     class="oe_stat_button" icon="fa-align-justify">
@@ -55,20 +52,35 @@
                             <!--</button>-->
                         </div>
 
+                        <div class="row" style="padding-bottom: 15px; padding-top: 11px;">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="col-lg-4 col-md-4"><label for="custom_master_id" string="申报地海关"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="custom_master_id" class="oe_inline"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="col-lg-4 col-md-4"><label for="work_sheet_id" string="工作单号"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="work_sheet_id"/>
+                                </div>
+                            </div>
+                        </div>
 
-                        <group col="3" colspan="1">
-                            <group>
-                                <field name="custom_master_id" required="1" string="申报地海关"/>
-                            </group>
-                            <group>
-                                <field name="business_type" string="业务类型" invisible="1"/>
-                                <field name="work_sheet_id" string="工作单号"/>
-                                <!--<field name="create_date" readonly="1"/>-->
-                            </group>
-                            <group>
-                                <field name="create_uid" readonly="1" string="创建人"/>
-                            </group>
-                        </group>
+
+                        <!--<group col="3" colspan="1">-->
+                            <!--<group>-->
+                                <!--<field name="custom_master_id" required="1" string="申报地海关"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                                <!--<field name="business_type" string="业务类型" invisible="1"/>-->
+                                <!--<field name="work_sheet_id" string="工作单号"/>-->
+                                <!--&lt;!&ndash;<field name="create_date" readonly="1"/>&ndash;&gt;-->
+                            <!--</group>-->
+                            <!--<group>-->
+                                <!--<field name="create_uid" readonly="1" string="创建人"/>-->
+                            <!--</group>-->
+                        <!--</group>-->
                         <notebook>
                             <page string="报关信息">
                                 <div class="row" style="padding-top:20px">
@@ -145,11 +157,10 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="declare_company_id" string="申报单位" />
+                                            <label for="dec_company_order" string="申报单位" />
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="declare_company_id" style="width:100%"
-                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            <field name="dec_company_order" style="width:100%"/>
                                         </div>
                                     </div>
                                 </div>
@@ -279,37 +290,40 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                </div>
+                                <field name="cus_goods_list_ids" string="商品信息"/>
 
                             </page>
                         </notebook>
 
-                            <notebook>
-                                 <page string="商品列表">
-                                    <field name="cus_goods_list_ids" mode="tree">
-                                        <tree string="cus_goods_list_tree" editable="bottom">
-                                            <!--<field name="sequence" widget="handle"/>-->
-                                            <field name="goods_classification_id" string="客户料号"/>
-                                            <field name="cus_goods_tariff_id" string="商品编码"/>
-                                            <field name="goods_name" string="商品名称"/>
-                                            <field name="goods_model" string="规格型号"/>
-                                            <field name="deal_qty" string="成交数量"/>
-                                            <field name="deal_unit_price" string="成交单价"/>
-                                            <field name="deal_unit" string="成交单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
-                                            <field name="deal_total_price" string="成交总价"/>
-                                            <field name="currency_id" string="币制" options="{'no_create_edit': 1, 'no_create': 1}"/>
-                                            <field name="first_qty" string="第一数量"/>
-                                            <field name="first_unit" string="第一单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
-                                            <field name="second_qty" string="第二数量"/>
-                                            <field name="second_unit" string="第二单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
-                                            <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1, 'no_create': 1}"/>
-                                            <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1, 'no_create': 1}"/>
-                                            <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1, 'no_create': 1}"/>
-                                            <!--<field name="create_uid" string="创建人" readonly="1"/>-->
-                                            <!--<field name="create_date" string="创建时间" readonly="1" widget="date"/>-->
-                                        </tree>
-                                    </field>
-                                </page>
-                            </notebook>
+                            <!--<notebook>-->
+                                 <!--<page string="商品列表">-->
+                                    <!--<field name="cus_goods_list_ids" mode="tree">-->
+                                        <!--<tree string="cus_goods_list_tree" editable="bottom">-->
+                                            <!--&lt;!&ndash;<field name="sequence" widget="handle"/>&ndash;&gt;-->
+                                            <!--<field name="goods_classification_id" string="客户料号"/>-->
+                                            <!--<field name="cus_goods_tariff_id" string="商品编码"/>-->
+                                            <!--<field name="goods_name" string="商品名称"/>-->
+                                            <!--<field name="goods_model" string="规格型号"/>-->
+                                            <!--<field name="deal_qty" string="成交数量"/>-->
+                                            <!--<field name="deal_unit_price" string="成交单价"/>-->
+                                            <!--<field name="deal_unit" string="成交单位" options="{'no_create_edit': 1, 'no_create': 1}"/>-->
+                                            <!--<field name="deal_total_price" string="成交总价"/>-->
+                                            <!--<field name="currency_id" string="币制" options="{'no_create_edit': 1, 'no_create': 1}"/>-->
+                                            <!--<field name="first_qty" string="第一数量"/>-->
+                                            <!--<field name="first_unit" string="第一单位" options="{'no_create_edit': 1, 'no_create': 1}"/>-->
+                                            <!--<field name="second_qty" string="第二数量"/>-->
+                                            <!--<field name="second_unit" string="第二单位" options="{'no_create_edit': 1, 'no_create': 1}"/>-->
+                                            <!--<field name="origin_country_id" string="原产国" options="{'no_create_edit': 1, 'no_create': 1}"/>-->
+                                            <!--<field name="destination_country_id" string="目的国" options="{'no_create_edit': 1, 'no_create': 1}"/>-->
+                                            <!--<field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1, 'no_create': 1}"/>-->
+                                            <!--&lt;!&ndash;<field name="create_uid" string="创建人" readonly="1"/>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<field name="create_date" string="创建时间" readonly="1" widget="date"/>&ndash;&gt;-->
+                                        <!--</tree>-->
+                                    <!--</field>-->
+                                <!--</page>-->
+                            <!--</notebook>-->
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids"

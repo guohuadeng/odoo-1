@@ -19,7 +19,7 @@ _logger = logging.getLogger(__name__)
 
 
 # 本地测试环境路径
-# # pre_ex_client 前置交换客户端路径
+# pre_ex_client 前置交换客户端路径
 # PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
 # PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
 # PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
@@ -33,7 +33,7 @@ _logger = logging.getLogger(__name__)
 # RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
 # ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
 # BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
-#
+
 
 
 # # # 118测试环境路径
@@ -80,6 +80,7 @@ def check_and_mkdir(*path):
             os.mkdir(p)
 
 
+
 class CustomsDeclaration(models.Model):
     """ 报关单 """
     _name = 'customs_center.customs_dec'
@@ -87,7 +88,7 @@ class CustomsDeclaration(models.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']
     _description = 'Customs Declaration'
 
-    name = fields.Char(string="Name")  # 报关单流水号
+    name = fields.Char(string="Name", copy=False)   # 报关单流水号   # copy=False 防止服务器动作复制报关单信息时复制
     client_seq_no = fields.Char(string="client seq No")  # 报关单客户端编号
     synergism_seq_no = fields.Char(string="Synergism seq No")  # 客户协同单号
 
@@ -101,12 +102,12 @@ class CustomsDeclaration(models.Model):
 
     entry_type_id = fields.Many2one(comodel_name="basedata.cus_entry_type", string="Entry Type")  # 报关单类型 关联报关单类型字典表，待新增
     bill_type_id = fields.Many2one(comodel_name="basedata.cus_filing_bill_type", string="bill Type")    # 备案清单 待新建，备案清单类型表
-    inout = fields.Selection(string="InOut", selection=[('I', u'进口'), ('E', u'出口'), ])  # 进出口类型
+    inout = fields.Selection(string="InOut", selection=[('I', u'进口'), ('E', u'出口'), ], track_visibility='always',)  # 进出口类型
     dec_seq_no = fields.Char(string="DecSeqNo")  # 统一编号
     pre_entry_id = fields.Char(string="PreEntryId")  # 预录入编号
     entry_id = fields.Char(string="EntryId")  # 海关编号
-    ManualNo = fields.Char(string="Manual No")  # 备案号
-    customer_contract_no = fields.Char(string="Customer Contract No")  # 合同协议号
+    ManualNo = fields.Char(string="Manual No", track_visibility='always',)  # 备案号
+    customer_contract_no = fields.Char(string="Customer Contract No", track_visibility='onchange',)  # 合同协议号
     in_out_date = fields.Datetime(string="InoutDate")   # 进出口日期
     dec_date = fields.Datetime(string="DecDate")   # 申报日期
     customs_id = fields.Many2one(comodel_name="delegate_customs", string="Customs")  # 进出口岸
@@ -211,6 +212,11 @@ class CustomsDeclaration(models.Model):
 
     cop_code = fields.Char(string="cop code")  # 录入单位企业组织机构代码
     cop_name = fields.Char(string="cop name")  # 录入单位企业名称
+    # dec_company = fields.Char(string="dec company name")  # 申报单位企业名称
+
+    # 模糊查询 从当前登录的用户所在的公司 模糊匹配海关企业表中的公司
+    dec_company = fields.Many2one(comodel_name="basedata.cus_register_company", string="dec company name",
+                                  default = lambda self: self.env['basedata.cus_register_company'].search([('register_name_cn', 'like', self.env.user.company_id.name[:4]+'%')])[0]) # 申报单位企业名称
     cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
     inputer_name = fields.Char(string="inputer name")  # 录入员姓名
     oper_name = fields.Char(string="oper name")     # 操作员姓名
@@ -246,6 +252,7 @@ class CustomsDeclaration(models.Model):
                                                         ('succeed', 'Success'),
                                                         ('cancel', 'Cancel'),
                                                         ('failure', 'Failure')], default='draft')  # 报关单状态
+    # 回执状态
     receipt_ids = fields.One2many(comodel_name="customs_center.dec_result", inverse_name="customs_declaration_id",
                                   string="Recipts", required=False, )
 
@@ -257,16 +264,109 @@ class CustomsDeclaration(models.Model):
 
     cus_dec_sent_way = fields.Selection(string="Sent way", selection=[('single', 'single windows'),('QP', 'quick pass')])  # 报关单发送通道选择
 
-    # 报关单关联附件模型
-    information_attachment_ids = fields.Many2many('ir.attachment', compute='_get_attachment_ids', string='attach')
+    # 附件拖拽上传
+    information_attachment_ids = fields.Many2many('ir.attachment')
+
+
+    #####################################################################################################
+    # 报关单关联的附件 该字段生成报文发送单一窗口QP的时候需要   继承原附件模型写法
+    # information_attachment_ids = fields.Many2many('ir.attachment', compute='_get_attachment_ids', string='attach')
+    # @api.multi
+    # def _get_attachment_ids(self):
+    #     att_model = self.env['ir.attachment']  # 获取附件模型
+    #     for obj in self:
+    #         query = [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', obj.id)]  # 根据res_model和res_id查询附件
+    #         obj.information_attachment_ids = att_model.search(query)  # 取得附件list
+
+    ###############################################################################################################
+    # 随附单据上传功能   继承原附件模型写法
+    # attachment_number = fields.Integer(compute='_compute_attachment_number', string='Number of Attachments')
+    # @api.multi
+    # def _compute_attachment_number(self):
+    #     """附件上传 计算附件数量"""
+    #     attachment_data = self.env['ir.attachment'].read_group([('res_model', '=', 'customs_center.customs_dec'), ('res_id', 'in', self.ids)], ['res_id'], ['res_id'])
+    #     attachment = dict((data['res_id'], data['res_id_count']) for data in attachment_data)
+    #     for expense in self:
+    #         expense.attachment_number = attachment.get(expense.id, 0)
 
     @api.multi
-    def _get_attachment_ids(self):
-        att_model = self.env['ir.attachment']  # 获取附件模型
-        for obj in self:
-            query = [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', obj.id)]  # 根据res_model和res_id查询附件
-            obj.information_attachment_ids = att_model.search(query)  # 取得附件list
+    def action_get_dec_attachment_view(self):
+        """附件上传动作视图"""
+        self.ensure_one()
+        res = self.env['ir.actions.act_window'].for_xml_id('customs_center', 'dec_action_attachment')
+        res['domain'] = [('res_model', '=', 'customs_center.customs_dec'), ('res_id', 'in', self.ids)]
+        res['context'] = {'default_res_model': 'customs_center.customs_dec', 'default_res_id': self.id}
+        return res
+    #############################################################################################
 
+    # 服务器动作 复制当前报关单全部数据
+    @api.multi
+    def duplicate_current_all_data(self):
+        """ 复制当前报关单全部数据 """
+        self.ensure_one()
+        customs_declaration_obj_copy = self.copy()
+        # cus_goods_list_ids_list = []
+        for line in self:
+            if line.dec_goods_list_ids:
+                cus_goods_list_ids_list = [goods.copy().id for goods in line.dec_goods_list_ids]
+                customs_declaration_obj_copy.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search([('id', 'in', cus_goods_list_ids_list)])
+        if customs_declaration_obj_copy:
+            return {
+                'type': 'ir.actions.act_window',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'customs_center.customs_dec',
+                'res_id': customs_declaration_obj_copy.id,
+                'context': self.env.context,
+                'flags': {'initial_mode': 'edit'},
+            }
+
+        # 自己实现方式2
+        # ref_id = self._context.get('active_id')
+        # customs_declaration_obj = self.env['customs_center.customs_dec'].browse(ref_id).copy()
+        #
+        # cus_goods_list_ids_list = []
+        # for line in self:
+        #     if line.dec_goods_list_ids:
+        #         cus_goods_list_ids_list = [goods.copy().id for goods in line.dec_goods_list_ids]
+        # customs_declaration_obj.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search([('id', 'in', cus_goods_list_ids_list)])
+        #
+        # return {
+        #     'name': "Customs Center Clearance",
+        #     'type': "ir.actions.act_window",
+        #     'view_type': 'form',
+        #     'view_mode': 'form, tree',
+        #     'res_model': 'customs_center.customs_dec',
+        #     'views': [[False, 'form']],
+        #     'res_id': customs_declaration_obj.id,
+        #     'target': 'current',
+        #     'flags': {'form': {'action_buttons': True, 'options': {'mode': 'edit'}}}
+        #     # 'target': 'main'
+        # }
+
+
+
+    ##############################################################################################
+    # 报关单列表视图 回执状态 查看历史回执按钮
+    @api.multi
+    def btn_review_receipt(self):
+        """ 查看历史回执按钮 """
+        # for line in self:
+        #     cus_goods_list_ids = []
+        #     if line.cus_goods_list_ids:
+        #         cus_goods_list_ids = [goods.copy().id for goods in line.cus_goods_list_ids]
+
+        return {
+            'name': u"回执历史状态",
+            'type': "ir.actions.act_window",
+            'view_type': 'tree',
+            'view_mode': 'tree',
+            'res_model': 'customs_center.dec_result',
+            'views': [[False, 'tree']],
+            'res_id': self.ids,
+            "domain": [["customs_declaration_id", "=", self.id]],
+            'target': 'new'
+        }
 
     @api.model
     def create(self, vals):
@@ -450,9 +550,9 @@ class CustomsDeclaration(models.Model):
                 input_company_id = self.env['basedata.cus_register_company'].search(
                     [('unified_social_credit_code', '=', input_company_unified_code)])
 
-                declare_company_register_code = customs_dec_dic['DecHead'].get('AgentCode', None)  # 申报单位
-                declare_company_id = self.env['basedata.cus_register_company'].search(
-                    [('register_code', '=', declare_company_register_code)])
+                # declare_company_register_code = customs_dec_dic['DecHead'].get('AgentCode', None)  # 申报单位
+                # declare_company_id = self.env['basedata.cus_register_company'].search(
+                #     [('register_code', '=', declare_company_register_code)])
 
                 transport_mode_code = customs_dec_dic['DecHead'].get('TrafMode', None)  # u'运输方式'
                 transport_mode_id = self.env['delegate_transport_mode'].search([('code', '=', transport_mode_code)])
@@ -556,7 +656,7 @@ class CustomsDeclaration(models.Model):
                     'in_out_date': in_out_date,  # u'进出口日期'
                     'business_company_id': business_company_id[0].id if len(business_company_id) else None,  # 收发货人
                     'input_company_id': input_company_id[0].id if len(input_company_id) else None,  # 消费使用单位 货主单位
-                    'declare_company_id': declare_company_id[0].id if len(declare_company_id) else None,  # 申报单位
+                    #'declare_company_id': declare_company_id[0].id if len(declare_company_id) else None,  # 申报单位
                     'transport_mode_id': transport_mode_id[0].id if len(transport_mode_id) else None,  # u'运输方式'
                     'NativeShipName': NativeShipName,  # u'运输工具名称'
                     'VoyageNo': VoyageNo,  # u'航次号'
@@ -654,7 +754,11 @@ class CustomsDeclaration(models.Model):
                                     #             genarate_attach_list_dic['datas'] = binary_data
                                 if k == 'EdocCode':
                                     edoc_code = values  # u'随附单据类别'
-                                    genarate_attach_list_dic['description'] = edoc_code
+                                    # genarate_attach_list_dic['description'] = edoc_code # 原先第一次实现 用的附件模型字段自带的description字段 临时存放了
+                                    # genarate_attach_list_dic['attach_type'] = edoc_code   # 第二种方案 关务中心附件上传 扩展了附件模型 增加单据类型字段attach_type
+                                    genarate_attach_list_dic['dec_edoc_type'] = edoc_code   # 第三种方案 附件拖拽上传 扩展了附件字段
+
+                            # 如果报关单对象为真 并且随附单据字典数据不为空 才会创建随附单据空附件
                             if customs_declaration_obj.id and genarate_attach_list_dic:
                                 genarate_attach_list_dic['res_model'] = "customs_center.customs_dec"
                                 genarate_attach_list_dic['res_id'] = customs_declaration_obj.id
@@ -869,7 +973,7 @@ class CustomsDeclaration(models.Model):
         check_and_mkdir(parse_xml_path, parse_attach_path, parse_error_xml_path, backup_xml_path,
                         backup_attach_xml_path)
 
-        # 首先解析随附单据目录的文件  可能多个附件
+        # 首先解析随附单据目录的文件 可能多个附件
         attach_files = os.listdir(parse_attach_path)
         attach_files_list = [attach_filename for attach_filename in attach_files if attach_filename.endswith('.xml')]
 
@@ -897,14 +1001,18 @@ class CustomsDeclaration(models.Model):
                 attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME')  # 获取随附单据报文中的文件名
                 binary_data = xml_attach_message_dic.get('BINARY_DATA', None) # 获取随附单据报文中的二进制数据
 
-                # 根据上述获取的附件名称 在附件模型中 查找 对应的附件ID
+                # 根据上述获取的附件名称 在附件模型中查找 对应的附件ID
                 attach_id = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('name', '=', attach_name_in_xml)])
+                print("*******************^^6666666665555555555555666666666666**********************")
+                print(attach_id)
                 # 根据附件ID 找到对应的报关单ID
                 res_id = attach_id.res_id
+                print("*******************^^66666666666666666666666666666666**********************")
+                print(res_id)
                 # 根据上方找到的报关单ID 找到该报关单对应的附件列表
                 information_attachment_ids = self.env['ir.attachment'].search(
                     [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id)])  # 取得附件list
-
+                print(information_attachment_ids)
                 for i in information_attachment_ids:
                     attach_name = i.name
                     attach_name_list.append(attach_name)
@@ -925,6 +1033,34 @@ class CustomsDeclaration(models.Model):
                     _logger.info(
                         u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
 
+    @api.multi
+    def generate_single_customer_xml_after(self):
+        """报文已发送至单一窗口"""
+        pass
+
+    @api.multi
+    def generate_qp_customer_xml_after(self):
+        """报文已发送至QP"""
+        pass
+
+
+    @api.multi
+    def print_check_reports(self):
+        """"""
+        return self.env['report'].get_action(self,'customs_center.report_dec_customs_check_template')
+
+
+    @api.multi
+    def print_invoice(self):
+        """打印发票按钮"""
+        self.env['report'].get_action(self,'customs_center.print_dec_customs_invoice_template')
+
+        self.information_attachment_ids=(4,2902)
+
+
+
+
+
 
     @api.multi
     def generate_single_customer_xml(self):
@@ -938,12 +1074,12 @@ class CustomsDeclaration(models.Model):
                 attach_list.append(attach_data)
             # 如果第一个附件中有值，说明随附单据解析入库成功
             delegate_to_xml(line)
-            if attach_list:
-                generate_attach_xml_to_single(line)
-                self.update({'cus_dec_sent_state': 'succeed'})
-                return True
-            else:
-                raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
+            # if attach_list:
+            #     generate_attach_xml_to_single(line)
+            #     self.update({'cus_dec_sent_state': 'succeed'})
+            #     return True
+            # else:
+            #     raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
 
 
     @api.multi

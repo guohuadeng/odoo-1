@@ -27,16 +27,25 @@
         'data/ir_sequence_data.xml',
         'data/parse_message.xml',
         'data/result_status.xml',
+        'views/customs_center_dashboard.xml',
         'views/pending_review_goods_views.xml',
+        'views/customs_dec_attachs.xml',
         'views/goods_classification_views.xml',
         'views/pending_classified_goods_views.xml',
         'views/customs_declaration.xml',
         'views/customs_order.xml',
         'views/result_status.xml',
+        'views/customs_receipt.xml',
         'views/setting_declaration.xml',
         'views/menu.xml',
-        'views/template.xml'
+        'views/template.xml',
+        'reports/dec_customs_check_report.xml',
+        'reports/dec_customs_check_report_template.xml',
     ],
+    'qweb': [
+        'static/src/xml/declare_element_modal.xml',
+    ],
+    'css': ['static/src/css/customs_dec.css'],
     # only loaded in demonstration mode
     'demo': [
         # 'demo/demo.xml',

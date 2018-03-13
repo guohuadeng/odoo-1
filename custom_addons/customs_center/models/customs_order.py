@@ -14,7 +14,7 @@ class CustomsOrder(models.Model):
     _rec_name = 'name'
     _description = 'Customs Customs Order'
 
-    name = fields.Char(string="Name")   # 通关清单流水号
+    name = fields.Char(string="Name", copy=False)   # 通关清单流水号   # copy=False 防止服务器动作复制报关单信息时复制
     customer_id = fields.Many2one(comodel_name="res.partner", string="Customer")                 # 客户 (委托单位)
     work_sheet_id = fields.Many2one(comodel_name="work_sheet", string="Work Sheet")              # 工作单ID
 
@@ -26,7 +26,11 @@ class CustomsOrder(models.Model):
     customer_contract_no = fields.Char(string="Customer Contract No")                            # 合同号
     licenseNo = fields.Char(string="License No")                                                 # 许可证号
 
-    declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
+    # declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
+    dec_company_order = fields.Char(string="declare company name")  # 申报单位 新建企业库表
+
+    # dec_company_order = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")
+
     input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
     business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
 
