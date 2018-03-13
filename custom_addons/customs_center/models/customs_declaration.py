@@ -33,7 +33,7 @@ _logger = logging.getLogger(__name__)
 # RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
 # ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
 # BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
-
+#
 
 
 # # # 118测试环境路径
@@ -54,7 +54,7 @@ _logger = logging.getLogger(__name__)
 
 
 
-# # 应用服务器 测试环境路径
+# 应用服务器 测试环境路径
 # pre_ex_client 前置交换客户端路径
 PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
 PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
@@ -215,8 +215,7 @@ class CustomsDeclaration(models.Model):
     # dec_company = fields.Char(string="dec company name")  # 申报单位企业名称
 
     # 模糊查询 从当前登录的用户所在的公司 模糊匹配海关企业表中的公司
-    dec_company = fields.Many2one(comodel_name="basedata.cus_register_company", string="dec company name",
-                                  default = lambda self: self.env['basedata.cus_register_company'].search([('register_name_cn', 'like', self.env.user.company_id.name[:4]+'%')])[0]) # 申报单位企业名称
+    # dec_company = fields.Many2one(comodel_name="basedata.cus_register_company", string="dec company name", default = lambda self: self.env['basedata.cus_register_company'].search([('register_name_cn', 'like', self.env.user.company_id.name[:4]+'%')])[0]) # 申报单位企业名称
     cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
     inputer_name = fields.Char(string="inputer name")  # 录入员姓名
     oper_name = fields.Char(string="oper name")     # 操作员姓名

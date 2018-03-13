@@ -26,8 +26,8 @@ class CustomsOrder(models.Model):
     customer_contract_no = fields.Char(string="Customer Contract No")                            # 合同号
     licenseNo = fields.Char(string="License No")                                                 # 许可证号
 
-    # declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
-    dec_company_order = fields.Char(string="declare company name")  # 申报单位 新建企业库表
+    declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
+    # dec_company_order = fields.Char(string="declare company name")  # 申报单位 新建企业库表
 
     # dec_company_order = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")
 
