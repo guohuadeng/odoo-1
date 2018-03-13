@@ -19,10 +19,12 @@ odoo.define('customs_center', function (require) {
             }
             this.on('change:tariff', this, this.get_element_name);
             this.element_names = [];
-            this.input_temp = '<div class="row" style="padding-bottom: 20px">' +
-                '<div class="col-md-4"><label for="<%= field_id %>"><%= name %></label></div>' +
+
+             this.input_temp = '<div class="row" style="padding-bottom: 20px">' +
+                '<div class="col-md-2"><label for="<%= field_id %>"><%= name %></label></div>' +
                 '<div class="col-md-6"><input class="o_form_label" id="<%= field_id %>"/></div>' +
-                '</div>'
+                +'</div>'
+
         },
 
         events: {
@@ -52,13 +54,48 @@ odoo.define('customs_center', function (require) {
             var display_board = $('#'+self.modal_id+' #declare-element-names');
             display_board.empty();
             var input_tags = [];
-            console.log(self.element_names);
+            //console.log(self.element_names);
             _.each(self.element_names, function (element_name) {
                 var ele_name = element_name[1];
                 var sequence = element_name[0];
                 var temp = _.template(self.input_temp);
                 var field = temp({field_id: 'dec-ele-'+sequence, name: ele_name});
-                var input_tag = $(field);
+                //var input_tag = $(field);
+
+
+                var input_tag;
+                if(ele_name=="品牌类型"){
+                    var select_pingpai='<select class="col-md-6" id="select_dec_ele_0" onchange="$(\'#dec-ele-0\').val(this.value)">' +
+                    '<option value="0">0-无品牌</option>' +
+                        '<option value="1">1-境内自主品牌</option>' +
+                        '<option value="2">2-境内收购品牌</option>' +
+                        '<option value="3">3-境外品牌(贴牌生产)</option>' +
+                        '<option value="4">4-境外品牌(其他)</option>' +
+                    '</select>';
+
+                    input_tag=$('<div class="row" style="padding-bottom: 20px">'
+                    +'<div class="col-md-2"><label for="'+'dec-ele-'+sequence+'">'+ele_name+'</label></div>'
+                    +'<div class="col-md-8"><input class="col-md-1" value="0" readonly="true"  id="'+'dec-ele-'+sequence+'"/>'+select_pingpai+'</div>'
+                    +'</div>');
+                }else if(ele_name=="出口享惠情况"){
+                    var select_chukou='<select class="col-md-6" id="select_dec_ele_1" onchange="$(\'#dec-ele-1\').val(this.value)">' +
+                    '<option value="0">0-出口货物在最终目的国（地区）不享受优惠关税</option>' +
+                        '<option value="1">1-出口货物在最终目的国（地区）享受优惠关税</option>' +
+                        '<option value="2">2-出口货物不能确定在最终目的国（地区）享受优惠关税</option>' +
+                        '<option value="3">3-不适用于进口报关单</option>'+
+                    '</select>';
+
+                    input_tag=$('<div class="row" style="padding-bottom: 20px">'
+                    +'<div class="col-md-2"><label for="'+'dec-ele-'+sequence+'">'+ele_name+'</label></div>'
+                    +'<div class="col-md-8"><input class="col-md-1" value="0" readonly="true"  id="'+'dec-ele-'+sequence+'"/>' +select_chukou+'</div>'
+                    +'</div>');
+                }else{
+                    input_tag=$('<div class="row" style="padding-bottom: 20px">'
+                    +'<div class="col-md-2"><label for="'+'dec-ele-'+sequence+'">'+ele_name+'</label></div>'
+                    +'<div class="col-md-8"><input class="col-md-7" class="o_form_label" id="'+'dec-ele-'+sequence+'"/></div>'
+                    +'</div>');
+                }
+
                 display_board.append(input_tag);
                 input_tags.push(input_tag)
             });
@@ -67,10 +104,16 @@ odoo.define('customs_center', function (require) {
             {
                 var vals = input_vals.split('|');
                 $.each(input_tags, function (idx, obj) {
-                    obj.find('input').val(vals[idx+1])
+                    obj.find('input').val(vals[idx])
+
+                    if(idx==0){
+                        $("#select_dec_ele_0").val(vals[idx]);
+                    }else if(idx==1){
+                        $("#select_dec_ele_1").val(vals[idx]);
+                    }
                 })
             }
-             console.log(display_board.html());
+            console.log(display_board.html());
         },
 
         remove_field: function () {
@@ -104,12 +147,17 @@ odoo.define('customs_center', function (require) {
                values.push($(this).val());
             });
             console.log(values);
-            var target_string = _.reduce(values, function (meno, value) {
-                return meno + '|' + value;
+            var target_string = _.reduce(values, function (meno, value,index) {
+               return meno + '|' + value;
+
             }, '');
-            if (target_string){
-                target_string += '|';
+
+            if (target_string.substr(0,1)=='|'){
+                target_string=target_string.substr(1);
             }
+            // if (target_string){
+            //     target_string += '|';
+            // }
             self.$input.val(target_string);
             $('#'+self.modal_id).modal('hide');
         }

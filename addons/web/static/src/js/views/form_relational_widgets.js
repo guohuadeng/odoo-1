@@ -177,7 +177,24 @@ var FieldMany2One = common.AbstractField.extend(common.CompletionFieldMixin, com
                 }
             }
         };
-        this.$input.keydown(input_changed);
+        //this.$input.keydown(input_changed);
+
+        //修改源码，实现在下拉框按Enter键，自动将光标移到下一个文本框
+        this.$input.on('keydown', function(event) {
+            var e = event || window.event;
+             if(e && e.keyCode==13){
+                if(!self.$input.autocomplete('widget').is(':visible')){
+                    var inputs = $("input"); // 获取表单中的所有输入框
+                    var idx = inputs.index(e.target); // 获取当前焦点输入框所处的位置
+                    console.log(inputs);
+                    console.log(idx);
+                    inputs[idx + 1].focus(); // 将下一控件设为焦点
+
+                }
+            }
+            return true;
+        });
+
         this.$input.change(input_changed);
         this.$input.on('click', function() {
             if (self.$input.autocomplete("widget").is(":visible")) {
