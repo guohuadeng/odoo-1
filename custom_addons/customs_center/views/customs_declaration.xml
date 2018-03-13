@@ -258,10 +258,10 @@ if records:
                                         <div class="row">
                                             <div class="col-lg-8 col-md-8">
                                                 <div class="col-lg-2 col-md-2" style="width:16%">
-                                                    <label for="dec_company" string="申报单位" />
+                                                    <label for="declare_company_id" string="申报单位" />
                                                 </div>
                                                 <div class="col-lg-10 col-md-10">
-                                                    <field name="dec_company" style="width:55%"/>
+                                                    <field name="declare_company_id" style="width:55%"/>
                                                 </div>
                                             </div>
                                         </div>

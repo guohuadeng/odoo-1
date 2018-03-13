@@ -157,10 +157,10 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="dec_company_order" string="申报单位" />
+                                            <label for="declare_company_id" string="申报单位" />
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="dec_company_order" style="width:100%"/>
+                                            <field name="declare_company_id" style="width:100%"/>
                                         </div>
                                     </div>
                                 </div>
