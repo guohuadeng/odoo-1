@@ -215,8 +215,7 @@ class CustomsDeclaration(models.Model):
     # dec_company = fields.Char(string="dec company name")  # 申报单位企业名称
 
     # 模糊查询 从当前登录的用户所在的公司 模糊匹配海关企业表中的公司
-    dec_company = fields.Many2one(comodel_name="basedata.cus_register_company", string="dec company name",
-                                  default = lambda self: self.env['basedata.cus_register_company'].search([('register_name_cn', 'like', self.env.user.company_id.name[:4]+'%')])[0]) # 申报单位企业名称
+    dec_company = fields.Many2one(comodel_name="basedata.cus_register_company", string="dec company name",) # 申报单位企业名称
     cop_code_scc = fields.Char(string="cop Social credit uniform coding")  # 录入单位社会信用统一编码
     inputer_name = fields.Char(string="inputer name")  # 录入员姓名
     oper_name = fields.Char(string="oper name")     # 操作员姓名
