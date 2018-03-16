@@ -22,6 +22,8 @@
         <menuitem id="cus_goods_tariff_menu" name="Goods Tariff" parent="args_menu" action="customs_cus_goods_tariff_action" />
         <menuitem id="dec_license_doc_type_menu" name="DecLicenseDoc Type" parent="args_menu" action="dec_license_doc_type_action" />
         <menuitem id="declare_element_menu" name="Declare Element" parent="args_menu" action="declare_element_action"/>
+        <menuitem id="other_menu" name="Other" parent="customs_args_menu" sequence="60"/>
+        <menuitem id="register_company_menu" name="Register Company" parent="other_menu" action="register_company_action"/>
 
     </data>
 </odoo>
