@@ -8,18 +8,31 @@ class widget_data(models.Model):
     sortable = fields.Integer()
 
     @api.model
-    def upload_dragndrop(self, name, base64, extension, sortable):
+    def upload_dragndrop(self,res_model_id,res_model_name,name, base64, extension, sortable):
         Model = self
+
+        dec_edoc_type=""
+        # 识别随附单据类型
+        if "箱单" in name or "packing" in name:
+            dec_edoc_type = "00000002"
+        if "发票" in name or "invoice" in name:
+            dec_edoc_type = "00000001"
+        if "合同" in name or "contract" in name:
+            dec_edoc_type = "00000004"
+        if "委托书" in name or "attorney" in name:
+            dec_edoc_type = "10000001"
+
         try:
             attachment_id = Model.create({
                 'name': name,
                 'datas': base64,
                 'extension': extension,
+                'dec_edoc_type':dec_edoc_type,
                 'datas_fname': name,
-                'res_model': Model._name,
+                'res_model': res_model_name,
                 'description': '',
                 'sortable': sortable,
-                'res_id': 0
+                'res_id': res_model_id
             })
             args = {
                 'filename': name,

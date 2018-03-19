@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_form_customs_declaration_inherited"
+             model="ir.ui.view">
+             <field name="name">一键生成随附单据</field>
+             <field name="model">customs_center.customs_dec</field>
+             <field name="inherit_id"
+               ref="customs_center.customs_declaration_form"/>
+             <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='generate_qp_customer_xml_after']" position="after">
+                <button name="gen_dec_edocs" type="object" string="一键生成随附单据"
+                    class="btn-primary"/>
+            </xpath>
+             </field>
+        </record>
+    </data>
+</odoo>

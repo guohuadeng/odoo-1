@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_add_seal" model="ir.ui.view">
+        <field name="name">customer add seal</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='sales_purchases']" position="after">
+
+                <page string="图章">
+                    <group>
+                        <field name="seal_company" string="公章" widget="image" class="oe_avatar" options="{'size': [200, 200]}"/>
+                        <field name="seal_legal_representative" string="法人章" widget="image" class="oe_avatar" options="{'size': [200, 200]}"/>
+                    </group>
+
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
