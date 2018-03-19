@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--打印报关核对单模板-->
+    <data>
+        <report
+            id="report_customs_dec_check"
+            model="customs_center.customs_dec"
+            report_type="qweb-pdf"
+            string="打印核对单"
+            name="customs_center.report_customs_dec_check_template"
+            file="customs_center.report_customs_dec_check_template"
+            attachment_use="false"
+        />
+    </data>
+</odoo>
