@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="cus_pay_mark_type_bus" model="customs_center.pay_mark_type">
+            <field name="Code">1</field>
+            <field name="NameCN">1-收发货人</field>
+       </record>
+
+       <record id="cus_pay_mark_type_cons" model="customs_center.pay_mark_type">
+            <field name="Code">2</field>
+            <field name="NameCN">2-消费使用单位</field>
+       </record>
+
+       <record id="cus_pay_mark_type_dec" model="customs_center.pay_mark_type">
+            <field name="Code">3</field>
+            <field name="NameCN">3-申报单位</field>
+       </record>
+    </data>
+</odoo>

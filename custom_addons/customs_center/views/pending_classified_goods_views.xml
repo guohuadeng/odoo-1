@@ -9,7 +9,7 @@
 
 
         <record id="action_pending_classified_goods" model="ir.actions.act_window">
-            <field name="name">pending classified goods</field>
+            <field name="name">待归类历史报关商品</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">customs_center.cus_goods_list</field>
             <field name="view_mode">tree,form</field>
@@ -66,6 +66,22 @@
 
                         <!--<group>-->
                         <div class="row" style="padding-top:20px">
+                            <!--<div>-->
+                                <!--<div class="col-lg-2 col-md-4"><label for="goods_classification_id" string="合规商品" style="font-weight:bold;"/></div>-->
+                                <!--<div class="col-lg-10 col-md-8">-->
+                                    <!--<field name="goods_classification_id" string="合规商品"/>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="col-lg-12 col-md-12">
+                                <div class="col-lg-2 col-md-2"><label for="goods_classification_id" string="合规商品" style="font-weight:bold;"/></div>
+                                <div class="col-lg-10 col-md-10">
+                                    <field name="goods_classification_id" string="合规商品"/>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
                             <div class="col-lg-3 col-md-3">
                                 <div class="col-lg-4 col-md-4"><label for="sequence" string="商品序号" style="font-weight:bold;"/></div>
                                 <div class="col-lg-8 col-md-8">
@@ -74,9 +90,9 @@
                             </div>
 
                             <div class="col-lg-3 col-md-3">
-                                <div class="col-lg-4 col-md-4"><label for="goods_classification_id" string="客户料号" style="font-weight:bold;"/></div>
+                                <div class="col-lg-4 col-md-4"><label for="cus_goods_code" string="客户料号" style="font-weight:bold;"/></div>
                                 <div class="col-lg-8 col-md-8">
-                                    <field name="goods_classification_id" string="客户料号"/>
+                                    <field name="cus_goods_code" string="客户料号"/>
                                 </div>
                             </div>
 
@@ -98,14 +114,14 @@
                         <!--一行两列-->
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
-                                <div class="col-lg-2 col-md-4"><label for="goods_name" string="商品名称" style="font-weight:bold;"/></div>
-                                <div class="col-lg-10 col-md-8">
+                                <div class="col-lg-3 col-md-4"><label for="goods_name" string="商品名称" style="font-weight:bold;"/></div>
+                                <div class="col-lg-9 col-md-8">
                                     <field name="goods_name" string="商品名称"/>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
-                                <div class="col-lg-2 col-md-4"><label for="goods_model" string="规格型号" style="font-weight:bold;"/></div>
-                                <div class="col-lg-10 col-md-8">
+                                <div class="col-lg-3 col-md-4"><label for="goods_model" string="规格型号" style="font-weight:bold;"/></div>
+                                <div class="col-lg-9 col-md-8">
                                     <field name="goods_model" string="规格型号" widget="declare_element" options="{'tariff': 'cus_goods_tariff_id'}"/>
                                 </div>
                             </div>
@@ -114,32 +130,32 @@
                         <!--一行5列-->
                         <div class="row" >
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="deal_qty" string="成交数量" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="deal_qty" string="成交数量" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="deal_qty" string="成交数量"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="deal_unit" string="成交单位" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="deal_unit" string="成交单位" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="deal_unit" string="成交单位"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="deal_unit_price" string="成交单价" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="deal_unit_price" string="成交单价" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="deal_unit_price" string="成交单价"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="deal_total_price" string="成交总价" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="deal_total_price" string="成交总价" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="deal_total_price" string="成交总价" readonly="1"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="currency_id" string="币制" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="currency_id" string="币制" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="currency_id" string="币制"/>
                                 </div>
                             </div>
@@ -151,32 +167,32 @@
                                 <!--&lt;!&ndash;一行5列&ndash;&gt;-->
                         <div class="row">
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="first_qty" string="法定数量" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="first_qty" string="法定数量" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="first_qty" string="法定数量"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="first_unit" string="法定单位" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="first_unit" string="法定单位" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="first_unit" string="法定单位"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="version_num" string="版本号" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="version_num" string="版本号" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="version_num" string="版本号"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="product_code" string="货号" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="product_code" string="货号" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="product_code" string="货号"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-5"><label for="destination_country_id" string="最终目的国" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-4 col-md-5"><label for="destination_country_id" string="最终目的国" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-7">
                                     <field name="destination_country_id" string="最终目的国"/>
                                 </div>
                             </div>
@@ -191,27 +207,42 @@
                                 <!--一行5列-->
                         <div class="row">
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-4"><label for="second_qty" string="第二数量" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-8">
+                                <div class="col-lg-4 col-md-4"><label for="second_qty" string="第二数量" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-8">
                                     <field name="second_qty" string="第二数量"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-4"><label for="second_unit" string="第二单位" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-8">
+                                <div class="col-lg-4 col-md-4"><label for="second_unit" string="第二单位" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-8">
                                     <field name="second_unit" string="第二单位"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-4"><label for="origin_country_id" string="原产国" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-8">
+                                <div class="col-lg-4 col-md-4"><label for="origin_country_id" string="原产国" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-8">
                                     <field name="origin_country_id" string="原产国"/>
                                 </div>
                             </div>
                             <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                <div class="col-lg-5 col-md-4"><label for="duty_mode_id" string="征免方式" style="font-weight:bold;"/></div>
-                                <div class="col-lg-7 col-md-8">
+                                <div class="col-lg-4 col-md-4"><label for="duty_mode_id" string="征免方式" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-8">
                                     <field name="duty_mode_id" string="征免方式"/>
+                                </div>
+                            </div>
+                            <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                <div class="col-lg-4 col-md-4"><label for="product_code" string="货号" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="product_code" string="货号"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                <div class="col-lg-4 col-md-4"><label for="version_num" string="版本号" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="version_num" string="版本号"/>
                                 </div>
                             </div>
                         </div>

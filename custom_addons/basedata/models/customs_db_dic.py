@@ -143,7 +143,7 @@ class CusRegisterCompany(models.Model):
         for record in self:
             result.append(
                 (record.id, u"%s %s" % (record.register_code, record.register_name_cn))
-                #(record.id, u"%s:%s" % ('name', record.register_name_cn))
+                # (record.id, u"%s" % record.register_name_cn)
             )
         return result
 

@@ -282,7 +282,7 @@
             <t t-raw="0"/>
             <input type="file" class="oe_form_binary_file" multiple="multiple" name="ufile" t-if="widget.widget!='image'"/>
             <input type="file" class="oe_form_binary_file" multiple="multiple"  name="ufile" accept="image/*" t-if="widget.widget=='image'"/>
-            <input type="submit"> </input>
+            <input type="submit">111</input>
         </form>
         <iframe t-att-id="fileupload_id" t-att-name="fileupload_id" style="display: none"/>
     </div>

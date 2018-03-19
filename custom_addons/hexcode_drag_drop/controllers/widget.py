@@ -1,11 +1,6 @@
 # –*– coding: utf–8 –*–
 from odoo import models,api,fields
 
-class product_demo(models.Model):
-    _inherit = 'product.template'
-
-    drag_image_ids = fields.Many2many('ir.attachment')
-
 class widget_data(models.Model):
     _inherit = 'ir.attachment'
 

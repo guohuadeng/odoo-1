@@ -24,6 +24,9 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'data/cus_expenses_mark_type.xml',
+        'data/cus_whether_mark_type.xml',
+        'data/payment_mark_type.xml',
         'data/ir_sequence_data.xml',
         'data/parse_message.xml',
         'data/result_status.xml',
@@ -39,8 +42,8 @@
         'views/setting_declaration.xml',
         'views/menu.xml',
         'views/template.xml',
-        'reports/dec_customs_check_report.xml',
-        'reports/dec_customs_check_report_template.xml',
+        'reports/customs_dec_report.xml',
+        'reports/customs_dec_report_template.xml',
     ],
     'qweb': [
         'static/src/xml/declare_element_modal.xml',

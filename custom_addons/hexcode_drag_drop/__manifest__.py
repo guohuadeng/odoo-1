@@ -12,7 +12,6 @@
     ],
     'data': [
         'views/import_widget.xml',
-        'views/demo.xml',
     ],
     'qweb': [
         'static/src/xml/multiwidget_template.xml',

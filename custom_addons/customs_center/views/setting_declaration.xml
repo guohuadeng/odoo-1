@@ -16,9 +16,9 @@
                     <form string="企业信息">
                         <header>
                             <h3>
-                             <button string="Save" type="object" name="execute" class="oe_highlight"/>
+                             <button string="保存" type="object" name="execute" class="oe_highlight"/>
                               or
-                             <button string="Cancel" type="object" name="cancel" class="oe_highlight"/>
+                             <button string="取消" type="object" name="cancel" class="oe_highlight"/>
                             </h3>
                         </header>
                         <sheet>
