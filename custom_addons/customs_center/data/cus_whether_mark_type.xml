@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="cus_whether_mark_type_no" model="customs_center.whet_mark_type">
+            <field name="Code">0</field>
+            <field name="NameCN">0-否</field>
+       </record>
+
+       <record id="cus_whether_mark_type_yes" model="customs_center.whet_mark_type">
+            <field name="Code">1</field>
+            <field name="NameCN">1-是</field>
+       </record>
+
+       <record id="cus_whether_mark_type_null" model="customs_center.whet_mark_type">
+            <field name="Code">9</field>
+            <field name="NameCN">9-空</field>
+       </record>
+    </data>
+</odoo>

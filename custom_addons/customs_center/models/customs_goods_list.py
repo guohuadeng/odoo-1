@@ -26,7 +26,7 @@ class CusGoodsList(models.Model):
     cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )  # 海关税则编码
 
     # 关联商品归类信息
-    goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False,)  # 客户料号
+    goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False,)  # 客户料号搜索字段
 
     goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
 
@@ -65,6 +65,9 @@ class CusGoodsList(models.Model):
     ManualSN = fields.Char(string="Manual SN")  # 备案序号
     version_num = fields.Char(string="version num")  # 版本号
     product_code = fields.Char(string="product code")  # 货号
+    cus_goods_code = fields.Char(string="Customer Goods Code",)     # 客户料号 录入字段
+
+    cus_goods_tariff_no = fields.Char(string="cus goods number", required=False, )  # 税则库商品编号 方便前端搜索视图调用
 
     # # 是否属于报关单 已在视图层面action过滤 暂不需要该字段
     # customs_dec_goods_own = fields.Selection(selection=[('yes', 'YES'),    # 是否属于报关单
@@ -77,7 +80,8 @@ class CusGoodsList(models.Model):
     #         if goods_list.customs_declaration_id:
     #             goods_list.customs_dec_goods_own = 'yes'
 
-    # 是否归类
+    # 是否归类  用于判断商品是否已经归类 在前端界面过滤显示
+    # 有两种情况触发修改该值：1 当归类审核通过后 将状态改为yes  2 当报关单状态为申报成功时候 将相应的商品归类状态修改为yes
     classify_status = fields.Selection(selection=[('yes', 'YES'),    # 商品是否归类
                                         ('no', 'NO')  # 未归类
                                         ], string='archive status', readonly=True, default='no')
@@ -96,6 +100,8 @@ class CusGoodsList(models.Model):
                 goods_list.first_unit = goods_list.cus_goods_tariff_id.first_unit
                 goods_list.second_unit = goods_list.cus_goods_tariff_id.second_unit
                 goods_list.supervision_condition = goods_list.cus_goods_tariff_id.supervision_condition
+                goods_list.cus_goods_tariff_no = goods_list.cus_goods_tariff_id.Code_ts
+
 
     @api.onchange('goods_classification_id')
     def _generate_about_goods_info(self):
@@ -112,6 +118,7 @@ class CusGoodsList(models.Model):
                 goods_list.duty_mode_id = goods_list.goods_classification_id.duty_mode_id
                 goods_list.ManualSN = goods_list.goods_classification_id.ManualSN
                 goods_list.supervision_condition = goods_list.goods_classification_id.supervision_condition
+
 
 
 
@@ -148,55 +155,6 @@ class CusGoodsList(models.Model):
                 },
                 'target': 'current'
             }
-
-
-        # for line in self:
-        #     dic = {
-        #         'cus_goods_tariff_id': line.inout, # 商品编号
-        #         'goods_model': line.inout, # 规格型号
-        #         'business_company_id': line.business_company_id.id,  # 经营单位
-        #         'origin_country_id': line.inout,  # 原产国
-        #         'destination_country_id': line.inout,  # 目的国
-        #         'goods_name': line.inout,  # 商品名称
-        #         'first_unit': line.inout,  # 第一计量单位
-        #         'second_unit': line.inout,  # 第二计量单位
-        #         'deal_unit_price': line.inout,  # 成交单价
-        #         'currency_id': line.inout,  # 币制
-        #         'supervision_condition': line.inout,  # 监管条件
-        #         'duty_mode_id': line.inout,  # 征免方式
-        #         'ManualNo': line.ManualNo,  # 备案号
-        #         'ManualSN': line.inout,  # 备案序号
-        #     }
-        #     print(line.cus_goods_list_ids)
-        #     print(line.cus_goods_list_ids.ids)
-        #     print(self.env['customs_center.cus_goods_list'].customs_order_id.ids)
-        #     # customs_center.cus_goods_list(1, 2)
-        #     # [1, 2]
-        #     # []
-        #
-        #     dic = {item: dic[item] for item in dic if dic[item]}
-        #     dic.update(dic)
-        #
-        #     customs_declaration_obj = self.env['customs_center.customs_dec'].create(dic)
-        #
-        #     # 获取当前对象下的报关单ID
-        #     # customs_order_obj = self.env['customs_center.customs_order']
-        #     # print(customs_order_obj)
-        #     # customs_clearance_obj = customs_order_obj.customs_declaration_ids
-        #     print(customs_declaration_obj)
-        #     return {
-        #         'name': "Customs Center Clearance",
-        #         'type': "ir.actions.act_window",
-        #         'view_type': 'form',
-        #         'view_mode': 'form, tree',
-        #         'res_model': 'customs_center.customs_dec',
-        #         'views': [[False, 'form']],
-        #         'res_id': customs_declaration_obj.id,
-        #         # 'target': 'current'
-        #         'target': 'main'
-        #     }
-
-
 
 
     # @api.model

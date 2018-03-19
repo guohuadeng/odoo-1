@@ -1159,8 +1159,10 @@ class CustomsDeclaration(models.Model):
             rep_client_no = response_dic.get('ClientSeqNo')
             bus_client_no = business_dic['DEC_RESULT'].get('CLIENTSEQ_NO') if business_dic.get('DEC_RESULT') else None
 
+            # 报关单对象
             dec_sheets = self.env['customs_center.customs_dec'].search(
                 [('client_seq_no', '=', rep_client_no or bus_client_no)])
+
             # 原周杨实现方式
             # dec_sheets = self.env['customs_center.customs_dec'].search(
             #     [('name', '=', rep_client_no or bus_client_no)])
@@ -1171,6 +1173,8 @@ class CustomsDeclaration(models.Model):
                 shutil.move(xml_message, error_path)
                 continue
             dec_sheet = dec_sheets[0]
+
+            # 如果还没有回填相关字段
             if not dec_sheet.dec_seq_no:
                 dec_sheet.dec_seq_no = response_dic.get('SeqNo') or business_dic.get('SEQ_NO')  # 回填统一编号
             # if not dec_sheet.entry_id:
@@ -1207,6 +1211,60 @@ class CustomsDeclaration(models.Model):
             try:
                 self.env['customs_center.dec_result'].create(receipt_dic)
                 dec_sheet.cus_dec_rec_state = status[0].name if status[0].name else None # 更新 报关单模型的回执状态字段
+
+                # 如果该票报关单 业务回执状态为：申报成功 则将该报关单下的商品 自动归类
+                if status[0].name == u'申报成功':
+                    # 获取改票报关单中的收发货人字段值
+                    business_company_id = dec_sheets[0].business_company_id if dec_sheets[0].business_company_id else None  # 从该报关单表头获取收发货人
+                    customs_declaration_id = dec_sheets[0].id if dec_sheets[0].id else None # 报关单ID
+
+                    # 遍历当前报关单对象 下的商品列表
+                    for goods_item in dec_sheet.dec_goods_list_ids:
+                        # 如果商品编号为真 并且报关单ID为真
+                        if goods_item.goods_classification_id and customs_declaration_id:
+                            classify_goods_code = goods_item.cus_goods_code if goods_item.cus_goods_code else None  # 客户料号
+                            classify_business_company_id = business_company_id  # 收发货人 从当前报关单表头获取
+                            classify_ManualNo = goods_item.cus_goods_code if goods_item.cus_goods_code else None  # 备案号
+                            classify_ManualSN = goods_item.ManualSN if goods_item.ManualSN else None  # 备案序号
+                            classify_cus_goods_tariff_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 商品编号
+                            classify_goods_name = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 商品名称
+                            classify_goods_model = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 规格型号
+                            classify_deal_unit_price = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 申报单价
+                            classify_currency_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 币制
+                            classify_supervision_condition = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 监管标识
+                            classify_deal_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 成交单位
+                            classify_first_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 第一计量单位
+                            classify_second_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 第二计量单位
+                            classify_origin_country_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 原产国
+                            classify_destination_country_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 目的国
+                            classify_duty_mode_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 征免方式
+                            classify_customs_declaration_id = customs_declaration_id  # 关联报关单ID
+
+                            # 归类字典
+                            classify_goods_list = {
+                                'cus_goods_code': classify_goods_code,  # 客户料号
+                                'business_company_id': classify_business_company_id,  # 收发货人
+                                'ManualNo': classify_ManualNo,  # 备案号
+                                'ManualSN': classify_ManualSN,  # 备案序号
+                                'cus_goods_tariff_id': classify_cus_goods_tariff_id,  # 商品编号
+                                'goods_name': classify_goods_name,  # 商品名称
+                                'goods_model': classify_goods_model,  # 规格型号
+                                'deal_unit_price': classify_deal_unit_price,  # 申报单价
+                                'currency_id': classify_currency_id,  # 币制
+                                'supervision_condition': classify_supervision_condition,  # 监管标识
+                                'deal_unit': classify_deal_unit,  # 成交单位
+                                'first_unit': classify_first_unit,  # 第一计量单位
+                                'second_unit': classify_second_unit,  # 第二计量单位
+                                'origin_country_id': classify_origin_country_id,  # 原产国
+                                'destination_country_id': classify_destination_country_id,  # 目的国
+                                'duty_mode_id': classify_duty_mode_id,  # 征免方式
+                                'customs_declaration_id': classify_customs_declaration_id,  # 关联报关单ID
+                            }
+
+                            classify_goods_list = {item: classify_goods_list[item] for item in classify_goods_list if
+                                                   classify_goods_list[item]}
+                            cus_goods_classify_obj = self.env['customs_center.goods_classify'].create(classify_goods_list)
+
             except Exception, error_info:
                 _logger.error(u'{} {}'.format(xml_message.decode('utf-8'), str(error_info).decode('utf-8')))
                 shutil.move(xml_message, error_path)

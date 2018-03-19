@@ -21,8 +21,8 @@
           sequence="40" action="action_goods_classification"/>
        <menuitem id="sw_pending_review_goods" string="pending review goods" name="待审核" parent="sw_goods_classification_menu"
           sequence="45" action="action_pending_review_goods"/>
-       <menuitem id="sw_pending_classified_goods" string="pending classified goods" name="待归类" parent="sw_goods_classification_menu"
-          sequence="50" action="action_pending_classified_goods"/>
+       <!--<menuitem id="sw_pending_classified_goods" string="pending classified goods" name="待归类" parent="sw_goods_classification_menu"-->
+          <!--sequence="50" action="action_pending_classified_goods"/>-->
 
     <menuitem id="sw_settings_dec_menu" string="Settings Declaration" name="设置" parent="customs_center_menu" sequence="15"/>
         <menuitem id="setting_declaration" name="企业信息" parent="sw_settings_dec_menu" sequence="40" action="setting_declaration_action"/>

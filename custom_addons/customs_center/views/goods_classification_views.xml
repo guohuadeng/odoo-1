@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="action_goods_classification" model="ir.actions.act_window">
-            <field name="name">Goods Classification</field>
+            <field name="name">商品归类</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">customs_center.goods_classify</field>
             <field name="view_mode">tree,form</field>
