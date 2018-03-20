@@ -721,7 +721,7 @@ if records:
                                                     <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
                                                         <div class="col-lg-5 col-md-5"><label for="first_unit" string="法定单位" style="font-weight:bold;"/></div>
                                                         <div class="col-lg-7 col-md-7">
-                                                            <field name="first_unit" string="法定单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                            <field name="first_unit" string="法定单位" readonly="1" options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                         </div>
                                                     </div>
                                                     <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
@@ -755,7 +755,7 @@ if records:
                                                     <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
                                                         <div class="col-lg-5 col-md-5"><label for="second_unit" string="第二单位" style="font-weight:bold;"/></div>
                                                         <div class="col-lg-7 col-md-7">
-                                                            <field name="second_unit" string="第二单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                            <field name="second_unit" string="第二单位" readonly="1" options="{'no_create_edit': 1, 'no_create': 1}"/>
                                                         </div>
                                                     </div>
                                                     <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
