@@ -35,7 +35,9 @@ def delegate_to_xml(self):
 
     # 申报单位直接读取配置文件的写法
     head_node_dic['AgentCode'] = self.dec_company_customs_code if self.dec_company_customs_code else None  # u'申报单位代码'
-    head_node_dic['AgentName'] = self.dec_company if self.dec_company else None   # u'申报单位名称'
+    # head_node_dic['AgentName'] = self.dec_company if self.dec_company else None   # u'申报单位名称'
+    head_node_dic[
+        'AgentName'] = self.declare_company_id.register_name_cn if self.declare_company_id.register_name_cn else None  # u'申报单位名称'
 
     head_node_dic['ApprNo'] = None
     head_node_dic['BillNo'] = str(self.bill_no) if self.bill_no else None  # u'提单号'
