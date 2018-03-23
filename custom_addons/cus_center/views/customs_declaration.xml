@@ -11,7 +11,6 @@
             <field name="domain">[('synergism_seq_no','=', False)]</field>
         </record>
 
-
         <record id="action_import_customs_declaration" model="ir.actions.act_window">
             <field name="name">进口报关单</field>
             <field name="type">ir.actions.act_window</field>
@@ -32,12 +31,11 @@
             <field name="domain">[('inout', '=', 'E'), ('synergism_seq_no','=', False)]</field>
         </record>
 
-
         <!--报关单界面添加服务器动作 复制当前报关单全部数据-->
         <record model="ir.actions.server" id="action_duplicate_dec_all_data">
             <field name="name">复制全部</field>
             <field name="type">ir.actions.server</field>
-            <field name="model_id" ref="model_customs_center_customs_dec"/>
+            <field name="model_id" ref="model_cus_center_customs_dec"/>
             <field name="state">code</field>
             <field name="code">
 if records:
@@ -48,7 +46,7 @@ if records:
         <!--添加服务器动作 指定上边的id-->
         <record model="ir.values" id="duplicate_dec_all_data">
             <field name="name">复制全部</field>
-            <field name="model_id" ref="model_customs_center_customs_dec" />
+            <field name="model_id" ref="model_cus_center_customs_dec" />
             <field name="model">cus_center.customs_dec</field>
             <field name="key2">client_action_multi</field>
             <field eval="'ir.actions.server,%d'%action_duplicate_dec_all_data" name="value"/>
@@ -101,14 +99,12 @@ if records:
                         <button name="generate_qp_customer_xml_after" string="报文发送QP"  type="object"
                                 attrs="{'invisible': [('cus_dec_sent_way', '!=', 'single')]}"
                                 confirm="该报关单已发送至单一窗口申报，不能重复发送！"/>
-                        <!--<button name="print_check_reports" string="打印核对单"  type="object"/>-->
-                        <!--<button name="print_invoice" string="生成发票单据"  type="object"/>-->
-                        <field name="cus_dec_sent_way" widget="statusbar" invisible="1" statusbar_visible="single,QP"/>
                     </header>
                     <sheet>
                         <field name="client_seq_no" string="报关单客户端编号" invisible="1"/>
                         <field name="customs_order_id" string="关联的通关清单" invisible="1"/>
                         <field name="synergism_seq_no" string="协同报关单号" invisible="1"/>
+                        <field name="cus_dec_sent_way" invisible="1"/>
 
 
                         <!--普通附件上传 用了附件拖拽上传模块之后 下方代码注释-->
@@ -212,34 +208,8 @@ if records:
                                                    readonly="1" placeholder="业务回执中获取"/>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="col-lg-4 col-md-4"></div>
-                                        <div class="col-lg-8 col-md-8"></div>
-                                    </div>
                                 </div>
-                                    <!--<group col="3" colspan="1">-->
-                                        <!--<group>-->
-                                            <!--<field name="business_company_id" string="经营单位/收发货人"/>-->
-                                            <!--<field name="transport_mode_id" string="运输方式"/>-->
-                                            <!--<field name="bill_no" string="提运单号"/>-->
-                                            <!--<field name="payment_mark" string="纳税单位"/>-->
-                                            <!--<field name="port_id" string="装货港/指运港"/>-->
-                                        <!--</group>-->
-                                        <!--<group>-->
-                                            <!--<field name="input_company_id" string="消费使用单位"/>-->
-                                            <!--<field name="NativeShipName" string="运输工具名称"/>-->
-                                            <!--<field name="trade_mode_id" string="监管方式"/>-->
-                                            <!--<field name="licenseNo" string="许可证号"/>-->
-                                            <!--<field name="region_id" string="境内目的地"/>-->
-                                        <!--</group>-->
-                                        <!--<group>-->
-                                            <!--<field name="declare_company_id" string="申报单位"/>-->
-                                            <!--<field name="VoyageNo" string="航次号"/>-->
-                                            <!--<field name="CutMode_id" string="征免性质"/>-->
-                                            <!--<field name="origin_arrival_country_id" string="启运国/抵达国"/>-->
-                                            <!--<field name="trade_terms_id" string="成交方式"/>-->
-                                        <!--</group>-->
-                                    <!--</group>-->
+
                                     <div style="padding-bottom: 10px; padding-top: 20px">
                                         <div class="row">
                                             <div class="col-lg-8 col-md-8">
@@ -820,26 +790,6 @@ if records:
                                     </field>
                                 </page>
 
-                                <!--<page string="配置信息(字段确认后，该page页面删除)">-->
-                                    <!--<group>-->
-                                        <!--<group>-->
-                                            <!--<field name="cop_code" string="录入单位企业组织机构代码"/>-->
-                                            <!--<field name="cop_name" string="录入单位名称"/>-->
-                                            <!--<field name="cop_code_scc" string="录入单位社会信用统一编码"/>-->
-                                            <!--<field name="inputer_name" string="录入员姓名" required="1"/>-->
-                                            <!--<field name="oper_name" string="操作员姓名"/>-->
-                                            <!--<field name="certificate" string="操作员卡的证书号"/>-->
-                                            <!--<field name="ic_code" string="操作员IC卡号"/>-->
-                                            <!--<field name="dec_company_customs_code" string="申报单位海关编码"/>-->
-                                        <!--</group>-->
-                                    <!--</group>-->
-                                <!--</page>-->
-
-                                <!--<page string="随附单据">-->
-                                    <!--<field name="information_attachment_ids" widget="many2many_binary"/>-->
-                                <!--</page>-->
-
-
                             </notebook>
 
                     </sheet>
@@ -851,7 +801,6 @@ if records:
                 </form>
             </field>
         </record>
-
 
         <!--协同报关单菜单-->
         <record id="action_sync_customs_declaration" model="ir.actions.act_window">
@@ -888,15 +837,15 @@ if records:
         <record id="sync_customs_declaration_tree" model="ir.actions.act_window.view">
                    <field name="view_mode">tree</field>
                    <field name="sequence">1</field>
-                   <field name="view_id" ref="customs_center.customs_sync_declaration_tree" />
-                   <field name="act_window_id" ref="customs_center.action_sync_customs_declaration" />
+                   <field name="view_id" ref="cus_center.customs_sync_declaration_tree" />
+                   <field name="act_window_id" ref="cus_center.action_sync_customs_declaration" />
         </record>
 
         <record id="sync_customs_declaration_form" model="ir.actions.act_window.view">
                     <field name="view_mode">form</field>
                     <field name="sequence">2</field>
-                   <field name="view_id" ref="customs_center.customs_declaration_form" />
-                   <field name="act_window_id" ref="customs_center.action_sync_customs_declaration" />
+                   <field name="view_id" ref="cus_center.customs_declaration_form" />
+                   <field name="act_window_id" ref="cus_center.action_sync_customs_declaration" />
         </record>
 
 
@@ -905,18 +854,18 @@ if records:
         <!--支持按工作单号、关检关联号、统一编号、预录入号、海关编号、收发货人、创建人搜索-->
         <record id="view_customs_declaration_search" model="ir.ui.view">
            <field name="name">customs declaration search</field>
-           <field name="model">customs_center.customs_dec</field>
+           <field name="model">cus_center.customs_dec</field>
             <field name="arch" type="xml">
                 <search string="customs declaration search">
-                    <field name="customs_order_id" string="通关清单" domain="[('customs_center.customs_dec.customs_order_id', '=', self)]"/>
-                    <field name="name" string="报关单流水号" domain="[('customs_center.customs_dec.name', '=', self)]"/>
-                    <field name="work_sheet_id" string="工作单号" domain="[('customs_center.customs_dec.work_sheet_id', '=', self)]"/>
-                    <field name="cus_ciq_No" string="关检关联号" domain="[('customs_center.customs_dec.cus_ciq_No', '=', self)]"/>
-                    <field name="dec_seq_no" string="统一编号" domain="[('customs_center.customs_dec.dec_seq_no', '=', self)]"/>
-                    <field name="entry_id" string="海关编号" domain="[('customs_center.customs_dec.entry_id', '=', self)]"/>
-                    <field name="custom_master_id" string="申报地海关" domain="[('customs_center.customs_dec.custom_master_id', '=', self)]"/>
-                    <field name="business_company_id" string="收发货人" domain="[('customs_center.customs_dec.business_company_id', '=', self)]"/>
-                    <field name="create_uid" string="创建人" domain="[('customs_center.customs_dec.create_uid', '=', self)]"/>
+                    <field name="customs_order_id" string="通关清单"/>
+                    <field name="name" string="报关单流水号"/>
+                    <field name="work_sheet_id" string="工作单号"/>
+                    <field name="cus_ciq_No" string="关检关联号"/>
+                    <field name="dec_seq_no" string="统一编号"/>
+                    <field name="entry_id" string="海关编号"/>
+                    <field name="custom_master_id" string="申报地海关"/>
+                    <field name="business_company_id" string="收发货人"/>
+                    <field name="create_uid" string="创建人"/>
                     <separator/>
                     <filter string="进口" name="in" domain="[('inout','=','i')]"/>
                     <filter string="出口" name="export" domain="[('inout','=','e')]"/>
@@ -932,7 +881,7 @@ if records:
 
         <record id="customs_goods_wizard" model="ir.ui.view">
             <field name="name">Customs Goods Wizard</field>
-            <field name="model">customs_center.goods_wizard</field>
+            <field name="model">cus_center.goods_wizard</field>
             <field name="arch" type="xml">
                 <form string="Customs Goods">
                     <sheet>
@@ -1113,7 +1062,7 @@ if records:
         <record id="action_customs_dec_goods_wizard" model="ir.actions.act_window">
             <field name="name">Customs Goods List</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">customs_center.goods_wizard</field>
+            <field name="res_model">cus_center.goods_wizard</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
             <field name="multi">True</field>

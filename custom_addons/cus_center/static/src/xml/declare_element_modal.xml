@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates >
+    <t t-name="declare_element_modal">
+        <div tabindex="-1" class="modal fade" role="dialog" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">规格型号</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="o_view_manager_content">
+                            <div class="o_form_view o_form_editable oe_form_dirty">
+                                <div class="o_form_sheet_bg">
+                                    <div class="o_form_sheet" id="declare-element-names">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <footer>
+                            <button type="button" class="btn btn-sm oe_highlight">
+                                <span>确定</span>
+                            </button>
+                            <button type="button" class="btn btn-sm" data-dismiss="modal">
+                                <span>取消</span>
+                            </button>
+                        </footer>
+                    </div>
+            	</div>
+            </div>
+        </div>
+    </t>
+</templates>

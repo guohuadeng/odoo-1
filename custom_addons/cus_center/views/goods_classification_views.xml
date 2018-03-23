@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_goods_classification" model="ir.actions.act_window">
+            <field name="name">商品归类</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cus_center.goods_classify</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="goods_classification_tree" model="ir.ui.view">
+            <field name="name">Goods Classification tree view</field>
+            <field name="model">cus_center.goods_classify</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="cus_goods_code" string="客户料号"/>
+                    <field name="cus_goods_tariff_id" string="商品编号"/>
+                    <field name="goods_name" string="商品名称"/>
+                    <field name="first_unit" string="第一计量单位"/>
+                    <field name="second_unit" string="第二计量单位"/>
+                    <field name="origin_country_id" string="原产国"/>
+                    <field name="destination_country_id" string="目的国"/>
+                    <field name="ManualNo" string="备案号"/>
+                    <field name="ManualSN" string="备案序号"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="goods_classification_form" model="ir.ui.view">
+            <field name="name">Goods Classification Form view</field>
+            <field name="model">cus_center.goods_classify</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="submit_review_btn" string="提交审核" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ['submitted','refused','approve'])]}"/>
+                        <button name="re_submit_review_btn" string="重新提交审核" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ['draft','submitted','approve'])]}"/>
+                        <button name="already_submit_review_btn" string="已提交" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ['draft','refused','approve'])]}" readonly="1"/>
+                        <!--<button name="already_reviewed_btn" string="已审核" type="object" class="oe_highlight"-->
+                                <!--attrs="{'invisible': [('state', 'in', ['draft','submitted','refused'])]}" readonly="1"/>-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,succeed"
+                               statusbar_colors="{'draft':'blue', 'submitted':'green', 'refused':'red'}"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="cus_goods_code"  placeholder="请录入客户料号"/>
+                                <field name="customs_declaration_id"  placeholder="关联的报关单号" invisible="1"/>
+                            </h1>
+                        </div>
+
+                        <!--<group col="3" colspan="1">-->
+                            <div class="row" style="padding-top:20px">
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="business_company_id" string="收发货人" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="business_company_id" string="收发货人"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="ManualNo" string="备案号" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="ManualNo" string="备案号"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="ManualSN" string="备案序号" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="ManualSN" string="备案序号"/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row" >
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="cus_goods_tariff_id" string="商品编号" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="cus_goods_tariff_id" string="商品编号"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="goods_name" string="商品名称" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="goods_name" string="商品名称"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="goods_model" string="规格型号" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="goods_model" string="规格型号" widget="declare_element" options="{'tariff': 'cus_goods_tariff_id'}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="deal_unit_price" string="申报单价" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="deal_unit_price" string="申报单价"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="currency_id" string="币种" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="currency_id" string="币种"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="supervision_condition" string="监管条件" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="supervision_condition" string="监管条件"/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="deal_unit" string="成交单位" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="deal_unit" string="成交单位" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="first_unit" string="第一计量单位" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="first_unit" string="第一计量单位" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="second_unit" string="第二计量单位" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="second_unit" string="第二计量单位"/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="origin_country_id" string="原产国" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="origin_country_id" string="原产国" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="destination_country_id" string="目的国" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="destination_country_id" string="目的国" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-4 col-md-4"><label for="duty_mode_id" string="征免方式" style="font-weight:bold;"/></div>
+                                    <div class="col-lg-8 col-md-8">
+                                        <field name="duty_mode_id" string="征免方式" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <!--<group>-->
+                                <!--<field name="business_company_id" string="收发货人"/>-->
+                                <!--<field name="cus_goods_tariff_id"  string="商品编号"/>-->
+                                <!--<field name="deal_unit_price"  string="申报单价"/>-->
+                                <!--<field name="deal_unit"  string="成交单位"/>-->
+                                <!--<field name="origin_country_id"  string="原产国"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                                <!--<field name="ManualNo"  string="备案号"/>-->
+                                <!--<field name="goods_name"  string="商品名称"/>-->
+                                <!--<field name="currency_id"  string="币种"/>-->
+                                <!--<field name="first_unit"  string="第一计量单位"/>-->
+                                <!--<field name="destination_country_id"  string="目的国"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                                <!--<field name="ManualSN"  string="备案序号"/>-->
+                                <!--<field name="goods_model"  string="规格型号" widget="declare_element" options="{'tariff': 'cus_goods_tariff_id'}"/>-->
+                                <!--<field name="supervision_condition"  string="监管条件"/>-->
+                                <!--<field name="second_unit"  string="第二计量单位"/>-->
+                                <!--<field name="duty_mode_id"  string="征免方式"/>-->
+                                <!--&lt;!&ndash;<field name="create_uid" readonly="1" string="创建人"/>&ndash;&gt;-->
+                            <!--</group>-->
+
+                        <!--</group>-->
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"
+                               widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
