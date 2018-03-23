@@ -625,7 +625,7 @@ if records:
                                                         </div>
                                                         <div class="col-lg-10 col-md-10" style="float: left;padding-left: 0px;  position: relative;">
                                                             <field name="goods_classification_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"
-                                                            domain="[('business_company_id', '=',parent.business_company_id)]"/>
+                                                            domain="[('business_company_id', '=',parent.business_company_id)]" placeholder="过滤条件说明 待补充"/>
                                                         </div>
                                                     </div>
                                                 </div>

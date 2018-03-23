@@ -20,19 +20,19 @@ _logger = logging.getLogger(__name__)
 
 # 本地测试环境路径
 # pre_ex_client 前置交换客户端路径
-PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
-PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
+PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
 
 # post_ex_client 后置交换客户端路径
-RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
-BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
+RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
+BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 
@@ -304,6 +304,8 @@ class CustomsDeclaration(models.Model):
         """ 复制当前报关单全部数据 """
         self.ensure_one()
         customs_declaration_obj_copy = self.copy()
+        customs_declaration_obj_copy.update({'cus_dec_sent_way': '', 'cus_dec_sent_state': ''})  # 将发送通道字段修改为空，否则复制全部的时候，会导致复制的新报关单无法再次发送
+
         # cus_goods_list_ids_list = []
         for line in self:
             if line.dec_goods_list_ids:
@@ -344,7 +346,6 @@ class CustomsDeclaration(models.Model):
         # }
 
 
-
     ##############################################################################################
     # 报关单列表视图 回执状态 查看历史回执按钮
     @api.multi
@@ -383,7 +384,7 @@ class CustomsDeclaration(models.Model):
         return result
 
 
-    # @api.model
+    # @api.model123456
     # @q_job.job
     @api.multi
     def parse_cus_message_xml(self):
@@ -1048,12 +1049,12 @@ class CustomsDeclaration(models.Model):
                 attach_list.append(attach_data)
             # 如果第一个附件中有值，说明随附单据解析入库成功
             delegate_to_xml(line)
-            # if attach_list:
-            #     generate_attach_xml_to_single(line)
-            #     self.update({'cus_dec_sent_state': 'succeed'})
-            #     return True
-            # else:
-            #     raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
+            if attach_list:
+                generate_attach_xml_to_single(line)
+                self.update({'cus_dec_sent_state': 'succeed'})
+                return True
+            else:
+                raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
 
 
     @api.multi

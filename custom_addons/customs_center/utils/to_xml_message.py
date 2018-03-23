@@ -315,9 +315,9 @@ def delegate_to_xml(self):
     # base_dir = config.options['xml_files_path']
 
     # 单一窗口报文发送根目录
-    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
+    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
     # QP 报文发送根目录
-    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
+    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
 
     # 企业报关单 报文生成路径  用户配置界面自定义
     company_name = str(self.dec_company_customs_code)  # 申报单位海关编码 用作报文存放路径
