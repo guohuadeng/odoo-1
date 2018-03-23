@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <!--<record id="auto_parse_xml_action" model="ir.cron">-->
+            <!--<field name="name">Parse customs receipt XML message</field>-->
+            <!--<field name="user_id" ref="base.user_root"/>-->
+            <!--<field name="interval_number">1</field>-->
+            <!--<field name="interval_type">minutes</field>-->
+            <!--<field name="numbercall">-1</field>-->
+            <!--<field eval="False" name="doall"/>-->
+            <!--<field eval="'customs_center.customs_dec'" name="model"/>-->
+            <!--<field eval="'parse_receipt_xml'" name="function"/>-->
+        <!--</record>-->
+        <delete id="auto_parse_xml_action" model="ir.cron"/>
+    </data>
+</odoo>

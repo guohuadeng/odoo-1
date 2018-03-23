@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <record id="result_status_import_success" model="cus_center.dec_res_status">
+            <field name="code">0</field>
+            <field name="name">导入成功</field>
+            <field name="sequence">0</field>
+       </record>
+
+        <record id="result_status_import_failure" model="cus_center.dec_res_status">
+            <field name="code">1</field>
+            <field name="name">导入失败</field>
+            <field name="sequence">1</field>
+       </record>
+
+        <record id="result_status_qp_data_up" model="cus_center.dec_res_status">
+            <field name="code">2</field>
+            <field name="name">QP接收成功，上载发往数据中心</field>
+            <field name="sequence">2</field>
+       </record>
+
+        <record id="result_status_qp_data_dec" model="cus_center.dec_res_status">
+            <field name="code">6</field>
+            <field name="name">QP接收成功，申报发往数据中心	</field>
+            <field name="sequence">3</field>
+       </record>
+
+        <record id="result_status_resend_file" model="cus_center.dec_res_status">
+            <field name="code">N</field>
+            <field name="name">重传文件</field>
+            <field name="sequence">4</field>
+       </record>
+
+        <record id="result_status_up_success" model="cus_center.dec_res_status">
+            <field name="code">3</field>
+            <field name="name">上载成功</field>
+            <field name="sequence">5</field>
+       </record>
+
+        <record id="result_status_up_failure" model="cus_center.dec_res_status">
+            <field name="code">4</field>
+            <field name="name">上载失败</field>
+            <field name="sequence">6</field>
+       </record>
+
+        <record id="result_status_dec_success" model="cus_center.dec_res_status">
+            <field name="code">7</field>
+            <field name="name">申报成功</field>
+            <field name="sequence">7</field>
+       </record>
+
+        <record id="result_status_up_no_dec" model="cus_center.dec_res_status">
+            <field name="code">8</field>
+            <field name="name">上载未申报（无申报权限）</field>
+            <field name="sequence">8</field>
+       </record>
+
+        <record id="result_status_up_dec_fail" model="cus_center.dec_res_status">
+            <field name="code">9</field>
+            <field name="name">上载申报失败（与数据中心联系）</field>
+            <field name="sequence">9</field>
+       </record>
+
+        <record id="result_status_custom_rev" model="cus_center.dec_res_status">
+            <field name="code">L</field>
+            <field name="name">海关已接收</field>
+            <field name="sequence">10</field>
+       </record>
+
+        <record id="result_status_guarantee_free" model="cus_center.dec_res_status">
+            <field name="code">B</field>
+            <field name="name">担保放行</field>
+            <field name="sequence">11</field>
+       </record>
+
+        <record id="result_status_no_accept" model="cus_center.dec_res_status">
+            <field name="code">E</field>
+            <field name="name">不被受理</field>
+            <field name="sequence">12</field>
+       </record>
+
+        <record id="result_status_manu_dec" model="cus_center.dec_res_status">
+            <field name="code">H</field>
+            <field name="name">需手工申报</field>
+            <field name="sequence">13</field>
+       </record>
+
+        <record id="result_status_return_mdfy" model="cus_center.dec_res_status">
+            <field name="code">v</field>
+            <field name="name">退回修改</field>
+            <field name="sequence">14</field>
+       </record>
+
+        <record id="result_status_custom_audit" model="cus_center.dec_res_status">
+            <field name="code">G</field>
+            <field name="name">报关单已审结</field>
+            <field name="sequence">15</field>
+       </record>
+
+        <record id="result_status_free_give" model="cus_center.dec_res_status">
+            <field name="code">F</field>
+            <field name="name">放行交单</field>
+            <field name="sequence">16</field>
+       </record>
+
+        <record id="result_status_need_tax" model="cus_center.dec_res_status">
+            <field name="code">T</field>
+            <field name="name">需交税费</field>
+            <field name="sequence">17</field>
+       </record>
+
+        <record id="result_status_dec_fail" model="cus_center.dec_res_status">
+            <field name="code">Y</field>
+            <field name="name">申报失败</field>
+            <field name="sequence">18</field>
+       </record>
+
+        <record id="result_status_cust_remv" model="cus_center.dec_res_status">
+            <field name="code">D</field>
+            <field name="name">海关删单</field>
+            <field name="sequence">19</field>
+       </record>
+
+        <record id="result_status_cust_reaudit" model="cus_center.dec_res_status">
+            <field name="code">M</field>
+            <field name="name">报关单重审</field>
+            <field name="sequence">20</field>
+       </record>
+
+        <record id="result_status_over_cust" model="cus_center.dec_res_status">
+            <field name="code">R</field>
+            <field name="name">已结关</field>
+            <field name="sequence">21</field>
+       </record>
+
+        <record id="result_status_aifn1" model="cus_center.dec_res_status">
+            <field name="code">W</field>
+            <field name="name">进出口审结/查验/放行通知</field>
+            <field name="sequence">22</field>
+       </record>
+
+        <record id="result_status_aifn2" model="cus_center.dec_res_status">
+            <field name="code">I</field>
+            <field name="name">进出口审结/查验/放行通知</field>
+            <field name="sequence">23</field>
+       </record>
+
+        <record id="result_status_exp_info" model="cus_center.dec_res_status">
+            <field name="code">C</field>
+            <field name="name">出口查验通知</field>
+            <field name="sequence">24</field>
+       </record>
+
+        <record id="result_status_dec_pass" model="cus_center.dec_res_status">
+            <field name="code">P</field>
+            <field name="name">报关单放行</field>
+            <field name="sequence">25</field>
+       </record>
+
+    </data>
+</odoo>

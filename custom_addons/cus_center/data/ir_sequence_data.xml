@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--原始清单序号-->
+        <record id="seq_customs_order" model="ir.sequence">
+            <field name="name">Custom Customs Order</field>
+            <field name="code">code_customs_order</field>
+            <field name="prefix">QD%(year)s%(month)s</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--报关单序号-->
+        <record id="seq_customs_declaration" model="ir.sequence">
+            <field name="name">Customs Declaration</field>
+            <field name="code">code_customs_declaration</field>
+            <field name="prefix">BG%(year)s%(month)s</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
