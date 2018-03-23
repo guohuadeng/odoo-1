@@ -19,20 +19,20 @@ _logger = logging.getLogger(__name__)
 
 
 # 本地测试环境路径
-# # pre_ex_client 前置交换客户端路径
-# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
-# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-#
-# # post_ex_client 后置交换客户端路径
-# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
-# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
+# pre_ex_client 前置交换客户端路径
+PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
+PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+
+# post_ex_client 后置交换客户端路径
+RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
+BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 
@@ -55,20 +55,20 @@ _logger = logging.getLogger(__name__)
 
 
 # 应用服务器 测试环境路径
-# pre_ex_client 前置交换客户端路径
-PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
-PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-
-# post_ex_client 后置交换客户端路径
-RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
-BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
+# # pre_ex_client 前置交换客户端路径
+# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
+# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+#
+# # post_ex_client 后置交换客户端路径
+# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
+# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 
@@ -394,8 +394,8 @@ class CustomsDeclaration(models.Model):
         customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(['dec_company_customs_code']) # 获取报关单模型对象
         company_xml_parse_path = customs_dec_model_dic.get('dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
 
-        # print("**************************77777777777777***********************")
-        # print(company_xml_parse_path)
+        print("**************************77777777777777***********************")
+        print(company_xml_parse_path)
         parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 原始报文解析目录
         parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
                                          company_xml_parse_path.encode('utf-8'))  # 随附单据解析目录
@@ -708,31 +708,6 @@ class CustomsDeclaration(models.Model):
                 customs_declaration_obj = self.env['customs_center.customs_dec'].create(customs_dec_dic)
                 # 创建报关单后 同时创建 空的 随附单据
                 # 首先解析随附单据目录的文件  可能多个附件
-                # attach_files = os.listdir(parse_attach_path)
-                # attach_files_list = [attach_filename for attach_filename in attach_files if attach_filename.endswith('.xml')]
-                #
-                # if not attach_files_list:
-                #     return True
-                # attach_files = [os.path.join(parse_attach_path, i) for i in attach_files_list]
-
-                # # 读文件，用lxml解析报文
-                # xml_attach_message_list = []
-                # for xml_attach_message in attach_files:
-                #     with open(xml_attach_message, 'r') as f:
-                #         attach_xml_str = str(f.read())
-                #         attach_xml_str1 = attach_xml_str.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
-                #         attach_xml_str = attach_xml_str1.replace('xsi:nil="true"', '')
-                #         # print xml_str
-                #         root = etree.fromstring(attach_xml_str)  # 打开xml文档
-                #
-                #         root_name = etree.QName(root).localname
-                #         print(root_name)  # Data
-                #         xml_attach_message_dic = {}  # 随附单据报文中的数据
-                #         if root_name == u'Data':
-                #             attach_data_node = root.xpath('.//TcsData')
-                #             for child in attach_data_node[0]:
-                #                 xml_attach_message_dic[child.tag] = child.text
-                #             xml_attach_message_list.append(xml_attach_message_dic)
 
                 # 生成附件
                 if attach_list_dic:  # 报关单中的随附单据数据 attach_list_dic
@@ -808,7 +783,7 @@ class CustomsDeclaration(models.Model):
                                 elif k == 'GUnit':
                                     deal_unit_code = values  # u'申报/成交计量单位'
                                     deal_unit_id = self.env['basedata.cus_unit'].search([('Code', '=', deal_unit_code)])
-                                    dec_goods_list['deal_unit'] = deal_unit_id[0].id if len(deal_unit_id) else None
+                                    dec_goods_list['deal_unit_id'] = deal_unit_id[0].id if len(deal_unit_id) else None
                                 elif k == 'DeclTotal':
                                     deal_total_price = values  # u'申报总价 成交总价'
                                     dec_goods_list['deal_total_price'] = deal_total_price
@@ -1222,48 +1197,51 @@ class CustomsDeclaration(models.Model):
                     for goods_item in dec_sheet.dec_goods_list_ids:
                         # 如果商品编号为真 并且报关单ID为真
                         if goods_item.goods_classification_id and customs_declaration_id:
-                            classify_goods_code = goods_item.cus_goods_code if goods_item.cus_goods_code else None  # 客户料号
-                            classify_business_company_id = business_company_id  # 收发货人 从当前报关单表头获取
-                            classify_ManualNo = goods_item.cus_goods_code if goods_item.cus_goods_code else None  # 备案号
-                            classify_ManualSN = goods_item.ManualSN if goods_item.ManualSN else None  # 备案序号
-                            classify_cus_goods_tariff_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 商品编号
-                            classify_goods_name = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 商品名称
-                            classify_goods_model = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 规格型号
-                            classify_deal_unit_price = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 申报单价
-                            classify_currency_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 币制
-                            classify_supervision_condition = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 监管标识
-                            classify_deal_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 成交单位
-                            classify_first_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 第一计量单位
-                            classify_second_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 第二计量单位
-                            classify_origin_country_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 原产国
-                            classify_destination_country_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 目的国
-                            classify_duty_mode_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 征免方式
-                            classify_customs_declaration_id = customs_declaration_id  # 关联报关单ID
 
-                            # 归类字典
-                            classify_goods_list = {
-                                'cus_goods_code': classify_goods_code,  # 客户料号
-                                'business_company_id': classify_business_company_id,  # 收发货人
-                                'ManualNo': classify_ManualNo,  # 备案号
-                                'ManualSN': classify_ManualSN,  # 备案序号
-                                'cus_goods_tariff_id': classify_cus_goods_tariff_id,  # 商品编号
-                                'goods_name': classify_goods_name,  # 商品名称
-                                'goods_model': classify_goods_model,  # 规格型号
-                                'deal_unit_price': classify_deal_unit_price,  # 申报单价
-                                'currency_id': classify_currency_id,  # 币制
-                                'supervision_condition': classify_supervision_condition,  # 监管标识
-                                'deal_unit': classify_deal_unit,  # 成交单位
-                                'first_unit': classify_first_unit,  # 第一计量单位
-                                'second_unit': classify_second_unit,  # 第二计量单位
-                                'origin_country_id': classify_origin_country_id,  # 原产国
-                                'destination_country_id': classify_destination_country_id,  # 目的国
-                                'duty_mode_id': classify_duty_mode_id,  # 征免方式
-                                'customs_declaration_id': classify_customs_declaration_id,  # 关联报关单ID
-                            }
-
-                            classify_goods_list = {item: classify_goods_list[item] for item in classify_goods_list if
-                                                   classify_goods_list[item]}
-                            cus_goods_classify_obj = self.env['customs_center.goods_classify'].create(classify_goods_list)
+                            #代码需要完善
+                            pass
+                            # classify_goods_code = goods_item.cust_goods_code if goods_item.cust_goods_code else None  # 客户料号
+                            # classify_business_company_id = business_company_id  # 收发货人 从当前报关单表头获取
+                            # classify_ManualNo = goods_item.cust_goods_code if goods_item.cust_goods_code else None  # 备案号
+                            # classify_ManualSN = goods_item.ManualSN if goods_item.ManualSN else None  # 备案序号
+                            # classify_cus_goods_tariff_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 商品编号
+                            # classify_goods_name = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 商品名称
+                            # classify_goods_model = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 规格型号
+                            # classify_deal_unit_price = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 申报单价
+                            # classify_currency_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 币制
+                            # classify_supervision_condition = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 监管标识
+                            # classify_deal_unit_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 成交单位
+                            # classify_first_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 第一计量单位
+                            # classify_second_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 第二计量单位
+                            # classify_origin_country_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 原产国
+                            # classify_destination_country_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 目的国
+                            # classify_duty_mode_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 征免方式
+                            # classify_customs_declaration_id = customs_declaration_id  # 关联报关单ID
+                            #
+                            # # 归类字典
+                            # classify_goods_list = {
+                            #     'cust_goods_code': classify_goods_code,  # 客户料号
+                            #     'business_company_id': classify_business_company_id,  # 收发货人
+                            #     'ManualNo': classify_ManualNo,  # 备案号
+                            #     'ManualSN': classify_ManualSN,  # 备案序号
+                            #     'cus_goods_tariff_id': classify_cus_goods_tariff_id,  # 商品编号
+                            #     'goods_name': classify_goods_name,  # 商品名称
+                            #     'goods_model': classify_goods_model,  # 规格型号
+                            #     'deal_unit_price': classify_deal_unit_price,  # 申报单价
+                            #     'currency_id': classify_currency_id,  # 币制
+                            #     'supervision_condition': classify_supervision_condition,  # 监管标识
+                            #     'deal_unit_id': classify_deal_unit_id,  # 成交单位
+                            #     'first_unit': classify_first_unit,  # 第一计量单位
+                            #     'second_unit': classify_second_unit,  # 第二计量单位
+                            #     'origin_country_id': classify_origin_country_id,  # 原产国
+                            #     'destination_country_id': classify_destination_country_id,  # 目的国
+                            #     'duty_mode_id': classify_duty_mode_id,  # 征免方式
+                            #     'customs_declaration_id': classify_customs_declaration_id,  # 关联报关单ID
+                            # }
+                            #
+                            # classify_goods_list = {item: classify_goods_list[item] for item in classify_goods_list if
+                            #                        classify_goods_list[item]}
+                            # cus_goods_classify_obj = self.env['customs_center.goods_classify'].create(classify_goods_list)
 
             except Exception, error_info:
                 _logger.error(u'{} {}'.format(xml_message.decode('utf-8'), str(error_info).decode('utf-8')))
@@ -1321,7 +1299,7 @@ class GoodsWizard(models.TransientModel):
     goods_model = fields.Char(string="goods model", required=False, )
     deal_qty = fields.Float(string="deal quantity", default=1, )
     deal_unit_price = fields.Monetary(string="deal unit price")
-    deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )
+    deal_unit_id = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )
     deal_total_price = fields.Monetary(string="deal total price")
     currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )
     first_qty = fields.Float(string="first quantity", required=False, )
@@ -1370,28 +1348,5 @@ class GoodsWizard(models.TransientModel):
     @api.multi
     def create_goods_list(self):
         """创建报关单商品列表"""
-        self.ensure_one()
-        vals = {}
-        vals['cus_goods_tariff_id '] = self.cus_goods_tariff_id.id
-        vals['goods_model '] = self.goods_model
-        vals['deal_qty'] = self.deal_qty
-        vals['deal_unit_price'] = self.deal_unit_price
-        vals['deal_unit'] = self.deal_unit and self.deal_unit.id
-        vals['deal_total_price'] = self.deal_total_price
-        vals['currency_id'] = self.currency_id and self.currency_id.id
-        vals['first_qty'] = self.first_qty
-        vals['first_unit'] = self.first_unit and self.first_unit.id
-        vals['second_qty'] = self.second_qty
-        vals['second_unit'] = self.second_unit and self.second_unit.id
-        vals['origin_country_id'] = self.origin_country_id and self.origin_country_id.id
-        vals['destination_country_id'] = self.destination_country_id and self.destination_country_id.id
-        vals['duty_mode_id'] = self.duty_mode_id and self.duty_mode_id.id
-        vals['goods_classification_id'] = self.goods_classification_id and self.goods_classification_id.id
-        vals['supervision_condition'] = self.supervision_condition
-
-        obj = self.env['customs_center.cus_goods_list'].create(vals)
-        dec_id = self._context['dec_id']
-        dec_obj = self.env['customs_center.customs_dec'].browse(dec_id)
-        dec_obj.dec_goods_list_ids |= obj
 
         return True

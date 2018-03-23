@@ -9,11 +9,11 @@ _logger = logging.getLogger(__name__)
 class GoodsClassification(models.Model):
     """ 商品归类（合规）"""
     _name = 'customs_center.goods_classify'
-    _rec_name = 'cus_goods_code'
+    _rec_name = 'cust_goods_code'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
     _description = 'Goods Classification'
 
-    cus_goods_code = fields.Char(string="Customer Goods Code", index=True,copy=False)     # 客户料号
+    cust_goods_code = fields.Char(string="Customer Goods Code", index=True,copy=False)     # 客户料号
     # 关联商品列表
     dec_goods_list_ids = fields.One2many(comodel_name="customs_center.cus_goods_list",
                                          inverse_name="cus_goods_tariff_id", string="dec goods name")
@@ -36,7 +36,7 @@ class GoodsClassification(models.Model):
     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", related='cus_goods_tariff_id.second_unit',store=False )  # 第二计量单位
     supervision_condition = fields.Char(string="supervision condition", related='cus_goods_tariff_id.supervision_condition',store=False)  # 监管标识/监管标识
 
-    cus_goods_tariff_no = fields.Char(string="cus goods number", related='cus_goods_tariff_id.Code_ts', store=True,required=False, )# 税则库商品编号，冗余字段 ，主要是为了在报关单添加商品界面，实现按商品编号搜索归类库
+    cus_goods_tariff_hs_code = fields.Char(string="cus goods number", related='cus_goods_tariff_id.Code_ts', store=True,required=False, )# 税则库商品编号，冗余字段 ，主要是为了在报关单添加商品界面，实现按商品编号搜索归类库
 
     deal_unit_price = fields.Float(string="deal unit price", )  # 成交单价
     deal_unit_id = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )  # 成交单位
@@ -54,7 +54,7 @@ class GoodsClassification(models.Model):
                 # goods_list.first_unit = goods_list.cus_goods_tariff_id.first_unit
                 # goods_list.second_unit = goods_list.cus_goods_tariff_id.second_unit
                 # goods_list.supervision_condition = goods_list.cus_goods_tariff_id.supervision_condition
-                # goods_list.cus_goods_tariff_no = goods_list.cus_goods_tariff_id.Code_ts
+                # goods_list.cus_goods_tariff_hs_code = goods_list.cus_goods_tariff_id.Code_ts
 
     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
     ManualNo = fields.Char(string="Manual No")  # 备案号 / 账册号
@@ -72,14 +72,14 @@ class GoodsClassification(models.Model):
 
     # 合规商品
     @api.multi
-    @api.depends('cus_goods_code', 'goods_name','cus_goods_tariff_no', 'goods_model')
+    @api.depends('cust_goods_code', 'goods_name','cus_goods_tariff_hs_code', 'goods_model')
     def name_get(self):
         result = []
         for record in self:
             result.append(
-                (record.id, u"%s %s %s %s" % (record.cus_goods_code if record.cus_goods_code else ''
+                (record.id, u"%s %s %s %s" % (record.cust_goods_code if record.cust_goods_code else ''
                                               , record.goods_name if record.goods_name else ''
-                                              , record.cus_goods_tariff_no if record.cus_goods_tariff_no else ''
+                                              , record.cus_goods_tariff_hs_code if record.cus_goods_tariff_hs_code else ''
                                               , record.goods_model if record.goods_model else ''))
             )
         return result
@@ -89,8 +89,8 @@ class GoodsClassification(models.Model):
         """重写模型name字段搜索方法"""
         args = args or []
         if not (name == '' and operator == 'ilike'):
-            args += ['|', '|', ('cus_goods_code', operator, name), ('goods_name', operator, name),
-                     ('cus_goods_tariff_no', operator, name)]
+            args += ['|', '|', ('cust_goods_code', operator, name), ('goods_name', operator, name),
+                     ('cus_goods_tariff_hs_code', operator, name)]
 
         return super(GoodsClassification, self)._name_search(
             name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
@@ -146,14 +146,14 @@ class GoodsClassification(models.Model):
             body = (_("商品编号：%s 归类，未审核通过！<br/>") % (goods_cls_list.cus_goods_tariff_id.Code_ts))
             goods_cls_list.message_post(body=body)
 
-    @api.constrains('cus_goods_code','business_company_id')
+    @api.constrains('cust_goods_code','business_company_id')
     def _check_cus_goods_code(self):
         """ 同一收发货人，料号必须唯一 """
-        goods = self.search([('cus_goods_code', "=", self.cus_goods_code)
+        goods = self.search([('cust_goods_code', "=", self.cust_goods_code)
                               , ('business_company_id', "=", self.business_company_id.id)])
         if len(goods) > 1:
             raise odoo.exceptions.except_orm(u'错误',u"%s 已存在料号 %s,不允许重复录入"
-                                             %(self.business_company_id.register_name_cn,self.business_company_id.cus_goods_code))
+                                             %(self.business_company_id.register_name_cn,self.business_company_id.cust_goods_code))
 
 
 

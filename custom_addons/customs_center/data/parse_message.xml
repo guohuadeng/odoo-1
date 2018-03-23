@@ -12,6 +12,5 @@
             <field eval="'customs_center.customs_dec'" name="model"/>
             <field eval="'parse_receipt_xml'" name="function"/>
         </record>
-        <delete id="auto_parse_xml_action" model="ir.cron"/>
     </data>
 </odoo>
