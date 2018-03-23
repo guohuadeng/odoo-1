@@ -1,0 +1,1271 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* customs_center
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-21 05:39+0000\n"
+"PO-Revision-Date: 2018-03-21 05:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_edoc_attorney_template
+msgid "2018年 03月 17日"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_dec_kanban_view
+msgid "<span>New</span>"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_dec_kanban_view
+msgid "<span>Reports</span>"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_dec_kanban_view
+msgid "<span>View</span>"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_bill_no
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_licenseNo
+msgid "Bill No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_bonded_No
+msgid "Bonded No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_business_type
+msgid "Business Type"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.customs_dec,cus_dec_sent_state:0
+#: selection:customs_center.customs_dec,customs_declaration_state:0
+#: selection:customs_center.customs_order,customs_order_state:0
+#: model:ir.ui.view,arch_db:customs_center.customs_goods_wizard
+#: selection:work_sheet,customs_declaration_state:0
+#: selection:work_sheet,customs_order_state:0
+msgid "Cancel"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_exp_mark_type_NameCN
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_pay_mark_type_NameCN
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_whet_mark_type_NameCN
+msgid "Chinese Name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status_code
+msgid "Code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_goods_wizard
+msgid "Create"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_exp_mark_type_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_pay_mark_type_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_create_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_whet_mark_type_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_exp_mark_type_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_pay_mark_type_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_create_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_whet_mark_type_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_exp_mark_type_Code
+msgid "CusExpensesMarkType Code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_work_sheet_custom_center
+msgid "Custom Center"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_custom_count
+msgid "Custom Declaration"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_dec_result
+msgid "Custom Declaration Result"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_customer_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_customer_id
+msgid "Customer"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_customer_contract_no
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_customer_contract_no
+msgid "Customer Contract No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_cus_goods_code
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_cus_goods_code
+msgid "Customer Goods Code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_customs_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_customs_id
+msgid "Customs"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_customs_order
+msgid "Customs Customs Order"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_customs_dec
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_customs_declaration_id
+msgid "Customs Declaration"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_goods_wizard
+msgid "Customs Goods"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.actions.act_window,name:customs_center.action_customs_dec_goods_wizard
+msgid "Customs Goods List"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_goods_wizard
+msgid "Customs Goods Wizard"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_work_sheet_customs_declaration_ids
+#: model:ir.model.fields,field_description:customs_center.field_work_sheet_customs_order_ids
+msgid "Customs Order"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_cus_goods_list
+msgid "Customs cus Goods List"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_customs_field
+msgid "CustomsField"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_CutMode_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_CutMode_id
+msgid "CutMode id"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.actions.act_window,name:customs_center.dec_action_attachment
+msgid "Dec Attachments"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_custom_master_id
+msgid "Dec Custom"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_dec_date
+msgid "DecDate"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_dec_lic_doc
+msgid "DecLicenseDoc"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc_dec_license_doc_type_id
+msgid "DecLicenseDoc type"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_dec_seq_no
+msgid "DecSeqNo"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_decl_trn_rel
+msgid "DeclTrnRel"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_custom_master_id
+msgid "Declare Customs"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_declaration_form
+#: model:ir.ui.view,arch_db:customs_center.customs_order_form
+msgid "Declearation Goods"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_default_certificate
+msgid "Default certificate"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_default_cop_code
+msgid "Default cop code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_default_cop_code_scc
+msgid "Default cop code scc"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_default_cop_name
+msgid "Default cop name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_default_dec_company_customs_code
+msgid "Default dec company customs code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_default_ic_code
+msgid "Default ic code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_default_inputer_name
+msgid "Default inputer name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_default_oper_name
+msgid "Default oper name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_exp_mark_type_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_pay_mark_type_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_display_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_whet_mark_type_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.customs_dec,cus_dec_sent_state:0
+#: selection:customs_center.customs_dec,customs_declaration_state:0
+#: selection:customs_center.customs_order,customs_order_state:0
+#: selection:customs_center.goods_classify,state:0
+#: selection:work_sheet,customs_declaration_state:0
+#: selection:work_sheet,customs_order_state:0
+msgid "Draft"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_duty_mode_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_duty_mode_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_duty_mode_id
+msgid "Duty Mode"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_entry_type_id
+msgid "Entry Type"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_entry_id
+msgid "EntryId"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.customs_dec,cus_dec_sent_state:0
+#: selection:customs_center.customs_dec,customs_declaration_state:0
+#: selection:customs_center.customs_order,customs_order_state:0
+#: selection:work_sheet,customs_declaration_state:0
+#: selection:work_sheet,customs_order_state:0
+msgid "Failure"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_fee_currency_id
+msgid "FeeCurrency"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_fee_mark
+msgid "FeeMark"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_fee_rate
+msgid "FeeRate"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_first_unit
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_first_unit
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_first_unit
+msgid "First Unit"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_goods_classify
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_goods_classification_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_goods_classification_id
+msgid "Goods Classification"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_gross_weight
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_gross_weight
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_weight
+msgid "Gross Weight"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_ic_code
+msgid "IC number"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_exp_mark_type_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_pay_mark_type_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_whet_mark_type_id
+msgid "ID"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_in_ratio
+msgid "In ratio"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_inout
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_inout
+msgid "InOut"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_information_attachment_ids
+msgid "Information attachment ids"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_in_out_date
+msgid "InoutDate"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_insurance_currency_id
+msgid "InsurCurrency_id"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_insurance_rate
+msgid "InsurRate"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.dec_container,spec_code:0
+msgid "Large Container"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_exp_mark_type___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_pay_mark_type___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings___last_update
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_whet_mark_type___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_exp_mark_type_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_pay_mark_type_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_write_uid
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_whet_mark_type_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_exp_mark_type_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_pay_mark_type_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_settings_write_date
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_whet_mark_type_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_licenseNo_ids
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_rel_man_No
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_licenseNo
+msgid "License No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_ManualNo
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_ManualNo
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_ManualNo
+msgid "Manual No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_ManualSN
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_ManualSN
+msgid "Manual SN"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_remarks
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_marks
+msgid "Marks"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_message
+msgid "Message"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_dec_kanban_view
+msgid "More <i class=\"fa fa-caret-down\"/>"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.cus_goods_list,classify_status:0
+msgid "NO"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status_name
+msgid "Name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_NativeShipName
+msgid "Native Ship Name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_net_weight
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_net_weight
+msgid "Net Weight"
+msgstr ""
+
+#. module: customs_center
+#: code:addons/customs_center/models/customs_declaration.py:373
+#: code:addons/customs_center/models/customs_declaration.py:374
+#: code:addons/customs_center/models/customs_order.py:185
+#: code:addons/customs_center/models/customs_order.py:186
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_notice_date
+msgid "Notice Date"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_origin_arrival_country_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_origin_arrival_country_id
+msgid "Origin Arrival Country"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_other_currency_id
+msgid "OtherCurrency_id"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_other_rate
+msgid "OtherRate"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_packing_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_packing_id
+msgid "Package Type"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_pay_mark_type_Code
+msgid "PaymentMarkType Code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_port_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_port_id
+msgid "Port"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_pre_entry_id
+msgid "PreEntryId"
+msgstr ""
+
+#. module: customs_center
+#: model:customs_center.dec_res_status,name:customs_center.result_status_qp_data_up
+msgid "QP接收成功，上载发往数据中心"
+msgstr ""
+
+#. module: customs_center
+#: model:customs_center.dec_res_status,name:customs_center.result_status_qp_data_dec
+msgid "QP接收成功，申报发往数据中心	"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_qty
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_qty
+msgid "Qty"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_receipt_ids
+msgid "Recipts"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.goods_classify,state:0
+msgid "Refused"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_region_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_region_id
+msgid "Region"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_rel_dec_No
+msgid "RelDec No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.actions.act_window,name:customs_center.result_status_action
+#: model:ir.model,name:customs_center.model_customs_center_dec_res_status
+msgid "Result Status"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_cus_dec_sent_state
+msgid "Sent State"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_cus_dec_sent_way
+msgid "Sent way"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_seq_No
+msgid "SeqNo"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_sequence
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_res_status_sequence
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.actions.act_window,name:customs_center.setting_declaration_action
+msgid "Setting Declaration"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.dec_container,spec_code:0
+msgid "Small Container"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_customs_declaration_state
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_customs_order_state
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_spec_code
+#: model:ir.model.fields,field_description:customs_center.field_work_sheet_customs_declaration_state
+#: model:ir.model.fields,field_description:customs_center.field_work_sheet_customs_order_state
+msgid "State"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_result_status_id
+msgid "Status"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.goods_classify,state:0
+msgid "Submitted"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.customs_dec,cus_dec_sent_state:0
+#: selection:customs_center.customs_dec,customs_declaration_state:0
+#: selection:customs_center.customs_order,customs_order_state:0
+#: selection:work_sheet,customs_declaration_state:0
+#: selection:work_sheet,customs_order_state:0
+msgid "Success"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_synergism_seq_no
+msgid "Synergism seq No"
+msgstr ""
+
+#. module: customs_center
+#: sql_constraint:customs_center.dec_res_status:0
+msgid "The status's code must be unique"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_edoc_contract_template
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_edoc_invoice_template
+msgid "This object's name is"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_trade_country_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_trade_country_id
+msgid "Trade Country"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_trade_mode_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_trade_mode_id
+msgid "Trade Mode"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_trade_terms_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_trade_terms_id
+msgid "Trade Term"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_transport_mode_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_transport_mode_id
+msgid "Transport Mode"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_VoyageNo
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_VoyageNo
+msgid "Voyage No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_whet_mark_type_Code
+msgid "WhetherMarkType Code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_work_sheet_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_work_sheet_id
+msgid "Work Sheet"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.cus_goods_list,classify_status:0
+msgid "YES"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.goods_classify,state:0
+msgid "approved"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_classify_status
+msgid "archive status"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_bill_type_id
+msgid "bill Type"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_business_company_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_business_company_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_business_company_id
+msgid "business company name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_client_seq_no
+msgid "client seq No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_containerNo
+msgid "container No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_dec_container_ids
+msgid "container info"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_cop_code_scc
+msgid "cop Social credit uniform coding"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_cop_code
+msgid "cop code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_cop_name
+msgid "cop name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_currency_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_currency_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_currency_id
+msgid "currency id"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_cus_ciq_No
+msgid "cus Ciq No"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_cus_goods_tariff_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_cus_goods_tariff_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_cus_goods_tariff_id
+msgid "cus goods Code TS"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_cus_goods_list_ids
+msgid "cus goods name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_cus_goods_tariff_no
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_cus_goods_tariff_no
+msgid "cus goods number"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_exp_mark_type
+msgid "customs CusExpensesMarkType"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_whet_mark_type
+msgid "customs ExpensesMarkType"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_customs_order_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_customs_order_id
+msgid "customs Order"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_pay_mark_type
+msgid "customs Payment MarkType"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_dec_container
+msgid "customs center container"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_customs_declaration_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_customs_declaration_ids
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_container_customs_declaration_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc_customs_declaration_id
+msgid "customs declaration"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_customs_declaration_id
+msgid "customs declaration id"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.view_customs_declaration_search
+msgid "customs declaration search"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.view_customs_order_search
+msgid "customs order search"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_customs_center_settings
+msgid "customs_center.settings"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_deal_qty
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_deal_qty
+msgid "deal quantity"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_deal_total_price
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_deal_total_price
+msgid "deal total price"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_deal_unit
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_deal_unit
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_deal_unit
+msgid "deal unit"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_deal_unit_price
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_deal_unit_price
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_deal_unit_price
+msgid "deal unit price"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_dec_goods_list_ids
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_dec_goods_list_ids
+msgid "dec goods name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_cus_dec_rec_state
+msgid "dec receive status"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_declaration_form
+msgid "dec_container_tree"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_declare_company_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_declare_company_id
+msgid "declare company name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_dec_company_customs_code
+msgid "declare company path"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_destination_country_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_destination_country_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_destination_country_id
+msgid "destination country"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_ediId
+msgid "ediId"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_first_qty
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_first_qty
+msgid "first quantity"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_dec_goods_classified_ids
+msgid "goods classified"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_goods_model
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_goods_model
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_goods_model
+msgid "goods model"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_goods_name
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_goods_name
+msgid "goods name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_input_company_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_input_company_id
+msgid "input company id"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_inputer_name
+msgid "inputer name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_insurance_mark
+msgid "insurance_mark"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_ir_attachment
+msgid "ir.attachment"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_dec_lic_doc_dec_license_no
+msgid "license no"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_declaration_form
+msgid "license_No_tree"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_certificate
+msgid "oper card certificate"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_oper_name
+msgid "oper name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.setting_declaration_form
+msgid "or"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_origin_country_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_origin_country_id
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_origin_country_id
+msgid "origin country"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_other_mark
+msgid "other_mark"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_payment_mark
+msgid "payment mark"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.pending_classified_goods_tree
+msgid "pending classified goods lists"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.view_pending_cla_goods_search
+msgid "pending goods search"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_product_code
+msgid "product code"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_promise1
+msgid "promise1"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_promise2
+msgid "promise2"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_dec_promise3
+msgid "promise3"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.customs_dec,cus_dec_sent_way:0
+msgid "quick pass"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.actions.act_window,name:customs_center.customs_receipt_action
+msgid "receipt Status"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_second_unit
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_second_unit
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_second_unit
+msgid "second Unit"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_second_qty
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_second_qty
+msgid "second quantity"
+msgstr ""
+
+#. module: customs_center
+#: selection:customs_center.customs_dec,cus_dec_sent_way:0
+msgid "single windows"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_state
+msgid "status"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_supervision_condition
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_classify_supervision_condition
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_goods_wizard_supervision_condition
+msgid "supervision condition"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_customs_order_transport_name
+msgid "transport name"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model.fields,field_description:customs_center.field_customs_center_cus_goods_list_version_num
+msgid "version num"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.model,name:customs_center.model_work_sheet
+msgid "work sheet"
+msgstr ""
+
+#. module: customs_center
+#: code:addons/customs_center/models/customs_order.py:216
+#, python-format
+msgid "work sheet must relate only one clearance draft"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_declaration_form
+#: model:ir.ui.view,arch_db:customs_center.customs_order_form
+msgid "净重(KG)"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "净重(千克)\n"
+"                                                                                <br/>\n"
+"                                                                                11.00000"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "出口口岸\n"
+"                                                                                (0100)\n"
+"                                                                                <br/>\n"
+"                                                                                北京关区"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_declaration_form
+msgid "单据PDF附件"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_edoc_attorney_template
+msgid "我单位现 A (A逐票、B长期) 委托贵公司代理 AB 等通关事宜。(A、填单申报B、辅助查验C、 垫缴税款D、办理海关证明联E、审批手册F、核销手册G、申办减免税手续H、其他 ) 详见《委托报关协议》。"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.pending_classified_goods_form
+msgid "报关单ID"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "报关单流水号CUS20180100001"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_declaration_form
+msgid "报文发送QP"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "指运港(102)\n"
+"                                                                                <br/>\n"
+"                                                                                巴林"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.setting_declaration_form
+msgid "操作员IC卡号"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "收发货人(1101360003)\n"
+"                                                                                <br/>\n"
+"                                                                                北京新华联协和药业有限责任公司"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_edoc_attorney_template
+msgid "本委托书有效期自签字之日起至 2018 年 12 月 31 日止。"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_declaration_form
+#: model:ir.ui.view,arch_db:customs_center.customs_order_form
+msgid "毛重(KG)"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "法定一KG数法定二KG数\n"
+"                                                                                <br/>\n"
+"                                                                                法定数量一法定数量二"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "生产销售单位(1101360003)\n"
+"                                                                                <br/>\n"
+"                                                                                北京新华联协和药业有限责任公司"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "申报单位(ABCDEF1234)\n"
+"                                                                                <br/>\n"
+"                                                                                慧泽商通测试公司"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "申报地海关机场单证(0101)"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_declaration_form
+msgid "确认将该报关单发送至-QP么?"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.customs_declaration_form
+msgid "该报关单已发送至QP申报，不能重复发送！"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "贸易国别(100)\n"
+"                                                                                <br/>\n"
+"                                                                                亚洲"
+msgstr ""
+
+#. module: customs_center
+#: model:ir.ui.view,arch_db:customs_center.report_customs_dec_check_template
+msgid "运抵国(地区)(101)\n"
+"                                                                                <br/>\n"
+"                                                                                阿富汗"
+msgstr ""
+
