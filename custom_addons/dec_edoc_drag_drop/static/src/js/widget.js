@@ -61,12 +61,9 @@ odoo.define('dec_edoc_drag_drop.form_widgets', function (require) {
         },
         render_value: function () {
             var model_id_filed_name = this.options && this.options.res_model_id;
-            console.log('model_id_filed_name'+model_id_filed_name);
             if (model_id_filed_name) {
-                //这里可能会提示错误 Uncaught TypeError: Cannot read property 'get_value' of undefined
-                console.log('get_field_value'+this.field_manager.get_field_value(model_id_filed_name));
+                //这里可能会提示错误 Uncaught TypeError: Cannot read property 'get_value' of undefined)，使用该控件时必须用options="{'res_model_id':'id','res_model_name':'customs_center.customs_dec'}"options="{'res_model_id':'id','res_model_name':'options="{'res_model_id':'id','res_model_name':'customs_center.customs_dec'}"'}"
                 res_model_id=this.field_manager.get_field_value(model_id_filed_name);
-                console.log('model_id'+res_model_id);
             }
 
             res_model_name= this.options && this.options.res_model_name;
