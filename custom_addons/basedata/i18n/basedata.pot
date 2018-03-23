@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 10:14+0000\n"
-"PO-Revision-Date: 2017-10-13 10:14+0000\n"
+"POT-Creation-Date: 2018-03-23 06:17+0000\n"
+"PO-Revision-Date: 2018-03-23 06:17+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,16 @@ msgstr ""
 #: model:ir.ui.view,arch_db:basedata.product_template_search_view_materials
 #: model:ir.ui.view,arch_db:basedata.product_template_search_view_service
 msgid "Active"
+msgstr ""
+
+#. module: basedata
+#: selection:basedata.internation_port,port_type:0
+msgid "Airport"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_Code_s
+msgid "Attach Code"
 msgstr ""
 
 #. module: basedata
@@ -53,16 +63,11 @@ msgid "Category"
 msgstr ""
 
 #. module: basedata
-#: model:ir.model.fields,field_description:basedata.field_b_hg_country_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_port_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_name_cn
-#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_NameCN
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_NameCN
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_name_cn
 #: model:ir.model.fields,field_description:basedata.field_route_NameCN
+#: model:ir.ui.view,arch_db:basedata.filing_bill_type_form
+#: model:ir.ui.view,arch_db:basedata.filing_bill_type_tree
 #: model:ir.ui.view,arch_db:basedata.freight_clause_form
 #: model:ir.ui.view,arch_db:basedata.freight_clause_tree
 #: model:ir.ui.view,arch_db:basedata.route_form
@@ -70,6 +75,21 @@ msgstr ""
 #: model:ir.ui.view,arch_db:basedata.transportation_term_form
 #: model:ir.ui.view,arch_db:basedata.transportation_term_tree
 msgid "Chinese Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_city_name_cn
+msgid "City Chinese Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_city_code
+msgid "City Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_city_name_en
+msgid "City English Name"
 msgstr ""
 
 #. module: basedata
@@ -106,6 +126,11 @@ msgid "Country"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_NameCN
+msgid "Country Chinese Name"
+msgstr ""
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_Code
 msgid "Country Code"
 msgstr ""
@@ -116,6 +141,7 @@ msgid "Country District"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_create_uid
@@ -125,6 +151,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_create_uid
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_create_uid
 #: model:ir.model.fields,field_description:basedata.field_business_type_create_uid
 #: model:ir.model.fields,field_description:basedata.field_container_type_create_uid
@@ -135,6 +170,7 @@ msgid "Created by"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_create_date
@@ -144,6 +180,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_create_date
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_create_date
 #: model:ir.model.fields,field_description:basedata.field_business_type_create_date
 #: model:ir.model.fields,field_description:basedata.field_container_type_create_date
@@ -156,6 +201,26 @@ msgstr ""
 #. module: basedata
 #: model:ir.ui.menu,name:basedata.local_setting_currency_menu
 msgid "Currency"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_NameCN
+msgid "Currency Chinese Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_Code
+msgid "Currency Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_symbol
+msgid "Currency Symbol"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_NameCN
+msgid "Custom Chinese Name"
 msgstr ""
 
 #. module: basedata
@@ -175,6 +240,77 @@ msgid "Customs"
 msgstr ""
 
 #. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_currency
+#: model:ir.model,name:basedata.model_basedata_cus_currency
+msgid "Customs Currency"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_dec_license_doc_type
+#: model:ir.model,name:basedata.model_basedata_dec_license_doc_type
+msgid "Customs DecLicenseDoc Type"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_duty_mode
+#: model:ir.model,name:basedata.model_basedata_cus_duty_mode
+msgid "Customs Duty Mode"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_entry_type
+#: model:ir.model,name:basedata.model_basedata_cus_entry_type
+msgid "Customs EntryType"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_filing_bill_type
+#: model:ir.model,name:basedata.model_basedata_cus_filing_bill_type
+msgid "Customs Filing Bill Type"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_register_name_cn
+msgid "Customs Register Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_basedata_cus_goods_tariff
+msgid "Customs goods tariff"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_register_code
+msgid "Customs register Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_basedata_cus_register_company
+msgid "Customs register company"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_unified_social_credit_code
+msgid "Customs unified social credit code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_NameCN
+msgid "Cut Chinese Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_Code
+msgid "Cut Mode Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.declare_element_menu
+msgid "Declare Element"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_display_name
@@ -184,6 +320,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_display_name
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_display_name
 #: model:ir.model.fields,field_description:basedata.field_business_type_display_name
 #: model:ir.model.fields,field_description:basedata.field_container_type_display_name
@@ -194,9 +339,24 @@ msgid "Display Name"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_NameCN
+msgid "DutyMode Chinese Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_Code
+msgid "DutyMode Code"
+msgstr ""
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_freight_clause_en_name
 #: model:ir.model.fields,field_description:basedata.field_transportation_term_en_name
 msgid "ENName"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_name
+msgid "Element Name"
 msgstr ""
 
 #. module: basedata
@@ -212,10 +372,43 @@ msgid "English Name"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_NameCN
+msgid "EntryType Chinese Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_Code
+msgid "EntryType Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_NameCN
+msgid "Filing Bill Type Chinese Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_Code
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_Code
+#: model:ir.ui.view,arch_db:basedata.filing_bill_type_form
+#: model:ir.ui.view,arch_db:basedata.filing_bill_type_tree
+msgid "Filing Bill Type Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_first_unit
+msgid "First Unit"
+msgstr ""
+
+#. module: basedata
 #: model:ir.actions.act_window,name:basedata.freight_clause_action
 #: model:ir.model,name:basedata.model_freight_clause
 #: model:ir.ui.menu,name:basedata.menu_freight_clause
 msgid "Freight Clause"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_NameCN
+msgid "Goods Chinese Name"
 msgstr ""
 
 #. module: basedata
@@ -230,6 +423,13 @@ msgid "Groups"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_cus_goods_tariff_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_Code_ts
+msgid "HS Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_id
@@ -239,6 +439,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_id
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_id
 #: model:ir.model.fields,field_description:basedata.field_business_type_id
 #: model:ir.model.fields,field_description:basedata.field_container_type_id
@@ -265,6 +474,7 @@ msgid "International Port"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code___last_update
@@ -274,6 +484,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type___last_update
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port___last_update
 #: model:ir.model.fields,field_description:basedata.field_business_type___last_update
 #: model:ir.model.fields,field_description:basedata.field_container_type___last_update
@@ -284,6 +503,7 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_write_uid
@@ -293,6 +513,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_write_uid
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_write_uid
 #: model:ir.model.fields,field_description:basedata.field_business_type_write_uid
 #: model:ir.model.fields,field_description:basedata.field_container_type_write_uid
@@ -303,6 +532,7 @@ msgid "Last Updated by"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_write_date
@@ -312,6 +542,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_write_date
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_write_date
 #: model:ir.model.fields,field_description:basedata.field_business_type_write_date
 #: model:ir.model.fields,field_description:basedata.field_container_type_write_date
@@ -332,7 +571,6 @@ msgstr ""
 #: model:ir.ui.menu,name:basedata.materials_menu
 #: model:ir.ui.view,arch_db:basedata.product_template_only_form_view_materials
 #: model:ir.ui.view,arch_db:basedata.product_template_search_view_materials
-#: model:product.category,name:basedata.product_category_materials
 msgid "Materials"
 msgstr ""
 
@@ -360,6 +598,11 @@ msgid "Name"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_sequence
+msgid "Num"
+msgstr ""
+
+#. module: basedata
 #: model:product.uom,name:basedata.product_custom_order
 msgid "Order"
 msgstr ""
@@ -376,6 +619,11 @@ msgid "Pack"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_NameCN
+msgid "Pack Chinese Name"
+msgstr ""
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_Code
 msgid "Pack Code"
 msgstr ""
@@ -387,8 +635,25 @@ msgid "Port"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_NameCN
+#: model:ir.ui.view,arch_db:basedata.internation_port_search_view
+msgid "Port Chinese Name"
+msgstr ""
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_port_Code
+#: model:ir.ui.view,arch_db:basedata.internation_port_search_view
 msgid "Port Code"
+msgstr ""
+
+#. module: basedata
+#: model:ir.ui.view,arch_db:basedata.internation_port_search_view
+msgid "Port English Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_port_type
+msgid "Port Type"
 msgstr ""
 
 #. module: basedata
@@ -408,6 +673,11 @@ msgid "Region"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_NameCN
+msgid "Region Chinese Name"
+msgstr ""
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_Code
 msgid "Region Code"
 msgstr ""
@@ -417,6 +687,11 @@ msgstr ""
 #: model:ir.ui.menu,name:basedata.menu_route
 #: model:ir.ui.view,arch_db:basedata.route_search
 msgid "Route"
+msgstr ""
+
+#. module: basedata
+#: selection:basedata.internation_port,port_type:0
+msgid "Seaport"
 msgstr ""
 
 #. module: basedata
@@ -451,6 +726,11 @@ msgid "Trade Mode"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_NameCN
+msgid "Trade Mode Chinese Name"
+msgstr ""
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_Code
 msgid "Trade Mode Code"
 msgstr ""
@@ -462,15 +742,26 @@ msgid "Trade Terms"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_NameCN
+msgid "Trade Terms Chinese Name"
+msgstr ""
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_Code
 msgid "Trade Terms Code"
 msgstr ""
 
 #. module: basedata
 #: model:ir.actions.act_window,name:basedata.delegation_transport_mode
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_transport_mode
 #: model:ir.model.fields,field_description:basedata.field_business_type_transport_mode
 #: model:ir.ui.menu,name:basedata.traf_mode_list_menu
 msgid "Transport Mode"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_name_cn
+msgid "Transport Mode Chinese Name"
 msgstr ""
 
 #. module: basedata
@@ -487,28 +778,12 @@ msgid "Transportation Term"
 msgstr ""
 
 #. module: basedata
-#: model:ir.model,name:basedata.model_declare_element
-msgid "add declare element to delegation"
-msgstr ""
-
-#. module: basedata
-#: model:ir.model,name:basedata.model_currency_system
-msgid "add special currency system for delegation"
-msgstr ""
-
-#. module: basedata
 #: model:ir.model,name:basedata.model_goods_attribute
 msgid "add special goods attribute for delegation"
 msgstr ""
 
 #. module: basedata
-#: model:ir.model,name:basedata.model_turnover_unit
-msgid "add special unit for delegation"
-msgstr ""
-
-#. module: basedata
 #: model:ir.model,name:basedata.model_delegate_country
-#: model:ir.model,name:basedata.model_product_hs_code
 msgid "add the Country of originOrCountry of destination"
 msgstr ""
 
@@ -534,8 +809,35 @@ msgid "code"
 msgstr ""
 
 #. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_cut_mode
+#: model:ir.model,name:basedata.model_basedata_cus_cut_mode
+msgid "customs cut mode"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_goods_tariff
+msgid "customs goods tariff"
+msgstr ""
+
+#. module: basedata
 #: model:ir.model,name:basedata.model_delegate_customs
 msgid "customs of delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_register_company
+msgid "customs register company"
+msgstr ""
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_unit
+#: model:ir.model,name:basedata.model_basedata_cus_unit
+msgid "customs unit"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_declare_element
+msgid "declare element"
 msgstr ""
 
 #. module: basedata
@@ -560,11 +862,6 @@ msgstr ""
 #. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_container_type_active
 msgid "enable/diable"
-msgstr ""
-
-#. module: basedata
-#: model:ir.model,name:basedata.model_delegate_exemption
-msgid "exemption nature of delegation"
 msgstr ""
 
 #. module: basedata
@@ -598,6 +895,21 @@ msgid "region of delegation"
 msgstr ""
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_second_unit
+msgid "second Unit"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_supervision_condition
+msgid "supervision condition"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_Code_t
+msgid "tax regulations Code"
+msgstr ""
+
+#. module: basedata
 #: model:ir.model,name:basedata.model_delegate_trade_mode
 msgid "trade mode of delegation"
 msgstr ""
@@ -605,6 +917,16 @@ msgstr ""
 #. module: basedata
 #: model:ir.model,name:basedata.model_delegate_trade_terms
 msgid "trade terms of delegation"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_NameCN
+msgid "unit Chinese Name"
+msgstr ""
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_Code
+msgid "unit Code"
 msgstr ""
 
 #. module: basedata
@@ -618,3 +940,4 @@ msgstr ""
 #, python-format
 msgid "you can't modify this root category"
 msgstr ""
+

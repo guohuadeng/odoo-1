@@ -16,10 +16,10 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="Code" string="unit Code"/>
+                                <field name="Code"/>
                             </group>
                             <group>
-                                <field name="NameCN" string="Chinese Name"/>
+                                <field name="NameCN"/>
                             </group>
                         </group>
                     </sheet>
@@ -32,10 +32,21 @@
             <field name="model">basedata.cus_unit</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="Code" string="unit Code"/>
-                    <field name="NameCN" string="Chinese Name"/>
+                    <field name="Code"/>
+                    <field name="NameCN"/>
                 </tree>
             </field>
+        </record>
+
+        <record id="cus_unit_search_view" model="ir.ui.view">
+           <field name="name">cus_unit search</field>
+           <field name="model">basedata.cus_unit</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="Code"/>
+                    <field name="NameCN"/>
+                </search>
+           </field>
         </record>
 
     </data>

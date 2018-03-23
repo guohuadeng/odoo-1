@@ -11,11 +11,12 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="NameCN"/>
-                        </group>
-                        <group>
                             <field name="Code"/>
                         </group>
+                        <group>
+                            <field name="NameCN"/>
+                        </group>
+
                     </group>
                 </sheet>
             </form>
@@ -30,12 +31,23 @@
         <!--固定格式-->
         <field name="arch" type="xml">
             <tree>
-                <field name="id"/>
-                <field name="NameCN"/>
                 <field name="Code"/>
+                <field name="NameCN"/>
             </tree>
         </field>
     </record>
+
+    <record id="customs_search_view" model="ir.ui.view">
+       <field name="name">customs search</field>
+       <field name="model">delegate_customs</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="Code"/>
+                <field name="NameCN"/>
+            </search>
+       </field>
+    </record>
+
     <!-- Action to open To-do Task list -->
     <act_window id="delegation_customs"
                 name="Customs"

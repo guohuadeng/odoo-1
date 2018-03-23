@@ -38,7 +38,7 @@
         # 'views/exemption.xml',
         # 'views/hs_code.xml',
         'views/packing.xml',
-        'views/dec_license_doc_type.xml',
+        # 'views/dec_license_doc_type.xml',
         'views/cus_goods_tariff.xml',
         'views/cus_register_company.xml',
         'views/cus_duty_mode.xml',

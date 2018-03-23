@@ -16,10 +16,10 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="Code" string="Filing Bill Type Code"/>
+                                <field name="Code"/>
                             </group>
                             <group>
-                                <field name="NameCN" string="Chinese Name"/>
+                                <field name="NameCN"/>
                             </group>
                         </group>
                     </sheet>
@@ -32,8 +32,8 @@
             <field name="model">basedata.dec_license_doc_type</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="Code" string="Filing Bill Type Code"/>
-                    <field name="NameCN" string="Chinese Name"/>
+                    <field name="Code"/>
+                    <field name="NameCN"/>
                 </tree>
             </field>
         </record>
