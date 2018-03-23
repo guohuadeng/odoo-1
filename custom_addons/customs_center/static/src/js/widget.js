@@ -41,6 +41,7 @@ odoo.define('customs_center', function (require) {
               $('body').append(temp);
               $('#'+self.modal_id+' button.oe_highlight').on('click', self, self.generate_string)
           }, 1000);
+
         },
 
         destroy: function () {
@@ -113,7 +114,7 @@ odoo.define('customs_center', function (require) {
                     }
                 })
             }
-            console.log(display_board.html());
+            // console.log(display_board.html());
         },
 
         remove_field: function () {
@@ -160,6 +161,13 @@ odoo.define('customs_center', function (require) {
             // }
             self.$input.val(target_string);
             $('#'+self.modal_id).modal('hide');
+
+            //点击确定时，将焦点移动到下一控件
+            var inputs = $("input"); // 获取表单中的所有输入框
+            var idx = inputs.index(self.$input);
+            if(idx<inputs.length-1){
+                inputs[idx+1].focus();
+            }
         }
     });
 
