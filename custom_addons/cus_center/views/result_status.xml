@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="result_status_action" model="ir.actions.act_window">
+            <field name="name">Result Status</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cus_center.dec_res_status</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="result_status_list" model="ir.ui.view">
+            <field name="name">Result Status List</field>
+            <field name="model">cus_center.dec_res_status</field>
+            <field name="arch" type="xml">
+                <tree default_order="sequence">
+                    <field name="sequence"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="result_status_form" model="ir.ui.view">
+            <field name="name">Result Status Form</field>
+            <field name="model">cus_center.dec_res_status</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                            </group>
+                            <group>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
