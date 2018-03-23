@@ -173,13 +173,13 @@ class CusGoodsTariff(models.Model):
     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
     supervision_condition = fields.Char(string="supervision condition")  # 监管条件 / 监管标识
 
-# 随附单证类型模型作废
-# class DecLicenseDocType(models.Model):
-#     """ 随附单证类型 """
-#     _name = 'basedata.dec_license_doc_type'
-#     _description = 'Customs DecLicenseDoc Type'
-#     _rec_name = 'NameCN'
-#
-#     Code = fields.Char(string='Filing Bill Type Code', required=True)       # 随附单证类型代码
-#     NameCN = fields.Char(string='Chinese Name', size=50, required=True)     # 中文名称
+
+class DecLicenseDocType(models.Model):
+    """ 随附单证类型 """
+    _name = 'basedata.dec_license_doc_type'
+    _description = 'Customs DecLicenseDoc Type'
+    _rec_name = 'NameCN'
+
+    Code = fields.Char(string='Filing Bill Type Code', required=True)       # 随附单证类型代码
+    NameCN = fields.Char(string='Chinese Name', size=50, required=True)     # 中文名称
 
