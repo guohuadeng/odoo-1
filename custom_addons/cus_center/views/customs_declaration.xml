@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_customs_declaration" model="ir.actions.act_window">
+            <field name="name">报关单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cus_center.customs_dec</field>
+            <field name="view_mode">tree,form</field>
+            <!--报关单列表视图界面过滤掉协同报关单 即不显示-->
+            <field name="domain">[('synergism_seq_no','=', False)]</field>
+        </record>
+
+
+        <record id="action_import_customs_declaration" model="ir.actions.act_window">
+            <field name="name">进口报关单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cus_center.customs_dec</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context" eval="{
+                        'default_inout': 'I'}"/>
+            <field name="domain">[('inout', '=', 'I'), ('synergism_seq_no','=', False)]</field>
+        </record>
+
+        <record id="action_export_customs_declaration" model="ir.actions.act_window">
+            <field name="name">出口报关单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cus_center.customs_dec</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context" eval="{
+                        'default_inout': 'E'}"/>
+            <field name="domain">[('inout', '=', 'E'), ('synergism_seq_no','=', False)]</field>
+        </record>
+
+
+        <!--报关单界面添加服务器动作 复制当前报关单全部数据-->
+        <record model="ir.actions.server" id="action_duplicate_dec_all_data">
+            <field name="name">复制全部</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_customs_center_customs_dec"/>
+            <field name="state">code</field>
+            <field name="code">
+if records:
+    action = records.duplicate_current_all_data()
+            </field>
+        </record>
+
+        <!--添加服务器动作 指定上边的id-->
+        <record model="ir.values" id="duplicate_dec_all_data">
+            <field name="name">复制全部</field>
+            <field name="model_id" ref="model_customs_center_customs_dec" />
+            <field name="model">cus_center.customs_dec</field>
+            <field name="key2">client_action_multi</field>
+            <field eval="'ir.actions.server,%d'%action_duplicate_dec_all_data" name="value"/>
+        </record>
+
+        <record id="customs_declaration_tree" model="ir.ui.view">
+            <field name="name">Customs Declaration tree view</field>
+            <field name="model">cus_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc" decoration-success="cus_dec_rec_state == '申报成功'" decoration-danger="cus_dec_rec_state == '导入失败'">
+                    <!--<field name="synergism_seq_no" string="协同报关单号" attrs="{'invisible':[('synergism_seq_no','=',False)]}"/>-->
+                    <field name="cus_dec_rec_state" string="回执状态"/>
+                    <button name="btn_review_receipt" string="历史回执信息" type="object" attrs="{'invisible': [('cus_dec_rec_state', '=', False)]}"/>
+                    <field name="name" string="报关单流水号"/>
+                    <field name="work_sheet_id" string="工作单号"/>
+                    <field name="inout" string="进出口类型" invisible="1"/>
+                    <field name="cus_ciq_No" string="关检关联号"/>
+                    <field name="dec_seq_no" string="统一编号"/>
+                    <field name="entry_id" string="海关编号"/>
+                    <field name="inout" string="进出口类型"/>
+                    <field name="business_company_id" string="收发货人"/>
+                    <field name="custom_master_id" string="申报地海关"/>
+                    <field name="create_uid" readonly="1" string="创建人"/>
+                    <field name="create_date" string="创建时间" widget="date"/>
+                    <field name="customs_order_id"  string="关联的通关清单" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="customs_declaration_form" model="ir.ui.view">
+            <field name="name">Customs Declaration Form</field>
+            <field name="model">cus_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                        <!--<button name="parse_cus_message_xml" string="解析富士康报文+空随附单据入库" class="oe_highlight" type="object"/>-->
+                        <!--<button name="auto_parse_attach_message_xml" string="解析随附单据入库" class="oe_highlight" type="object"/>-->
+                        <!--<button name="parse_receipt_xml" string="解析报关单回执" class="oe_highlight" type="object"/>-->
+                        <button name="generate_single_customer_xml" string="报文发送单一窗口" class="oe_highlight" type="object" attrs="{'invisible': [('cus_dec_sent_way', 'in', ['QP','single'])]}" confirm="确认将该报关单发送至-单一窗口么?"/>
+                        <button name="generate_single_customer_xml_after" string="报文发送单一窗口"  type="object"
+                                attrs="{'invisible': [('cus_dec_sent_way', '!=', 'QP')]}"
+                                confirm="该报关单已发送至QP申报，不能重复发送！"/>
+                        <button name="generate_single_customer_xml_after" string="报文发送单一窗口"  type="object"
+                                attrs="{'invisible': [('cus_dec_sent_way', '!=', 'single')]}"
+                                confirm="该报关单已发送至单一窗口申报，不能重复发送！"/>
+                        <button name="generate_qp_customer_xml" string="报文发送QP" class="oe_highlight" type="object" attrs="{'invisible': [('cus_dec_sent_way', 'in', ['QP','single'])]}" confirm="确认将该报关单发送至-QP么?"/>
+                        <button name="generate_qp_customer_xml_after" string="报文发送QP"  type="object"
+                                attrs="{'invisible': [('cus_dec_sent_way', '!=', 'QP')]}"
+                                confirm="该报关单已发送至QP申报，不能重复发送！"/>
+                        <button name="generate_qp_customer_xml_after" string="报文发送QP"  type="object"
+                                attrs="{'invisible': [('cus_dec_sent_way', '!=', 'single')]}"
+                                confirm="该报关单已发送至单一窗口申报，不能重复发送！"/>
+                        <!--<button name="print_check_reports" string="打印核对单"  type="object"/>-->
+                        <!--<button name="print_invoice" string="生成发票单据"  type="object"/>-->
+                        <field name="cus_dec_sent_way" widget="statusbar" invisible="1" statusbar_visible="single,QP"/>
+                    </header>
+                    <sheet>
+                        <field name="client_seq_no" string="报关单客户端编号" invisible="1"/>
+                        <field name="customs_order_id" string="关联的通关清单" invisible="1"/>
+                        <field name="synergism_seq_no" string="协同报关单号" invisible="1"/>
+
+
+                        <!--普通附件上传 用了附件拖拽上传模块之后 下方代码注释-->
+                        <!--<div class="oe_button_box" name="button_box">-->
+                            <!--<button name="action_get_dec_attachment_view" class="oe_stat_button" icon="fa-book" type="object">-->
+                                <!--<field name="attachment_number" widget="statinfo" string="单据上传"/>-->
+                            <!--</button>-->
+                        <!--</div>-->
+
+                        <div class="row" style="padding-bottom: 15px; padding-top: 11px;">
+                            <!--<div class="col-lg-4 col-md-6">-->
+                                <!--<div class="col-lg-4 col-md-4"><label for="inout" string="进出口类型"/></div>-->
+                                <!--<div class="col-lg-8 col-md-8">-->
+                                    <!--<field name="inout" class="oe_inline" readonly="1" invisible="1"/>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="col-lg-4 col-md-4">
+                                <div class="col-lg-4 col-md-4"><label for="custom_master_id" string="申报地海关"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="custom_master_id"/>
+                                    <field name="inout" class="oe_inline" invisible="1"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="col-lg-4 col-md-4"><label for="cus_ciq_No" string="关检关联号"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="cus_ciq_No"/>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4">
+                                <div class="col-lg-4 col-md-4"><label for="customer_id" string="委托报关单位"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="customer_id"/>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <notebook>
+                            <page string="基本信息">
+                                <div class="row" style="padding-top:20px">
+
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="dec_seq_no" string="统一编号" placeholder="响应回执中获取"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="dec_seq_no" string="统一编号" readonly="1" placeholder="响应回执中获取"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="pre_entry_id" string="预录入编号"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="pre_entry_id" string="预录入编号"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="entry_id" string="海关编号"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="entry_id" string="海关编号" readonly="1" placeholder="业务回执中获取"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="customs_id" string="进出口岸"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="customs_id" string="进出口岸" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="ManualNo" string="备案号"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="ManualNo" string="备案号"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="customer_contract_no" string="合同协议号"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="customer_contract_no" string="合同协议号"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4">
+                                            <label for="in_out_date" string="进出口日期"/>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="in_out_date" string="进出口日期" widget="date" style="width:100%"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"><label for="dec_date" string="申报日期"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="dec_date" string="申报日期" widget="date" style="width: 100%;"
+                                                   readonly="1" placeholder="业务回执中获取"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="col-lg-4 col-md-4"></div>
+                                        <div class="col-lg-8 col-md-8"></div>
+                                    </div>
+                                </div>
+                                    <!--<group col="3" colspan="1">-->
+                                        <!--<group>-->
+                                            <!--<field name="business_company_id" string="经营单位/收发货人"/>-->
+                                            <!--<field name="transport_mode_id" string="运输方式"/>-->
+                                            <!--<field name="bill_no" string="提运单号"/>-->
+                                            <!--<field name="payment_mark" string="纳税单位"/>-->
+                                            <!--<field name="port_id" string="装货港/指运港"/>-->
+                                        <!--</group>-->
+                                        <!--<group>-->
+                                            <!--<field name="input_company_id" string="消费使用单位"/>-->
+                                            <!--<field name="NativeShipName" string="运输工具名称"/>-->
+                                            <!--<field name="trade_mode_id" string="监管方式"/>-->
+                                            <!--<field name="licenseNo" string="许可证号"/>-->
+                                            <!--<field name="region_id" string="境内目的地"/>-->
+                                        <!--</group>-->
+                                        <!--<group>-->
+                                            <!--<field name="declare_company_id" string="申报单位"/>-->
+                                            <!--<field name="VoyageNo" string="航次号"/>-->
+                                            <!--<field name="CutMode_id" string="征免性质"/>-->
+                                            <!--<field name="origin_arrival_country_id" string="启运国/抵达国"/>-->
+                                            <!--<field name="trade_terms_id" string="成交方式"/>-->
+                                        <!--</group>-->
+                                    <!--</group>-->
+                                    <div style="padding-bottom: 10px; padding-top: 20px">
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8">
+                                                <div class="col-lg-2 col-md-2" style="width:16%">
+                                                    <label for="business_company_id" string="收发货人"/>
+                                                </div>
+                                                <div class="col-lg-10 col-md-10">
+                                                    <field name="business_company_id" style="width:55%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8">
+                                                <div class="col-lg-2 col-md-2" style="width:16%">
+                                                    <label for="input_company_id" string="消费使用单位"/>
+                                                </div>
+                                                <div class="col-lg-10 col-md-10">
+                                                    <field name="input_company_id" style="width:55%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8">
+                                                <div class="col-lg-2 col-md-2" style="width:16%">
+                                                    <label for="declare_company_id" string="申报单位" />
+                                                </div>
+                                                <div class="col-lg-10 col-md-10">
+                                                    <field name="declare_company_id" style="width:55%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="transport_mode_id" string="运输方式"/>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="transport_mode_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="NativeShipName" string="运输工具名称"/>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="NativeShipName"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="VoyageNo" string="航次号"/>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="VoyageNo"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="bill_no" string="提运单号"/>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="bill_no"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="trade_mode_id" string="监管方式" />
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="trade_mode_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="CutMode_id" string="征免性质" />
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="CutMode_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="payment_mark" string="纳税单位"/>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="payment_mark" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="licenseNo" string="许可证号"/>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="licenseNo"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="origin_arrival_country_id" string="启运国/抵达国"/>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="origin_arrival_country_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="port_id" string="装货港/指运港" />
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="port_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="region_id" string="境内目的地"/>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="region_id"  style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="trade_terms_id" string="成交方式" />
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <field name="trade_terms_id" style="width:100%"
+                                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-3 col-md-3">
+                                                <label for="fee_mark" class="oe_inline" string="运费"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field class="oe_inline" name="fee_mark" placeholder="运费标记"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field name="fee_rate" placeholder="运费/率"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field class="oe_inline" name="other_currency_id" placeholder="运费币制"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-3 col-md-3">
+                                                <label for="insurance_mark" string="保费"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field class="oe_inline" name="insurance_mark" placeholder="保费标记"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field name="insurance_rate" placeholder="保费/率"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field name="insurance_currency_id" placeholder="保费币制"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-3 col-md-3">
+                                                <label for="other_mark" string="杂费"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field class="oe_inline" name="other_mark" placeholder="杂费标记"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field name="other_rate" placeholder="杂费/率"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field name="other_currency_id" placeholder="杂费币制"
+                                                       options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                     <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="qty" string="件数"/>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3">
+                                                <field name="qty"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="packing_id" string="包装种类" />
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <field name="packing_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="gross_weight" string="毛重(KG)"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <field name="gross_weight"/>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="net_weight" string="净重(KG)"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <field name="net_weight"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="trade_country_id" string="贸易国(地区)"/>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8">
+                                                <field name="trade_country_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="in_ratio" string="征税比例"/>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8">
+                                                <field name="in_ratio"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="promise1" string="特殊关系确认"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <field name="promise1" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="promise2" string="价格影响确认"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <field name="promise2" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="promise3" string="特许权使用费支付确认"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <field name="promise3" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="col-lg-4 col-md-4">
+                                                <label for="entry_type_id" string="报关单类型"/>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8">
+                                                <field name="entry_type_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <!--<div class="col-md-4">-->
+                                                <!--<label for="bill_type_id" string="备案清单类型"/>-->
+                                            <!--</div>-->
+                                            <!--<div class="col-md-6">-->
+                                                <!--<field name="bill_type_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>-->
+                                            <!--</div>-->
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8">
+                                            <div class="col-lg-2 col-md-2" style="width:16%">
+                                                <label for="remarks" string="备注"/>
+                                            </div>
+                                            <div class="col-lg-10 col-md-10" style="width:55%">
+                                                <field name="remarks"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                    </div>
+                                    <!--odoo自带弹出窗口实现方式-->
+                                    <!--<field name="dec_goods_list_ids" string="商品信息"/>-->
+
+                                    <!--周杨 列表上方自定义按钮-->
+                                    <!--<span class="oe_right">-->
+                                        <!--<button name="customs_center.action_customs_dec_goods_wizard" type="action" string="Create"/>-->
+                                    <!--</span>-->
+
+                                    <field name="dec_goods_list_ids" mode="tree" string="商品信息">
+                                        <form string="Declearation Goods">
+                                            <sheet>
+                                                <div class="row" style="padding-top:20px">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="col-lg-2 col-md-2" style="width:16%">
+                                                            <label for="goods_classification_id" string="合规商品" style="font-weight:bold;"/>
+                                                        </div>
+                                                        <div class="col-lg-10 col-md-10">
+                                                            <field name="goods_classification_id" style="width:80%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" style="padding-top:20px">
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <div class="col-lg-4 col-md-4"><label for="sequence" string="商品序号" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-8 col-md-8">
+                                                            <field name="sequence" string="商品序号" readonly="1" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <div class="col-lg-4 col-md-4"><label for="cus_goods_code" string="客户料号" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-8 col-md-8">
+                                                            <field name="cus_goods_code" string="客户料号" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <div class="col-lg-4 col-md-4"><label for="ManualSN" string="备案序号" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-8 col-md-8">
+                                                            <field name="ManualSN" string="备案序号"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-3 col-md-3">
+                                                        <div class="col-lg-4 col-md-4"><label for="cus_goods_tariff_id" string="商品编号" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-8 col-md-8">
+                                                            <field name="cus_goods_tariff_id" string="商品编号" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!--一行两列-->
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <div class="col-lg-3 col-md-4"><label for="goods_name" string="商品名称" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-9 col-md-8">
+                                                            <field name="goods_name" string="商品名称"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <div class="col-lg-3 col-md-4"><label for="goods_model" string="规格型号" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-9 col-md-8">
+                                                            <field name="goods_model" string="规格型号" widget="declare_element" options="{'tariff': 'cus_goods_tariff_id'}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!--一行5列-->
+                                                <div class="row" >
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="deal_qty" string="成交数量" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="deal_qty" string="成交数量"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="deal_unit" string="成交单位" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="deal_unit" string="成交单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="deal_unit_price" string="成交单价" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="deal_unit_price" string="成交单价"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="deal_total_price" string="成交总价" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="deal_total_price" string="成交总价" readonly="1"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="currency_id" string="币制" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="currency_id" string="币制" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!--&lt;!&ndash;一行5列&ndash;&gt;-->
+                                                <div class="row">
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="first_qty" string="法定数量" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="first_qty" string="法定数量"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="first_unit" string="法定单位" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="first_unit" string="法定单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="version_num" string="版本号" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="version_num" string="版本号"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="product_code" string="货号" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="product_code" string="货号"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="destination_country_id" string="最终目的国" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="destination_country_id" string="最终目的国" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!--一行5列-->
+                                                <div class="row">
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="second_qty" string="第二数量" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="second_qty" string="第二数量"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="second_unit" string="第二单位" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="second_unit" string="第二单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="origin_country_id" string="原产国" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="duty_mode_id" string="征免方式" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="product_code" string="货号" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="product_code" string="货号"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                        <div class="col-lg-5 col-md-5"><label for="version_num" string="版本号" style="font-weight:bold;"/></div>
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <field name="version_num" string="版本号"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </sheet>
+                                        </form>
+
+                                        <tree string="商品信息">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="goods_classification_id" string="客户料号"/>
+                                            <field name="cus_goods_tariff_id" string="商品编码" options="{'no_create_edit': 1}"/>
+                                            <field name="goods_name" string="商品名称"/>
+                                            <field name="goods_model" string="规格模型"/>
+                                            <field name="deal_qty" string="成交数量"/>
+                                            <field name="deal_unit_price" string="成交单价"/>
+                                            <field name="deal_unit" string="成交单位"/>
+                                            <field name="deal_total_price" string="成交总价"/>
+                                            <field name="currency_id" string="币制" options="{'no_create_edit': 1}"/>
+                                            <field name="first_qty" string="第一数量"/>
+                                            <field name="first_unit" string="第一单位" options="{'no_create_edit': 1}" />
+                                            <field name="second_qty" string="第二数量"/>
+                                            <field name="second_unit" string="第二单位" options="{'no_create_edit': 1}" />
+                                            <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1}"/>
+                                            <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1}"/>
+                                            <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1}"/>
+                                            <field name="supervision_condition" string="监管标识" options="{'no_create_edit': 1}" />
+                                            <!--<field name="create_uid" string="创建人" readonly="1"/>-->
+                                            <!--<field name="create_date" string="创建时间" readonly="1" widget="date"/>-->
+                                        </tree>
+                                    </field>
+
+                                </page>
+
+                                <page string="集装箱信息">
+                                    <field name="dec_container_ids" mode="tree">
+                                        <tree string="dec_container_tree" editable="bottom">
+                                            <field name="containerNo" string="集装箱号"/>
+                                            <field name="spec_code" string="集装箱规格"/>
+                                            <field name="weight" string="自重"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+                                <page string="随附单证">
+                                    <field name="licenseNo_ids" mode="tree">
+                                        <tree string="license_No_tree" editable="bottom">
+                                            <field name="dec_license_no" string="单证编号"/>
+                                            <field name="dec_license_doc_type_id" string="单证类型"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+                                <page string="关联信息">
+                                    <group>
+                                        <group>
+                                            <field name="rel_dec_No" string="关联报关单"/>
+                                            <field name="rel_man_No" string="关联备案"/>
+                                            <field name="bonded_No" string="保税/监管场所"/>
+                                            <field name="customs_field" string="货场代码"/>
+                                        </group>
+                                    </group>
+                                </page>
+
+                                <page string="随附单据">
+                                        <!--<field name="drag_attach_ids" widget="multidragndrop" string="单据PDF附件"/>-->
+                                        <field name="information_attachment_ids" widget="multidragndrop_edoc" options="{'res_model_id':'id','res_model_name':'customs_center.customs_dec'}" string="单据PDF附件"/>
+                                        <field name="id" invisible="1" />
+                                </page>
+
+                                <page string="回执信息">
+                                    <field name="receipt_ids" mode="tree" readonly="1">
+                                        <tree>
+                                            <field name="sequence" invisible="1"/>
+                                            <field name="status_id" readonly="1"/>
+                                            <field name="message" readonly="1"/>
+                                            <field name="notice_date" readonly="1"/>
+                                        </tree>
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="status_id" readonly="1" options="{'on_open': True}"/>
+                                                    <field name="notice_date" readonly="1"/>
+                                                </group>
+                                                <group>
+                                                    <field name="message" readonly="1"/>
+                                                </group>
+                                            </group>
+                                        </form>
+                                    </field>
+                                </page>
+
+                                <!--<page string="配置信息(字段确认后，该page页面删除)">-->
+                                    <!--<group>-->
+                                        <!--<group>-->
+                                            <!--<field name="cop_code" string="录入单位企业组织机构代码"/>-->
+                                            <!--<field name="cop_name" string="录入单位名称"/>-->
+                                            <!--<field name="cop_code_scc" string="录入单位社会信用统一编码"/>-->
+                                            <!--<field name="inputer_name" string="录入员姓名" required="1"/>-->
+                                            <!--<field name="oper_name" string="操作员姓名"/>-->
+                                            <!--<field name="certificate" string="操作员卡的证书号"/>-->
+                                            <!--<field name="ic_code" string="操作员IC卡号"/>-->
+                                            <!--<field name="dec_company_customs_code" string="申报单位海关编码"/>-->
+                                        <!--</group>-->
+                                    <!--</group>-->
+                                <!--</page>-->
+
+                                <!--<page string="随附单据">-->
+                                    <!--<field name="information_attachment_ids" widget="many2many_binary"/>-->
+                                <!--</page>-->
+
+
+                            </notebook>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"
+                               widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <!--协同报关单菜单-->
+        <record id="action_sync_customs_declaration" model="ir.actions.act_window">
+            <field name="name">协同报关单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cus_center.customs_dec</field>
+            <field name="view_mode">tree,form</field>
+            <!--协同报关单列表视图界面 只显示协同报关单-->
+            <field name="domain">[('synergism_seq_no','&lt;&gt;', False)]</field>
+        </record>
+
+        <record id="customs_sync_declaration_tree" model="ir.ui.view">
+            <field name="name">Customs Sync Declaration tree view</field>
+            <field name="model">cus_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <tree create="false" decoration-success="cus_dec_rec_state == '申报成功'" decoration-danger="cus_dec_rec_state == '导入失败'" default_order="create_date desc">
+                    <field name="cus_dec_rec_state" string="回执状态"/>
+                    <button name="btn_review_receipt" string="历史回执信息" type="object"/>
+                    <field name="name" string="报关单流水号"/>
+                    <field name="synergism_seq_no" string="协同报关单号"/>
+                    <field name="work_sheet_id" string="工作单号"/>
+                    <field name="cus_ciq_No" string="关检关联号"/>
+                    <field name="dec_seq_no" string="统一编号"/>
+                    <field name="entry_id" string="海关编号"/>
+                    <field name="inout" string="进出口类型"/>
+                    <field name="business_company_id" string="收发货人"/>
+                    <field name="custom_master_id" string="申报地海关"/>
+                    <field name="create_uid" readonly="1" string="创建人"/>
+                    <field name="create_date" string="创建时间" widget="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sync_customs_declaration_tree" model="ir.actions.act_window.view">
+                   <field name="view_mode">tree</field>
+                   <field name="sequence">1</field>
+                   <field name="view_id" ref="customs_center.customs_sync_declaration_tree" />
+                   <field name="act_window_id" ref="customs_center.action_sync_customs_declaration" />
+        </record>
+
+        <record id="sync_customs_declaration_form" model="ir.actions.act_window.view">
+                    <field name="view_mode">form</field>
+                    <field name="sequence">2</field>
+                   <field name="view_id" ref="customs_center.customs_declaration_form" />
+                   <field name="act_window_id" ref="customs_center.action_sync_customs_declaration" />
+        </record>
+
+
+
+        <!--报关单搜索视图-->
+        <!--支持按工作单号、关检关联号、统一编号、预录入号、海关编号、收发货人、创建人搜索-->
+        <record id="view_customs_declaration_search" model="ir.ui.view">
+           <field name="name">customs declaration search</field>
+           <field name="model">customs_center.customs_dec</field>
+            <field name="arch" type="xml">
+                <search string="customs declaration search">
+                    <field name="customs_order_id" string="通关清单" domain="[('customs_center.customs_dec.customs_order_id', '=', self)]"/>
+                    <field name="name" string="报关单流水号" domain="[('customs_center.customs_dec.name', '=', self)]"/>
+                    <field name="work_sheet_id" string="工作单号" domain="[('customs_center.customs_dec.work_sheet_id', '=', self)]"/>
+                    <field name="cus_ciq_No" string="关检关联号" domain="[('customs_center.customs_dec.cus_ciq_No', '=', self)]"/>
+                    <field name="dec_seq_no" string="统一编号" domain="[('customs_center.customs_dec.dec_seq_no', '=', self)]"/>
+                    <field name="entry_id" string="海关编号" domain="[('customs_center.customs_dec.entry_id', '=', self)]"/>
+                    <field name="custom_master_id" string="申报地海关" domain="[('customs_center.customs_dec.custom_master_id', '=', self)]"/>
+                    <field name="business_company_id" string="收发货人" domain="[('customs_center.customs_dec.business_company_id', '=', self)]"/>
+                    <field name="create_uid" string="创建人" domain="[('customs_center.customs_dec.create_uid', '=', self)]"/>
+                    <separator/>
+                    <filter string="进口" name="in" domain="[('inout','=','i')]"/>
+                    <filter string="出口" name="export" domain="[('inout','=','e')]"/>
+                    <separator/>
+                    <filter string="当天清单" name="today"  domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                    <filter string="本周清单" name="last_week"  domain="[('create_date','&gt;', (context_today() - datetime.timedelta(weeks=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                    <filter string="本月清单" name="month" domain="[('create_date','&gt;=', time.strftime('%Y-%m-01 00:00:00')),('create_date','&lt;',  (context_today() + relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="上月清单" name="month2"  domain="[('create_date','&lt;', time.strftime('%Y-%m-01 00:00:00')),('create_date','&gt;=',  (context_today() - relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="本年清单" name="year"  domain="[('create_date','&lt;=', time.strftime('%Y-12-31 23:59:59')),('create_date','&gt;=', time.strftime('%Y-01-01 00:00:00'))]"/>
+                </search>
+           </field>
+        </record>
+
+        <record id="customs_goods_wizard" model="ir.ui.view">
+            <field name="name">Customs Goods Wizard</field>
+            <field name="model">customs_center.goods_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Customs Goods">
+                    <sheet>
+                        <div class="row">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="goods_classification_id" string="客户料号"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="goods_classification_id"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="supervision_condition " string="监管标识"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="supervision_condition" readonly="1"/>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="cus_goods_tariff_id" string="商品编码"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="cus_goods_tariff_id"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="goods_model" string="规格模型"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="goods_model" widget="declare_element"
+                                               options="{'tariff': 'cus_goods_tariff_id'}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="deal_qty" string="成交数量"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="deal_qty"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="deal_unit_price" string="成交单价"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="deal_unit_price"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="deal_unit" string="成交单位"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="deal_unit"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="deal_total_price" string="成交总价"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="deal_total_price"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="currency_id" string="币制"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="currency_id"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="first_qty" string="第一数量"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="first_qty"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="first_unit" string="第一单位"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="first_unit" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="second_qty" string="第二数量"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="second_qty"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="second_unit" string="第二单位"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="second_unit" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="origin_country_id" string="原产国"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="origin_country_id"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="destination_country_id" string="目的国"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="destination_country_id"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="duty_mode_id" string="征免方式"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <field name="duty_mode_id"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                            </div>
+
+                        </div>
+
+                        <footer>
+                            <button class="oe_highlight" name="create_goods_list" type="object" string="Create"/>
+                            <button special="cancel" string="Cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_customs_dec_goods_wizard" model="ir.actions.act_window">
+            <field name="name">Customs Goods List</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.goods_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+
+    </data>
+</odoo>

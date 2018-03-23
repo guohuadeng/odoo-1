@@ -214,35 +214,37 @@ class MailMail(models.Model):
 
                 # build an RFC2822 email.message.Message object and send it without queuing
                 res = None
+                receiver = []
                 for email in email_list:
-                    msg = IrMailServer.build_email(
-                        email_from=mail.email_from,
-                        email_to=email.get('email_to'),
-                        subject=mail.subject,
-                        body=email.get('body'),
-                        body_alternative=email.get('body_alternative'),
-                        email_cc=tools.email_split(mail.email_cc),
-                        email_bcc=tools.email_split(mail.email_bcc),
-                        reply_to=mail.reply_to,
-                        attachments=attachments,
-                        message_id=mail.message_id,
-                        references=mail.references,
-                        object_id=mail.res_id and ('%s-%s' % (mail.res_id, mail.model)),
-                        subtype='html',
-                        subtype_alternative='plain',
-                        headers=headers)
-                    try:
-                        res = IrMailServer.send_email(msg, mail_server_id=mail.mail_server_id.id)
-                    except AssertionError as error:
-                        if error.message == IrMailServer.NO_VALID_RECIPIENT:
-                            # No valid recipient found for this particular
-                            # mail item -> ignore error to avoid blocking
-                            # delivery to next recipients, if any. If this is
-                            # the only recipient, the mail will show as failed.
-                            _logger.info("Ignoring invalid recipients for mail.mail %s: %s",
-                                         mail.message_id, email.get('email_to'))
-                        else:
-                            raise
+                    receiver.extend(email.get('email_to'))
+                msg = IrMailServer.build_email(
+                    email_from=mail.email_from,
+                    email_to=receiver,
+                    subject=mail.subject,
+                    body=email_list[0].get('body'),
+                    body_alternative=email_list[0].get('body_alternative'),
+                    email_cc=tools.email_split(mail.email_cc),
+                    email_bcc=tools.email_split(mail.email_bcc),
+                    reply_to=mail.reply_to,
+                    attachments=attachments,
+                    message_id=mail.message_id,
+                    references=mail.references,
+                    object_id=mail.res_id and ('%s-%s' % (mail.res_id, mail.model)),
+                    subtype='html',
+                    subtype_alternative='plain',
+                    headers=headers)
+                try:
+                    res = IrMailServer.send_email(msg, mail_server_id=mail.mail_server_id.id)
+                except AssertionError as error:
+                    if error.message == IrMailServer.NO_VALID_RECIPIENT:
+                        # No valid recipient found for this particular
+                        # mail item -> ignore error to avoid blocking
+                        # delivery to next recipients, if any. If this is
+                        # the only recipient, the mail will show as failed.
+                        _logger.info("Ignoring invalid recipients for mail.mail %s: %s",
+                                     mail.message_id, email.get('email_to'))
+                    else:
+                        raise
                 if res:
                     mail.write({'state': 'sent', 'message_id': res, 'failure_reason': False})
                     mail_sent = True

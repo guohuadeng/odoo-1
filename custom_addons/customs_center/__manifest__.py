@@ -34,7 +34,7 @@
         'views/pending_review_goods_views.xml',
         'views/customs_dec_attachs.xml',
         'views/goods_classification_views.xml',
-        'views/pending_classified_goods_views.xml',
+        # 'views/pending_classified_goods_views.xml', 历史申报记录待归类功能作废
         'views/customs_declaration.xml',
         'views/customs_order.xml',
         'views/result_status.xml',

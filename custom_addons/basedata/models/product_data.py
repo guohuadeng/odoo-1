@@ -23,41 +23,12 @@ class DeclareElement(models.Model):
     _rec_name = 'name'
     _table = 'b_hg_complex_criterion'
 
-    cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="Customs Goods Tariff", required=True, )
+    cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="HS Code", required=True, )
     name = fields.Char('Element Name', size=255, required=True)   # 要素名
     sequence = fields.Integer('Num', required=True)   # 序号
 
 
-class Country(models.Model):
-    """国家、地区"""
-    _name = 'delegate_country'
-    _description = 'add the Country of originOrCountry of destination'
-    _rec_name = 'NameCN'
-    _table = 'b_hg_country'
 
-    Code = fields.Char('Country Code', size=50)     # 国家代码
-    NameCN = fields.Char('Chinese Name', size=50)   # 中文名称
-
-    @api.multi
-    @api.depends('Code', 'NameCN')
-    def name_get(self):
-        result = []
-        for record in self:
-            result.append(
-                (record.id, u"%s %s"%(record.Code, record.NameCN))
-            )
-        return result
-
-    @api.model
-    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
-        """重写模型name字段搜索方法"""
-        args = args or []
-        if not (name == '' and operator == 'ilike'):
-            args += ['|', ('Code', operator, name), ('NameCN', operator, name)]
-
-        return super(Country, self)._name_search(
-            name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
-        )
 
 
 # class Unit(models.Model):

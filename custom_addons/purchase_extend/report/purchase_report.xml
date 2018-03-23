@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            string="Request for Service Quotation"
+            id="report_purchase_service_quotation"
+            model="purchase.service_quote_order"
+            report_type="qweb-pdf"
+            name="purchase_extend.service_quotation_template"
+            file="purchase_extend.service_quotation_template"
+        />
+
+    </data>
+</odoo>

@@ -43,7 +43,7 @@
     <menuitem id="cus_filing_bill_type_menu" name="备案清单类型表" parent="delegate_list_menu" action="delegation_filing_bill_type" />
     <menuitem id="cus_register_company_menu" name="企业库表" parent="delegate_list_menu" action="delegation_cus_register_company" />
     <menuitem id="cus_goods_tariff_menu" name="海关税则" parent="delegate_list_menu" action="delegation_cus_goods_tariff" />
-    <menuitem id="dec_license_doc_type_menu" name="随附单证类型" parent="delegate_list_menu" action="delegation_dec_license_doc_type" />
+    <!--<menuitem id="dec_license_doc_type_menu" name="随附单证类型" parent="delegate_list_menu" action="delegation_dec_license_doc_type" />-->
     <menuitem id="declare_element_menu" name="Declare Element" parent="delegate_list_menu" action="delegation_declare_element"/>
 
     <!--其它-->

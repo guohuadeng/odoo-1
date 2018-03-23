@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_transport_mode_form" model="ir.ui.view">
+        <field name="name">transport mode form</field>
+        <field name="model">cus_args.transport_mode</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name_cn"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_transport_mode_list" model="ir.ui.view">
+        <field name="name">transport mode list</field>
+        <field name="model">cus_args.transport_mode</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id"/>
+                <field name="name_cn" />
+                <field name="code" />
+            </tree>
+        </field>
+    </record>
+
+    <act_window id="transport_mode_action"
+                name="Transport Mode"
+                res_model="cus_args.transport_mode"
+                view_mode="tree,form"/>
+</odoo>

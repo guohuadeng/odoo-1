@@ -16,9 +16,9 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="register_code" string="register code"/>
-                                <field name="unified_social_credit_code" string="unified social credit code"/>
-                                <field name="register_name_cn" string="register name cn"/>
+                                <field name="register_code"/>
+                                <field name="unified_social_credit_code"/>
+                                <field name="register_name_cn"/>
                             </group>
                         </group>
                     </sheet>
@@ -31,11 +31,23 @@
             <field name="model">basedata.cus_register_company</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="register_code" string="register code"/>
-                    <field name="unified_social_credit_code" string="unified social credit code"/>
-                    <field name="register_name_cn" string="register name cn"/>
+                    <field name="register_code"/>
+                    <field name="unified_social_credit_code"/>
+                    <field name="register_name_cn"/>
                 </tree>
             </field>
+        </record>
+
+        <record id="cus_register_company_search_view" model="ir.ui.view">
+           <field name="name">cus_register_company search</field>
+           <field name="model">basedata.cus_register_company</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="register_code"/>
+                    <field name="unified_social_credit_code"/>
+                    <field name="register_name_cn"/>
+                </search>
+           </field>
         </record>
 
     </data>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="consignor_nee_type_action" model="ir.actions.act_window">
+            <field name="name">Consignor Nee Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase_extend.consignor_nee_type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="consignor_nee_type_form_view" model="ir.ui.view">
+            <field name="name">consignor nee type form view</field>
+            <field name="model">purchase_extend.consignor_nee_type</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="delivery_info_action" model="ir.actions.act_window">
+            <field name="name">Delivery Info</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order_delivery_info</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="delivery_info_form_view" model="ir.ui.view">
+            <field name="name">delivery info form view</field>
+            <field name="model">purchase.order_delivery_info</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="address"/>
+                                <field name="qty"/>
+                                <field name="wrap_type_id"/>
+                            </group>
+                            <group>
+                                <field name="type_id"/>
+                                <field name="gross_weight"/>
+                                <field name="remark"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

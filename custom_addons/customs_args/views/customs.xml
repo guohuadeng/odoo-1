@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_customs_form" model="ir.ui.view">
+        <field name="name">customs form</field>
+        <field name="model">cus_args.customs</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="NameCN"/>
+                        </group>
+                        <group>
+                            <field name="Code"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_customs_list" model="ir.ui.view">
+        <field name="name">customs list</field>
+        <field name="model">cus_args.customs</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id"/>
+                <field name="NameCN"/>
+                <field name="Code"/>
+            </tree>
+        </field>
+    </record>
+
+    <act_window id="customs_action"
+                name="Customs"
+                res_model="cus_args.customs"
+                view_mode="tree,form"/>
+
+
+</odoo>

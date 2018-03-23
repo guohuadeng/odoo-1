@@ -9,9 +9,9 @@
 
             <xpath expr="//field[@name='partner_shipping_id']" position="after">
                 <field name="contract" readonly="1"/>
-                <field name="business_type" attrs="{'readonly': [('state', 'not in', ('draft', 'sent'))]}"
+                <field name="business_type" attrs="{'readonly': ['|', ('state', 'not in', ('draft', 'sent')), ('name', '!=', '新建'), ('name', '!=', 'New')]}"
                        options="{'no_open': True, 'no_create_edit': 1}"/>
-                <field name="contact" widget="many2many_tags" options="{'no_create_edit': 1}"
+                <field name="contact_id" options="{'no_create_edit': 1}"
                        domain="[('parent_id', '=', partner_id), ('is_company', '=', False), ('type', '=', 'contact')]"
                  context="{'default_is_company': False, 'default_parent_id': partner_id}"/>
             </xpath>
@@ -27,12 +27,12 @@
 
             <!--加入签订合同,生成工作单按钮-->
             <xpath expr="//header/button[@name='action_quotation_send']" position="before">
-                <button name="%(boyue_sale_extend.action_order_contract_wizard)d" string="Signed Contract"
-                        type="action" class="btn-primary"
-                        attrs="{'invisible': ['|', ('state', 'not in', ('draft', 'sent')), ('contract', '!=', False)]}"
-                        context="{'sale_order': active_id, 'default_customer': partner_id}"/>
                 <button name="create_work_sheet" type="object" string="Create Work Sheet"
                     class="btn-primary" states="sale,sheet"/>
+                <button name="%(boyue_sale_extend.action_order_contract_wizard)d" string="Signed Contract"
+                        type="action"
+                        attrs="{'invisible': ['|', ('state', 'not in', ('sale',)), ('contract', '!=', False)]}"
+                        context="{'sale_order': active_id, 'default_customer': partner_id}"/>
             </xpath>
 
             <xpath expr="//header/button[@name='action_cancel']" position="attributes">
@@ -72,20 +72,20 @@
             </xpath>
 
             <!--当合同为空时，隐藏确认销售按钮-->
-            <xpath expr="//header/button[@class='o_sale_confirm']" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', ('contract', '=', False)]}</attribute>
-            </xpath>
+            <!--<xpath expr="//header/button[@class='o_sale_confirm']" position="attributes">-->
+                <!--<attribute name="attrs">{'invisible': ['|', ('contract', '=', False)]}</attribute>-->
+            <!--</xpath>-->
 
             <!--当合同为空时，隐藏确认销售按钮-->
-            <xpath expr="//header/button[@class='btn-primary o_sale_confirm']" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', ('contract', '=', False)]}</attribute>
-            </xpath>
+            <!--<xpath expr="//header/button[@class='btn-primary o_sale_confirm']" position="attributes">-->
+                <!--<attribute name="attrs">{'invisible': ['|', ('contract', '=', False)]}</attribute>-->
+            <!--</xpath>-->
 
             <!--当状态为签订合同时，加入确认按钮-->
-            <xpath expr="//header/button[@name='print_quotation']" position="before">
-                <button name="action_confirm" type="object" states="signed" class="btn-primary o_sale_confirm"
-                        string="Confirm Sale"/>
-            </xpath>
+            <!--<xpath expr="//header/button[@name='print_quotation']" position="before">-->
+                <!--<button name="action_confirm" type="object" states="sent" class="btn-primary o_sale_confirm"-->
+                        <!--string="Confirm Sale"/>-->
+            <!--</xpath>-->
 
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="domain">[('customer','=',True), ('is_company', '=', True)]</attribute>
@@ -95,11 +95,14 @@
                 <page string="Trade Info">
                     <group>
                         <group>
-                            <field name="customs" widget="many2many_tags" options="{'no_create_edit': 1}"/>                 <!-- 进出口岸 -->
+                            <field name="load_port_id" options="{'no_create_edit': 1}"/>              <!-- 起运港 -->
+                            <field name="trans_port_id" options="{'no_create_edit': 1}"/>              <!-- 中转港 -->
+                            <field name="dest_port_id" options="{'no_create_edit': 1}"/>              <!-- 目的港 -->
                             <field name="incoterm" options="{'no_create_edit': 1}"/>              <!-- 成交方式 -->
-                            <field name="trade_country" options="{'no_create_edit': 1}"/>           <!-- 贸易国别 -->
-                            <field name="port" options="{'no_create_edit': 1}"/>                    <!-- 装货/指运港 -->
+                            <!--<field name="port" options="{'no_create_edit': 1}"/>                    &lt;!&ndash; 装货/指运港 &ndash;&gt;-->
                             <field name="num"/>                     <!-- 件数 -->
+                            <field name="packing" options="{'no_create_edit': 1}"/>                 <!-- 包装方式 -->
+                            <field name="goods_attribute_id"/>
                             <field name="goods_name"/>
                             <field name="remarks"/>
 
@@ -113,10 +116,12 @@
                             <!--<field name="mark_code"/>               &lt;!&ndash; 标记唛码 &ndash;&gt;-->
                         </group>
                         <group>
+                            <field name="customs" widget="many2many_tags" options="{'no_create_edit': 1}"/>                 <!-- 进出口岸 -->
+                            <field name="decl_custom_id" options="{'no_create_edit': 1}"/>                 <!-- 申报口岸 -->
                             <field name="trade_mode" options="{'no_create_edit': 1}"/>              <!-- 监管方式 -->
-                            <field name="origin_arrival_country" options="{'no_create_edit': 1}"/>  <!-- 启运/抵达国 -->
-                            <field name="region" options="{'no_create_edit': 1}"/>                  <!-- 境内目的/货源地 -->
-                            <field name="packing" options="{'no_create_edit': 1}"/>                 <!-- 包装方式 -->
+                            <field name="trade_country" options="{'no_create_edit': 1}"/>           <!-- 贸易国别 -->
+                            <!--<field name="origin_arrival_country" options="{'no_create_edit': 1}"/>  &lt;!&ndash; 启运/抵达国 &ndash;&gt;-->
+                            <!--<field name="region" options="{'no_create_edit': 1}"/>                  &lt;!&ndash; 境内目的/货源地 &ndash;&gt;-->
 
                             <!--<field name="customs"/>                 &lt;!&ndash; 进出口岸 &ndash;&gt;-->
                             <!--<field name="trade_mode"/>              &lt;!&ndash; 监管方式 &ndash;&gt;-->
@@ -127,6 +132,9 @@
                             <!--<field name="net_weight"/>              &lt;!&ndash; 净重 &ndash;&gt;-->
                             <!--<field name="remarks"/>                 &lt;!&ndash; 备注 &ndash;&gt;-->
                         </group>
+                        <h1>
+                            <label for="delivery_info"/>
+                        </h1>
                         <field name="delivery_info" nolabel="1">
                             <tree string="Delivery Info" editable="bottom">
                                 <field name="type_id"/>

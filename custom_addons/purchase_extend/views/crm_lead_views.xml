@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <!-- Inherit Form View to Modify it -->
+       <record id="crm_case_form_view_oppor_extend" model="ir.ui.view">
+           <field name="name">crm.lead.form.opportunity.extend</field>
+           <field name="model">crm.lead</field>
+           <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+           <field name="priority">100</field>
+           <field name="arch" type="xml">
+
+               <xpath expr="//button[@name='action_set_won']" position="before">
+                   <button name="pop_purchase_order" string="Create PO" type="object" class="btn-link"
+                           attrs="{'invisible': [('active', '=', False)]}"/>
+               </xpath>
+
+               <xpath expr="//button[@name='action_schedule_meeting']" position="after">
+                       <button name="purchase_extend.lead_to_purchase_order_action"
+                               type="action"
+                               class="oe_stat_button"
+                               context="{'lead_id': active_id, 'default_crm_lead_id': active_id,
+                                'default_sale_person_id': user_id, 'default_customer_service_id': uid}"
+                               icon="fa-file-text-o">
+                           <field name="purchase_order_nums" string="Purchase Orders" widget="statinfo"/>
+                       </button>
+               </xpath>
+
+               <!--<xpath expr="//field[@name='date_conversion']" position="after">-->
+                   <!--<field name="purchase_order_nums" invisible="1"/>-->
+               <!--</xpath>-->
+
+           </field>
+       </record>
+
+        <record id="lead_to_purchase_order_action" model="ir.actions.act_window">
+            <field name="name">Purchase Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.service_quote_order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('crm_lead_id', '=', context.get('lead_id', 0))]</field>
+        </record>
+
+    </data>
+</odoo>

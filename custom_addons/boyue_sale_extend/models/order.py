@@ -6,20 +6,18 @@ from datetime import datetime, timedelta
 
 class Order(models.Model):
     """继承销售订单，添加通关数据字段"""
-    _description = 'quote order'
     _inherit = 'sale.order'
 
     contract = fields.Many2one(comodel_name="contract.sale_contract", string="Contract", required=False, copy=False)
     business_type = fields.Many2one(comodel_name="business_type", string="Business Type", required=True, )
     contact = fields.Many2many(comodel_name="res.partner", string="Contact", required=False, copy=False)
+    contact_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=False, coyp=False)
     servicer = fields.Many2one(comodel_name="res.partner", string="Servicer")
-    customer_service = fields.Many2one(comodel_name="res.users", string="Customer Service", index=True, track_visibility='always')
+    customer_service = fields.Many2one(comodel_name="res.users", string="customer service", index=True, track_visibility='always')
     goods_name = fields.Text(string="Goods Name", required=False, )
     delivery_info = fields.One2many(comodel_name="boyue_sale_extend.delivery_info", inverse_name="order",
                                     string="Delivery Info", )
     # partner_id = fields.Many2one('res.partner', string='Customer', readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, required=True, change_default=True, index=True, track_visibility='onchange')
-
-
 
     # 进出口类型
     # import_and_export = fields.Selection(
@@ -39,6 +37,7 @@ class Order(models.Model):
     customs = fields.Many2many(comodel_name="delegate_customs", string="Custom", )    # 进出口岸
     trade_mode = fields.Many2one('delegate_trade_mode', string='Trade Mode')         # 监管方式
     trade_country = fields.Many2one('delegate_country', string=' Country')         # 贸易国别
+    goods_attribute_id = fields.Many2one(comodel_name="goods_attribute", string="Goods Type", )     # 货物类型
     origin_arrival_country = fields.Many2one('delegate_country', string='Nation')
     region = fields.Many2one('delegate_region', string='Region')
     packing = fields.Many2one('delegate_packing', string='Wrap Type')
@@ -47,9 +46,9 @@ class Order(models.Model):
     state = fields.Selection([
         ('draft', 'Quotation'),
         ('sent', 'Quotation Sent'),
-        ('signed', 'Signed Contract'),
+        # ('signed', 'Signed Contract'),
         ('sale', 'Sales Order'),
-        ('sheet', 'Work Sheet'),
+        # ('sheet', 'Work Sheet'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
@@ -62,6 +61,11 @@ class Order(models.Model):
     message_follower_ids = fields.One2many(
         'mail.followers', 'res_id', string='Followers', copy=False,
         domain=lambda self: [('res_model', '=', self._name)])
+    load_port_id = fields.Many2one(comodel_name="basedata.internation_port", string="Loading Port")     # 起运港
+    trans_port_id = fields.Many2one(comodel_name="basedata.internation_port", string="Transition Port") # 中转港
+    dest_port_id = fields.Many2one(comodel_name="basedata.internation_port", string="Destination Port") # 目的港
+    decl_custom_id = fields.Many2one(comodel_name="delegate_customs", string="Declare Customs")         # 申报口岸
+
 
     @api.model
     def create(self, vals):
@@ -233,7 +237,7 @@ class Order(models.Model):
             obj.work_sheet_id |= self.env['work_sheet']\
                 .with_context(default_business_type=obj.business_type.id)\
                 .create(vals)
-        self.write({'state': 'sheet'})
+        # self.write({'state': 'sheet'})
 
         return True
 
@@ -253,67 +257,38 @@ class Order(models.Model):
                 obj.update({'customer_service': obj.partner_id.customer_service_ids[0].id})
 
 
-    @api.onchange('template_id')
-    def onchange_template_id(self):
-        if not self.template_id:
-            return
-        template = self.template_id.with_context(lang=self.partner_id.lang)
+    @api.onchange('business_type')
+    def _change_business_type(self):
+        """根据业务类型改变单号规则"""
+        if self.name and self.name != _('New'):
+            de_time_name = self.name[0:-7]
+            time = self.name[-7:]
+            name = de_time_name.split('-')[0] + '-' + self.business_type.code + time
+            self.name = name
 
-        order_lines = [(5, 0, 0)]
-        for line in template.quote_line:
-            if self.pricelist_id:
-                price = self.pricelist_id.with_context(uom=line.product_uom_id.id).get_product_price(line.product_id, 1, False)
-            else:
-                price = line.price_unit
 
-            data = {
-                'name': line.name,
-                'price_unit': price,
-                'discount': line.discount,
-                'product_uom_qty': line.product_uom_qty,
-                'product_id': line.product_id.id,
-                'quote_currency_id': line.product_id.currency_id,    # 把产品的货币带到询价货币中去
-                'quote_price_unit': price,      # 当产品发生改变时，报价单价也要发生改变
-                'layout_category_id': line.layout_category_id,
-                'product_uom': line.product_uom_id.id,
-                'website_description': line.website_description,
-                'state': 'draft',
-                'customer_lead': self._get_customer_lead(line.product_id.product_tmpl_id),
-            }
-            if self.pricelist_id:
-                data.update(self.env['sale.order.line']._get_purchase_price(self.pricelist_id, line.product_id, line.product_uom_id, fields.Date.context_today(self)))
-            order_lines.append((0, 0, data))
+    @api.multi
+    def write(self, vals):
+        """根据业务类型改变单号规则"""
+        for obj in self:
+            if 'business_type' in vals:
+                business_type = self.env['business_type'].browse(vals['business_type'])
+                de_time_name = self.name[0:-7]
+                time = self.name[-7:]
+                name = de_time_name.split('-')[0] + '-' + business_type.code + time
+                order_sets = self.env['sale.order'].search([('name', '=', name)])
+                if len(order_sets) == 0:
+                    vals['name'] = name
+                else:
+                    q_name = name[0:-3]
+                    order_sets = self.env['sale.order'].search([('name', 'like', q_name+'%')])
+                    numbers_char = order_sets.mapped(lambda r: r.name[-3:])
+                    numbers = [int(i) for i in numbers_char]
+                    max_num = max(numbers) + 1
+                    name = (name[0: -3] + '%03d') % max_num
+                    vals['name'] = name
 
-        self.order_line = order_lines
-        self.order_line._compute_tax_id()
-
-        option_lines = []
-        for option in template.options:
-            if self.pricelist_id:
-                price = self.pricelist_id.with_context(uom=option.uom_id.id).get_product_price(option.product_id, 1, False)
-            else:
-                price = option.price_unit
-            data = {
-                'product_id': option.product_id.id,
-                'layout_category_id': option.layout_category_id,
-                'name': option.name,
-                'quantity': option.quantity,
-                'uom_id': option.uom_id.id,
-                'price_unit': price,
-                'discount': option.discount,
-                'website_description': option.website_description,
-            }
-            option_lines.append((0, 0, data))
-        self.options = option_lines
-
-        if template.number_of_days > 0:
-            self.validity_date = fields.Date.to_string(datetime.now() + timedelta(template.number_of_days))
-
-        self.website_description = template.website_description
-        self.require_payment = template.require_payment
-
-        if template.note:
-            self.note = template.note
+        return super(Order, self).write(vals)
 
 class delivery_info(models.Model):
     """收发货信息"""
@@ -388,7 +363,7 @@ class OrderLine(models.Model):
         )
 
         self.quote_currency_id = self.product_id.currency_id    # 把产品的货币带到询价货币中去
-        self.quote_price_unit = self.product_id.list_price      # 当产品发生改变时，报价单价也要发生改变
+        self.quote_price_unit = self.product_id.list_price * self.rate      # 当产品发生改变时，报价单价也要发生改变
 
         name = ' '
         if product.description_sale:
@@ -430,7 +405,8 @@ class OrderLine(models.Model):
                 fiscal_position=self.env.context.get('fiscal_position')
             )
             self.price_unit = self.env['account.tax']._fix_tax_included_price(self._get_display_price(product), product.taxes_id, self.tax_id)
-            self.quote_price_unit = self.price_unit     # 同时更改报价单价
+            # self.quote_price_unit = self.price_unit     # 同时更改报价单价
+            self.price_unit = self.quote_price_unit / self.rate    # 同时更改报价单价
 
 
 class ContractWizard(models.TransientModel):
@@ -467,7 +443,8 @@ class ContractWizard(models.TransientModel):
             'contract_failure_date': self.contract_failure_date,
         }
         contract = self.env['contract.sale_contract'].create(vals)
-        order.write({'contract': contract.id, 'state': 'signed'})
+        # order.write({'contract': contract.id, 'state': 'sale'})
+        order.write({'contract': contract.id, })
 
         return True
 
@@ -477,7 +454,8 @@ class ContractWizard(models.TransientModel):
         if not self.selected_contract:
             raise UserError(_('Please select contract'))
         order = self.env['sale.order'].browse(self._context.get('sale_order'))
-        order.write({'contract': self.selected_contract.id, 'state': 'signed'})
+        # order.write({'contract': self.selected_contract.id, 'state': 'sale'})
+        order.write({'contract': self.selected_contract.id, })
 
         return True
 

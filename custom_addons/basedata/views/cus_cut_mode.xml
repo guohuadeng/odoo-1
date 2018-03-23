@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!--征免性质-->
         <record id="delegation_cus_cut_mode" model="ir.actions.act_window">
             <field name="name">customs cut mode</field>
             <field name="type">ir.actions.act_window</field>
@@ -16,10 +17,10 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="Code" string="Cut Mode Code"/>
+                                <field name="Code"/>
                             </group>
                             <group>
-                                <field name="NameCN" string="Chinese Name"/>
+                                <field name="NameCN"/>
                             </group>
                         </group>
                     </sheet>
@@ -32,10 +33,21 @@
             <field name="model">basedata.cus_cut_mode</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="Code" string="Cut Mode Code"/>
-                    <field name="NameCN" string="Chinese Name"/>
+                    <field name="Code"/>
+                    <field name="NameCN"/>
                 </tree>
             </field>
+        </record>
+
+        <record id="cus_cut_mode_search_view" model="ir.ui.view">
+           <field name="name">cus_cut_mode search</field>
+           <field name="model">basedata.cus_cut_mode</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="Code"/>
+                    <field name="NameCN"/>
+                </search>
+           </field>
         </record>
 
     </data>
