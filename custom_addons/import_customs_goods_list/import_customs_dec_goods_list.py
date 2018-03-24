@@ -13,7 +13,7 @@ try:
     import xlrd
 except ImportError:
     _logger = logging.getLogger(__name__)
-    _logger.error('Cannot `import xlrd`.')
+    _logger.error('Cannot `import xlrd` please install xlrd and xlwt.')
 
 
 class import_customs_dec_goods_list_wizard(models.TransientModel):
