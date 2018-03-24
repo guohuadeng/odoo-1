@@ -4,7 +4,7 @@
 from odoo import api, fields, models, _
 from datetime import datetime
 from odoo.exceptions import Warning
-import binascii
+import binascii,logging
 import tempfile
 from tempfile import TemporaryFile
 from odoo.exceptions import UserError, ValidationError
@@ -12,7 +12,8 @@ from odoo.exceptions import UserError, ValidationError
 try:
     import xlrd
 except ImportError:
-    _logger.debug('Cannot `import xlrd`.')
+    _logger = logging.getLogger(__name__)
+    _logger.error('Cannot `import xlrd`.')
 
 
 class import_customs_dec_goods_list_wizard(models.TransientModel):
