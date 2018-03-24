@@ -1148,8 +1148,8 @@
             <field name="arch" type="xml">
                 <tree create="false" decoration-success="cus_dec_rec_state == '申报成功'"
                       decoration-danger="cus_dec_rec_state == '导入失败'" default_order="create_date desc">
-                    <field name="cus_dec_rec_state" string="回执状态"/>
-                    <button name="btn_review_receipt" string="历史回执信息" type="object"/>
+                    <field name="cus_dec_rec_state" string="报关状态"/>
+                    <button name="btn_review_receipt" string="历史回执" type="object"/>
                     <field name="name" string="报关单流水号"/>
                     <field name="synergism_seq_no" string="协同报关单号"/>
                     <field name="work_sheet_id" string="工作单号"/>
