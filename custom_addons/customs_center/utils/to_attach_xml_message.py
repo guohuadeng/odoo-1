@@ -70,10 +70,10 @@ def generate_attach_xml_to_single(self):
 
             # 单一窗口报文发送根目录
             base_dir_send_single_attach = config.options.get('generate_wly_to_ex_single_attach_path',
-                                                      '/home/saastest/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_single_attach')
+                                                      '/mnt/xml_data/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_single_attach')
             # QP 报文发送根目录
             base_dir_send_qp_attach = config.options.get('generate_wly_to_ex_qp_attach_path',
-                                                  '/home/saastest/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp_attach')
+                                                  '/mnt/xml_data/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp_attach')
 
             company_name = str(self.dec_company_customs_code)  # 申报单位海关编码 用作报文存放路径
             if dec_send_way:
