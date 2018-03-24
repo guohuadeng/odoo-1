@@ -97,7 +97,7 @@ class CusGoodsList(models.Model):
 
                 if goods_list.goods_classification_id:
                     break
-                goods_list.goods_name = goods_list.cus_goods_tariff_id.goods_name
+                goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
                 goods_list.first_unit = goods_list.cus_goods_tariff_id.first_unit
                 goods_list.second_unit = goods_list.cus_goods_tariff_id.second_unit
                 goods_list.supervision_condition = goods_list.cus_goods_tariff_id.supervision_condition
