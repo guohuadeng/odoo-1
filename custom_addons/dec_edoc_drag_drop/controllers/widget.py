@@ -27,7 +27,7 @@ class widget_data(models.Model):
                 'name': name,
                 'datas': base64,
                 'extension': extension,
-                'dec_edoc_type':dec_edoc_type,
+                'dec_edoc_type': dec_edoc_type,
                 'datas_fname': name,
                 'res_model': res_model_name,
                 'description': '',

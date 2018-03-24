@@ -20,19 +20,19 @@ _logger = logging.getLogger(__name__)
 
 # 本地测试环境路径
 # pre_ex_client 前置交换客户端路径
-PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
-PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-
-# post_ex_client 后置交换客户端路径
-RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
-BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
+# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
+# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+#
+# # post_ex_client 后置交换客户端路径
+# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
+# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 
@@ -70,6 +70,22 @@ BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odoos
 # ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
 # BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
+
+# 新测试环境路径
+# pre_ex_client 前置交换客户端路径
+PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
+PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+
+# post_ex_client 后置交换客户端路径
+RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/saastest/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/saastest/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/saastest/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
+BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/saastest/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 
@@ -201,7 +217,7 @@ class CustomsDeclaration(models.Model):
 
     declare_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="declare company name")  # 申报单位 新建企业库表
     input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 货主单位 消费使用单位 新建企业库表
-    business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
+    business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 经营单位 收发货人 新建企业库表
 
     @api.onchange('business_company_id')
     def _compute_input_company(self):
@@ -546,13 +562,13 @@ class CustomsDeclaration(models.Model):
                 business_company_id = self.env['basedata.cus_register_company'].search(
                     [('register_code', '=', business_company_register_code)])
 
-                input_company_unified_code = customs_dec_dic['DecHead'].get('OwnerCodeScc', None)  # 消费使用单位 货主单位
+                input_company_register_code = customs_dec_dic['DecHead'].get('OwnerCode', None)  # 消费使用单位 货主单位
                 input_company_id = self.env['basedata.cus_register_company'].search(
-                    [('unified_social_credit_code', '=', input_company_unified_code)])
+                    [('register_code', '=', input_company_register_code)])
 
-                # declare_company_register_code = customs_dec_dic['DecHead'].get('AgentCode', None)  # 申报单位
-                # declare_company_id = self.env['basedata.cus_register_company'].search(
-                #     [('register_code', '=', declare_company_register_code)])
+                declare_company_register_code = customs_dec_dic['DecHead'].get('AgentCode', None)  # 申报单位
+                declare_company_id = self.env['basedata.cus_register_company'].search(
+                    [('register_code', '=', declare_company_register_code)])
 
                 transport_mode_code = customs_dec_dic['DecHead'].get('TrafMode', None)  # u'运输方式'
                 transport_mode_id = self.env['delegate_transport_mode'].search([('code', '=', transport_mode_code)])
@@ -656,7 +672,7 @@ class CustomsDeclaration(models.Model):
                     'in_out_date': in_out_date,  # u'进出口日期'
                     'business_company_id': business_company_id[0].id if len(business_company_id) else None,  # 收发货人
                     'input_company_id': input_company_id[0].id if len(input_company_id) else None,  # 消费使用单位 货主单位
-                    #'declare_company_id': declare_company_id[0].id if len(declare_company_id) else None,  # 申报单位
+                    'declare_company_id': declare_company_id[0].id if len(declare_company_id) else None,  # 申报单位
                     'transport_mode_id': transport_mode_id[0].id if len(transport_mode_id) else None,  # u'运输方式'
                     'NativeShipName': NativeShipName,  # u'运输工具名称'
                     'VoyageNo': VoyageNo,  # u'航次号'
@@ -707,7 +723,7 @@ class CustomsDeclaration(models.Model):
 
             try:
                 customs_declaration_obj = self.env['customs_center.customs_dec'].create(customs_dec_dic)
-                # 创建报关单后 同时创建 空的 随附单据
+                # 创建报关单后 同时创建 空的 随附单据附件
                 # 首先解析随附单据目录的文件  可能多个附件
 
                 # 生成附件
@@ -721,7 +737,7 @@ class CustomsDeclaration(models.Model):
                                     genarate_attach_list_dic['name'] = attach_id
                                     genarate_attach_list_dic['datas_fname'] = attach_id
 
-                                    # # 查询和文件名匹配的二进制数据
+                                    # # 查询和文件名匹配的二进制数据   正向生成的时候 有个问题 就是报关单报文到了 随附单据报文还未接收到
                                     # if xml_attach_message_list:
                                     #     for attach_dic in xml_attach_message_list:
                                     #         if attach_dic.get('FILE_NAME') == attach_id:
@@ -973,8 +989,8 @@ class CustomsDeclaration(models.Model):
                     attach_data_node = root.xpath('.//TcsData')
                     for child in attach_data_node[0]:
                         xml_attach_message_dic[child.tag] = child.text
-                attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME')  # 获取随附单据报文中的文件名
-                binary_data = xml_attach_message_dic.get('BINARY_DATA', None) # 获取随附单据报文中的二进制数据
+                attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME')   # 获取随附单据报文中的文件名
+                binary_data = xml_attach_message_dic.get('BINARY_DATA', None)  # 获取随附单据报文中的二进制数据
 
                 # 根据上述获取的附件名称 在附件模型中查找 对应的附件ID
                 attach_id = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('name', '=', attach_name_in_xml)])
@@ -1031,9 +1047,6 @@ class CustomsDeclaration(models.Model):
         self.env['report'].get_action(self,'customs_center.print_dec_customs_invoice_template')
 
         self.information_attachment_ids=(4,2902)
-
-
-
 
 
 

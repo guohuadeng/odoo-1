@@ -137,7 +137,7 @@ class CusRegisterCompany(models.Model):
     register_name_cn = fields.Char(string='Customs Register Name', size=50, required=True)     # 企业海关名称
 
     @api.multi
-    @api.depends('register_code', 'register_name_cn')
+    @api.depends('register_code', 'register_name_cn',)
     def name_get(self):
         result = []
         for record in self:
@@ -152,7 +152,8 @@ class CusRegisterCompany(models.Model):
         """重写模型name字段搜索方法"""
         args = args or []
         if not (name == '' and operator == 'ilike'):
-            args += ['|', ('register_code', operator, name), ('register_name_cn', operator, name)]
+            args += ['|', ('register_code', operator, name),
+                     ('register_name_cn', operator, name)]
 
         return super(CusRegisterCompany, self)._name_search(
             name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
