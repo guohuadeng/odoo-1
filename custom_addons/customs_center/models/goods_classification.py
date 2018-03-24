@@ -19,7 +19,7 @@ class GoodsClassification(models.Model):
                                          inverse_name="cus_goods_tariff_id", string="dec goods name")
 
     business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company",
-                                          string="business company name")  # 收发货人 / 经营单位
+                                          string="business company name",required=True)  # 收发货人 / 经营单位
     cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )  # 海关税则编码 / 商品编号 Code_ts 即 hs_code
     goods_name = fields.Char(string="goods name")  # 商品名称
 
@@ -149,11 +149,13 @@ class GoodsClassification(models.Model):
     @api.constrains('cust_goods_code','business_company_id')
     def _check_cus_goods_code(self):
         """ 同一收发货人，料号必须唯一 """
-        goods = self.search([('cust_goods_code', "=", self.cust_goods_code)
-                              , ('business_company_id', "=", self.business_company_id.id)])
-        if len(goods) > 1:
-            raise odoo.exceptions.except_orm(u'错误',u"%s 已存在料号 %s,不允许重复录入"
-                                             %(self.business_company_id.register_name_cn,self.business_company_id.cust_goods_code))
+        if  self.cust_goods_code:
+
+            goods = self.search([('cust_goods_code', "=", self.cust_goods_code)
+                                  , ('business_company_id', "=", self.business_company_id.id)])
+            if len(goods) > 1:
+                raise odoo.exceptions.except_orm(u'错误',u"%s 已存在料号 %s,不允许重复录入"
+                                                 %(self.business_company_id.register_name_cn,self.cust_goods_code))
 
 
 

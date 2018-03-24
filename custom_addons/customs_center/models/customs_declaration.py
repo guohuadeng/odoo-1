@@ -362,6 +362,7 @@ class CustomsDeclaration(models.Model):
         # }
 
 
+
     ##############################################################################################
     # 报关单列表视图 回执状态 查看历史回执按钮
     @api.multi
@@ -400,7 +401,7 @@ class CustomsDeclaration(models.Model):
         return result
 
 
-    # @api.model123456
+    # @api.model
     # @q_job.job
     @api.multi
     def parse_cus_message_xml(self):
@@ -1050,6 +1051,9 @@ class CustomsDeclaration(models.Model):
 
 
 
+
+
+
     @api.multi
     def generate_single_customer_xml(self):
         """ 生成报关单报文+随附单据报文 发送单一窗口 存放到指定目录 """
@@ -1142,7 +1146,9 @@ class CustomsDeclaration(models.Model):
                             business_dic['RESULT_INFO'] = result_info_node.text if result_info_node.text else ''
                 else:
                     _logger.error(u'Find error format xml message: %s' % xml_message.decode('utf-8'))
-                    shutil.move(xml_message, error_path)
+                    shutil.copy2(xml_message,error_path)
+                    os.remove(xml_message)
+                    # shutil.move(xml_message, error_path)
                     continue
             # 根据报文中客户端代码找到关联的报关单
             rep_client_no = response_dic.get('ClientSeqNo')
@@ -1159,7 +1165,9 @@ class CustomsDeclaration(models.Model):
                 _logger.error(
                     u'{} Can\'t find related declaration sheet according to ClientSeqNo {}'
                         .format(xml_message.decode('utf-8'), rep_client_no or bus_client_no))
-                shutil.move(xml_message, error_path)
+                shutil.copy2(xml_message, error_path)
+                os.remove(xml_message)
+                # shutil.move(xml_message, error_path)
                 continue
             dec_sheet = dec_sheets[0]
 
@@ -1190,7 +1198,9 @@ class CustomsDeclaration(models.Model):
             if not status:
                 _logger.error(
                     u'%s Can\'t find related status obj according to response code' % xml_message.decode('utf-8'))
-                shutil.move(xml_message, error_path)
+                shutil.copy2(xml_message, error_path)
+                os.remove(xml_message)
+                # shutil.move(xml_message, error_path)
                 continue
             receipt_dic = {
                 'status_id': status[0].id,
@@ -1201,68 +1211,22 @@ class CustomsDeclaration(models.Model):
                 self.env['customs_center.dec_result'].create(receipt_dic)
                 dec_sheet.cus_dec_rec_state = status[0].name if status[0].name else None # 更新 报关单模型的回执状态字段
 
-                # 如果该票报关单 业务回执状态为：申报成功 则将该报关单下的商品 自动归类
-                if status[0].name == u'申报成功':
-                    # 获取改票报关单中的收发货人字段值
-                    business_company_id = dec_sheets[0].business_company_id if dec_sheets[0].business_company_id else None  # 从该报关单表头获取收发货人
-                    customs_declaration_id = dec_sheets[0].id if dec_sheets[0].id else None # 报关单ID
+                # 如果该票报关单 业务回执状态为：报关单放行 则将该报关单下的商品 自动归类
+                # 注意，已经进行过归类的商品不需要重新归类（如果该商品有客户料号（说明选的时候就是来自于归类库），或者归类库中已有同收发货人、同商品名称、同规格型号的商品，说明已经进行过归类，不再自动归类）
+                if status[0].code == 'P': # 报关单放行
+                    self.create_classify_goods(dec_sheet)
 
-                    # 遍历当前报关单对象 下的商品列表
-                    for goods_item in dec_sheet.dec_goods_list_ids:
-                        # 如果商品编号为真 并且报关单ID为真
-                        if goods_item.goods_classification_id and customs_declaration_id:
-
-                            #代码需要完善
-                            pass
-                            # classify_goods_code = goods_item.cust_goods_code if goods_item.cust_goods_code else None  # 客户料号
-                            # classify_business_company_id = business_company_id  # 收发货人 从当前报关单表头获取
-                            # classify_ManualNo = goods_item.cust_goods_code if goods_item.cust_goods_code else None  # 备案号
-                            # classify_ManualSN = goods_item.ManualSN if goods_item.ManualSN else None  # 备案序号
-                            # classify_cus_goods_tariff_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 商品编号
-                            # classify_goods_name = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 商品名称
-                            # classify_goods_model = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 规格型号
-                            # classify_deal_unit_price = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 申报单价
-                            # classify_currency_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 币制
-                            # classify_supervision_condition = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 监管标识
-                            # classify_deal_unit_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 成交单位
-                            # classify_first_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 第一计量单位
-                            # classify_second_unit = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 第二计量单位
-                            # classify_origin_country_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 原产国
-                            # classify_destination_country_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 目的国
-                            # classify_duty_mode_id = goods_item.cus_goods_tariff_no if goods_item.cus_goods_tariff_no else None  # 征免方式
-                            # classify_customs_declaration_id = customs_declaration_id  # 关联报关单ID
-                            #
-                            # # 归类字典
-                            # classify_goods_list = {
-                            #     'cust_goods_code': classify_goods_code,  # 客户料号
-                            #     'business_company_id': classify_business_company_id,  # 收发货人
-                            #     'ManualNo': classify_ManualNo,  # 备案号
-                            #     'ManualSN': classify_ManualSN,  # 备案序号
-                            #     'cus_goods_tariff_id': classify_cus_goods_tariff_id,  # 商品编号
-                            #     'goods_name': classify_goods_name,  # 商品名称
-                            #     'goods_model': classify_goods_model,  # 规格型号
-                            #     'deal_unit_price': classify_deal_unit_price,  # 申报单价
-                            #     'currency_id': classify_currency_id,  # 币制
-                            #     'supervision_condition': classify_supervision_condition,  # 监管标识
-                            #     'deal_unit_id': classify_deal_unit_id,  # 成交单位
-                            #     'first_unit': classify_first_unit,  # 第一计量单位
-                            #     'second_unit': classify_second_unit,  # 第二计量单位
-                            #     'origin_country_id': classify_origin_country_id,  # 原产国
-                            #     'destination_country_id': classify_destination_country_id,  # 目的国
-                            #     'duty_mode_id': classify_duty_mode_id,  # 征免方式
-                            #     'customs_declaration_id': classify_customs_declaration_id,  # 关联报关单ID
-                            # }
-                            #
-                            # classify_goods_list = {item: classify_goods_list[item] for item in classify_goods_list if
-                            #                        classify_goods_list[item]}
-                            # cus_goods_classify_obj = self.env['customs_center.goods_classify'].create(classify_goods_list)
 
             except Exception, error_info:
                 _logger.error(u'{} {}'.format(xml_message.decode('utf-8'), str(error_info).decode('utf-8')))
-                shutil.move(xml_message, error_path)
+                shutil.copy2(xml_message, error_path)
+                os.remove(xml_message)
+                # shutil.move(xml_message, error_path)
                 continue
             else:
-                shutil.move(xml_message, bakup_path)
+                shutil.copy2(xml_message, bakup_path)
+                os.remove(xml_message)
+                # shutil.move(xml_message, bakup_path)
                 _logger.info(u'Had parsed the xml message %s' % xml_message.decode('utf-8'))
 
     @api.multi
@@ -1270,6 +1234,32 @@ class CustomsDeclaration(models.Model):
         """创建商品列表"""
 
         return True
+
+    @api.multi
+    def create_classify_goods(self,dec_sheet):
+        print('create_classify_goods',dec_sheet)
+
+        for goods_item in dec_sheet.dec_goods_list_ids:
+            print('goods_item.goods_classification_id', goods_item.goods_classification_id)
+            if not goods_item.goods_classification_id:
+                classify_goods_list = {
+                    'cust_goods_code': goods_item.cust_goods_code,  # 客户料号
+                    'business_company_id': dec_sheet.business_company_id,  # 收发货人
+                    'ManualNo': dec_sheet.ManualNo,  # 备案号
+                    'ManualSN': goods_item.ManualSN,  # 备案序号
+                    'cus_goods_tariff_id': goods_item.cus_goods_tariff_id,  # 商品编号
+                    'goods_name': goods_item.goods_name,  # 商品名称
+                    'goods_model': goods_item.goods_model,  # 规格型号
+                    'deal_unit_price': goods_item.deal_unit_price,  # 申报单价
+                    'currency_id': goods_item.currency_id,  # 币制
+                    'deal_unit_id': goods_item.deal_unit_id,  # 成交单位
+                    'origin_country_id': goods_item.origin_country_id,  # 原产国
+                    'destination_country_id': goods_item.destination_country_id,  # 目的国
+                    'duty_mode_id': goods_item.duty_mode_id,  # 征免方式
+                }
+                print('goods_item.classify_goods_list', classify_goods_list)
+
+                # cus_goods_classify_obj = self.env['customs_center.goods_classify'].create(classify_goods_list)
 
 
 class WorkSheet(models.Model):
