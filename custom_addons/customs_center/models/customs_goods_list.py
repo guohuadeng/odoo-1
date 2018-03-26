@@ -28,11 +28,13 @@ class CusGoodsList(models.Model):
     # 关联商品归类信息
     goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False,)  # 客户料号搜索字段
 
+    cust_goods_code = fields.Char(string="Customer Goods Code", related='goods_classification_id.cust_goods_code',store=False )  # 客户料号 录入字段
+
     goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
 
     deal_qty = fields.Float(string="deal quantity", required=False, default=1)  # 成交数量
     deal_unit_price = fields.Float(string="deal unit price", )    # 成交单价/申报单价
-    deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )    # 成交单位
+    deal_unit_id = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )    # 成交单位
     deal_total_price = fields.Float(compute='_compute_total_goods_price', string="deal total price", )  # 成交总价
 
     # @api.depends('sequence')
@@ -65,9 +67,7 @@ class CusGoodsList(models.Model):
     ManualSN = fields.Char(string="Manual SN")  # 备案序号
     version_num = fields.Char(string="version num")  # 版本号
     product_code = fields.Char(string="product code")  # 货号
-    cus_goods_code = fields.Char(string="Customer Goods Code",)     # 客户料号 录入字段
 
-    cus_goods_tariff_no = fields.Char(string="cus goods number", required=False, )  # 税则库商品编号 方便前端搜索视图调用
 
     # # 是否属于报关单 已在视图层面action过滤 暂不需要该字段
     # customs_dec_goods_own = fields.Selection(selection=[('yes', 'YES'),    # 是否属于报关单
@@ -94,13 +94,13 @@ class CusGoodsList(models.Model):
             if goods_list.cus_goods_tariff_id:
                 # 增加一个判断goods_classification_id是否为真 因为如果料号变化之后 商品编号会变，商品名称也会变， 而本方法同样有这样的功能，如果料号变了，商品编号也变，商品名称显示的就是税则库中的名称
                 # 而不是归类库中的名称了
+
                 if goods_list.goods_classification_id:
-                    pass
+                    break
                 goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
                 goods_list.first_unit = goods_list.cus_goods_tariff_id.first_unit
                 goods_list.second_unit = goods_list.cus_goods_tariff_id.second_unit
                 goods_list.supervision_condition = goods_list.cus_goods_tariff_id.supervision_condition
-                goods_list.cus_goods_tariff_no = goods_list.cus_goods_tariff_id.Code_ts
 
 
     @api.onchange('goods_classification_id')
@@ -109,14 +109,16 @@ class CusGoodsList(models.Model):
         for goods_list in self:
             if goods_list.goods_classification_id:
                 goods_list.cus_goods_tariff_id = goods_list.goods_classification_id.cus_goods_tariff_id
+                goods_list.ManualSN = goods_list.goods_classification_id.ManualSN
                 goods_list.goods_name = goods_list.goods_classification_id.goods_name
                 goods_list.goods_model = goods_list.goods_classification_id.goods_model
+                goods_list.deal_unit_id = goods_list.goods_classification_id.deal_unit_id
+                goods_list.deal_unit_price=goods_list.goods_classification_id.deal_unit_price
                 goods_list.first_unit = goods_list.goods_classification_id.first_unit
                 goods_list.second_unit = goods_list.goods_classification_id.second_unit
                 goods_list.origin_country_id = goods_list.goods_classification_id.origin_country_id
                 goods_list.destination_country_id = goods_list.goods_classification_id.destination_country_id
                 goods_list.duty_mode_id = goods_list.goods_classification_id.duty_mode_id
-                goods_list.ManualSN = goods_list.goods_classification_id.ManualSN
                 goods_list.supervision_condition = goods_list.goods_classification_id.supervision_condition
 
 
@@ -145,7 +147,7 @@ class CusGoodsList(models.Model):
                     'default_first_unit': line.first_unit.id,  # 第一计量单位
                     'default_second_unit': line.second_unit.id,  # 第二计量单位
                     'default_deal_unit_price': line.deal_unit_price,  # 成交单价
-                    'default_deal_unit': line.deal_unit.id,  # 成交单位
+                    'default_deal_unit_id': line.deal_unit_id.id,  # 成交单位
                     'default_currency_id': line.currency_id.id,  # 币制
                     # 'default_supervision_condition': line.inout,  # 监管条件
                     'default_duty_mode_id':line.duty_mode_id.id,  # 征免方式

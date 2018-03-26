@@ -6,22 +6,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 05:57+0000\n"
-"PO-Revision-Date: 2017-10-13 13:58+0800\n"
+"POT-Creation-Date: 2018-03-23 06:17+0000\n"
+"PO-Revision-Date: 2018-03-23 14:21+0800\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: zh\n"
-"X-Generator: Poedit 2.0.3\n"
+"Language: zh_CN\n"
+"X-Generator: Poedit 2.0.5\n"
 
 #. module: basedata
 #: model:ir.ui.view,arch_db:basedata.product_template_search_view_materials
 #: model:ir.ui.view,arch_db:basedata.product_template_search_view_service
 msgid "Active"
 msgstr "有效"
+
+#. module: basedata
+#: selection:basedata.internation_port,port_type:0
+msgid "Airport"
+msgstr "空港"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_Code_s
+msgid "Attach Code"
+msgstr "附加编码"
 
 #. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_attribute_name
@@ -55,16 +65,11 @@ msgid "Category"
 msgstr "分类"
 
 #. module: basedata
-#: model:ir.model.fields,field_description:basedata.field_b_hg_country_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_port_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_name_cn
-#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_NameCN
-#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_NameCN
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_NameCN
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_name_cn
 #: model:ir.model.fields,field_description:basedata.field_route_NameCN
+#: model:ir.ui.view,arch_db:basedata.filing_bill_type_form
+#: model:ir.ui.view,arch_db:basedata.filing_bill_type_tree
 #: model:ir.ui.view,arch_db:basedata.freight_clause_form
 #: model:ir.ui.view,arch_db:basedata.freight_clause_tree
 #: model:ir.ui.view,arch_db:basedata.route_form
@@ -73,6 +78,21 @@ msgstr "分类"
 #: model:ir.ui.view,arch_db:basedata.transportation_term_tree
 msgid "Chinese Name"
 msgstr "中文名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_city_name_cn
+msgid "City Chinese Name"
+msgstr "中文名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_city_code
+msgid "City Code"
+msgstr "城市代码"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_city_name_en
+msgid "City English Name"
+msgstr "英文名称"
 
 #. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_code
@@ -108,9 +128,14 @@ msgid "Country"
 msgstr "国家"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_country_NameCN
+msgid "Country Chinese Name"
+msgstr "国家中文名称"
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_Code
 msgid "Country Code"
-msgstr "国家代码"
+msgstr "国家地区代码"
 
 #. module: basedata
 #: model:ir.ui.menu,name:basedata.country_list_menu
@@ -118,6 +143,7 @@ msgid "Country District"
 msgstr "国别地区代码"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_create_uid
@@ -127,6 +153,15 @@ msgstr "国别地区代码"
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_create_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_create_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_create_uid
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_create_uid
 #: model:ir.model.fields,field_description:basedata.field_business_type_create_uid
 #: model:ir.model.fields,field_description:basedata.field_container_type_create_uid
@@ -137,6 +172,7 @@ msgid "Created by"
 msgstr "创建人"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_create_date
@@ -146,6 +182,15 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_create_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_create_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_create_date
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_create_date
 #: model:ir.model.fields,field_description:basedata.field_business_type_create_date
 #: model:ir.model.fields,field_description:basedata.field_container_type_create_date
@@ -158,7 +203,27 @@ msgstr "创建时间"
 #. module: basedata
 #: model:ir.ui.menu,name:basedata.local_setting_currency_menu
 msgid "Currency"
-msgstr "币种"
+msgstr "货币代码"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_NameCN
+msgid "Currency Chinese Name"
+msgstr "货币名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_Code
+msgid "Currency Code"
+msgstr "货币代码"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_symbol
+msgid "Currency Symbol"
+msgstr "货币符号"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_customs_NameCN
+msgid "Custom Chinese Name"
+msgstr "关区名称"
 
 #. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_Code
@@ -177,6 +242,77 @@ msgid "Customs"
 msgstr "关区代码"
 
 #. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_currency
+#: model:ir.model,name:basedata.model_basedata_cus_currency
+msgid "Customs Currency"
+msgstr "货币代码"
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_dec_license_doc_type
+#: model:ir.model,name:basedata.model_basedata_dec_license_doc_type
+msgid "Customs DecLicenseDoc Type"
+msgstr "Customs DecLicenseDoc Type"
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_duty_mode
+#: model:ir.model,name:basedata.model_basedata_cus_duty_mode
+msgid "Customs Duty Mode"
+msgstr "征免方式"
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_entry_type
+#: model:ir.model,name:basedata.model_basedata_cus_entry_type
+msgid "Customs EntryType"
+msgstr "报关单类型"
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_filing_bill_type
+#: model:ir.model,name:basedata.model_basedata_cus_filing_bill_type
+msgid "Customs Filing Bill Type"
+msgstr "备案清单类型"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_register_name_cn
+msgid "Customs Register Name"
+msgstr "企业名称"
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_basedata_cus_goods_tariff
+msgid "Customs goods tariff"
+msgstr "Customs goods tariff"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_register_code
+msgid "Customs register Code"
+msgstr "海关编码"
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_basedata_cus_register_company
+msgid "Customs register company"
+msgstr "Customs register company"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_unified_social_credit_code
+msgid "Customs unified social credit code"
+msgstr "社会信用统一编码"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_NameCN
+msgid "Cut Chinese Name"
+msgstr "征免性质名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_Code
+msgid "Cut Mode Code"
+msgstr "征免性质代码"
+
+#. module: basedata
+#: model:ir.ui.menu,name:basedata.declare_element_menu
+msgid "Declare Element"
+msgstr "申报要素"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_display_name
@@ -186,6 +322,15 @@ msgstr "关区代码"
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_display_name
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_display_name
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_display_name
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_display_name
 #: model:ir.model.fields,field_description:basedata.field_business_type_display_name
 #: model:ir.model.fields,field_description:basedata.field_container_type_display_name
@@ -196,10 +341,25 @@ msgid "Display Name"
 msgstr "显示名称"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_NameCN
+msgid "DutyMode Chinese Name"
+msgstr "征免方式名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_Code
+msgid "DutyMode Code"
+msgstr "征免方式代码"
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_freight_clause_en_name
 #: model:ir.model.fields,field_description:basedata.field_transportation_term_en_name
 msgid "ENName"
 msgstr "英文名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_name
+msgid "Element Name"
+msgstr "要素名称"
 
 #. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_name_en
@@ -214,11 +374,44 @@ msgid "English Name"
 msgstr "英文名称"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_NameCN
+msgid "EntryType Chinese Name"
+msgstr "报关单类型名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_Code
+msgid "EntryType Code"
+msgstr "报关单类型代码"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_NameCN
+msgid "Filing Bill Type Chinese Name"
+msgstr "备案清单类型名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_Code
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_Code
+#: model:ir.ui.view,arch_db:basedata.filing_bill_type_form
+#: model:ir.ui.view,arch_db:basedata.filing_bill_type_tree
+msgid "Filing Bill Type Code"
+msgstr "备案清单类型代码"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_first_unit
+msgid "First Unit"
+msgstr "法定第一单位"
+
+#. module: basedata
 #: model:ir.actions.act_window,name:basedata.freight_clause_action
 #: model:ir.model,name:basedata.model_freight_clause
 #: model:ir.ui.menu,name:basedata.menu_freight_clause
 msgid "Freight Clause"
 msgstr "运费条款"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_NameCN
+msgid "Goods Chinese Name"
+msgstr "商品名称"
 
 #. module: basedata
 #: model:ir.actions.act_window,name:basedata.goods_attribute_action
@@ -232,6 +425,13 @@ msgid "Groups"
 msgstr "群组"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_cus_goods_tariff_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_Code_ts
+msgid "HS Code"
+msgstr "商品编码"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_id
@@ -241,6 +441,15 @@ msgstr "群组"
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_id
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_id
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_id
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_id
 #: model:ir.model.fields,field_description:basedata.field_business_type_id
 #: model:ir.model.fields,field_description:basedata.field_container_type_id
@@ -267,6 +476,7 @@ msgid "International Port"
 msgstr "国际标准港口"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code___last_update
@@ -276,6 +486,15 @@ msgstr "国际标准港口"
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode___last_update
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit___last_update
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type___last_update
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port___last_update
 #: model:ir.model.fields,field_description:basedata.field_business_type___last_update
 #: model:ir.model.fields,field_description:basedata.field_container_type___last_update
@@ -286,6 +505,7 @@ msgid "Last Modified on"
 msgstr "最后修改日"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_write_uid
@@ -295,6 +515,15 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_write_uid
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_write_uid
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_write_uid
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_write_uid
 #: model:ir.model.fields,field_description:basedata.field_business_type_write_uid
 #: model:ir.model.fields,field_description:basedata.field_container_type_write_uid
@@ -305,6 +534,7 @@ msgid "Last Updated by"
 msgstr "最后更新人"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_country_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_customs_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_write_date
@@ -314,6 +544,15 @@ msgstr "最后更新人"
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_write_date
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_currency_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_cut_mode_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_duty_mode_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_entry_type_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_filing_bill_type_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_register_company_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_write_date
+#: model:ir.model.fields,field_description:basedata.field_basedata_dec_license_doc_type_write_date
 #: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_write_date
 #: model:ir.model.fields,field_description:basedata.field_business_type_write_date
 #: model:ir.model.fields,field_description:basedata.field_container_type_write_date
@@ -334,7 +573,6 @@ msgstr "本地化"
 #: model:ir.ui.menu,name:basedata.materials_menu
 #: model:ir.ui.view,arch_db:basedata.product_template_only_form_view_materials
 #: model:ir.ui.view,arch_db:basedata.product_template_search_view_materials
-#: model:product.category,name:basedata.product_category_materials
 msgid "Materials"
 msgstr "辅材"
 
@@ -362,6 +600,11 @@ msgid "Name"
 msgstr "名字"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_complex_criterion_sequence
+msgid "Num"
+msgstr "序号"
+
+#. module: basedata
 #: model:product.uom,name:basedata.product_custom_order
 msgid "Order"
 msgstr "票"
@@ -378,6 +621,11 @@ msgid "Pack"
 msgstr "包装方式"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_NameCN
+msgid "Pack Chinese Name"
+msgstr "包装方式名称"
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_wrap_type_Code
 msgid "Pack Code"
 msgstr "包装方式代码"
@@ -389,9 +637,26 @@ msgid "Port"
 msgstr "港口代码"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_port_NameCN
+#: model:ir.ui.view,arch_db:basedata.internation_port_search_view
+msgid "Port Chinese Name"
+msgstr "港口中文名称"
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_port_Code
+#: model:ir.ui.view,arch_db:basedata.internation_port_search_view
 msgid "Port Code"
-msgstr "装运港代码"
+msgstr "港口代码"
+
+#. module: basedata
+#: model:ir.ui.view,arch_db:basedata.internation_port_search_view
+msgid "Port English Name"
+msgstr "港口英文名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_port_type
+msgid "Port Type"
+msgstr "港口类型"
 
 #. module: basedata
 #: model:ir.model,name:basedata.model_product_category
@@ -410,6 +675,11 @@ msgid "Region"
 msgstr "国内地区代码"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_NameCN
+msgid "Region Chinese Name"
+msgstr "国内地区名称"
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_district_code_Code
 msgid "Region Code"
 msgstr "国内地区代码"
@@ -420,6 +690,11 @@ msgstr "国内地区代码"
 #: model:ir.ui.view,arch_db:basedata.route_search
 msgid "Route"
 msgstr "航线"
+
+#. module: basedata
+#: selection:basedata.internation_port,port_type:0
+msgid "Seaport"
+msgstr "海港"
 
 #. module: basedata
 #: model:ir.actions.act_window,name:basedata.product_template_action_extend_service
@@ -453,6 +728,11 @@ msgid "Trade Mode"
 msgstr "监管方式"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_NameCN
+msgid "Trade Mode Chinese Name"
+msgstr "监管方式名称"
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trade_mode_Code
 msgid "Trade Mode Code"
 msgstr "监管方式代码"
@@ -464,16 +744,27 @@ msgid "Trade Terms"
 msgstr "成交方式"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_NameCN
+msgid "Trade Terms Chinese Name"
+msgstr "成交方式名称"
+
+#. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_trans_mode_Code
 msgid "Trade Terms Code"
 msgstr "成交方式代码"
 
 #. module: basedata
 #: model:ir.actions.act_window,name:basedata.delegation_transport_mode
+#: model:ir.model.fields,field_description:basedata.field_basedata_internation_port_transport_mode
 #: model:ir.model.fields,field_description:basedata.field_business_type_transport_mode
 #: model:ir.ui.menu,name:basedata.traf_mode_list_menu
 msgid "Transport Mode"
 msgstr "运输方式"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_name_cn
+msgid "Transport Mode Chinese Name"
+msgstr "运输方式名称"
 
 #. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_traf_mode_code
@@ -489,28 +780,12 @@ msgid "Transportation Term"
 msgstr "运输条款"
 
 #. module: basedata
-#: model:ir.model,name:basedata.model_declare_element
-msgid "add declare element to delegation"
-msgstr "报关申报要素"
-
-#. module: basedata
-#: model:ir.model,name:basedata.model_currency_system
-msgid "add special currency system for delegation"
-msgstr "报关专用货币系统"
-
-#. module: basedata
 #: model:ir.model,name:basedata.model_goods_attribute
 msgid "add special goods attribute for delegation"
 msgstr "报关货物属性"
 
 #. module: basedata
-#: model:ir.model,name:basedata.model_turnover_unit
-msgid "add special unit for delegation"
-msgstr "报关商品单位"
-
-#. module: basedata
 #: model:ir.model,name:basedata.model_delegate_country
-#: model:ir.model,name:basedata.model_product_hs_code
 msgid "add the Country of originOrCountry of destination"
 msgstr "国家（地区代码）"
 
@@ -536,9 +811,36 @@ msgid "code"
 msgstr "代码"
 
 #. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_cut_mode
+#: model:ir.model,name:basedata.model_basedata_cus_cut_mode
+msgid "customs cut mode"
+msgstr "征免性质"
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_goods_tariff
+msgid "customs goods tariff"
+msgstr "海关税则"
+
+#. module: basedata
 #: model:ir.model,name:basedata.model_delegate_customs
 msgid "customs of delegation"
 msgstr "报关进出口岸"
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_register_company
+msgid "customs register company"
+msgstr "企业库表"
+
+#. module: basedata
+#: model:ir.actions.act_window,name:basedata.delegation_cus_unit
+#: model:ir.model,name:basedata.model_basedata_cus_unit
+msgid "customs unit"
+msgstr "计量单位"
+
+#. module: basedata
+#: model:ir.model,name:basedata.model_declare_element
+msgid "declare element"
+msgstr "申报要素"
 
 #. module: basedata
 #: model:ir.model.fields,field_description:basedata.field_b_hg_goods_attribute_description
@@ -563,11 +865,6 @@ msgstr "例如..木质包装材料"
 #: model:ir.model.fields,field_description:basedata.field_container_type_active
 msgid "enable/diable"
 msgstr "是否启用"
-
-#. module: basedata
-#: model:ir.model,name:basedata.model_delegate_exemption
-msgid "exemption nature of delegation"
-msgstr "报关免征方式"
 
 #. module: basedata
 #: selection:business_type,in_out:0
@@ -600,6 +897,21 @@ msgid "region of delegation"
 msgstr "报关境内目的地"
 
 #. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_second_unit
+msgid "second Unit"
+msgstr "法定第二单位"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_supervision_condition
+msgid "supervision condition"
+msgstr "监管方式"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_goods_tariff_Code_t
+msgid "tax regulations Code"
+msgstr "前八位税则号"
+
+#. module: basedata
 #: model:ir.model,name:basedata.model_delegate_trade_mode
 msgid "trade mode of delegation"
 msgstr "监管方式"
@@ -608,6 +920,16 @@ msgstr "监管方式"
 #: model:ir.model,name:basedata.model_delegate_trade_terms
 msgid "trade terms of delegation"
 msgstr "成交方式"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_NameCN
+msgid "unit Chinese Name"
+msgstr "计量单位名称"
+
+#. module: basedata
+#: model:ir.model.fields,field_description:basedata.field_basedata_cus_unit_Code
+msgid "unit Code"
+msgstr "计量单位代码"
 
 #. module: basedata
 #: code:addons/basedata/models/product_category.py:16

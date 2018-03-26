@@ -8,7 +8,7 @@ class widget_data(models.Model):
     sortable = fields.Integer()
 
     @api.model
-    def upload_dragndrop(self,res_model_id,res_model_name,name, base64, extension, sortable):
+    def upload_dragndrop_dec_edoc(self,res_model_id,res_model_name,name, base64, extension, sortable):
         Model = self
 
         dec_edoc_type=""
@@ -27,7 +27,7 @@ class widget_data(models.Model):
                 'name': name,
                 'datas': base64,
                 'extension': extension,
-                'dec_edoc_type':dec_edoc_type,
+                'dec_edoc_type': dec_edoc_type,
                 'datas_fname': name,
                 'res_model': res_model_name,
                 'description': '',

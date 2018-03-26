@@ -9,7 +9,7 @@ class CusCutMode(models.Model):
     _rec_name = 'NameCN'
 
     Code = fields.Char(string='Cut Mode Code', required=True)     # 征免性质代码
-    NameCN = fields.Char(string='Chinese Name', size=50, required=True)   # 中文名称
+    NameCN = fields.Char(string='Cut Chinese Name', size=50, required=True)   # 中文名称
 
 
 class CusDutyMode(models.Model):
@@ -19,7 +19,7 @@ class CusDutyMode(models.Model):
     _rec_name = 'NameCN'
 
     Code = fields.Char(string='DutyMode Code', required=True)  # 征免方式代码
-    NameCN = fields.Char(string='Chinese Name', size=50, required=True)  # 中文名称
+    NameCN = fields.Char(string='DutyMode Chinese Name', size=50, required=True)  # 中文名称
 
     @api.multi
     @api.depends('Code', 'NameCN')
@@ -50,7 +50,7 @@ class CusUnit(models.Model):
     _rec_name = 'NameCN'
 
     Code = fields.Char(string='unit Code', required=True)     # 计量单位
-    NameCN = fields.Char(string='Chinese Name', size=50, required=True)   # 中文名称
+    NameCN = fields.Char(string='unit Chinese Name', size=50, required=True)   # 中文名称
 
     @api.multi
     @api.depends('Code', 'NameCN')
@@ -81,8 +81,8 @@ class CusCurrency(models.Model):
     _rec_name = 'NameCN'
 
     Code = fields.Char(string='Currency Code', required=True)       # 币制代码
-    symbol = fields.Char(string='Symbol',)     # 符号
-    NameCN = fields.Char(string='Chinese Name', size=50, required=True)   # 中文名称
+    symbol = fields.Char(string='Currency Symbol',)     # 符号
+    NameCN = fields.Char(string='Currency Chinese Name', size=50, required=True)   # 中文名称
 
     @api.multi
     @api.depends('Code', 'NameCN')
@@ -113,7 +113,7 @@ class CusEntryType(models.Model):
     _rec_name = 'NameCN'
 
     Code = fields.Char(string='EntryType Code', required=True)       # 报关单类型代码
-    NameCN = fields.Char(string='Chinese Name', size=50, required=True)   # 中文名称
+    NameCN = fields.Char(string='EntryType Chinese Name', size=50, required=True)   # 中文名称
 
 
 class CusFilingBillType(models.Model):
@@ -123,7 +123,7 @@ class CusFilingBillType(models.Model):
     _rec_name = 'NameCN'
 
     Code = fields.Char(string='Filing Bill Type Code', required=True)       # 备案清单类型代码
-    NameCN = fields.Char(string='Chinese Name', size=50, required=True)     # 中文名称
+    NameCN = fields.Char(string='Filing Bill Type Chinese Name', size=50, required=True)     # 中文名称
 
 
 class CusRegisterCompany(models.Model):
@@ -137,7 +137,7 @@ class CusRegisterCompany(models.Model):
     register_name_cn = fields.Char(string='Customs Register Name', size=50, required=True)     # 企业海关名称
 
     @api.multi
-    @api.depends('register_code', 'register_name_cn')
+    @api.depends('register_code', 'register_name_cn',)
     def name_get(self):
         result = []
         for record in self:
@@ -152,7 +152,8 @@ class CusRegisterCompany(models.Model):
         """重写模型name字段搜索方法"""
         args = args or []
         if not (name == '' and operator == 'ilike'):
-            args += ['|', ('register_code', operator, name), ('register_name_cn', operator, name)]
+            args += ['|', ('register_code', operator, name),
+                     ('register_name_cn', operator, name)]
 
         return super(CusRegisterCompany, self)._name_search(
             name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
@@ -166,12 +167,13 @@ class CusGoodsTariff(models.Model):
     _rec_name = 'Code_ts'
 
     Code_t = fields.Char(string='tax regulations Code',)       # 税则号
-    Code_s = fields.Char(string='Attach Code',)       # 附加编号
-    Code_ts = fields.Char(string='goods Code', required=True)       # 商品编号
-    NameCN = fields.Char(string='Chinese Name', size=50, required=True)     # 中文名称
+    Code_s = fields.Char(string='Attach Code',)       # 附加编码
+    Code_ts = fields.Char(string='HS Code', required=True)       # 商品编号
+    NameCN = fields.Char(string='Goods Chinese Name', size=50, required=True)     # 中文名称
     first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
     supervision_condition = fields.Char(string="supervision condition")  # 监管条件 / 监管标识
+
 
 class DecLicenseDocType(models.Model):
     """ 随附单证类型 """

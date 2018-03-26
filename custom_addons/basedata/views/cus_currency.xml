@@ -16,13 +16,13 @@
                     <sheet>
                         <group col="3" colspan="1">
                             <group>
-                                <field name="Code" string="Currency Code"/>
+                                <field name="Code" />
                             </group>
                             <group>
-                                <field name="symbol" string="Symbol"/>
+                                <field name="symbol"/>
                             </group>
                             <group>
-                                <field name="NameCN" string="Chinese Name"/>
+                                <field name="NameCN"/>
                             </group>
                         </group>
                     </sheet>
@@ -35,11 +35,23 @@
             <field name="model">basedata.cus_currency</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="Code" string="Currency Code"/>
-                    <field name="symbol" string="Symbol"/>
-                    <field name="NameCN" string="Chinese Name"/>
+                    <field name="Code"/>
+                    <field name="symbol"/>
+                    <field name="NameCN"/>
                 </tree>
             </field>
+        </record>
+
+        <record id="cus_currency_search_view" model="ir.ui.view">
+           <field name="name">cus_currency search</field>
+           <field name="model">basedata.cus_currency</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="Code"/>
+                    <field name="symbol"/>
+                    <field name="NameCN"/>
+                </search>
+           </field>
         </record>
 
     </data>

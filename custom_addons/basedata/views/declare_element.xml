@@ -25,7 +25,6 @@
         <field name="model">declare_element</field>    <!--固定格式-->
         <field name="arch" type="xml">                        <!--固定格式-->
             <tree>
-                <field name="id"/>
                 <field name="cus_goods_tariff_id"/>
                 <field name="sequence"/>
                 <field name="name"/>

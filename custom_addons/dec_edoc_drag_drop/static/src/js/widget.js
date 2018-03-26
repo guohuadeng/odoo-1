@@ -1,4 +1,4 @@
-odoo.define('edoc_drag_drop.form_widgets', function (require) {
+odoo.define('dec_edoc_drag_drop.form_widgets', function (require) {
     "use strict";
 
     var core = require('web.core');
@@ -18,7 +18,7 @@ odoo.define('edoc_drag_drop.form_widgets', function (require) {
     var res_model_name="ir.attachment";
 
     var multidragndrop_edoc = Many2ManyBinary.extend({
-        template: "dragndropmulti_template",
+        template: "dragndropmulti_edoc_template",
         read_name_values : function () {
 
             var self = this;
@@ -61,12 +61,9 @@ odoo.define('edoc_drag_drop.form_widgets', function (require) {
         },
         render_value: function () {
             var model_id_filed_name = this.options && this.options.res_model_id;
-            console.log('model_id_filed_name'+model_id_filed_name);
             if (model_id_filed_name) {
-                //这里可能会提示错误 Uncaught TypeError: Cannot read property 'get_value' of undefined
-                console.log('get_field_value'+this.field_manager.get_field_value(model_id_filed_name));
+                //这里可能会提示错误 Uncaught TypeError: Cannot read property 'get_value' of undefined)，使用该控件时必须用options="{'res_model_id':'id','res_model_name':'customs_center.customs_dec'}"options="{'res_model_id':'id','res_model_name':'options="{'res_model_id':'id','res_model_name':'customs_center.customs_dec'}"'}"
                 res_model_id=this.field_manager.get_field_value(model_id_filed_name);
-                console.log('model_id'+res_model_id);
             }
 
             res_model_name= this.options && this.options.res_model_name;
@@ -74,7 +71,7 @@ odoo.define('edoc_drag_drop.form_widgets', function (require) {
             var self = this;
             this.read_name_values().then(function (ids) {
 
-                var render = $(QWeb.render('dragndropmulti_template.images', {'widget': self, 'values': ids}));
+                var render = $(QWeb.render('dragndropmulti_edoc_template.images', {'widget': self, 'values': ids}));
                 render.on('click', '.oe_delete', _.bind(self.on_file_delete, self));
                 self.$('.oe_placeholder_files, .oe_attachments').replaceWith( render );
 
@@ -98,7 +95,7 @@ odoo.define('edoc_drag_drop.form_widgets', function (require) {
                                 return item.el.attr('title') +
                                     '<div style="margin-top: -45px;"><a style="padding:5px; color:black; background-color:white; text-align:center;" href="'+item.src+'" >Download</a></div>';
                             },
-                            tError: "<a href='%url%'><img src='/hexcode_drag_drop/static/src/img/down.png' style='margin-top:-100px;' width='200' /><br/><p>Download File</p></a>"
+                            tError: "<a href='%url%'><img src='/dec_edoc_drag_drop/static/src/img/down.png' style='margin-top:-100px;' width='200' /><br/><p>Download File</p></a>"
                         }
                     });
 
@@ -264,7 +261,7 @@ odoo.define('edoc_drag_drop.form_widgets', function (require) {
                 }
 
                 var model = new Model("ir.attachment");
-                model.call("upload_dragndrop", [],{res_model_id:res_model_id,res_model_name:res_model_name,name: file.name, base64: base64_image, extension: extension_file, sortable: last_sort_number+1}).then(function(result_id) {
+                model.call("upload_dragndrop_dec_edoc", [],{res_model_id:res_model_id,res_model_name:res_model_name,name: file.name, base64: base64_image, extension: extension_file, sortable: last_sort_number+1}).then(function(result_id) {
                     console.log(result_id);
                     var values = _.clone(self.get('value'));
                     values.push(parseInt(result_id));

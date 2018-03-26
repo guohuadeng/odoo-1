@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-   <t t-name="dragndropmulti_template">
+   <t t-name="dragndropmulti_edoc_template">
     <div t-att-style="widget.node.attrs.style" t-attf-class="oe_fileupload #{widget.node.attrs.class ? widget.node.attrs.class :''}">
         <div class="oe_placeholder_files"/>
         <div class="oe_add" t-if="!widget.get('effective_readonly')">
@@ -19,7 +19,7 @@
     </div>
 </t>
 
-<t t-name="dragndropmulti_template.images">
+<t t-name="dragndropmulti_edoc_template.images">
     <div class="oe_attachments dragndrop-input" style="min-height: 100px; width: 790px;
     margin: 20px;">
             <t t-if="!widget.get('effective_readonly')">
@@ -41,31 +41,31 @@
                                         se e' un file inserisco la foto in base all'estensione-->
                                         <t t-if="file.extension == 'pdf'">
                                             <!--File PDF-->
-                                            <img src="/edoc_drag_drop/static/src/img/pdf.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                            <img src="/dec_edoc_drag_drop/static/src/img/pdf.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                         </t>
                                         <t t-if="file.extension == 'doc'">
                                             <!--File PDF-->
-                                            <img src="/edoc_drag_drop/static/src/img/doc.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                            <img src="/dec_edoc_drag_drop/static/src/img/doc.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                         </t>
                                         <t t-if="file.extension == 'zip'">
                                             <!--File PDF-->
-                                            <img src="/edoc_drag_drop/static/src/img/zip.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                            <img src="/dec_edoc_drag_drop/static/src/img/zip.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                         </t>
                                         <t t-if="file.extension == 'psd'">
                                             <!--File PDF-->
-                                            <img src="/edoc_drag_drop/static/src/img/psd.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                            <img src="/dec_edoc_drag_drop/static/src/img/psd.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                         </t>
                                         <t t-if="file.extension == 'ai'">
                                             <!--File PDF-->
-                                            <img src="/edoc_drag_drop/static/src/img/ai.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                            <img src="/dec_edoc_drag_drop/static/src/img/ai.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                         </t>
                                         <t t-if="file.extension == 'ppt'">
                                             <!--File PDF-->
-                                            <img src="/edoc_drag_drop/static/src/img/ppt.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                            <img src="/dec_edoc_drag_drop/static/src/img/ppt.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                         </t>
                                         <t t-if="file.extension == 'xls'">
                                             <!--File PDF-->
-                                            <img src="/edoc_drag_drop/static/src/img/xls.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                            <img src="/dec_edoc_drag_drop/static/src/img/xls.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                         </t>
                                         <t t-if="file.extension != 'pdf' and file.extension != 'doc' and file.extension != 'zip' and file.extension != 'ai' and file.extension != 'psd'
                                         and file.extension != 'ppt' and file.extension != 'xls'">
@@ -198,31 +198,31 @@
                                 se e' un file inserisco la foto in base all'estensione-->
                                 <t t-if="file.extension == 'pdf'">
                                     <!--File PDF-->
-                                    <img src="/edoc_drag_drop/static/src/img/pdf.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                    <img src="/dec_edoc_drag_drop/static/src/img/pdf.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                 </t>
                                 <t t-if="file.extension == 'doc'">
                                     <!--File PDF-->
-                                    <img src="/edoc_drag_drop/static/src/img/doc.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                    <img src="/dec_edoc_drag_drop/static/src/img/doc.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                 </t>
                                 <t t-if="file.extension == 'zip'">
                                     <!--File PDF-->
-                                    <img src="/edoc_drag_drop/static/src/img/zip.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                    <img src="/dec_edoc_drag_drop/static/src/img/zip.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                 </t>
                                 <t t-if="file.extension == 'psd'">
                                     <!--File PDF-->
-                                    <img src="/edoc_drag_drop/static/src/img/psd.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                    <img src="/dec_edoc_drag_drop/static/src/img/psd.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                 </t>
                                 <t t-if="file.extension == 'ai'">
                                     <!--File PDF-->
-                                    <img src="/edoc_drag_drop/static/src/img/ai.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                    <img src="/dec_edoc_drag_drop/static/src/img/ai.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                 </t>
                                 <t t-if="file.extension == 'ppt'">
                                     <!--File PDF-->
-                                    <img src="/edoc_drag_drop/static/src/img/ppt.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                    <img src="/dec_edoc_drag_drop/static/src/img/ppt.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                 </t>
                                 <t t-if="file.extension == 'xls'">
                                     <!--File PDF-->
-                                    <img src="/edoc_drag_drop/static/src/img/xls.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                    <img src="/dec_edoc_drag_drop/static/src/img/xls.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
                                 </t>
                                 <t t-if="file.extension != 'pdf' and file.extension != 'doc' and file.extension != 'zip' and file.extension != 'ai' and file.extension != 'psd'
                                 and file.extension != 'ppt' and file.extension != 'xls'">
@@ -282,7 +282,6 @@
             <t t-raw="0"/>
             <input type="file" class="oe_form_binary_file" multiple="multiple" name="ufile" t-if="widget.widget!='image'"/>
             <input type="file" class="oe_form_binary_file" multiple="multiple"  name="ufile" accept="image/*" t-if="widget.widget=='image'"/>
-            <input type="submit"> </input>
         </form>
         <iframe t-att-id="fileupload_id" t-att-name="fileupload_id" style="display: none"/>
     </div>

@@ -35,7 +35,9 @@ def delegate_to_xml(self):
 
     # 申报单位直接读取配置文件的写法
     head_node_dic['AgentCode'] = self.dec_company_customs_code if self.dec_company_customs_code else None  # u'申报单位代码'
-    head_node_dic['AgentName'] = self.dec_company if self.dec_company else None   # u'申报单位名称'
+    # head_node_dic['AgentName'] = self.dec_company if self.dec_company else None   # u'申报单位名称'
+    head_node_dic[
+        'AgentName'] = self.declare_company_id.register_name_cn if self.declare_company_id.register_name_cn else None  # u'申报单位名称'
 
     head_node_dic['ApprNo'] = None
     head_node_dic['BillNo'] = str(self.bill_no) if self.bill_no else None  # u'提单号'
@@ -133,7 +135,7 @@ def delegate_to_xml(self):
         product_node_name['Factor'] = None   # u'申报计量单位与法定单位比例因子'
         product_node_name['FirstQty'] = str(item.first_qty) if item.first_qty else None  # u'第一法定数量'
         product_node_name['FirstUnit'] = item.first_unit.Code  if item.first_unit.Code else None # u'第一计量单位'
-        product_node_name['GUnit'] = item.deal_unit.Code  if item.deal_unit.Code else None  # u'申报/成交计量单位'
+        product_node_name['GUnit'] = item.deal_unit_id.Code  if item.deal_unit_id.Code else None  # u'申报/成交计量单位'
         product_node_name['GModel'] = item.goods_model if item.goods_model else None   # u'商品规格、型号'
         product_node_name['GName'] = item.goods_name  if item.goods_name else None  # u'商品名称'
         product_node_name['GNo'] = str(i)   # u'商品序号'
@@ -313,9 +315,9 @@ def delegate_to_xml(self):
     # base_dir = config.options['xml_files_path']
 
     # 单一窗口报文发送根目录
-    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
+    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
     # QP 报文发送根目录
-    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
+    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/xml_data/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
 
     # 企业报关单 报文生成路径  用户配置界面自定义
     company_name = str(self.dec_company_customs_code)  # 申报单位海关编码 用作报文存放路径

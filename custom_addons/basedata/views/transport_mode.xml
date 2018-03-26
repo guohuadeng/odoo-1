@@ -11,11 +11,12 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="name_cn"/>
-                        </group>
-                        <group>
                             <field name="code"/>
                         </group>
+                        <group>
+                            <field name="name_cn"/>
+                        </group>
+
                     </group>
                 </sheet>
             </form>
@@ -30,12 +31,23 @@
         <!--固定格式-->
         <field name="arch" type="xml">
             <tree>
-                <field name="id"/>
-                <field name="name_cn" />
                 <field name="code" />
+                <field name="name_cn" />
             </tree>
         </field>
     </record>
+
+    <record id="transport_mode_search_view" model="ir.ui.view">
+       <field name="name">itransport_mode search</field>
+       <field name="model">delegate_transport_mode</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="code"/>
+                <field name="name_cn"/>
+            </search>
+       </field>
+    </record>
+
     <!-- Action to open To-do Task list -->
     <act_window id="delegation_transport_mode"
                 name="Transport Mode"
