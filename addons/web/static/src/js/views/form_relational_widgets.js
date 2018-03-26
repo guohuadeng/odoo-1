@@ -59,14 +59,14 @@ var FieldMany2One = common.AbstractField.extend(common.CompletionFieldMixin, com
                 case $.ui.keyCode.UP:
                 case $.ui.keyCode.DOWN:
                     e.stopPropagation();
-                    break;
-                // 添加按空格弹出下拉列表功能
-                case $.ui.keyCode.SPACE:
+		    break;
+               // 添加按空格弹出下拉列表
+               case $.ui.keyCode.SPACE:
                     this.$input.autocomplete("search");
                     e.stopPropagation();
                     return false;
             }
-        }
+        },
     },
     init: function(field_manager, node) {
         this._super(field_manager, node);
@@ -192,9 +192,9 @@ var FieldMany2One = common.AbstractField.extend(common.CompletionFieldMixin, com
                 if(!self.$input.autocomplete('widget').is(':visible')){
                     var inputs = $("input"); // 获取表单中的所有输入框
                     var idx = inputs.index(e.target); // 获取当前焦点输入框所处的位置
-                    console.log(inputs);
-                    console.log(idx);
-                    inputs[idx + 1].focus(); // 将下一控件设为焦点
+                    if(idx<inputs.length-1){
+                        inputs[idx + 1].focus(); // 将下一控件设为焦点
+                    }
 
                 }
             }

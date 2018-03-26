@@ -314,6 +314,26 @@ class CustomsDeclaration(models.Model):
         return res
     #############################################################################################
 
+    # 服务器动作 复制当前报关单表头数据
+    @api.multi
+    def duplicate_current_title_data(self):
+        """ 复制当前报关单表头数据 """
+        self.ensure_one()
+        customs_declaration_obj_copy = self.copy()
+        customs_declaration_obj_copy.update(
+            {'cus_dec_sent_way': '', 'cus_dec_sent_state': ''})  # 将发送通道字段修改为空，否则复制全部的时候，会导致复制的新报关单无法再次发送
+
+        if customs_declaration_obj_copy:
+            return {
+                'type': 'ir.actions.act_window',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'customs_center.customs_dec',
+                'res_id': customs_declaration_obj_copy.id,
+                'context': self.env.context,
+                'flags': {'initial_mode': 'edit'},
+            }
+
     # 服务器动作 复制当前报关单全部数据
     @api.multi
     def duplicate_current_all_data(self):

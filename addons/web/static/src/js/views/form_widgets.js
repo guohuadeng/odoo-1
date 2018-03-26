@@ -132,7 +132,9 @@ var FieldChar = common.AbstractField.extend(common.ReinitializeFieldMixin, {
              if(e && e.keyCode==13){
              var inputs = $("input"); // 获取表单中的所有输入框
                 var idx = inputs.index(e.target); // 获取当前焦点输入框所处的位置
-                inputs[idx + 1].focus(); // 设置焦点
+                if(idx<inputs.length-1){
+                    inputs[idx + 1].focus(); // 将下一控件设为焦点
+                }
             }
            return true;
         },
@@ -504,7 +506,9 @@ var FieldDate = common.AbstractField.extend(common.ReinitializeFieldMixin, {
              if(e && e.keyCode==13){
              var inputs = $("input"); // 获取表单中的所有输入框
                 var idx = inputs.index(e.target); // 获取当前焦点输入框所处的位置
-                inputs[idx + 1].focus(); // 设置焦点
+                if(idx<inputs.length-1){
+                    inputs[idx + 1].focus(); // 将下一控件设为焦点
+                }
             }
            return true;
         },
@@ -573,23 +577,7 @@ var FieldText = common.AbstractField.extend(common.ReinitializeFieldMixin, {
                 e.stopPropagation();
             }
         },
-        'change': 'store_dom_value',
-        'keydown': function (e) {
-          var e = event || window.event;
-             if(e && e.keyCode==13){
-                if(!self.$input.autocomplete('widget').is(':visible')){
-                    var inputs = $("input"); // 获取表单中的所有输入框
-                    var idx = inputs.index(this); // 获取当前焦点输入框所处的位置
-                    console.log(inputs);
-                    console.log(idx);
-                    inputs[idx + 1].focus(); // 设置焦点
-
-                }
-
-
-            }
-           return true;
-        },
+        'change': 'store_dom_value',        
     },
     initialize_content: function() {
         if (!this.get("effective_readonly")) {
