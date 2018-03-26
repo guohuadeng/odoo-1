@@ -11,6 +11,27 @@ class CusCutMode(models.Model):
     Code = fields.Char(string='Cut Mode Code', required=True)     # 征免性质代码
     NameCN = fields.Char(string='Cut Chinese Name', size=50, required=True)   # 中文名称
 
+    @api.multi
+    @api.depends('Code', 'NameCN')
+    def name_get(self):
+        result = []
+        for record in self:
+            result.append(
+                (record.id, u"%s %s"%(record.Code, record.NameCN))
+            )
+        return result
+
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
+        """重写模型name字段搜索方法"""
+        args = args or []
+        if not (name == '' and operator == 'ilike'):
+            args += ['|', ('Code', operator, name), ('NameCN', operator, name)]
+
+        return super(CusCutMode, self)._name_search(
+            name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
+        )
+
 
 class CusDutyMode(models.Model):
     """ 征免方式表 """
