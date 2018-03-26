@@ -56,13 +56,13 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="col-lg-4 col-md-4"><label for="custom_master_id" string="申报地海关"/></div>
                                 <div class="col-lg-8 col-md-8">
-                                    <field name="custom_master_id" class="oe_inline"/>
+                                    <field name="custom_master_id" class="oe_inline" options="{'no_create_edit': 1, 'no_create': 1}"/>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="col-lg-4 col-md-4"><label for="work_sheet_id" string="工作单号"/></div>
                                 <div class="col-lg-8 col-md-8">
-                                    <field name="work_sheet_id"/>
+                                    <field name="work_sheet_id" options="{'no_create_edit': 1, 'no_create': 1}"/>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                                             <label for="declare_company_id" string="申报单位" />
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="declare_company_id" style="width:100%"/>
+                                            <field name="declare_company_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
                                         </div>
                                     </div>
                                 </div>

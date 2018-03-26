@@ -12,6 +12,27 @@ class TransportMode(models.Model):
     code = fields.Char(string='Transport Mode Code', size=50)       # 运输方式代码
     name_cn = fields.Char(string='Transport Mode Chinese Name', size=50)     # 中文名称
 
+    @api.multi
+    @api.depends('code', 'name_cn')
+    def name_get(self):
+        result = []
+        for record in self:
+            result.append(
+                (record.id, u"%s %s"%(record.code, record.name_cn))
+            )
+        return result
+
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
+        """重写模型name字段搜索方法"""
+        args = args or []
+        if not (name == '' and operator == 'ilike'):
+            args += ['|', ('code', operator, name), ('name_cn', operator, name)]
+
+        return super(TransportMode, self)._name_search(
+            name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
+        )
+
 
 # class Exemption(models.Model):
 #     """征免性质"""

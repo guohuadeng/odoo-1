@@ -139,15 +139,7 @@
                                 </div>
                                 <div class="col-lg-8 col-md-8">
                                     <field name="custom_master_id"/>
-                                    <field name="inout" class="oe_inline" invisible="1"/>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4">
-                                <div class="col-lg-4 col-md-4">
-                                    <label for="cus_ciq_No" string="关检关联号"/>
-                                </div>
-                                <div class="col-lg-8 col-md-8">
-                                    <field name="cus_ciq_No"/>
+                                    <field name="inout" class="oe_inline" invisible="1" options="{'no_create_edit': 1, 'no_create': 1}"/>
                                 </div>
                             </div>
 
@@ -156,9 +148,20 @@
                                     <label for="customer_id" string="委托报关单位"/>
                                 </div>
                                 <div class="col-lg-8 col-md-8">
-                                    <field name="customer_id"/>
+                                    <field name="customer_id" options="{'no_create_edit': 1, 'no_create': 1}"/>
                                 </div>
                             </div>
+
+                            <div class="col-lg-4 col-md-4">
+                                <div class="col-lg-4 col-md-4">
+                                    <label for="cus_ciq_No" string="关检关联号"/>
+                                </div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="cus_ciq_No" readonly="1"/>
+                                </div>
+                            </div>
+
+
 
 
                         </div>
