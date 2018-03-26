@@ -95,7 +95,7 @@
             <field name="view_mode">form</field>
             <field name="sequence">2</field>
             <field name="view_id" ref="cus_center.view_pending_review_application_form" />
-            <field name="act_window_id" ref="customs_center.action_pending_review_goods" />
+            <field name="act_window_id" ref="cus_center.action_pending_review_goods" />
         </record>
 
     </data>

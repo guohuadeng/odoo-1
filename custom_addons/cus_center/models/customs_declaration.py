@@ -43,7 +43,7 @@ class CustomsDeclaration(models.Model):
     CutMode_id = fields.Many2one(comodel_name="cus_args.cut_mode", string="CutMode id")  # 征免性质   征免性质表待新建
     in_ratio = fields.Integer(string="In Ratio")  # 征免比例
     licenseNo = fields.Char(string="Bill No")  # 许可证号
-    licenseNo_ids = fields.One2many(comodel_name="customs_center.dec_lic_doc",
+    licenseNo_ids = fields.One2many(comodel_name="cus_center.dec_lic_doc",
                                 inverse_name="customs_declaration_id", string="License No")  # 许可证号    一对多 关联随附单证模型
 
     origin_arrival_country_id = fields.Many2one(comodel_name="cus_args.country",
@@ -104,7 +104,7 @@ class CustomsDeclaration(models.Model):
                                                         ('5', u'南方转关提前'), ('6', u'普通报关')], )  # 报关标志
 
     # 通关清单
-    dec_goods_list_ids = fields.One2many(comodel_name="cus_center.goods_list",
+    dec_goods_list_ids = fields.One2many(comodel_name="cus_center.goods_line",
                                          inverse_name="customs_declaration_id", string="dec goods name")
 
     # 报关单 关联合规模型 一对多 冗余字段 用于修改历史商品列表 通过关联报关单 确认是否已归类
@@ -112,7 +112,7 @@ class CustomsDeclaration(models.Model):
     #                                      inverse_name="customs_declaration_id", string="goods classified")
 
     # 集装箱信息 报关单 关联集装箱模型 一对多
-    dec_container_ids = fields.One2many(comodel_name="customs_center.dec_container",
+    dec_container_ids = fields.One2many(comodel_name="cus_center.dec_container",
                                          inverse_name="customs_declaration_id", string="container info")
 
     state = fields.Selection(string="State", selection=[('draft', 'Draft'),

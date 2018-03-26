@@ -10,16 +10,16 @@ class CompanySettings(models.TransientModel):
     _inherit = 'res.config.settings'
     _name = 'cus_center.settings'
 
-    default_cop_code = fields.Char(default_model='customs_center.customs_dec')  # 录入单位企业组织机构代码
-    default_cop_name = fields.Char(default_model='customs_center.customs_dec')  # 录入单位名称
+    default_cop_code = fields.Char(default_model='cus_center.cus_dec')  # 录入单位企业组织机构代码
+    default_cop_name = fields.Char(default_model='cus_center.cus_dec')  # 录入单位名称
 
-    default_cop_code_scc = fields.Char(default_model='customs_center.customs_dec')  # 录入单位社会信用统一编码
-    default_inputer_name = fields.Char(default_model='customs_center.customs_dec')  # 录入员姓名
-    default_oper_name = fields.Char(default_model='customs_center.customs_dec')     # 操作员姓名
-    default_certificate = fields.Char(default_model='customs_center.customs_dec')   # 操作员卡的证书号
-    default_ic_code = fields.Char(default_model='customs_center.customs_dec')  # 操作员IC卡号
+    default_cop_code_scc = fields.Char(default_model='cus_center.cus_dec')  # 录入单位社会信用统一编码
+    default_inputer_name = fields.Char(default_model='cus_center.cus_dec')  # 录入员姓名
+    default_oper_name = fields.Char(default_model='cus_center.cus_dec')     # 操作员姓名
+    default_certificate = fields.Char(default_model='cus_center.cus_dec')   # 操作员卡的证书号
+    default_ic_code = fields.Char(default_model='cus_center.cus_dec')  # 操作员IC卡号
 
-    default_dec_company_customs_code = fields.Char(default_model='customs_center.customs_dec')  # 申报单位海关编号
+    default_dec_company_customs_code = fields.Char(default_model='cus_center.cus_dec')  # 申报单位海关编号
 
     @api.onchange('default_dec_company')
     def _get_customs_dec_company(self):

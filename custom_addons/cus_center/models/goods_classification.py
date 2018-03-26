@@ -14,7 +14,7 @@ class GoodsClassification(models.Model):
 
     cus_goods_code = fields.Char(string="Customer Goods Code", required=True, index=True)     # 客户料号
     # 关联商品列表
-    dec_goods_list_ids = fields.One2many(comodel_name="cus_center.goods_list",
+    dec_goods_list_ids = fields.One2many(comodel_name="cus_center.goods_line",
                                          inverse_name="cus_goods_tariff_id", string="dec goods name")
 
     business_company_id = fields.Many2one(comodel_name="cus_args.register_company",

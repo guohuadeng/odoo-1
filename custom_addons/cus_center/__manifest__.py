@@ -22,11 +22,11 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['customs_args', 'mail', 'web_sheet_full_width'],
+    'depends': ['customs_args', 'mail', 'decimal_precision', 'web_sheet_full_width'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
+        # 'security/ir.model.access.csv',
         'data/cus_expenses_mark_type.xml',
         'data/cus_whether_mark_type.xml',
         'data/payment_mark_type.xml',

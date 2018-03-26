@@ -10,7 +10,7 @@ class DecContainer(models.Model):
     _description = 'customs center container'
 
     # 关联报关单 多对一
-    customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec", string="customs declaration",
+    customs_declaration_id = fields.Many2one(comodel_name="cus_center.cus_dec", string="customs declaration",
                                              copy=False)
     containerNo = fields.Char(string="container No")  # 集装箱号
     weight = fields.Float(string="Gross Weight")      # 自重

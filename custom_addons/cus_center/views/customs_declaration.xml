@@ -5,7 +5,7 @@
         <record id="action_customs_declaration" model="ir.actions.act_window">
             <field name="name">报关单</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">cus_center.customs_dec</field>
+            <field name="res_model">cus_center.cus_dec</field>
             <field name="view_mode">tree,form</field>
             <!--报关单列表视图界面过滤掉协同报关单 即不显示-->
             <field name="domain">[('synergism_seq_no','=', False)]</field>
@@ -14,7 +14,7 @@
         <record id="action_import_customs_declaration" model="ir.actions.act_window">
             <field name="name">进口报关单</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">cus_center.customs_dec</field>
+            <field name="res_model">cus_center.cus_dec</field>
             <field name="view_mode">tree,form</field>
             <field name="context" eval="{
                         'default_inout': 'I'}"/>
@@ -24,7 +24,7 @@
         <record id="action_export_customs_declaration" model="ir.actions.act_window">
             <field name="name">出口报关单</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">cus_center.customs_dec</field>
+            <field name="res_model">cus_center.cus_dec</field>
             <field name="view_mode">tree,form</field>
             <field name="context" eval="{
                         'default_inout': 'E'}"/>
@@ -47,14 +47,14 @@ if records:
         <record model="ir.values" id="duplicate_dec_all_data">
             <field name="name">复制全部</field>
             <field name="model_id" ref="model_cus_center_customs_dec" />
-            <field name="model">cus_center.customs_dec</field>
+            <field name="model">cus_center.cus_dec</field>
             <field name="key2">client_action_multi</field>
             <field eval="'ir.actions.server,%d'%action_duplicate_dec_all_data" name="value"/>
         </record>
 
         <record id="customs_declaration_tree" model="ir.ui.view">
             <field name="name">Customs Declaration tree view</field>
-            <field name="model">cus_center.customs_dec</field>
+            <field name="model">cus_center.cus_dec</field>
             <field name="arch" type="xml">
                 <tree default_order="create_date desc" decoration-success="cus_dec_rec_state == '申报成功'" decoration-danger="cus_dec_rec_state == '导入失败'">
                     <!--<field name="synergism_seq_no" string="协同报关单号" attrs="{'invisible':[('synergism_seq_no','=',False)]}"/>-->
@@ -78,7 +78,7 @@ if records:
 
         <record id="customs_declaration_form" model="ir.ui.view">
             <field name="name">Customs Declaration Form</field>
-            <field name="model">cus_center.customs_dec</field>
+            <field name="model">cus_center.cus_dec</field>
             <field name="arch" type="xml">
                 <form create="false">
                     <header>
@@ -806,7 +806,7 @@ if records:
         <record id="action_sync_customs_declaration" model="ir.actions.act_window">
             <field name="name">协同报关单</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">cus_center.customs_dec</field>
+            <field name="res_model">cus_center.cus_dec</field>
             <field name="view_mode">tree,form</field>
             <!--协同报关单列表视图界面 只显示协同报关单-->
             <field name="domain">[('synergism_seq_no','&lt;&gt;', False)]</field>
@@ -814,7 +814,7 @@ if records:
 
         <record id="customs_sync_declaration_tree" model="ir.ui.view">
             <field name="name">Customs Sync Declaration tree view</field>
-            <field name="model">cus_center.customs_dec</field>
+            <field name="model">cus_center.cus_dec</field>
             <field name="arch" type="xml">
                 <tree create="false" decoration-success="cus_dec_rec_state == '申报成功'" decoration-danger="cus_dec_rec_state == '导入失败'" default_order="create_date desc">
                     <field name="cus_dec_rec_state" string="回执状态"/>
@@ -844,7 +844,7 @@ if records:
         <record id="sync_customs_declaration_form" model="ir.actions.act_window.view">
                     <field name="view_mode">form</field>
                     <field name="sequence">2</field>
-                   <field name="view_id" ref="cus_center.customs_declaration_form" />
+                   <field name="view_id" ref="cus_center.cus_declaration_form" />
                    <field name="act_window_id" ref="cus_center.action_sync_customs_declaration" />
         </record>
 
@@ -854,7 +854,7 @@ if records:
         <!--支持按工作单号、关检关联号、统一编号、预录入号、海关编号、收发货人、创建人搜索-->
         <record id="view_customs_declaration_search" model="ir.ui.view">
            <field name="name">customs declaration search</field>
-           <field name="model">cus_center.customs_dec</field>
+           <field name="model">cus_center.cus_dec</field>
             <field name="arch" type="xml">
                 <search string="customs declaration search">
                     <field name="customs_order_id" string="通关清单"/>
