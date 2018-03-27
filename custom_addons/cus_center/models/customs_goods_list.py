@@ -25,6 +25,7 @@ class CusGoodsList(models.Model):
 
     # 关联商品归类信息
     goods_classification_id = fields.Many2one(comodel_name="cus_center.goods_classify", string="Goods Classification", required=False,)  # 客户料号
+    cus_goods_code = fields.Char(string="Customer Goods Code", related='goods_classification_id.cus_goods_code')  # 客户料号 录入字段
     goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
     deal_qty = fields.Float(string="deal quantity", required=False, default=1)  # 成交数量
     deal_unit_price = fields.Float(string="deal unit price", )    # 成交单价/申报单价

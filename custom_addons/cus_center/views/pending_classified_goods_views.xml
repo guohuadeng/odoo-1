@@ -11,7 +11,7 @@
         <record id="action_pending_classified_goods" model="ir.actions.act_window">
             <field name="name">待归类历史报关商品</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">cus_center.cus_goods_list</field>
+            <field name="res_model">cus_center.goods_line</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('customs_declaration_id','&lt;&gt;', False), ('classify_status', '=', 'no')]</field>
             <!--过滤条件：由于报关单和通关清单共用一个商品列表模型 第一个过滤条件过滤掉通关清单的商品 第二个过滤条件 过滤掉已经归类的商品-->
@@ -20,7 +20,7 @@
         <!--通关清单 报关单 通用商品列表视图-->
         <record id="pending_classified_goods_tree" model="ir.ui.view">
             <field name="name">pending classified goods tree view</field>
-            <field name="model">cus_center.cus_goods_list</field>
+            <field name="model">cus_center.goods_line</field>
             <field name="arch" type="xml">
                 <tree string="pending classified goods lists">
                     <field name="sequence" widget="handle"/>
@@ -48,7 +48,7 @@
 
         <record id="pending_classified_goods_form" model="ir.ui.view">
             <field name="name">pending classified goods Form view</field>
-            <field name="model">cus_center.cus_goods_list</field>
+            <field name="model">cus_center.goods_line</field>
             <field name="arch" type="xml">
                 <form create="false">
                     <header>
@@ -249,7 +249,7 @@
 
         <record id="view_pending_cla_goods_search" model="ir.ui.view">
            <field name="name">pending classified goods search</field>
-           <field name="model">cus_center.cus_goods_list</field>
+           <field name="model">cus_center.goods_line</field>
             <field name="arch" type="xml">
                 <search string="pending goods search">
                     <field name="customs_declaration_id" string="报关单号"/>

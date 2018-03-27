@@ -41,9 +41,6 @@ class Customer(models.Model):
     certificate_manager = fields.One2many(comodel_name="certificate_management", inverse_name="customer",
                                           string="Certificate Manager", required=False, )
     certificate_count = fields.Integer(string="Certificate Count", compute='_count_certificate_manager', required=False, )
-
-    is_company = fields.Boolean(string='Is a Company', default=True,
-                                help="Check if the contact is a company, otherwise it is a person")
     customer_service_ids = fields.Many2many(comodel_name="res.users", string="Customer Service", )  # 客服
 
     # 增加注册地址

@@ -35,7 +35,7 @@
         <record model="ir.actions.server" id="action_duplicate_dec_all_data">
             <field name="name">复制全部</field>
             <field name="type">ir.actions.server</field>
-            <field name="model_id" ref="model_cus_center_customs_dec"/>
+            <field name="model_id" ref="model_cus_center_cus_dec"/>
             <field name="state">code</field>
             <field name="code">
 if records:
@@ -46,7 +46,7 @@ if records:
         <!--添加服务器动作 指定上边的id-->
         <record model="ir.values" id="duplicate_dec_all_data">
             <field name="name">复制全部</field>
-            <field name="model_id" ref="model_cus_center_customs_dec" />
+            <field name="model_id" ref="model_cus_center_cus_dec" />
             <field name="model">cus_center.cus_dec</field>
             <field name="key2">client_action_multi</field>
             <field eval="'ir.actions.server,%d'%action_duplicate_dec_all_data" name="value"/>
@@ -61,7 +61,6 @@ if records:
                     <field name="cus_dec_rec_state" string="回执状态"/>
                     <button name="btn_review_receipt" string="历史回执信息" type="object" attrs="{'invisible': [('cus_dec_rec_state', '=', False)]}"/>
                     <field name="name" string="报关单流水号"/>
-                    <field name="work_sheet_id" string="工作单号"/>
                     <field name="inout" string="进出口类型" invisible="1"/>
                     <field name="cus_ciq_No" string="关检关联号"/>
                     <field name="dec_seq_no" string="统一编号"/>
@@ -821,7 +820,6 @@ if records:
                     <button name="btn_review_receipt" string="历史回执信息" type="object"/>
                     <field name="name" string="报关单流水号"/>
                     <field name="synergism_seq_no" string="协同报关单号"/>
-                    <field name="work_sheet_id" string="工作单号"/>
                     <field name="cus_ciq_No" string="关检关联号"/>
                     <field name="dec_seq_no" string="统一编号"/>
                     <field name="entry_id" string="海关编号"/>
@@ -844,7 +842,7 @@ if records:
         <record id="sync_customs_declaration_form" model="ir.actions.act_window.view">
                     <field name="view_mode">form</field>
                     <field name="sequence">2</field>
-                   <field name="view_id" ref="cus_center.cus_declaration_form" />
+                   <field name="view_id" ref="cus_center.customs_declaration_form" />
                    <field name="act_window_id" ref="cus_center.action_sync_customs_declaration" />
         </record>
 
@@ -859,7 +857,6 @@ if records:
                 <search string="customs declaration search">
                     <field name="customs_order_id" string="通关清单"/>
                     <field name="name" string="报关单流水号"/>
-                    <field name="work_sheet_id" string="工作单号"/>
                     <field name="cus_ciq_No" string="关检关联号"/>
                     <field name="dec_seq_no" string="统一编号"/>
                     <field name="entry_id" string="海关编号"/>

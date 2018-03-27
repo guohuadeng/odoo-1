@@ -53,8 +53,8 @@ class GoodsClassification(models.Model):
                                         ('approve', 'approved')  # 通过审核
                                         ], string='status', readonly=True, default='draft')
 
-    # customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
-    #                                      inverse_name="cus_goods_tariff_id", string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
+    customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
+                                         inverse_name="cus_goods_tariff_id", string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
 
 
     # @api.model

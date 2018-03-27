@@ -83,6 +83,7 @@ class CustomsDeclaration(models.Model):
     rel_man_No = fields.Char(string="License No")  # 关联 备案
     bonded_No = fields.Char(string="Bonded No")  # 监管场所
     customs_field = fields.Char(string="CustomsField")  # 货场代码
+    customer_id = fields.Many2one(comodel_name="res.partner", string="Customer")  # 客户
 
     declare_company_id = fields.Many2one(comodel_name="cus_args.register_company", string="declare company name")  # 申报单位
     input_company_id = fields.Many2one(comodel_name="cus_args.register_company", string="input company id")  # 货主单位 消费使用单位
