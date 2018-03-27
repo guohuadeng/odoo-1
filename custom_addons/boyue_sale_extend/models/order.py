@@ -472,11 +472,3 @@ class ContractWizard(models.TransientModel):
                 item.contract_effective_date = item.selected_contract.contract_effective_date
                 item.contract_failure_date = item.selected_contract.contract_failure_date
 
-
-class Company(models.Model):
-    """增加公司代码"""
-    _name = 'res.company'
-    _inherit = 'res.company'
-
-    company_code = fields.Char(string="Code", required=False)
-
