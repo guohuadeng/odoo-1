@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="exp_mark_type_rate" model="cus_center.exp_mark_type">
+            <field name="Code">1</field>
+            <field name="NameCN">1-费率</field>
+       </record>
+
+       <record id="exp_mark_type_unit" model="cus_center.exp_mark_type">
+            <field name="Code">2</field>
+            <field name="NameCN">2-单价</field>
+       </record>
+
+       <record id="exp_mark_type_total" model="cus_center.exp_mark_type">
+            <field name="Code">3</field>
+            <field name="NameCN">3-总价</field>
+       </record>
+    </data>
+</odoo>

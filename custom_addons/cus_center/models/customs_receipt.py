@@ -18,7 +18,7 @@ class DecResult(models.Model):
     notice_date = fields.Datetime(string="Notice Date", required=False, default=fields.Datetime.now)          # 回执时间
     sequence = fields.Integer(string="Sequence", compute='_compute_seq_no')
 
-    customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
+    customs_declaration_id = fields.Many2one(comodel_name="cus_center.cus_dec",
                                              string="Customs Declaration")          # 关联报关单
 
     @api.depends('status_id')

@@ -19,9 +19,9 @@ class CustomsOrder(models.Model):
     ManualNo = fields.Char(string="Manual No")                                                   # 备案号
     customer_contract_no = fields.Char(string="Customer Contract No")                            # 合同号
     licenseNo = fields.Char(string="License No")                                                 # 许可证号
-    # declare_company_id = fields.Many2one(comodel_name="", string="declare company name")  # 申报单位
-    # input_company_id = fields.Many2one(comodel_name="", string="input company id")  # 消费使用单位
-    # business_company_id = fields.Many2one(comodel_name="", string="business company name")    # 收发货人
+    declare_company_id = fields.Many2one(comodel_name="cus_args.register_company", string="declare company name")  # 申报单位
+    input_company_id = fields.Many2one(comodel_name="cus_args.register_company", string="input company id")  # 消费使用单位
+    business_company_id = fields.Many2one(comodel_name="cus_args.register_company", string="business company name")    # 收发货人
 
     transport_mode_id = fields.Many2one(comodel_name="cus_args.transport_mode",
                                        string="Transport Mode")                                 # 运输方式

@@ -14,7 +14,6 @@
             <field name="arch" type="xml">
                 <tree default_order="create_date desc">
                     <field name="name" string="通关清单号"/>
-                    <field name="work_sheet_id" string="工作单号"/>
                     <field name="inout" string="进出口类型"/>
                     <field name="business_company_id" string="收发货人"/>
                     <field name="custom_master_id" string="申报地海关"/>
@@ -47,9 +46,6 @@
                                 <field name="custom_count" widget="statinfo" string="报关单"/>
                             </button>
 
-                            <!--<button name="action_get_attachment_view" class="oe_stat_button" icon="fa-book" type="object">-->
-                            <!--<field name="attachment_number" widget="statinfo" string="附件上传"/>-->
-                            <!--</button>-->
                         </div>
 
                         <div class="row" style="padding-bottom: 15px; padding-top: 11px;">
@@ -59,12 +55,7 @@
                                     <field name="custom_master_id" class="oe_inline"/>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="col-lg-4 col-md-4"><label for="work_sheet_id" string="工作单号"/></div>
-                                <div class="col-lg-8 col-md-8">
-                                    <field name="work_sheet_id"/>
-                                </div>
-                            </div>
+
                         </div>
 
 
@@ -338,7 +329,6 @@
             <field name="arch" type="xml">
                 <search string="customs order search">
                     <field name="name" string="通关清单号" domain="[('customs_center.customs_order.name', '=', self)]"/>
-                    <field name="work_sheet_id" string="工作单号" domain="[('customs_center.customs_order.work_sheet_id', '=', self)]"/>
                     <field name="business_company_id" string="收发货人" domain="[('customs_center.customs_order.business_company_id', '=', self)]"/>
                     <separator/>
                     <filter string="进口" name="in" domain="[('inout','=','i')]"/>

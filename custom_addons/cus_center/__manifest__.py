@@ -22,10 +22,30 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['customs_args', 'mail', 'web_sheet_full_width'],
+    'depends': ['customs_args', 'mail', 'decimal_precision', 'web_sheet_full_width'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'data/cus_expenses_mark_type.xml',
+        'data/cus_whether_mark_type.xml',
+        'data/payment_mark_type.xml',
+        'data/ir_sequence_data.xml',
+        'data/parse_message.xml',
+        'data/result_status.xml',
+        'views/customs_center_dashboard.xml',
+        'views/pending_review_goods_views.xml',
+        'views/customs_dec_attachs.xml',
+        'views/goods_classification_views.xml',
+        'views/pending_classified_goods_views.xml',
+        'views/customs_declaration.xml',
+        'views/customs_order.xml',
+        'views/result_status.xml',
+        'views/customs_receipt.xml',
+        'views/setting_declaration.xml',
+        'views/menu.xml',
+        'views/template.xml',
+        'reports/customs_dec_report.xml',
+        'reports/customs_dec_report_template.xml',
     ],
 }

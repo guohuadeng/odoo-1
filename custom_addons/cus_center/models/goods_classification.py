@@ -14,7 +14,7 @@ class GoodsClassification(models.Model):
 
     cus_goods_code = fields.Char(string="Customer Goods Code", required=True, index=True)     # 客户料号
     # 关联商品列表
-    dec_goods_list_ids = fields.One2many(comodel_name="cus_center.goods_list",
+    dec_goods_list_ids = fields.One2many(comodel_name="cus_center.goods_line",
                                          inverse_name="cus_goods_tariff_id", string="dec goods name")
 
     business_company_id = fields.Many2one(comodel_name="cus_args.register_company",
@@ -53,8 +53,8 @@ class GoodsClassification(models.Model):
                                         ('approve', 'approved')  # 通过审核
                                         ], string='status', readonly=True, default='draft')
 
-    # customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
-    #                                      inverse_name="cus_goods_tariff_id", string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
+    customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
+                                         inverse_name="cus_goods_tariff_id", string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
 
 
     # @api.model

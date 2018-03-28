@@ -10,6 +10,6 @@ class DecLicenseDoc(models.Model):
 
     dec_license_no = fields.Char(string="License No")  # 单证编号
     # 多对一关联 报关单
-    customs_declaration_id = fields.Many2one(comodel_name="cus_center.customs_dec", string="customs declaration")
+    customs_declaration_id = fields.Many2one(comodel_name="cus_center.cus_dec", string="customs declaration")
     dec_license_doc_type_id = fields.Many2one(comodel_name="cus_args.dec_license_doc_type", string="DecLicenseDoc type")   # 单证类型/单证代码
 

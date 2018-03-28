@@ -4,7 +4,7 @@
     <data>
         <report
             id="report_customs_dec_check"
-            model="customs_center.customs_dec"
+            model="cus_center.customs_dec"
             report_type="qweb-pdf"
             string="打印核对单"
             name="customs_center.report_customs_dec_check_template"
