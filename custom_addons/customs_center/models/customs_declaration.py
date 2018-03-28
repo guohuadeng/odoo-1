@@ -20,19 +20,19 @@ _logger = logging.getLogger(__name__)
 
 # 本地测试环境路径
 # pre_ex_client 前置交换客户端路径
-# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
-# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-#
-# # post_ex_client 后置交换客户端路径
-# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
-# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
+PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/about_wly_xml_data/pre_ex_client/cus_to_wly')
+PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+
+# post_ex_client 后置交换客户端路径
+RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/about_wly_xml_data/post_ex_client/error_xml_message')
+BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 
@@ -54,21 +54,21 @@ _logger = logging.getLogger(__name__)
 
 
 
-# 应用服务器 测试环境路径
-# pre_ex_client 前置交换客户端路径
-PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
-PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-
-# post_ex_client 后置交换客户端路径
-RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
-BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
+# # 应用服务器 测试环境路径
+# # pre_ex_client 前置交换客户端路径
+# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
+# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+#
+# # post_ex_client 后置交换客户端路径
+# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
+# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 # 新测试环境路径
@@ -758,10 +758,15 @@ class CustomsDeclaration(models.Model):
                                                             genarate_attach_list_dic if
                                                             genarate_attach_list_dic[item]}
 
-                                new_attachment = self.env['ir.attachment'].create(genarate_attach_list_dic)
+                                # new_attachment = self.env['ir.attachment'].create(genarate_attach_list_dic)
+                                edoc_queue_obj = self.env['customs_center.edoc_queue'].create({
+                                    'edoc_id': genarate_attach_list_dic['name'],
+                                    'edoc_code': genarate_attach_list_dic['edoc_code'],
+                                    'cus_dec_id': genarate_attach_list_dic['res_id']
+                                })
 
                                 #if not attach_files_list or not new_attachment:
-                                if not new_attachment:
+                                if not edoc_queue_obj :
                                     return True
                                 # for xml_attach_message in attach_files_list:  # xml_attach_message是单据名
                                 #     if xml_attach_message:
@@ -946,8 +951,14 @@ class CustomsDeclaration(models.Model):
     # @q_job.job
     @api.multi
     def auto_parse_attach_message_xml(self):
-        """ 自动 解析随附单据入库 从随附单据报文到报关单 反向查找"""
+        """ 自动解析随附单据入库 从随附单据报文到报关单 反向查找"""
         # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
+
+        # 先判断随附单据队列模型里是否有数据
+        edoc_queue_ids = self.env['customs_center.edoc_queue'].search([])
+        if not edoc_queue_ids:
+            return
+
         customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(
             ['dec_company_customs_code'])  # 获取报关单模型对象
         company_xml_parse_path = customs_dec_model_dic.get(
@@ -967,15 +978,24 @@ class CustomsDeclaration(models.Model):
 
         # 首先解析随附单据目录的文件 可能多个附件
         attach_files = os.listdir(parse_attach_path)
-        attach_files_list = [attach_filename for attach_filename in attach_files if attach_filename.endswith('.xml')]
+        attach_files_list = {attach_filename.split('$')[0] : attach_filename for attach_filename in attach_files if attach_filename.endswith('.xml')}
+
 
         if not attach_files_list:
             return True
-        attach_files = [os.path.join(parse_attach_path, i) for i in attach_files_list]
+        # attach_files = {os.path.join(parse_attach_path, i) for i in attach_files_list}
 
         # 读文件，用lxml解析报文
         attach_name_list = []
-        for xml_attach_message in attach_files:
+        for edoc_queue_obj in edoc_queue_ids:
+            name = edoc_queue_obj.edoc_id
+            datas_fname = edoc_queue_obj.edoc_id
+            dec_edoc_type = edoc_queue_obj.edoc_code
+            cus_dec_id = edoc_queue_obj.cus_dec_id
+
+            if name not in attach_files_list:
+                continue
+            xml_attach_message = os.path.join(parse_attach_path, attach_files_list[name])
             with open(xml_attach_message, 'r') as f:
                 attach_xml_str = str(f.read())
                 attach_xml_str1 = attach_xml_str.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
@@ -993,26 +1013,39 @@ class CustomsDeclaration(models.Model):
                 attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME')   # 获取随附单据报文中的文件名
                 binary_data = xml_attach_message_dic.get('BINARY_DATA', None)  # 获取随附单据报文中的二进制数据
 
-                # 根据上述获取的附件名称 在附件模型中查找 对应的附件ID
-                attach_id = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('name', '=', attach_name_in_xml)])
-                print("*******************^^6666666665555555555555666666666666**********************")
-                print(attach_id)
-                # 根据附件ID 找到对应的报关单ID
-                res_id = attach_id.res_id
-                print("*******************^^66666666666666666666666666666666**********************")
-                print(res_id)
-                # 根据上方找到的报关单ID 找到该报关单对应的附件列表
-                information_attachment_ids = self.env['ir.attachment'].search(
-                    [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id)])  # 取得附件list
-                print(information_attachment_ids)
-                for i in information_attachment_ids:
-                    attach_name = i.name
-                    attach_name_list.append(attach_name)
+                # # 根据上述获取的附件名称 在附件模型中查找 对应的附件ID
+                # attach_id = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('name', '=', attach_name_in_xml)])
+                # print("*******************^^6666666665555555555555666666666666**********************")
+                # print(attach_id)
+                # # 根据附件ID 找到对应的报关单ID
+                # res_id = attach_id.res_id
+                # print("*******************^^66666666666666666666666666666666**********************")
+                # print(res_id)
 
-                    if attach_name == attach_name_in_xml:
-                        new_attachment = self.env['ir.attachment'].search(
-                            [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id),
-                             ('name', '=', attach_name)]).update({'datas': binary_data})
+                # 根据队列里的内容创建附件， 并删除相应的记录
+                self.env['ir.attachment'].create({
+                    'name': name,
+                    'datas_fname': datas_fname,
+                    'res_model': 'customs_center.customs_dec',
+                    'res_id': cus_dec_id,
+                    'dec_edoc_type': dec_edoc_type,
+                    'datas': binary_data
+                })
+                edoc_queue_obj.unlink()
+                attach_name_list.append(name)
+
+                # # 根据上方找到的报关单ID 找到该报关单对应的附件列表
+                # information_attachment_ids = self.env['ir.attachment'].search(
+                #     [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id)])  # 取得附件list
+                # print(information_attachment_ids)
+                # for i in information_attachment_ids:
+                #     attach_name = i.name
+                #     attach_name_list.append(attach_name)
+                #
+                #     if attach_name == attach_name_in_xml:
+                #         new_attachment = self.env['ir.attachment'].search(
+                #             [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id),
+                #              ('name', '=', attach_name)]).update({'datas': binary_data})
 
         # 将解析成功的随附单据报文 移动到随附单据备份目录
         for xml_attach_message in attach_files_list:  # xml_attach_message是单据名
