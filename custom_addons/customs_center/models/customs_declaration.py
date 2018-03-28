@@ -761,7 +761,7 @@ class CustomsDeclaration(models.Model):
                                 # new_attachment = self.env['ir.attachment'].create(genarate_attach_list_dic)
                                 edoc_queue_obj = self.env['customs_center.edoc_queue'].create({
                                     'edoc_id': genarate_attach_list_dic['name'],
-                                    'edoc_code': genarate_attach_list_dic['edoc_code'],
+                                    'edoc_code': genarate_attach_list_dic['edoc_code_type'],
                                     'cus_dec_id': genarate_attach_list_dic['res_id']
                                 })
 
@@ -1032,7 +1032,7 @@ class CustomsDeclaration(models.Model):
                     'datas': binary_data
                 })
                 edoc_queue_obj.unlink()
-                attach_name_list.append(name)
+                attach_name_list.append(xml_attach_message)
 
                 # # 根据上方找到的报关单ID 找到该报关单对应的附件列表
                 # information_attachment_ids = self.env['ir.attachment'].search(
@@ -1048,12 +1048,12 @@ class CustomsDeclaration(models.Model):
                 #              ('name', '=', attach_name)]).update({'datas': binary_data})
 
         # 将解析成功的随附单据报文 移动到随附单据备份目录
-        for xml_attach_message in attach_files_list:  # xml_attach_message是单据名
+        for xml_attach_message in attach_name_list:  # xml_attach_message是单据名
             if xml_attach_message:
                 strlist = xml_attach_message.split('$')
                 filename = strlist[0]
                 if filename in attach_name_list:
-                    xml_attach_message_path = os.path.join(parse_attach_path, xml_attach_message)
+                    xml_attach_message_path = xml_attach_message
                     shutil.move(xml_attach_message_path, backup_attach_xml_path)
                     _logger.info(
                         u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
