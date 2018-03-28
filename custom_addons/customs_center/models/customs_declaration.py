@@ -1028,6 +1028,7 @@ class CustomsDeclaration(models.Model):
                 self.env['ir.attachment'].create({
                     'name': name,
                     'datas_fname': datas_fname,
+                    'extension': 'pdf',
                     'res_model': 'customs_center.customs_dec',
                     'res_id': cus_dec_id,
                     'dec_edoc_type': dec_edoc_type,
