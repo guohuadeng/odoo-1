@@ -948,12 +948,11 @@ class CustomsDeclaration(models.Model):
     #                 _logger.info(
     #                     u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
 
-
     # @api.model
     # @q_job.job
     @api.multi
     def auto_parse_attach_message_xml(self):
-        """ 自动解析随附单据入库 从随附单据报文到报关单 反向查找"""
+        """ 自动解析随附单据入库 从随附单据报文到报关单 """
         # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
 
         # 先判断随附单据队列模型里是否有数据
@@ -980,8 +979,8 @@ class CustomsDeclaration(models.Model):
 
         # 首先解析随附单据目录的文件 可能多个附件
         attach_files = os.listdir(parse_attach_path)
-        attach_files_list = {attach_filename.split('$')[0] : attach_filename for attach_filename in attach_files if attach_filename.endswith('.xml')}
-
+        attach_files_list = {attach_filename.split('$')[0]: attach_filename for attach_filename in attach_files if
+                             attach_filename.endswith('.xml')}
 
         if not attach_files_list:
             return True
@@ -1000,7 +999,8 @@ class CustomsDeclaration(models.Model):
             xml_attach_message = os.path.join(parse_attach_path, attach_files_list[name])
             with open(xml_attach_message, 'r') as f:
                 attach_xml_str = str(f.read())
-                attach_xml_str1 = attach_xml_str.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
+                attach_xml_str1 = attach_xml_str.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
+                                                         '')
                 attach_xml_str = attach_xml_str1.replace('xsi:nil="true"', '')
                 # print xml_str
                 root = etree.fromstring(attach_xml_str)  # 打开xml文档
@@ -1012,7 +1012,7 @@ class CustomsDeclaration(models.Model):
                     attach_data_node = root.xpath('.//TcsData')
                     for child in attach_data_node[0]:
                         xml_attach_message_dic[child.tag] = child.text
-                attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME')   # 获取随附单据报文中的文件名
+                attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME')  # 获取随附单据报文中的文件名
                 binary_data = xml_attach_message_dic.get('BINARY_DATA', None)  # 获取随附单据报文中的二进制数据
 
                 # # 根据上述获取的附件名称 在附件模型中查找 对应的附件ID
@@ -1052,9 +1052,9 @@ class CustomsDeclaration(models.Model):
 
         # 将解析成功的随附单据报文 移动到随附单据备份目录
         for xml_attach_message in attach_name_list:  # xml_attach_message是单据名
-                shutil.move(xml_attach_message, backup_attach_xml_path)
-                _logger.info(
-                    u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
+            shutil.move(xml_attach_message, backup_attach_xml_path)
+            _logger.info(
+                u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
 
 
     @api.multi
