@@ -405,15 +405,13 @@ class CustomsDeclaration(models.Model):
     # @q_job.job
     @api.multi
     def parse_cus_message_xml(self):
-        """解析报文 + 空随附单据入库"""
+        """解析报文 + 相关随附单据信息插入解析队列表"""
         # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
         # company_xml_parse_path = self.dec_company_customs_code  # 获取配置信息中的 申报单位海关编码 作为解析路径
 
         customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(['dec_company_customs_code']) # 获取报关单模型对象
         company_xml_parse_path = customs_dec_model_dic.get('dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
 
-        print("**************************77777777777777***********************")
-        print(company_xml_parse_path)
         parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 原始报文解析目录
         parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
                                          company_xml_parse_path.encode('utf-8'))  # 随附单据解析目录
@@ -946,7 +944,7 @@ class CustomsDeclaration(models.Model):
     # @q_job.job
     @api.multi
     def auto_parse_attach_message_xml(self):
-        """ 自动 解析随附单据入库 从随附单据报文到报关单 反向查找"""
+        """ 自动 解析随附单据入库 从随附单据队列表中根据相关记录生成附件 """
         # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
         customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(
             ['dec_company_customs_code'])  # 获取报关单模型对象
@@ -995,12 +993,9 @@ class CustomsDeclaration(models.Model):
 
                 # 根据上述获取的附件名称 在附件模型中查找 对应的附件ID
                 attach_id = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('name', '=', attach_name_in_xml)])
-                print("*******************^^6666666665555555555555666666666666**********************")
-                print(attach_id)
+
                 # 根据附件ID 找到对应的报关单ID
                 res_id = attach_id.res_id
-                print("*******************^^66666666666666666666666666666666**********************")
-                print(res_id)
                 # 根据上方找到的报关单ID 找到该报关单对应的附件列表
                 information_attachment_ids = self.env['ir.attachment'].search(
                     [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id)])  # 取得附件list
