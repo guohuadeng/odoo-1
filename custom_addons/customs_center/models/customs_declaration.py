@@ -20,19 +20,19 @@ _logger = logging.getLogger(__name__)
 
 # 本地测试环境路径
 # pre_ex_client 前置交换客户端路径
-# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
-# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-#
-# # post_ex_client 后置交换客户端路径
-# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
-# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
+PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
+PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+
+# post_ex_client 后置交换客户端路径
+RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
+BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 
@@ -54,47 +54,27 @@ _logger = logging.getLogger(__name__)
 
 
 
-# 应用服务器 测试环境路径
-# pre_ex_client 前置交换客户端路径
-PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
-PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-
-# post_ex_client 后置交换客户端路径
-RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
-BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
-
-
-# 新测试环境路径
+# 应用服务器 测试环境路径  新测试环境路径
 # # pre_ex_client 前置交换客户端路径
-# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
-# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/saastest/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
+# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
 #
 # # post_ex_client 后置交换客户端路径
-# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/saastest/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/saastest/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/saastest/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
-# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/saastest/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
-
-
+# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
+# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 def check_and_mkdir(*path):
     for p in path:
         if not os.path.exists(p):
             os.mkdir(p)
-
 
 
 class CustomsDeclaration(models.Model):
@@ -1055,12 +1035,10 @@ class CustomsDeclaration(models.Model):
         """报文已发送至QP"""
         pass
 
-
     @api.multi
     def print_check_reports(self):
         """"""
         return self.env['report'].get_action(self,'customs_center.report_dec_customs_check_template')
-
 
     @api.multi
     def print_invoice(self):
@@ -1069,16 +1047,14 @@ class CustomsDeclaration(models.Model):
 
         self.information_attachment_ids=(4,2902)
 
-
-
-
-
-
     @api.multi
     def generate_single_customer_xml(self):
         """ 生成报关单报文+随附单据报文 发送单一窗口 存放到指定目录 """
         self.update({'cus_dec_sent_way': 'single'})  # 前端点击发送通道按钮之后 确定发送通道 隐藏另一条通道
         for line in self:
+            # 判断当前报关单是否有随附单据
+
+
             # 判断当前报关单的随附单据中是否有数据
             attach_list = []
             for attach in self.information_attachment_ids:
@@ -1091,7 +1067,8 @@ class CustomsDeclaration(models.Model):
                 self.update({'cus_dec_sent_state': 'succeed'})
                 return True
             else:
-                raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
+                pass
+                # raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
 
 
     @api.multi
@@ -1111,7 +1088,7 @@ class CustomsDeclaration(models.Model):
                 self.update({'cus_dec_sent_state': 'succeed'})
                 return True
             else:
-                raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
+                raise UserError(_(u"该报关单关联的随附单据附件无效，请检查！"))
 
     @api.multi
     def dec_send_success(self):
@@ -1256,7 +1233,7 @@ class CustomsDeclaration(models.Model):
         return True
 
     @api.multi
-    def create_classify_goods(self,dec_sheet):
+    def create_classify_goods(self, dec_sheet):
         print('create_classify_goods',dec_sheet)
 
         for goods_item in dec_sheet.dec_goods_list_ids:
@@ -1315,6 +1292,7 @@ class DecLicenseDoc(models.Model):
                                        string="customs declaration")
     dec_license_doc_type_id = fields.Many2one(comodel_name="basedata.dec_license_doc_type", string="DecLicenseDoc type")   # 单证类型/单证代码
 
+
 class GoodsWizard(models.TransientModel):
     _name = 'customs_center.goods_wizard'
     _description = 'Customs Goods Wizard'
@@ -1336,13 +1314,11 @@ class GoodsWizard(models.TransientModel):
     goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False, )    # 客户料号
     supervision_condition = fields.Char(string="supervision condition", required=False, )
 
-
     @api.onchange('deal_qty', 'deal_unit_price')
     def _compute_total_goods_price(self):
         """根据当前商品列表的成交单价 X 成交数量数量 计算出商品单行总价"""
         if self.deal_qty != 0:
             self.deal_total_price = self.deal_qty * self.deal_unit_price
-
 
     @api.onchange('cus_goods_tariff_id')
     def _generate_about_name(self):
@@ -1367,7 +1343,6 @@ class GoodsWizard(models.TransientModel):
             self.duty_mode_id = self.goods_classification_id.duty_mode_id
             self.ManualSN = self.goods_classification_id.ManualSN
             self.supervision_condition = self.goods_classification_id.supervision_condition
-
 
     @api.multi
     def create_goods_list(self):

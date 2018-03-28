@@ -1077,6 +1077,15 @@
                                         <field name="spec_code" string="集装箱规格"/>
                                         <field name="weight" string="自重"/>
                                     </tree>
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="containerNo" string="集装箱号" required="1"/>
+                                                <field name="spec_code" string="集装箱规格"/>
+                                                <field name="weight" string="自重"/>
+                                            </group>
+                                        </group>
+                                    </form>
                                 </field>
                             </page>
 
@@ -1086,6 +1095,14 @@
                                         <field name="dec_license_no" string="单证编号"/>
                                         <field name="dec_license_doc_type_id" string="单证类型"/>
                                     </tree>
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="dec_license_no" string="单证编号"/>
+                                                <field name="dec_license_doc_type_id" string="单证类型"/>
+                                            </group>
+                                        </group>
+                                    </form>
                                 </field>
                             </page>
 
