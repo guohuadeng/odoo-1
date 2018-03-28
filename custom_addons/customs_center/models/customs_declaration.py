@@ -1037,6 +1037,7 @@ class CustomsDeclaration(models.Model):
                 edoc_queue_obj.unlink()
                 attach_name_list.append(xml_attach_message)
 
+
                 # # 根据上方找到的报关单ID 找到该报关单对应的附件列表
                 # information_attachment_ids = self.env['ir.attachment'].search(
                 #     [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id)])  # 取得附件list
