@@ -2,7 +2,7 @@
 <odoo>
     <data>
 
-        <template id="cus_center.report_customs_dec_check_template">
+        <template id="customs_center.report_customs_dec_check_template">
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="report.external_layout">
