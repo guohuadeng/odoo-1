@@ -34,6 +34,13 @@ class CustomsOrder(models.Model):
     input_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="input company id")  # 消费使用单位 新建企业库表
     business_company_id = fields.Many2one(comodel_name="basedata.cus_register_company", string="business company name")    # 收发货人 新建企业库表
 
+    @api.onchange('business_company_id')
+    def _compute_input_company_name(self):
+        """根据当前选中的收发货人 改变 消费使用单位"""
+        for customs_order in self:
+            if customs_order.business_company_id != 0:
+                customs_order.input_company_id = customs_order.business_company_id
+
     transport_mode_id = fields.Many2one(comodel_name="delegate_transport_mode",
                                         string="Transport Mode")                                 # 运输方式
     transport_name = fields.Char(string="transport name")                                        # 运输工具名称
@@ -57,8 +64,9 @@ class CustomsOrder(models.Model):
     # 关联报关单 1对多关系
     customs_declaration_ids = fields.One2many(comodel_name="customs_center.customs_dec",
                                               inverse_name="customs_order_id", string="customs declaration")
+
     # 关联通关清单商品列表 1对多关系
-    cus_goods_list_ids = fields.One2many(comodel_name="customs_center.cus_goods_list",
+    cus_goods_list_ids = fields.One2many(comodel_name="customs_center.draft_goods_list",
                                          inverse_name="customs_order_id", string="cus goods name")
     customs_order_state = fields.Selection(string="State", selection=[('draft', 'Draft'),
                                                         ('succeed', 'Success'),
@@ -66,118 +74,72 @@ class CustomsOrder(models.Model):
                                                         ('failure', 'Failure')], default='draft')  # 通关清单状态
 
     custom_count = fields.Integer(string='Custom Declaration', compute='_get_custom_count')
+
     @api.depends('customs_declaration_ids')
     def _get_custom_count(self):
         for sheet in self:
             sheet.custom_count = len(sheet.customs_declaration_ids.ids)
 
-
-    @api.multi
-    def generate_customs_declaration(self):
-        """ 生成报关单 """
-        for line in self:
-            cus_goods_list_ids = []
-            if line.cus_goods_list_ids:
-                cus_goods_list_ids = [goods.copy().id for goods in line.cus_goods_list_ids]
-
-            dic = {
-                'inout': str(line.inout).upper(),
-                'customs_order_id': line.id,
-                'customs_id': line.customs_id.id,
-                'custom_master_id': line.custom_master_id.id,
-                'ManualNo': line.ManualNo,
-                'customer_contract_no': line.customer_contract_no,
-                'licenseNo': line.licenseNo,
-                'declare_company_id': line.declare_company_id.id,
-                'input_company_id': line.input_company_id.id,
-                'business_company_id': line.business_company_id.id,
-                'transport_mode_id': line.transport_mode_id.id,
-                'transport_name': line.transport_name,
-                'VoyageNo': line.VoyageNo,
-                'trade_terms_id': line.trade_terms_id.id,
-                'trade_mode_id': line.trade_mode_id.id,
-                'CutMode_id': line.CutMode_id.id,
-                'packing_id': line.packing_id.id,
-                'trade_country_id': line.trade_country_id.id,
-                'origin_arrival_country_id': line.origin_arrival_country_id.id,
-                'port_id': line.port_id.id,
-                'region_id': line.region_id.id,
-                'qty': line.qty,
-                'gross_weight': line.gross_weight,
-                'net_weight': line.net_weight,
-                'remarks': line.marks,
-                'work_sheet_id': line.work_sheet_id.id,
-               #  'dec_goods_list_ids': goods_dic,
-               #  'dec_goods_list_ids': cus_goods_list_ids,
-            }
-
-            dic = {item: dic[item] for item in dic if dic[item]}
-
-            customs_declaration_obj = self.env['customs_center.customs_dec'].create(dic)
-            customs_declaration_obj.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search([('id', 'in', cus_goods_list_ids)])
-
-            # 获取当前对象下的报关单ID
-            # customs_order_obj = self.env['customs_center.customs_order']
-            # print(customs_order_obj)
-            # customs_clearance_obj = customs_order_obj.customs_declaration_ids
-
-            return {
-                'name': "Customs Center Clearance",
-                'type': "ir.actions.act_window",
-                'view_type': 'form',
-                'view_mode': 'form, tree',
-                'res_model': 'customs_center.customs_dec',
-                'views': [[False, 'form']],
-                'res_id': customs_declaration_obj.id,
-                'target': 'current'
-                # 'target': 'main'
-            }
-
     # @api.multi
     # def generate_customs_declaration(self):
     #     """ 生成报关单 """
-    #     # if len(self.mapped('cus_goods_list_ids')) != 1:
-    #     #     raise UserError(_("有多个商品"))
-    #     customs_order_info_dic = dict()
     #     for line in self:
-    #         customs_order_info_dic.update({
-    #             'default_inout': line.inout,
-    #             'default_customs_id': line.customs_id.id,
-    #             'default_custom_master_id': line.custom_master_id.id,
-    #             'default_ManualNo': line.ManualNo,
-    #             'default_customer_contract_no': line.customer_contract_no,
-    #             'default_licenseNo': line.licenseNo,
-    #             'default_declare_company_id': line.declare_company_id.id,
-    #             'default_input_company_id': line.input_company_id.id,
-    #             'default_business_company_id': line.business_company_id.id,
-    #             'default_transport_mode_id': line.transport_mode_id.id,
-    #             'default_transport_name': line.transport_name,
-    #             'default_VoyageNo': line.VoyageNo,
-    #             'default_trade_terms_id': line.trade_terms_id.id,
-    #             'default_trade_mode_id': line.trade_mode_id.id,
-    #             'default_CutMode_id': line.CutMode_id.id,
-    #             'default_packing_id': line.packing_id.id,
-    #             'default_trade_country_id': line.trade_country_id.id,
-    #             'default_origin_arrival_country_id': line.origin_arrival_country_id.id,
-    #             'default_port_id': line.port_id.id,
-    #             'default_region_id': line.region_id.id,
-    #             'default_qty': line.qty,
-    #             'default_gross_weight': line.gross_weight,
-    #             'default_net_weight': line.net_weight,
-    #             'default_remarks': line.marks,
-    #         })
-    #     # print('**************^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^****************')
-    #     for item in customs_order_info_dic.items():
-    #         print(item)
+    #         cus_goods_list_ids = []
+    #         if line.cus_goods_list_ids:
+    #             cus_goods_list_ids = [goods.copy().id for goods in line.cus_goods_list_ids]
     #
-    #     return {
-    #         'type': 'ir.actions.act_window',
-    #         'view_mode': 'form',
-    #         'res_model': 'customs_center.customs_dec',
-    #         'target': 'current',
-    #         'context': customs_order_info_dic,
-    #     }
-
+    #         dic = {
+    #             'inout': str(line.inout).upper(),
+    #             'customs_order_id': line.id,
+    #             'customs_id': line.customs_id.id,
+    #             'custom_master_id': line.custom_master_id.id,
+    #             'ManualNo': line.ManualNo,
+    #             'customer_contract_no': line.customer_contract_no,
+    #             'licenseNo': line.licenseNo,
+    #             'declare_company_id': line.declare_company_id.id,
+    #             'input_company_id': line.input_company_id.id,
+    #             'business_company_id': line.business_company_id.id,
+    #             'transport_mode_id': line.transport_mode_id.id,
+    #             'transport_name': line.transport_name,
+    #             'VoyageNo': line.VoyageNo,
+    #             'trade_terms_id': line.trade_terms_id.id,
+    #             'trade_mode_id': line.trade_mode_id.id,
+    #             'CutMode_id': line.CutMode_id.id,
+    #             'packing_id': line.packing_id.id,
+    #             'trade_country_id': line.trade_country_id.id,
+    #             'origin_arrival_country_id': line.origin_arrival_country_id.id,
+    #             'port_id': line.port_id.id,
+    #             'region_id': line.region_id.id,
+    #             'qty': line.qty,
+    #             'gross_weight': line.gross_weight,
+    #             'net_weight': line.net_weight,
+    #             'remarks': line.marks,
+    #             'work_sheet_id': line.work_sheet_id.id,
+    #            #  'dec_goods_list_ids': goods_dic,
+    #            #  'dec_goods_list_ids': cus_goods_list_ids,
+    #         }
+    #
+    #         dic = {item: dic[item] for item in dic if dic[item]}
+    #
+    #         customs_declaration_obj = self.env['customs_center.customs_dec'].create(dic)
+    #         customs_declaration_obj.dec_goods_list_ids |= self.env['customs_center.cus_goods_list'].search([('id', 'in', cus_goods_list_ids)])
+    #
+    #         # 获取当前对象下的报关单ID
+    #         # customs_order_obj = self.env['customs_center.customs_order']
+    #         # print(customs_order_obj)
+    #         # customs_clearance_obj = customs_order_obj.customs_declaration_ids
+    #
+    #         return {
+    #             'name': "Customs Center Clearance",
+    #             'type': "ir.actions.act_window",
+    #             'view_type': 'form',
+    #             'view_mode': 'form, tree',
+    #             'res_model': 'customs_center.customs_dec',
+    #             'views': [[False, 'form']],
+    #             'res_id': customs_declaration_obj.id,
+    #             'target': 'current'
+    #             # 'target': 'main'
+    #         }
 
     @api.model
     def create(self, vals):

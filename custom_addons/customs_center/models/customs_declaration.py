@@ -93,6 +93,7 @@ class CustomsDeclaration(models.Model):
 
     # 关联通关清单 多对一
     customs_order_id = fields.Many2one(comodel_name="customs_center.customs_order", string="customs Order")
+
     cus_ciq_No = fields.Char(string="cus Ciq No")  # 关检关联号
     custom_master_id = fields.Many2one(comodel_name="delegate_customs", string="Dec Custom")  # 申报口岸 / 申报地海关
 
@@ -230,9 +231,6 @@ class CustomsDeclaration(models.Model):
     # trade_code = fields.Char(string="Trade Code", required=True, )  # 经营单位编号
 
     # 关联报关单商品列表 1对多关系
-    # dec_goods_list_ids = fields.One2many(comodel_name="customs_center.dec_goods_list",
-    #                                     inverse_name="customs_declaration_id", string="dec goods name")
-    # 通关清单 和报关单共用一张商品表的时候 下方的写法
     dec_goods_list_ids = fields.One2many(comodel_name="customs_center.cus_goods_list",
                                          inverse_name="customs_declaration_id", string="dec goods name")
     # 报关单 关联合规模型 一对多 冗余字段 用于修改历史商品列表 通过关联报关单 确认是否已归类
@@ -384,6 +382,70 @@ class CustomsDeclaration(models.Model):
             "domain": [["customs_declaration_id", "=", self.id]],
             'target': 'new'
         }
+
+
+    # 通关清单生成报关单
+    @api.onchange('customs_order_id')
+    def _onchange_customs_order_id(self):
+        if not self.customs_order_id:
+            return
+        customs_order = self.customs_order_id
+        for line in customs_order:
+            self.inout = str(line.inout).upper()
+            self.customs_id = line.customs_id.id  # 进出口岸
+            self.custom_master_id = line.custom_master_id.id
+            self.ManualNo = line.ManualNo
+            self.customer_contract_no = line.customer_contract_no
+            self.licenseNo = line.licenseNo
+            self.declare_company_id = line.declare_company_id.id
+            self.input_company_id = line.input_company_id.id
+            self.business_company_id = line.business_company_id.id
+            self.transport_mode_id = line.transport_mode_id.id
+            self.transport_name = line.transport_name
+            self.VoyageNo = line.VoyageNo
+            self.trade_terms_id = line.trade_terms_id.id
+            self.trade_mode_id = line.trade_mode_id.id
+            self.CutMode_id = line.CutMode_id.id
+            self.packing_id = line.packing_id.id
+            self.trade_country_id = line.trade_country_id.id
+            self.origin_arrival_country_id = line.origin_arrival_country_id.id
+            self.port_id = line.port_id.id
+            self.region_id = line.region_id.id
+            self.qty = line.qty
+            self.gross_weight = line.gross_weight
+            self.net_weight = line.net_weight
+            self.remarks = line.marks
+            self.work_sheet_id = line.work_sheet_id.id
+            #  'dec_goods_list_ids': goods_dic,
+            #  'dec_goods_list_ids': cus_goods_list_ids,
+
+        # 创建报关单商品列表
+        cus_goods_list = []
+        for line in customs_order.cus_goods_list_ids:
+            cus_goods_list.append((0, 0, {
+                'goods_classification_id': line.goods_classification_id.id,  # 客户料号
+                'cus_goods_tariff_id': line.cus_goods_tariff_id.id,  # 商品编号
+                'goods_name': line.goods_name,  # 商品名称
+                'goods_model': line.goods_model,  # 规格型号
+                'deal_qty': line.deal_qty,  # 规格型号
+                'deal_unit_price': line.deal_unit_price,  # 成交单价
+                'deal_unit_id': line.deal_unit_id.id,  # 成交单位
+                'deal_total_price': line.deal_total_price,  # 成交总价
+                'currency_id': line.currency_id.id,  # 币制
+                'first_qty': line.first_qty,  # 第一数量
+                'first_unit': line.first_unit.id,  # 第一单位
+                'second_qty': line.second_qty,  # 第一单位
+                'second_unit': line.second_unit.id,  # 第二单位
+                'origin_country_id': line.origin_country_id.id,  # 原产国
+                'destination_country_id': line.destination_country_id.id,  # 目的国
+                'duty_mode_id': line.duty_mode_id.id,  # 征免费、方式
+                'ManualSN': line.ManualSN,  # 备案序号
+                'version_num': line.version_num,  # 版本号
+                'product_code': line.product_code,  # 货号
+            }))
+        self.dec_goods_list_ids = cus_goods_list
+
+ ###################################################################
 
     @api.model
     def create(self, vals):
@@ -1110,7 +1172,6 @@ class CustomsDeclaration(models.Model):
             else:
                 pass
                 # raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
-
 
     @api.multi
     def generate_qp_customer_xml(self):

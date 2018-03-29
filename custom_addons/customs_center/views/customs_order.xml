@@ -24,16 +24,28 @@
             </field>
         </record>
 
+        <record model="ir.actions.act_window" id="generate_customs_declaration">
+            <field name="name">generate custom declaration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customs_center.customs_dec</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="domain">[('customs_order_id','=',active_id)]</field>
+            <field name="context">{"default_customs_order_id":active_id}</field>
+            <!--以上通过向导视图把当前的通关清单对象传给报关单模型-->
+        </record>
+
         <record id="customs_order_form" model="ir.ui.view">
             <field name="name">Customs Customs Order form</field>
             <field name="model">customs_center.customs_order</field>
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="generate_customs_declaration" string="生成报关单" type="object" class="oe_highlight" confirm="确定生成报关单么?"/>
-                        <!--<button name="generate_customs_declaration" string="生成报关单" type="object" states="posted" confirm="确定生成报关单么?"/>-->
-                        <!--<button name="generate_customs_declaration" string="生成报关单" type="object" class="oe_highlight"-->
-                                <!--attrs="{'invisible':[('customs_declaration_ids','!=','')]}"/>-->
+                        <!--<button name="generate_customs_declaration" string="生成报关单" type="object" class="oe_highlight" confirm="确定生成报关单么?"/>-->
+
+                        <button string="生成报关单" name="%(generate_customs_declaration)d" type="action"
+                                class="oe_highlight" confirm="确定生成报关单么?"/>
+
                         <!--<field name="customs_order_state" widget="statusbar" statusbar_visible="draft,succeed"-->
                                <!--statusbar_colors="{'draft':'blue', 'succeed':'green', 'failure':'red'}"/>-->
                     </header>

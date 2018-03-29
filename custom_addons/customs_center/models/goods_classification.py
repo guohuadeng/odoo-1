@@ -68,7 +68,6 @@ class GoodsClassification(models.Model):
     customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
                                          inverse_name="cus_goods_tariff_id", string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
 
-
     # 合规商品
     @api.multi
     @api.depends('cust_goods_code', 'goods_name','cus_goods_tariff_hs_code', 'goods_model')
@@ -94,11 +93,6 @@ class GoodsClassification(models.Model):
         return super(GoodsClassification, self)._name_search(
             name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
         )
-
-
-
-
-
 
     # @api.model
     # def create(self, vals):
