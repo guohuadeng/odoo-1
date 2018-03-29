@@ -383,8 +383,8 @@ class CustomsDeclaration(models.Model):
             'target': 'new'
         }
 
-
     # 通关清单生成报关单
+    # 通关清单视图中 通过按钮“生成报关单” 触发动作。将当前界面清单id传递过来，执行该方法创建相应报关单
     @api.onchange('customs_order_id')
     def _onchange_customs_order_id(self):
         if not self.customs_order_id:
