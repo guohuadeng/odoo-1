@@ -83,7 +83,7 @@ def generate_attach_xml_to_single(self):
                     if not os.path.exists(dec_catalog_path):
                         os.mkdir(dec_catalog_path)
                     obj_dir = os.path.join(dec_catalog_path, attach_name +'$'+ (datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S') + '.xml')
-                    with open(obj_dir.decode('utf8'), 'w') as fp:
+                    with open(obj_dir.encode('utf8'), 'w') as fp:
                         fp.write(string.encode('utf8'))
                 elif dec_send_way == 'QP':
                     dec_catalog_path = os.path.join(base_dir_send_qp_attach, company_name)
@@ -91,6 +91,6 @@ def generate_attach_xml_to_single(self):
                     if not os.path.exists(dec_catalog_path):
                         os.mkdir(dec_catalog_path)
                     obj_dir = os.path.join(dec_catalog_path, attach_name +'$'+ (datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S') + '.xml')
-                    with open(obj_dir.decode('utf8'), 'w') as fp:
+                    with open(obj_dir.encode('utf8'), 'w') as fp:
                         fp.write(string.encode('utf8'))
 
