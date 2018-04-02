@@ -241,6 +241,24 @@
         </field>
     </record>
 
+
+        <!-- 向公司中添加公司代码 -->
+    <record id="view_company_form_extend" model="ir.ui.view">
+        <field name="name">res_company_form_extend</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//h1" position="after">
+                <label for="company_code" class="oe_edit_only"/>
+                <h3>
+                    <field name="company_code" required="1"/>
+                </h3>
+            </xpath>
+
+        </field>
+    </record>
+
     <menuitem id="menu_consignor_nee_type" name="Consignor Consignee Type" parent="sales_team.menu_sale_config" action="boyue_sale_extend.action_consignor_nee_type" sequence="24"/>
     <menuitem id="menu_incoterm" name="Trade Term" parent="sales_team.menu_sale_config" action="stock.action_incoterms_tree" sequence="25"/>
 

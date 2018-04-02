@@ -73,15 +73,6 @@ class Order(models.Model):
 
         if vals.get('name', _('New')) == _('New'):
             business_type = self.env['business_type'].browse(vals['business_type'])
-            # transport = business_type.transport_mode
-            # import_and_export = business_type.in_out.upper()
-            #
-            # if transport.code == '2':
-            #     transport_code = 'S'
-            # elif transport.code == '5':
-            #     transport_code = 'A'
-            # else:
-            #     transport_code = transport.code
             business_type_code = business_type.code
 
             import pytz
@@ -472,3 +463,10 @@ class ContractWizard(models.TransientModel):
                 item.contract_effective_date = item.selected_contract.contract_effective_date
                 item.contract_failure_date = item.selected_contract.contract_failure_date
 
+
+class Company(models.Model):
+    """增加公司代码"""
+    _name = 'res.company'
+    _inherit = 'res.company'
+
+    company_code = fields.Char(string="Code", required=False)
