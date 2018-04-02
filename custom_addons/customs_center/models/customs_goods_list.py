@@ -7,8 +7,107 @@ from collections import OrderedDict
 _logger = logging.getLogger(__name__)
 
 
+class DraftGoodsList(models.Model):
+    """ 通关清单 -商品列表 """
+    _name = 'customs_center.draft_goods_list'
+    # rec_name = 'goods_name'
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
+    _description = 'draft Goods List'
+
+    sequence = fields.Integer(string='Sequence')
+    # sequence_add_one = fields.Integer(compute='_compute_sequence_add_one', string='Sequence')
+    goods_name = fields.Char(string="goods name")  # 商品名称
+    # 关联通关清单 多对一
+    customs_order_id = fields.Many2one(comodel_name="customs_center.customs_order", string="customs Order", copy=False)
+
+    cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )  # 海关税则编码
+
+    # 关联商品归类信息
+    goods_classification_id = fields.Many2one(comodel_name="customs_center.goods_classify", string="Goods Classification", required=False,)  # 客户料号搜索字段
+
+    cust_goods_code = fields.Char(string="Customer Goods Code", related='goods_classification_id.cust_goods_code',store=False )  # 客户料号 录入字段
+
+    goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
+
+    deal_qty = fields.Float(string="deal quantity", required=False, default=1)  # 成交数量
+    deal_unit_price = fields.Float(string="deal unit price", )    # 成交单价/申报单价
+    deal_unit_id = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )    # 成交单位
+    deal_total_price = fields.Float(compute='_compute_total_goods_price', string="deal total price", )  # 成交总价
+
+    # @api.depends('sequence')
+    # def _compute_sequence_add_one(self):
+    #     """有序系统默认sequence 是从0开始，前端展示的时候获取当前sequence值 加1用于展示"""
+    #     for goods_list in self:
+    #         goods_list.sequence_add_one = goods_list.sequence + 1
+    #         print("*************00000lll***********")
+    #         print(goods_list.sequence)
+    #         print(goods_list.sequence_add_one)
+
+    @api.onchange('deal_qty', 'deal_unit_price')
+    def _compute_total_goods_price(self):
+        """根据当前商品列表的成交单价 X 成交数量数量 计算出商品单行总价"""
+        for goods_list in self:
+            if goods_list.deal_qty != 0:
+                goods_list.deal_total_price = goods_list.deal_qty * goods_list.deal_unit_price
+
+    currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )  # 币制
+    first_qty = fields.Float(string="first quantity", required=False,)  # 第一法定数量
+    second_qty = fields.Float(string="second quantity", )  # 第二法定数量
+
+    first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
+    second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
+    supervision_condition = fields.Char(string="supervision condition")  # 监管标识/监管标识
+
+    origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
+    destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
+    duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
+    ManualSN = fields.Char(string="Manual SN")  # 备案序号
+    version_num = fields.Char(string="version num")  # 版本号
+    product_code = fields.Char(string="product code")  # 货号
+
+    # 是否归类  用于判断商品是否已经归类 在前端界面过滤显示
+    # 有两种情况触发修改该值：1 当归类审核通过后 将状态改为yes  2 当报关单状态为申报成功时候 将相应的商品归类状态修改为yes
+    classify_status = fields.Selection(selection=[('yes', 'YES'),    # 商品是否归类
+                                        ('no', 'NO')  # 未归类
+                                        ], string='archive status', readonly=True, default='no')
+
+    @api.onchange('cus_goods_tariff_id')
+    def _generate_about_name(self):
+        """根据当前海关税则编码的变化 改变商品名称 并通过onchange装饰器，自动执行_generate_about_name方法"""
+        for goods_list in self:
+            if goods_list.cus_goods_tariff_id:
+                # 增加一个判断goods_classification_id是否为真 因为如果料号变化之后 商品编号会变，商品名称也会变，
+                # 而本方法同样有这样的功能，如果料号变了，商品编号也变，商品名称显示的就是税则库中的名称
+                # 而不是归类库中的名称了
+
+                if goods_list.goods_classification_id:
+                    break
+                goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
+                goods_list.first_unit = goods_list.cus_goods_tariff_id.first_unit
+                goods_list.second_unit = goods_list.cus_goods_tariff_id.second_unit
+                goods_list.supervision_condition = goods_list.cus_goods_tariff_id.supervision_condition
+
+    @api.onchange('goods_classification_id')
+    def _generate_about_goods_info(self):
+        """根据当前合规客户料号的变化 改变商品名称 商品编码等信息 并通过onchange装饰器，自动执行_generate_about_name方法"""
+        for goods_list in self:
+            if goods_list.goods_classification_id:
+                goods_list.cus_goods_tariff_id = goods_list.goods_classification_id.cus_goods_tariff_id
+                goods_list.ManualSN = goods_list.goods_classification_id.ManualSN
+                goods_list.goods_name = goods_list.goods_classification_id.goods_name
+                goods_list.goods_model = goods_list.goods_classification_id.goods_model
+                goods_list.deal_unit_id = goods_list.goods_classification_id.deal_unit_id
+                goods_list.deal_unit_price=goods_list.goods_classification_id.deal_unit_price
+                goods_list.first_unit = goods_list.goods_classification_id.first_unit
+                goods_list.second_unit = goods_list.goods_classification_id.second_unit
+                goods_list.origin_country_id = goods_list.goods_classification_id.origin_country_id
+                goods_list.destination_country_id = goods_list.goods_classification_id.destination_country_id
+                goods_list.duty_mode_id = goods_list.goods_classification_id.duty_mode_id
+                goods_list.supervision_condition = goods_list.goods_classification_id.supervision_condition
+
+
 class CusGoodsList(models.Model):
-    """ 通关清单 报关单 商品列表 """
+    """ 报关单 商品列表 """
     _name = 'customs_center.cus_goods_list'
     # rec_name = 'goods_name'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
@@ -18,8 +117,7 @@ class CusGoodsList(models.Model):
     sequence = fields.Integer(string='Sequence')
     # sequence_add_one = fields.Integer(compute='_compute_sequence_add_one', string='Sequence')
     goods_name = fields.Char(string="goods name")  # 商品名称
-    # 关联通关清单 多对一
-    customs_order_id = fields.Many2one(comodel_name="customs_center.customs_order", string="customs Order", copy=False)
+
     # 关联报关单 多对一
     customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec", string="customs declaration", copy=False)
 
@@ -68,7 +166,6 @@ class CusGoodsList(models.Model):
     version_num = fields.Char(string="version num")  # 版本号
     product_code = fields.Char(string="product code")  # 货号
 
-
     # # 是否属于报关单 已在视图层面action过滤 暂不需要该字段
     # customs_dec_goods_own = fields.Selection(selection=[('yes', 'YES'),    # 是否属于报关单
     #                                     ('no', 'NO')
@@ -86,13 +183,13 @@ class CusGoodsList(models.Model):
                                         ('no', 'NO')  # 未归类
                                         ], string='archive status', readonly=True, default='no')
 
-
     @api.onchange('cus_goods_tariff_id')
     def _generate_about_name(self):
         """根据当前海关税则编码的变化 改变商品名称 并通过onchange装饰器，自动执行_generate_about_name方法"""
         for goods_list in self:
             if goods_list.cus_goods_tariff_id:
-                # 增加一个判断goods_classification_id是否为真 因为如果料号变化之后 商品编号会变，商品名称也会变， 而本方法同样有这样的功能，如果料号变了，商品编号也变，商品名称显示的就是税则库中的名称
+                # 增加一个判断goods_classification_id是否为真 因为如果料号变化之后 商品编号会变，商品名称也会变，
+                #  而本方法同样有这样的功能，如果料号变了，商品编号也变，商品名称显示的就是税则库中的名称
                 # 而不是归类库中的名称了
 
                 if goods_list.goods_classification_id:
@@ -101,7 +198,6 @@ class CusGoodsList(models.Model):
                 goods_list.first_unit = goods_list.cus_goods_tariff_id.first_unit
                 goods_list.second_unit = goods_list.cus_goods_tariff_id.second_unit
                 goods_list.supervision_condition = goods_list.cus_goods_tariff_id.supervision_condition
-
 
     @api.onchange('goods_classification_id')
     def _generate_about_goods_info(self):
@@ -120,9 +216,6 @@ class CusGoodsList(models.Model):
                 goods_list.destination_country_id = goods_list.goods_classification_id.destination_country_id
                 goods_list.duty_mode_id = goods_list.goods_classification_id.duty_mode_id
                 goods_list.supervision_condition = goods_list.goods_classification_id.supervision_condition
-
-
-
 
     @api.multi
     def goods_classified_btn(self):
@@ -158,7 +251,6 @@ class CusGoodsList(models.Model):
                 'target': 'current'
             }
 
-
     # @api.model
     # def create(self, values):
     #     self.product_id_change()
@@ -179,35 +271,3 @@ class CusGoodsList(models.Model):
     #             goods_list.goods_name = goods_list.cus_goods_tariff_id.NameCN
     #             return goods_list.goods_name
     #             # return {'domain': {'goods_name': goods_list.cus_goods_tariff_id.NameCN}}
-
-
-
-
-# class DecGoodsList(models.Model):
-#     """ 报关单-商品列表 """
-#     _name = 'customs_center.dec_goods_list'
-#     # rec_name = 'goods_name'
-#     _inherit = ['mail.thread', 'ir.needaction_mixin']
-#     _description = 'Customs dec Goods List'
-#
-#     # goods_name = fields.Char(string="goods name", required=False, )  # 商品名称
-#     # 关联报关单 多对一
-#     customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
-#                                        string="customs declaration")
-#     cus_goods_tariff_id = fields.Many2one(comodel_name="basedata.cus_goods_tariff", string="cus goods Code TS", required=False, )  # 海关税则编码
-#     goods_model = fields.Char(string="goods model", required=False, )  # 规格型号
-#
-#     deal_qty = fields.Integer(string="deal quantity", required=False, default=1)  # 成交数量
-#     deal_unit_price = fields.Monetary(string="deal unit price", )    # 成交单价/申报单价
-#     deal_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="deal unit", required=False, )    # 成交单位
-#     deal_total_price = fields.Monetary(string="deal total price", )  # 成交总价/申报单价
-#     currency_id = fields.Many2one(comodel_name="basedata.cus_currency", string="currency id", required=False, )  # 币制
-#     first_qty = fields.Integer(string="first quantity", required=False,)  # 第一法定数量
-#     first_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="First Unit", )  # 第一计量单位
-#
-#     second_qty = fields.Integer(string="second quantity",)  # 第二法定数量
-#     second_unit = fields.Many2one(comodel_name="basedata.cus_unit", string="second Unit", )  # 第二计量单位
-#     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
-#     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
-#     duty_mode_id = fields.Many2one(comodel_name="basedata.cus_duty_mode", string="Duty Mode", )  # 征免方式
-

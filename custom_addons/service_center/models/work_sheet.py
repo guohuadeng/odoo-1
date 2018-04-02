@@ -504,9 +504,9 @@ class ContainerTypeAndQty(models.Model):
     _rec_name = 'id'
 
     work_order_id = fields.Many2one(comodel_name="work_sheet", string="Work Order", required=False, )   # 工作单
-    container_type_id  = fields.Many2one(comodel_name="container_type", string="Container Type", required=False, )
+    container_type_id = fields.Many2one(comodel_name="container_type", string="Container Type", required=False, )
     container_qty = fields.Integer(string="Container Qty", required=False, )
-    soc = fields.Boolean(string="SOC",  )   # 是否货主箱
+    soc = fields.Boolean(string="SOC",)   # 是否货主箱
     container_no = fields.Char(string="ContainerNo")
     seal_no = fields.Char(string="SealNo")
 

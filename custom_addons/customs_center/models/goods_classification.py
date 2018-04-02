@@ -44,7 +44,6 @@ class GoodsClassification(models.Model):
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
 
-
     @api.onchange('cus_goods_tariff_id')
     def _generate_about_name(self):
         """根据当前海关税则编码的变化 改变监管条件 并通过onchange装饰器，自动执行_generate_about_name方法"""
@@ -68,7 +67,6 @@ class GoodsClassification(models.Model):
 
     customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
                                          inverse_name="cus_goods_tariff_id", string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
-
 
     # 合规商品
     @api.multi
@@ -95,11 +93,6 @@ class GoodsClassification(models.Model):
         return super(GoodsClassification, self)._name_search(
             name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
         )
-
-
-
-
-
 
     # @api.model
     # def create(self, vals):
