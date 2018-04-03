@@ -17,6 +17,9 @@ def generate_attach_xml_to_single(self):
     for attach in self.information_attachment_ids:
         attach_name = attach.name
         attach_data = attach.datas
+        attach_description = attach.description
+        attach_edoc_type = attach.dec_edoc_type
+
         if attach_name and attach_data:
             root = etree.Element("Data")
             tcs_flow201 = etree.SubElement(root, "TcsFlow201")
@@ -53,7 +56,7 @@ def generate_attach_xml_to_single(self):
             tcs_data_dic['DECL_TIME'] = (datetime.now()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')   # u'上传时间'
             tcs_data_dic['DECL_CODE'] = self.ic_code if self.ic_code else None  # u'上传人员代码'   操作员IC卡号
             tcs_data_dic['DECL_NAME'] = self.oper_name if self.oper_name else None  # u'上传人员名称'
-            tcs_data_dic['FILE_TYPE'] = '00000001'  # u'随附单据类型'
+            tcs_data_dic['FILE_TYPE'] = attach_edoc_type if attach_edoc_type else None  # u'随附单据类型'
             tcs_data_dic['FILE_SOURCE'] = None  # u'数据来源'
             tcs_data_dic['FILE_DIGEST'] = None  # u'文件摘要'
             tcs_data_dic['SIGN_CERT'] = None  # u'证书名称'
@@ -82,7 +85,7 @@ def generate_attach_xml_to_single(self):
                     # 检查并生成相应的目录
                     if not os.path.exists(dec_catalog_path):
                         os.mkdir(dec_catalog_path)
-                    obj_dir = os.path.join(dec_catalog_path, attach_name +'$'+ (datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S') + '.xml')
+                    obj_dir = os.path.join(dec_catalog_path, attach_description +'$'+ (datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S') + '.xml')
                     with open(obj_dir.encode('utf8'), 'w') as fp:
                         fp.write(string.encode('utf8'))
                 elif dec_send_way == 'QP':
@@ -90,7 +93,7 @@ def generate_attach_xml_to_single(self):
                     # 检查并生成相应的目录
                     if not os.path.exists(dec_catalog_path):
                         os.mkdir(dec_catalog_path)
-                    obj_dir = os.path.join(dec_catalog_path, attach_name +'$'+ (datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S') + '.xml')
+                    obj_dir = os.path.join(dec_catalog_path, attach_description +'$'+ (datetime.now()+timedelta(hours=8)).strftime('%Y%m%d%H%M%S') + '.xml')
                     with open(obj_dir.encode('utf8'), 'w') as fp:
                         fp.write(string.encode('utf8'))
 

@@ -11,16 +11,22 @@ class widget_data(models.Model):
     def upload_dragndrop_dec_edoc(self,res_model_id,res_model_name,name, base64, extension, sortable):
         Model = self
 
-        dec_edoc_type=""
+        dec_edoc_type = ""
+        description = ""
+
         # 识别随附单据类型
         if "箱单" in name or "packing" in name:
             dec_edoc_type = "00000002"
+            description = "xiang_dan"
         if "发票" in name or "invoice" in name:
             dec_edoc_type = "00000001"
+            description = "fa_piao"
         if "合同" in name or "contract" in name:
             dec_edoc_type = "00000004"
+            description = "he_tong"
         if "委托书" in name or "attorney" in name:
             dec_edoc_type = "10000001"
+            description = "wei_tuo_shu"
 
         try:
             attachment_id = Model.create({
@@ -30,7 +36,8 @@ class widget_data(models.Model):
                 'dec_edoc_type': dec_edoc_type,
                 'datas_fname': name,
                 'res_model': res_model_name,
-                'description': '',
+                # 'description': '',
+                'description': description,
                 'sortable': sortable,
                 'res_id': res_model_id
             })

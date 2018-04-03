@@ -1097,7 +1097,8 @@ class CustomsDeclaration(models.Model):
                         'res_model': 'customs_center.customs_dec',
                         'res_id': cus_dec_id,
                         'dec_edoc_type': dec_edoc_type,
-                        'datas': binary_data
+                        'datas': binary_data,
+                        'description': name
                     })
 
                     edoc_queue_obj.unlink()
