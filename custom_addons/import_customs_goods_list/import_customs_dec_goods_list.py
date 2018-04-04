@@ -4,7 +4,7 @@
 from odoo import api, fields, models, _
 from datetime import datetime
 from odoo.exceptions import Warning
-import binascii,logging
+import binascii, logging
 import tempfile
 from tempfile import TemporaryFile
 from odoo.exceptions import UserError, ValidationError
@@ -37,8 +37,16 @@ class import_customs_dec_goods_list_wizard(models.TransientModel):
                 line = list(
                     map(lambda row: isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value),
                         sheet.row(row_no)))
+
+                # 解决当Excel中的客户料号等是数字时，程序默认以float格式读取，导致数据异常的问题(如客户料号=4420710001，程序读取到的是4420710001.0)
+                for c_no in [0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]:
+                    cell = sheet.cell(row_no, c_no)
+                    cell_value = cell.value
+                    if cell.ctype == 2 and int(cell_value) == cell_value:
+                        line[c_no] = int(cell_value)
+
                 values.update({
-                    'cust_goods_code': str(line[0]),  # 客户料号
+                    'cust_goods_code': line[0],  # 客户料号
                     'ManualSN': line[1],  # 备案序号
                     'cus_goods_tariff': line[2],  # 商品编号
                     'goods_name': line[3],  # 商品名称
@@ -64,12 +72,13 @@ class import_customs_dec_goods_list_wizard(models.TransientModel):
         customs_dec_brw = self.env['customs_center.customs_dec'].browse(self._context.get('active_id'))
 
         goods_classification_exist_obj = self.env['customs_center.goods_classify'].search(
-                 [('cust_goods_code', '=', values.get('cust_goods_code')),
-                  ('business_company_id', "=", customs_dec_brw.business_company_id.id)])  #
+            [('cust_goods_code', '=', values.get('cust_goods_code')),
+             ('business_company_id', "=", customs_dec_brw.business_company_id.id)])
 
         # 如果根据收发货人、客户料号，能从商品归类库中找到已存在的记录，则直接从归类库中调取商品名称、规格型号等信息，无需从Excel中读取
         if goods_classification_exist_obj:
             goods_classification_id = goods_classification_exist_obj.id
+            cus_goods_tariff_id=goods_classification_exist_obj.cus_goods_tariff_id.id
             ManualSN = goods_classification_exist_obj.ManualSN
             goods_name = goods_classification_exist_obj.goods_name
             goods_model = goods_classification_exist_obj.goods_model
@@ -80,38 +89,52 @@ class import_customs_dec_goods_list_wizard(models.TransientModel):
             destination_country_id = goods_classification_exist_obj.destination_country_id.id
             duty_mode_id = goods_classification_exist_obj.duty_mode_id.id
         else:
-            goods_classification_id=''
+
+            goods_classification_obj = self.env['basedata.cus_goods_tariff'].search(
+                [('Code_ts', '=', values.get('cus_goods_tariff'))])
+
+            if goods_classification_obj:
+                goods_classification_id = goods_classification_obj.id
+            else:
+                goods_classification_id = ''
+
             ManualSN = values.get('ManualSN')
             goods_name = values.get('goods_name')
             goods_model = values.get('goods_model')
             deal_unit_price = values.get('deal_unit_price')
 
-            deal_unit_obj = self.env['basedata.cus_unit'].search(["|",('Code', '=', values.get('deal_unit')),('NameCN', '=', values.get('deal_unit'))])
+            deal_unit_obj = self.env['basedata.cus_unit'].search(
+                ["|", ('Code', '=', values.get('deal_unit')), ('NameCN', '=', values.get('deal_unit'))])
 
             if deal_unit_obj:
                 deal_unit_id = deal_unit_obj.id
             else:
-                deal_unit_id=''
+                deal_unit_id = ''
 
-            currency_obj = self.env['basedata.cus_currency'].search(["|",('Code', '=', values.get('currency')),('NameCN', '=', values.get('currency'))])
+            currency_obj = self.env['basedata.cus_currency'].search(
+                ["|", ('Code', '=', values.get('currency')), ('NameCN', '=', values.get('currency'))])
             if currency_obj:
                 currency_id = currency_obj.id
             else:
-                currency_id=''
+                currency_id = ''
 
-            origin_country_obj = self.env['delegate_country'].search(["|",('Code', '=', values.get('origin_country')),('NameCN', '=', values.get('origin_country'))])
+            origin_country_obj = self.env['delegate_country'].search(
+                ["|", ('Code', '=', values.get('origin_country')), ('NameCN', '=', values.get('origin_country'))])
             if origin_country_obj:
                 origin_country_id = origin_country_obj.id
             else:
-                origin_country_id=''
+                origin_country_id = ''
 
-            destination_country_obj = self.env['delegate_country'].search(["|",('Code', '=', values.get('destination_country')),('NameCN', '=', values.get('destination_country'))])
+            destination_country_obj = self.env['delegate_country'].search(
+                ["|", ('Code', '=', values.get('destination_country')),
+                 ('NameCN', '=', values.get('destination_country'))])
             if origin_country_obj:
                 destination_country_id = destination_country_obj.id
             else:
-                destination_country_id=''
+                destination_country_id = ''
 
-            duty_mode_obj = self.env['basedata.cus_duty_mode'].search(["|",('Code', '=', values.get('duty_mode')),('NameCN', '=', values.get('duty_mode'))])
+            duty_mode_obj = self.env['basedata.cus_duty_mode'].search(
+                ["|", ('Code', '=', values.get('duty_mode')), ('NameCN', '=', values.get('duty_mode'))])
             if duty_mode_obj:
                 duty_mode_id = duty_mode_obj.id
             else:
@@ -127,17 +150,18 @@ class import_customs_dec_goods_list_wizard(models.TransientModel):
         self.env['customs_center.cus_goods_list'].create({
             'customs_declaration_id': customs_dec_brw.id,
             'goods_classification_id': goods_classification_id,
+            'cus_goods_tariff_id':cus_goods_tariff_id,
             'ManualSN': ManualSN,
             'goods_name': goods_name,
             'goods_model': goods_model,
             'deal_qty': deal_qty,
             'deal_unit_price': deal_unit_price,
             'deal_unit_id': deal_unit_id,
-            'currency_id':currency_id,
+            'currency_id': currency_id,
             'first_qty': first_qty,
             'second_qty': second_qty,
-            'origin_country_id':origin_country_id,
-            'destination_country_id':destination_country_id,
+            'origin_country_id': origin_country_id,
+            'destination_country_id': destination_country_id,
             'duty_mode_id': duty_mode_id,
             'version_num': version_num,
             'product_code': product_code
