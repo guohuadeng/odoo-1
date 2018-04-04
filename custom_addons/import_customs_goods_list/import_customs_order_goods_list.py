@@ -73,8 +73,8 @@ class import_customs_order_goods_list_wizard(models.TransientModel):
         customs_order_brw = self.env['customs_center.customs_order'].browse(self._context.get('active_id'))
 
         goods_classification_exist_obj = self.env['customs_center.goods_classify'].search(
-            [('cust_goods_code', '=', values.get('cust_goods_code')),
-             ('business_company_id', "=", customs_order_brw.business_company_id.id)])
+            ["&", "&", ('cust_goods_code', '=', values.get('cust_goods_code')),
+             ('business_company_id', "=", customs_order_brw.business_company_id.id), ('state', "=", "approve")])
 
         # 如果根据收发货人、客户料号，能从商品归类库中找到已存在的记录，则直接从归类库中调取商品名称、规格型号等信息，无需从Excel中读取
         if goods_classification_exist_obj:
@@ -91,13 +91,14 @@ class import_customs_order_goods_list_wizard(models.TransientModel):
             duty_mode_id = goods_classification_exist_obj.duty_mode_id.id
         else:
 
-            goods_classification_obj = self.env['basedata.cus_goods_tariff'].search(
+            goods_classification_id = ''
+            cus_goods_tariff_obj = self.env['basedata.cus_goods_tariff'].search(
                 [('Code_ts', '=', values.get('cus_goods_tariff'))])
 
-            if goods_classification_obj:
-                goods_classification_id = goods_classification_obj.id
+            if cus_goods_tariff_obj:
+                cus_goods_tariff_id = cus_goods_tariff_obj.id
             else:
-                goods_classification_id = ''
+                cus_goods_tariff_id = ''
 
             ManualSN = values.get('ManualSN')
             goods_name = values.get('goods_name')
