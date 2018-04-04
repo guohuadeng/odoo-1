@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="report_todo_task"
+            model="todo.task"
+            report_type="qweb-pdf"
+            string="todo_task_report"
+            name="todo_app.report_todo_task_template"
+            file="todo_app.report_todo_task_template"
+            attachment="'箱单'"
+        />
+
+        <report
+            id="report_todo_task2"
+            model="todo.task"
+            report_type="qweb-pdf"
+            string="todo_task_report32"
+            name="todo_app.report_todo_task_template2"
+            file="todo_app.report_todo_task_template2"
+            attachment="'发票'"
+        />
+
+        <report
+            id="report_todo_task3"
+            model="todo.task"
+            report_type="qweb-pdf"
+            string="todo_task_report3"
+            name="todo_app.report_todo_task_template3"
+            file="todo_app.report_todo_task_template3"
+            attachment="'合同'"
+        />
+
+        <report
+            id="report_todo_task4"
+            model="todo.task"
+            report_type="qweb-pdf"
+            string="todo_task_report4"
+            name="todo_app.report_todo_task_template4"
+            file="todo_app.report_todo_task_template4"
+            attachment="'委托书'"
+        />
+    </data>
+</odoo>
