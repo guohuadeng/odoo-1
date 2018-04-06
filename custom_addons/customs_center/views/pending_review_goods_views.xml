@@ -27,6 +27,50 @@
         </record>
 
 
+        <!-- 批量审核提交 服务器动作-->
+        <record model="ir.actions.server" id="action_batch_check_submit">
+            <field name="name">批量提交审核</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_customs_center_goods_classify"/>
+            <field name="state">code</field>
+            <field name="code">
+if records:
+    action = records.classify_batch_check_submit()
+            </field>
+        </record>
+
+        <record model="ir.values" id="batch_check_submit_classify">
+            <field name="name">批量提交审核</field>
+            <field name="model_id" ref="model_customs_center_goods_classify" />
+            <field name="model">customs_center.goods_classify</field>
+            <!--<field name="key">action</field>-->
+            <field name="key2">client_action_multi</field>
+            <field eval="'ir.actions.server,%d'%action_batch_check_submit" name="value"/>
+        </record>
+
+
+        <!-- 批量审核通过服务器动作-->
+        <record model="ir.actions.server" id="action_batch_check_pass">
+            <field name="name">批量通过审核</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_customs_center_goods_classify"/>
+            <field name="state">code</field>
+            <field name="code">
+if records:
+    action = records.classify_batch_check_pass()
+            </field>
+        </record>
+
+        <record model="ir.values" id="batch_check_pass_classify">
+            <field name="name">批量通过审核</field>
+            <field name="model_id" ref="model_customs_center_goods_classify" />
+            <field name="model">customs_center.goods_classify</field>
+            <!--<field name="key">action</field>-->
+            <field name="key2">client_action_multi</field>
+            <field eval="'ir.actions.server,%d'%action_batch_check_pass" name="value"/>
+        </record>
+
+
         <!-- 待审核归类 列表视图 -->
         <record id="view_pending_review_application_tree" model="ir.ui.view">
             <field name="name">pending goods classify tree</field>

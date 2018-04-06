@@ -32,16 +32,16 @@ class TodoTask(models.Model):
                 # 识别随附单据类型
                 if "箱单" in edoc.name or "packing" in edoc.name:
                     dec_edoc_type = "00000002"
-                    description = "xiang_dan"
+                    #description = "xiang_dan"
                 if "发票" in edoc.name or "invoice" in edoc.name:
                     dec_edoc_type = "00000001"
-                    description = "fa_piao"
+                    #description = "fa_piao"
                 if "合同" in edoc.name or "contract" in edoc.name:
                     dec_edoc_type = "00000004"
-                    description = "he_tong"
+                    #description = "he_tong"
                 if "委托书" in edoc.name or "attorney" in edoc.name:
                     dec_edoc_type = "10000001"
-                    description = "wei_tuo_shu"
+                    # description = "wei_tuo_shu"
 
                 self.env['ir.attachment'].search(
                     [('id', '=', i.id)]).update({'extension': 'pdf',

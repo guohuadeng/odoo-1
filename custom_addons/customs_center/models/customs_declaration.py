@@ -20,19 +20,19 @@ _logger = logging.getLogger(__name__)
 
 # 本地测试环境路径
 # pre_ex_client 前置交换客户端路径
-# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
-# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-#
-# # post_ex_client 后置交换客户端路径
-# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
-# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
+PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
+PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+
+# post_ex_client 后置交换客户端路径
+RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
+BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 
@@ -56,19 +56,19 @@ _logger = logging.getLogger(__name__)
 
 # 应用服务器 测试环境路径  新测试环境路径
 # pre_ex_client 前置交换客户端路径
-PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
-PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-
-# post_ex_client 后置交换客户端路径
-RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
-BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
+# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly')
+# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
+# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
+# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
+# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/mnt/xml_data/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
+#
+# # post_ex_client 后置交换客户端路径
+# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/mnt/xml_data/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
+# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/error_xml_message')
+# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/mnt/xml_data/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
 
 def check_and_mkdir(*path):
@@ -467,15 +467,13 @@ class CustomsDeclaration(models.Model):
     # @q_job.job
     @api.multi
     def parse_cus_message_xml(self):
-        """解析报文 + 空随附单据入库"""
+        """解析报文 + 附单据入单据队列表"""
         # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
         # company_xml_parse_path = self.dec_company_customs_code  # 获取配置信息中的 申报单位海关编码 作为解析路径
 
         customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(['dec_company_customs_code']) # 获取报关单模型对象
         company_xml_parse_path = customs_dec_model_dic.get('dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
 
-        print("**************************77777777777777***********************")
-        print(company_xml_parse_path)
         parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 原始报文解析目录
         parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
                                          company_xml_parse_path.encode('utf-8'))  # 随附单据解析目录
@@ -808,8 +806,6 @@ class CustomsDeclaration(models.Model):
                                     #             genarate_attach_list_dic['datas'] = binary_data
                                 if k == 'EdocCode':
                                     edoc_code = values  # u'随附单据类别'
-                                    print('************22222**********')
-                                    print(edoc_code)
                                     # genarate_attach_list_dic['description'] = edoc_code # 原先第一次实现 用的附件模型字段自带的description字段 临时存放了
                                     # genarate_attach_list_dic['attach_type'] = edoc_code   # 第二种方案 关务中心附件上传 扩展了附件模型 增加单据类型字段attach_type
                                     genarate_attach_list_dic['dec_edoc_type'] = edoc_code   # 第三种方案 附件拖拽上传 扩展了附件字段
@@ -933,84 +929,6 @@ class CustomsDeclaration(models.Model):
                 shutil.move(xml_message, backup_xml_path)
                 _logger.info(u'Had parsed the xml message %s' % xml_message.decode('utf-8'))
 
-
-
-    # @api.multi
-    # # @api.model
-    # # @q_job.job
-    # def parse_attach_message_xml(self):
-    #     """ 手动 解析随附单据入库 从报关单到随附单据报文 正向查找  可用 """
-    #     company_xml_parse_path = '0000016165'  # 做成前端界面可配置
-    #     parse_xml_path = os.path.join(PARSE_CUS_TO_WLY_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文解析目录
-    #     parse_attach_path = os.path.join(PARSE_CUS_TO_WLY_ATTACH_PATH,
-    #                                      company_xml_parse_path.encode('utf-8'))  # 新光随附单据解析目录
-    #     parse_error_xml_path = os.path.join(PARSE_SEND_ERROR_XML_PATH, company_xml_parse_path.encode('utf-8'))
-    #     backup_xml_path = os.path.join(BACKUP_SEND_XML_PATH, company_xml_parse_path.encode('utf-8'))  # 新光原始报文备份目录
-    #     backup_attach_xml_path = os.path.join(BACKUP_SEND_ATTACH_XML_PATH,
-    #                                           company_xml_parse_path.encode('utf-8'))  # 新光随附单据报文备份目录
-    #
-    #     # 检查并生成相应的目录
-    #     check_and_mkdir(parse_xml_path, parse_attach_path, parse_error_xml_path, backup_xml_path,
-    #                     backup_attach_xml_path)
-    #
-    #     # 首先解析随附单据目录的文件  可能多个附件
-    #     attach_files = os.listdir(parse_attach_path)
-    #     attach_files_list = [attach_filename for attach_filename in attach_files if attach_filename.endswith('.xml')]
-    #
-    #     if not attach_files_list:
-    #         return True
-    #     attach_files = [os.path.join(parse_attach_path, i) for i in attach_files_list]
-    #
-    #     # 读文件，用lxml解析报文
-    #     xml_attach_message_list = []
-    #     attach_name_list = []
-    #     for xml_attach_message in attach_files:
-    #         with open(xml_attach_message, 'r') as f:
-    #             attach_xml_str = str(f.read())
-    #             attach_xml_str1 = attach_xml_str.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
-    #             attach_xml_str = attach_xml_str1.replace('xsi:nil="true"', '')
-    #             # print xml_str
-    #             root = etree.fromstring(attach_xml_str)  # 打开xml文档
-    #
-    #             root_name = etree.QName(root).localname
-    #             print(root_name)  # 根标签 Data
-    #             xml_attach_message_dic = {}  # 随附单据报文中的数据  即将xml随附单据TcsData标签部分 转换为字典形式
-    #             if root_name == u'Data':
-    #                 attach_data_node = root.xpath('.//TcsData')
-    #                 for child in attach_data_node[0]:
-    #                     xml_attach_message_dic[child.tag] = child.text
-    #                 xml_attach_message_list.append(xml_attach_message_dic)
-    #
-    #             genarate_attach_list_dic = {}
-    #             for obj in self:
-    #                 # 获取附件模型 根据res_model和res_id查询附件
-    #                 information_attachment_ids = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('res_id', '=', obj.id)])  # 取得附件list
-    #                 print(information_attachment_ids)    # ir.attachment(2738, 2737, 2736, 2735)
-    #                 for i in information_attachment_ids:
-    #                     attach_name = i.name
-    #                     attach_id = i.id
-    #                     attach_name_list.append(attach_name)
-    #                     if xml_attach_message_list:
-    #                         for attach_dic in xml_attach_message_list:    # 这里循环出的每一个attach_dic 相当于上边的 xml_attach_message_dic
-    #                             if attach_dic.get('FILE_NAME') == attach_name:
-    #                                 binary_data = attach_dic.get('BINARY_DATA', None)
-    #                                 genarate_attach_list_dic['datas'] = binary_data
-    #                                 genarate_attach_list_dic['res_id'] = attach_id
-    #                                 if genarate_attach_list_dic:
-    #                                     new_attachment = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('res_id', '=',obj.id),('name', '=',attach_name)]).update({'datas': binary_data})
-    #
-    #     # 将解析成功的随附单据报文 移动到随附单据备份目录
-    #     for xml_attach_message in attach_files_list:  # xml_attach_message是单据名
-    #         if xml_attach_message:
-    #             strlist = xml_attach_message.split('$')
-    #             filename = strlist[0]
-    #             if filename in attach_name_list:
-    #                 xml_attach_message_path = os.path.join(parse_attach_path, xml_attach_message)
-    #                 shutil.move(xml_attach_message_path, backup_attach_xml_path)
-    #                 _logger.info(
-    #                     u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))
-
-
     # @api.model
     # @q_job.job
     @api.multi
@@ -1076,8 +994,9 @@ class CustomsDeclaration(models.Model):
                     attach_data_node = root.xpath('.//TcsData')
                     for child in attach_data_node[0]:
                         xml_attach_message_dic[child.tag] = child.text
-                attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME')   # 获取随附单据报文中的文件名
+                attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME', None)   # 获取随附单据报文中的文件名
                 binary_data = xml_attach_message_dic.get('BINARY_DATA', None)  # 获取随附单据报文中的二进制数据
+                trade_file_name = xml_attach_message_dic.get('TRADE_FILE_NAME', None)  # 获取随附单据报文中的trade file name
 
                 # # 根据上述获取的附件名称 在附件模型中查找 对应的附件ID
                 # attach_id = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('name', '=', attach_name_in_xml)])
@@ -1091,7 +1010,7 @@ class CustomsDeclaration(models.Model):
                 # 根据队列里的内容创建附件， 并删除相应的记录
                 if attach_name_in_xml == name:
                     attach_file_obj = self.env['ir.attachment'].create({
-                        'name': name,
+                        'name': trade_file_name,   # 该字段 用于前端界面显示
                         'datas_fname': datas_fname,
                         'extension': 'pdf',
                         'res_model': 'customs_center.customs_dec',
@@ -1157,8 +1076,6 @@ class CustomsDeclaration(models.Model):
         self.update({'cus_dec_sent_way': 'single'})  # 前端点击发送通道按钮之后 确定发送通道 隐藏另一条通道
         for line in self:
             # 判断当前报关单是否有随附单据
-
-
             # 判断当前报关单的随附单据中是否有数据
             attach_list = []
             for attach in self.information_attachment_ids:
@@ -1309,11 +1226,11 @@ class CustomsDeclaration(models.Model):
             }
             try:
                 self.env['customs_center.dec_result'].create(receipt_dic)
-                dec_sheet.cus_dec_rec_state = status[0].name if status[0].name else None # 更新 报关单模型的回执状态字段
+                dec_sheet.cus_dec_rec_state = status[0].name if status[0].name else None  # 更新 报关单模型的回执状态字段
 
                 # 如果该票报关单 业务回执状态为：报关单放行 则将该报关单下的商品 自动归类
                 # 注意，已经进行过归类的商品不需要重新归类（如果该商品有客户料号（说明选的时候就是来自于归类库），或者归类库中已有同收发货人、同商品名称、同规格型号的商品，说明已经进行过归类，不再自动归类）
-                if status[0].code == 'P': # 报关单放行
+                if status[0].code == 'P':  # 报关单放行
                     self.create_classify_goods(dec_sheet)
 
 
@@ -1336,30 +1253,70 @@ class CustomsDeclaration(models.Model):
         return True
 
     @api.multi
-    def create_classify_goods(self, dec_sheet):
-        print('create_classify_goods',dec_sheet)
-
-        for goods_item in dec_sheet.dec_goods_list_ids:
-            print('goods_item.goods_classification_id', goods_item.goods_classification_id)
+    def create_classify_goods(self):
+        """ 报关单状态为放行后调用该方法 自动归类"""
+        for goods_item in self.dec_goods_list_ids:
+            # print('goods_item.goods_classification_id', goods_item.goods_classification_id)
             if not goods_item.goods_classification_id:
-                classify_goods_list = {
-                    'cust_goods_code': goods_item.cust_goods_code,  # 客户料号
-                    'business_company_id': dec_sheet.business_company_id,  # 收发货人
-                    'ManualNo': dec_sheet.ManualNo,  # 备案号
-                    'ManualSN': goods_item.ManualSN,  # 备案序号
-                    'cus_goods_tariff_id': goods_item.cus_goods_tariff_id,  # 商品编号
-                    'goods_name': goods_item.goods_name,  # 商品名称
-                    'goods_model': goods_item.goods_model,  # 规格型号
-                    'deal_unit_price': goods_item.deal_unit_price,  # 申报单价
-                    'currency_id': goods_item.currency_id,  # 币制
-                    'deal_unit_id': goods_item.deal_unit_id,  # 成交单位
-                    'origin_country_id': goods_item.origin_country_id,  # 原产国
-                    'destination_country_id': goods_item.destination_country_id,  # 目的国
-                    'duty_mode_id': goods_item.duty_mode_id,  # 征免方式
-                }
-                print('goods_item.classify_goods_list', classify_goods_list)
+                business_company = self.business_company_id  # 收发貨人
+                cust_goods_code = goods_item.cust_goods_code  # 客户料号
+                cus_goods_tariff_no = goods_item.cus_goods_tariff_id  # 商品编号
+                goods_name = goods_item.goods_name  # 商品名称
+                goods_model = goods_item.goods_model  # 规格型号
+                # 收发貨人为空
+                if not business_company:
+                    pass
+                # 客户料号为真：
+                elif cust_goods_code:
+                    pass
+                # 客户料号为空：
+                elif not cust_goods_code:
+                    # 多条件搜索:收发货人+商品编号+商品名称+规格型号
+                    history_good_classify_info = self.env['customs_center.goods_classify'].search([
+                                                                    ('business_company_id', '=', business_company),
+                                                                    ('cus_goods_tariff_id', '=', cus_goods_tariff_no),
+                                                                    ('goods_name', '=', goods_name),
+                                                                    ('goods_model', '=', goods_model)
+                                                                ])
+                    # 为真：调用次数字段 加1, 最新调用时间为当前时间
+                    if history_good_classify_info:
+                        new_call_count = history_good_classify_info.call_count + 1
+                        history_good_classify_info.update({'call_count': new_call_count,
+                                                           'new_call_date': fields.Datetime.now()})
+                    # 创建一条新的归类记录
+                    else:
+                        classify_goods_dic = {
+                            'cust_goods_code': cust_goods_code,  # 客户料号
+                            'business_company_id': business_company,  # 收发货人
+                            'ManualNo': self.ManualNo,  # 备案号
+                            'ManualSN': goods_item.ManualSN,  # 备案序号
+                            'cus_goods_tariff_id': cus_goods_tariff_no,  # 商品编号
+                            'goods_name': goods_name,  # 商品名称
+                            'goods_model': goods_model,  # 规格型号
+                            'deal_unit_price': goods_item.deal_unit_price,  # 申报单价
+                            'currency_id': goods_item.currency_id,  # 币制
+                            'deal_unit_id': goods_item.deal_unit_id,  # 成交单位
+                            'origin_country_id': goods_item.origin_country_id,  # 原产国
+                            'destination_country_id': goods_item.destination_country_id,  # 目的国
+                            'duty_mode_id': goods_item.duty_mode_id,  # 征免方式
+                        }
 
-                # cus_goods_classify_obj = self.env['customs_center.goods_classify'].create(classify_goods_list)
+                        classify_goods_dic = {item: classify_goods_dic[item]
+                                              for item in classify_goods_dic if classify_goods_dic[item]}  # 清除False
+
+                        # print('goods_item.classify_goods_list', classify_goods_dic)
+                        cus_goods_classify_obj = self.env['customs_center.goods_classify'].create(classify_goods_dic)
+
+
+
+
+
+
+
+
+
+
+
 
 
 class WorkSheet(models.Model):
