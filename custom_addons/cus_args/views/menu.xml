@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="customs_args_menu" name="customs_args_menu"/>
+
+    <!--报关基础数据-->
+    <menuitem id="customs_dec_args_menu" name="Custom Dec Args" parent="basedata_menu" sequence="50" />
+
+    <menuitem id="duty_mode_menu" name="duty_mode" parent="customs_dec_args_menu" sequence="120" />
+
+</odoo>
