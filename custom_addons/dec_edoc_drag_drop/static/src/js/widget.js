@@ -232,43 +232,38 @@ odoo.define('dec_edoc_drag_drop.form_widgets', function (require) {
             reader.onload = function(e) {
                 var srcData = e.target.result;
                 var base64_image = srcData.substring(srcData.lastIndexOf(",")+1, srcData.length);
-
+                // Attach file Size
+                var attach_file_size = base64_image.length;
+                // 将随附单据base64 转换成文件流大小fileLength
+                var fileLength=parseInt(attach_file_size-(attach_file_size/8)*2);
                 var extension_file = "";
                 var extension = name.split('.').pop();
 
                 console.log(extension);
 
-
                 // https://bugzilla.mozilla.org/show_bug.cgi?id=453805
                 if(extension == 'pdf'){
-                    //File PDF
-                    extension_file = "pdf";
-                }else if(extension == 'doc' || extension == 'docx'){
-                    //File WORD
-                    extension_file = "word";
-                }else if(extension == 'zip' || extension == 'rar'){
-                    //File ZIP
-                    extension_file = "zip";
-                }else if(extension == 'psd'){
-                    //File PHOTOSHOP
-                    extension_file = "psd";
-                }else if(extension == 'ppt' || extension == 'pptx'){
-                    //File POWER POINT
-                    extension_file = "ppt";
-                }else if(extension == 'xls' || extension == 'xlsx'){
-                    //File POWER POINT
-                    extension_file = "xls";
+                    //File SIZE
+                    if(fileLength >= 4190000){
+                        alert("单据附件大小不能超过4M,请重新上传!");
+                        return false;
+                    }else{
+                        //File PDF
+                        extension_file = "pdf";
+                        var model = new Model("ir.attachment");
+                            model.call("upload_dragndrop_dec_edoc", [],{res_model_id:res_model_id,res_model_name:res_model_name,name: file.name, base64: base64_image, extension: extension_file, sortable: last_sort_number+1}).then(function(result_id) {
+                                console.log(result_id);
+                                var values = _.clone(self.get('value'));
+                                values.push(parseInt(result_id));
+                                upload_images[file.name] = parseInt(result_id);
+                                console.log('file non presente, lo carico');
+                                self.set({'value': values});
+                            });
+                    }
+                }else {
+                    alert("单据附件只支持.pdf类型文件！请重新上传！");
+                    return false;
                 }
-
-                var model = new Model("ir.attachment");
-                model.call("upload_dragndrop_dec_edoc", [],{res_model_id:res_model_id,res_model_name:res_model_name,name: file.name, base64: base64_image, extension: extension_file, sortable: last_sort_number+1}).then(function(result_id) {
-                    console.log(result_id);
-                    var values = _.clone(self.get('value'));
-                    values.push(parseInt(result_id));
-                    upload_images[file.name] = parseInt(result_id);
-                    console.log('file non presente, lo carico');
-                    self.set({'value': values});
-                });
             }
             reader.readAsDataURL(file);
 
