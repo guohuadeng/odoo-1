@@ -1308,17 +1308,6 @@ class CustomsDeclaration(models.Model):
                         cus_goods_classify_obj = self.env['customs_center.goods_classify'].create(classify_goods_dic)
 
 
-
-
-
-
-
-
-
-
-
-
-
 class WorkSheet(models.Model):
     """" 工作单 """
     _inherit = 'work_sheet'
