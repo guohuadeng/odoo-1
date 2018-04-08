@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--海关注册企业库-->
+        <record id="cus_args_cus_register_company_action" model="ir.actions.act_window">
+            <field name="name">Customs Register Company</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cus_args.cus_register_company</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="cus_args_cus_register_company_tree_view" model="ir.ui.view">
+            <field name="name">cus_args.cus_register_company.tree</field>
+            <field name="model">cus_args.cus_register_company</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="register_code"/>
+                    <field name="unified_social_credit_code"/>
+                    <field name="register_name_cn"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cus_args_cus_register_company_search_view" model="ir.ui.view">
+            <field name="name">cus_args.cus_register_company.search</field>
+            <field name="model">cus_args.cus_register_company</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="register_code"/>
+                    <field name="register_name_cn"/>
+                    <field name="unified_social_credit_code"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="cus_args_cus_register_company_form" model="ir.ui.view">
+            <field name="name">cus_args.cus_register_company.form</field>
+            <field name="model">cus_args.cus_register_company</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="register_code"/>
+                            <field name="register_name_cn"/>
+                            <field name="unified_social_credit_code"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

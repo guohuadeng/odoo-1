@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
-# 报关表体基础参数表
 
+# 报关表体基础参数表
 class DutyMode(models.Model):
-    """ 征免方式表 """
+    """ 征免方式 """
     _name = 'cus_args.duty_mode'
     _description = 'Duty Mode Code Table'
     _rec_name = 'name_cn'
@@ -34,7 +34,7 @@ class DutyMode(models.Model):
 
 
 class Unit(models.Model):
-    """ 单位表 """
+    """ 计量单位表 """
     _name = 'cus_args.unit'
     _description = 'Unit Code Table'
     _rec_name = 'name_cn'
@@ -54,7 +54,6 @@ class Unit(models.Model):
 
     @api.model
     def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
-        """重写模型name字段搜索方法"""
         args = args or []
         if not (name == '' and operator == 'ilike'):
             args += ['|', ('code', operator, name), ('name_cn', operator, name)]

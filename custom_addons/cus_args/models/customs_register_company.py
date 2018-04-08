@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
+
 class CusRegisterCompany(models.Model):
-    """ 海关注册企业库表 """
+    """ 海关注册企业库 """
     _name = 'cus_args.cus_register_company'
-    _description = 'Customs register company'
+    _description = 'Customs Register Company'
     _rec_name = 'register_name_cn'
 
-    register_code = fields.Char(string='Customs register Code', required=True)  # 海关编码
-    unified_social_credit_code = fields.Char(string='Customs unified social credit code', required=True)  # 社会信用统一编码
-    register_name_cn = fields.Char(string='Customs Register Name', size=50, required=True)  # 企业海关名称
+    register_code = fields.Char(string='Customs Register Code', required=True)  # 海关注册编码(十位)
+    register_name_cn = fields.Char(string='Customs Register Name', size=50, required=True)  # 海关注册企业名称
+    unified_social_credit_code = fields.Char(string='Unified Social Credit Code', required=False)  # 社会信用统一编码（十八位）
 
     @api.multi
     @api.depends('register_code', 'register_name_cn', )
@@ -23,7 +24,6 @@ class CusRegisterCompany(models.Model):
 
     @api.model
     def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
-        """重写模型name字段搜索方法"""
         args = args or []
         if not (name == '' and operator == 'ilike'):
             args += ['|', ('register_code', operator, name),

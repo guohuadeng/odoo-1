@@ -2,9 +2,10 @@
 from odoo import models, fields, api
 
 
-# 报关表头基础参数表
+# 报关表头基础参数表(按照报关单中使用到该字典表的顺序排列)
+
 class Customs(models.Model):
-    """关区代码(即进出口岸)"""
+    """关区代码(用于报关单中进出口岸、海关总署)"""
     _name = 'cus_args.customs'
     _description = 'Customs Code Table'
     _rec_name = 'name_cn'
@@ -95,14 +96,14 @@ class TradeMode(models.Model):
         )
 
 
-class CusCutMode(models.Model):
-    """ 征免性质表 """
+class CutMode(models.Model):
+    """ 征免性质 """
     _name = 'cus_args.cut_mode'
     _description = 'Cut Mode Code Table'
     _rec_name = 'name_cn'
 
     code = fields.Char(string='Cut Mode Code', required=True)  # 征免性质代码
-    name_cn = fields.Char(string='Cut Chinese Name', size=50, required=True)  # 中文名称
+    name_cn = fields.Char(string='Cut Mode Chinese Name', size=50, required=True)  # 中文名称
 
     @api.multi
     @api.depends('code', 'name_cn')
@@ -121,7 +122,7 @@ class CusCutMode(models.Model):
         if not (name == '' and operator == 'ilike'):
             args += ['|', ('code', operator, name), ('name_cn', operator, name)]
 
-        return super(CusCutMode, self)._name_search(
+        return super(CutMode, self)._name_search(
             name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
         )
 
@@ -268,7 +269,6 @@ class WrapType(models.Model):
 
     @api.model
     def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
-        """重写模型name字段搜索方法"""
         args = args or []
         if not (name == '' and operator == 'ilike'):
             args += ['|', ('code', operator, name), ('name_cn', operator, name)]
@@ -279,12 +279,12 @@ class WrapType(models.Model):
 
 
 class Currency(models.Model):
-    """ 货币代码表"""
+    """ 货币代码"""
     _name = 'cus_args.currency'
     _description = 'Currency Code Table'
     _rec_name = 'name_cn'
 
-    code = fields.Char(string='Currency Code', required=True)  #货币代码
+    code = fields.Char(string='Currency Code', required=True)  # 货币代码
     symbol = fields.Char(string='Currency Symbol', )  # 符号
     name_cn = fields.Char(string='Currency Chinese Name', size=50, required=True)  # 中文名称
 
@@ -308,8 +308,9 @@ class Currency(models.Model):
             name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
         )
 
-class CusEntryType(models.Model):
-    """ 报关单类型表  """
+
+class EntryType(models.Model):
+    """ 报关单类型  """
     _name = 'cus_args.entry_type'
     _description = 'Customs Entry Type Table'
     _rec_name = 'name_cn'
@@ -318,8 +319,8 @@ class CusEntryType(models.Model):
     name_cn = fields.Char(string='Entry Type Chinese Name', size=50, required=True)  # 中文名称
 
 
-class CusFilingBillType(models.Model):
-    """ 备案清单类型表 """
+class FilingBillType(models.Model):
+    """ 备案清单类型 """
     _name = 'cus_args.filing_bill_type'
     _description = 'Filing Bill Type Table'
     _rec_name = 'name_cn'

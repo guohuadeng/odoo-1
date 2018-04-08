@@ -13,7 +13,7 @@ class CusGoodsTariff(models.Model):
     code_ts = fields.Char(string='HS Code', required=True)  # 商品编号
     name_cn = fields.Char(string='Goods Chinese Name', size=50, required=True)  # 中文名称
     first_unit_id = fields.Many2one(comodel_name="cus_args.unit", string="First Unit", )  # 第一计量单位
-    second_unit_id = fields.Many2one(comodel_name="cus_args.unit", string="second Unit", )  # 第二计量单位
+    second_unit_id = fields.Many2one(comodel_name="cus_args.unit", string="Second Unit", )  # 第二计量单位
     supervision_condition = fields.Char(string="Supervision Condition")  # 监管条件 / 监管标识
 
 

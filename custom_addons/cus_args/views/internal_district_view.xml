@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!--征免方式-->
-        <record id="cus_args_duty_mode_action" model="ir.actions.act_window">
-            <field name="name">Duty Mode Code Table</field>
+        <!--国内地区代码（用于报关单境内目的/货源地）-->
+        <record id="cus_args_internal_district_action" model="ir.actions.act_window">
+            <field name="name">Internal District Code Table</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">cus_args.duty_mode</field>
+            <field name="res_model">cus_args.internal_district</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record id="cus_args_duty_mode_tree_view" model="ir.ui.view">
-            <field name="name">cus_args.duty_mode.tree</field>
-            <field name="model">cus_args.duty_mode</field>
+        <record id="cus_args_internal_district_tree_view" model="ir.ui.view">
+            <field name="name">cus_args.internal_district.tree</field>
+            <field name="model">cus_args.internal_district</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="code"/>
@@ -20,9 +20,9 @@
             </field>
         </record>
 
-        <record id="cus_args_duty_mode_search_view" model="ir.ui.view">
-            <field name="name">cus_args.duty_mode.search</field>
-            <field name="model">cus_args.duty_mode</field>
+        <record id="cus_args_internal_district_search_view" model="ir.ui.view">
+            <field name="name">cus_args.internal_district.search</field>
+            <field name="model">cus_args.internal_district</field>
             <field name="arch" type="xml">
                 <search>
                     <field name="code"/>
@@ -31,9 +31,9 @@
             </field>
         </record>
 
-        <record id="cus_args_duty_mode_form" model="ir.ui.view">
-            <field name="name">cus_args.duty_mode.form</field>
-            <field name="model">cus_args.duty_mode</field>
+        <record id="cus_args_internal_district_form" model="ir.ui.view">
+            <field name="name">cus_args.internal_district.form</field>
+            <field name="model">cus_args.internal_district</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>

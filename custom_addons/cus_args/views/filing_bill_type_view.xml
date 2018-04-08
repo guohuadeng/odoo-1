@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!--征免方式-->
-        <record id="cus_args_duty_mode_action" model="ir.actions.act_window">
-            <field name="name">Duty Mode Code Table</field>
+        <!--备案清单类型表-->
+        <record id="cus_args_filing_bill_type_action" model="ir.actions.act_window">
+            <field name="name">Filing Bill Type Table</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">cus_args.duty_mode</field>
+            <field name="res_model">cus_args.filing_bill_type</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record id="cus_args_duty_mode_tree_view" model="ir.ui.view">
-            <field name="name">cus_args.duty_mode.tree</field>
-            <field name="model">cus_args.duty_mode</field>
+        <record id="cus_args_filing_bill_type_tree_view" model="ir.ui.view">
+            <field name="name">cus_args.filing_bill_type.tree</field>
+            <field name="model">cus_args.filing_bill_type</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="code"/>
@@ -20,9 +20,9 @@
             </field>
         </record>
 
-        <record id="cus_args_duty_mode_search_view" model="ir.ui.view">
-            <field name="name">cus_args.duty_mode.search</field>
-            <field name="model">cus_args.duty_mode</field>
+        <record id="cus_args_filing_bill_type_search_view" model="ir.ui.view">
+            <field name="name">cus_args.filing_bill_type.search</field>
+            <field name="model">cus_args.filing_bill_type</field>
             <field name="arch" type="xml">
                 <search>
                     <field name="code"/>
@@ -31,9 +31,9 @@
             </field>
         </record>
 
-        <record id="cus_args_duty_mode_form" model="ir.ui.view">
-            <field name="name">cus_args.duty_mode.form</field>
-            <field name="model">cus_args.duty_mode</field>
+        <record id="cus_args_filing_bill_type_form" model="ir.ui.view">
+            <field name="name">cus_args.filing_bill_type.form</field>
+            <field name="model">cus_args.filing_bill_type</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
