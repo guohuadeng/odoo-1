@@ -15,7 +15,7 @@
     'data': [
         'views/country_view.xml',
         'views/currency_view.xml',
-        'views/cus_register_company_view.xml',
+        'views/register_company_view.xml',
         'views/customs_view.xml',
         'views/cut_mode_view.xml',
         'views/dec_license_doc_type_view.xml',
