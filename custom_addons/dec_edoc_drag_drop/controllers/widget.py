@@ -17,16 +17,16 @@ class widget_data(models.Model):
         # 识别随附单据类型
         if "箱单" in name or "packing" in name:
             dec_edoc_type = "00000002"
-            description = "xiang_dan"
+            #description = res_model_id.name + "$00000002"
         if "发票" in name or "invoice" in name:
             dec_edoc_type = "00000001"
-            description = "fa_piao"
+            #description = res_model_id.name + "$00000001"
         if "合同" in name or "contract" in name:
             dec_edoc_type = "00000004"
-            description = "he_tong"
+            #description = res_model_id.name + "$00000004"
         if "委托书" in name or "attorney" in name:
             dec_edoc_type = "10000001"
-            description = "wei_tuo_shu"
+            #description = res_model_id.name + "$10000001"
 
         try:
             attachment_id = Model.create({

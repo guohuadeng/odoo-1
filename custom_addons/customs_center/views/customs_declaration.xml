@@ -706,7 +706,9 @@
                                                          style="float: left;padding-left: 0px;  position: relative;">
                                                         <field name="goods_classification_id" style="width:100%"
                                                                options="{'no_create_edit': 1, 'no_create': 1}"
-                                                               domain="[('business_company_id', '=',parent.business_company_id)]"/>
+                                                               domain="[('business_company_id', '=',parent.business_company_id),
+                                                                        ('state','=','approve')]"/>
+                                                               <!--搜索过滤条件：客户调用商品的时候，只是调用当前界面收发貨人下的商品，并且状态是审核通过的-->
                                                     </div>
                                                 </div>
                                             </div>
