@@ -123,7 +123,7 @@ msgstr "报关基础数据"
 #. module: cus_args_center
 #: model:ir.ui.menu,name:cus_args_center.customs_args_menu
 msgid "Customs Args"
-msgstr "通关参数"
+msgstr "通关参数中心"
 
 #. module: cus_args_center
 #: model:ir.actions.act_window,name:cus_args_center.cus_args_customs_action

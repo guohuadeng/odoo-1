@@ -40,15 +40,16 @@
         'views/result_status.xml',
         'views/customs_receipt.xml',
         'views/setting_declaration.xml',
+        'views/customs_center_dashboard_view.xml',
         'views/menu.xml',
         'views/template.xml',
         'reports/customs_dec_report.xml',
         'reports/customs_dec_report_template.xml',
     ],
     'qweb': [
-        'static/src/xml/declare_element_modal.xml',
+        'static/src/xml/*.xml',
     ],
-    'css': ['static/src/css/customs_dec.css'],
+    'css': ['static/src/css/customs_dec.css',],
     # only loaded in demonstration mode
     'demo': [
         # 'demo/demo.xml',
