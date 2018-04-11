@@ -109,29 +109,27 @@
             <field name="arch" type="xml">
                 <form create="false">
                     <header>
-                        <button name="parse_cus_message_xml" string="解析富士康报文+空随附单据入库" class="oe_highlight"
+                        <button name="parse_cus_message_xml" groups="base.group_no_one" string="解析富士康报文+空随附单据入库" class="oe_highlight"
                                 type="object"/>
-                        <button name="auto_parse_attach_message_xml" string="解析随附单据入库" class="oe_highlight"
+                        <button name="auto_parse_attach_message_xml" groups="base.group_no_one" string="解析随附单据入库" class="oe_highlight"
                                 type="object"/>
-                        <button name="parse_receipt_xml" string="解析报关单回执" class="oe_highlight" type="object"/>
-                        <button name="generate_single_customer_xml" string="报文发送单一窗口" class="oe_highlight" type="object"
+                        <button name="parse_receipt_xml" groups="base.group_no_one" string="解析报关单回执" class="oe_highlight" type="object"/>
+
+                        <button name="generate_single_customer_xml" string="发送单一窗口" class="oe_highlight" type="object"
                                 attrs="{'invisible': [('cus_dec_sent_way', 'in', ['QP','single'])]}"
                                 confirm="确认将该报关单发送至-单一窗口么?"/>
-                        <button name="generate_single_customer_xml_after" string="报文发送单一窗口" type="object"
-                                attrs="{'invisible': [('cus_dec_sent_way', '!=', 'QP')]}"
-                                confirm="该报关单已发送至QP申报，不能重复发送！"/>
-                        <button name="generate_single_customer_xml_after" string="报文发送单一窗口" type="object"
+                        <button name="generate_single_customer_xml_after" string="已发送单一窗口" type="object"
                                 attrs="{'invisible': [('cus_dec_sent_way', '!=', 'single')]}"
                                 confirm="该报关单已发送至单一窗口申报，不能重复发送！"/>
-                        <button name="generate_qp_customer_xml" string="报文发送QP" class="oe_highlight" type="object"
+
+                        <button name="generate_qp_customer_xml" string="发送QP" class="oe_highlight" type="object"
                                 attrs="{'invisible': [('cus_dec_sent_way', 'in', ['QP','single'])]}"
                                 confirm="确认将该报关单发送至-QP么?"/>
-                        <button name="generate_qp_customer_xml_after" string="报文发送QP" type="object"
+
+                        <button name="generate_qp_customer_xml_after" string="已发送QP" type="object"
                                 attrs="{'invisible': [('cus_dec_sent_way', '!=', 'QP')]}"
                                 confirm="该报关单已发送至QP申报，不能重复发送！"/>
-                        <button name="generate_qp_customer_xml_after" string="报文发送QP" type="object"
-                                attrs="{'invisible': [('cus_dec_sent_way', '!=', 'single')]}"
-                                confirm="该报关单已发送至单一窗口申报，不能重复发送！"/>
+
                         <field name="cus_dec_sent_way" widget="statusbar" invisible="1" statusbar_visible="single,QP"/>
                     </header>
                     <sheet>
@@ -609,7 +607,9 @@
                                                          style="float: left;padding-left: 0px;  position: relative;">
                                                         <field name="goods_classification_id" style="width:100%"
                                                                options="{'no_create_edit': 1, 'no_create': 1}"
-                                                               domain="[('business_company_id', '=',parent.business_company_id)]"/>
+                                                               domain="[('business_company_id', '=',parent.business_company_id),
+                                                                        ('state','=','approve')]"/>
+                                                               <!--搜索过滤条件：客户调用商品的时候，只是调用当前界面收发貨人下的商品，并且状态是审核通过的-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -938,20 +938,19 @@
                             </page>
 
                             <page string="随附单据">
-                                <!--<field name="drag_attach_ids" widget="multidragndrop" string="单据PDF附件"/>-->
                                 <field name="information_attachment_ids" widget="multidragndrop_edoc"
                                        options="{'res_model_id':'id','res_model_name':'cus_center.customs_dec'}"
-                                       string="单据PDF附件"/>
+                                       string="随附单据PDF附件"/>
                                 <field name="id" invisible="1"/>
                             </page>
 
                             <page string="回执信息">
-                                <field name="receipt_ids" mode="tree" readonly="1">
+                                <field name="receipt_list" mode="tree" readonly="1">
                                     <tree>
                                         <field name="sequence" invisible="1"/>
-                                        <field name="status_id" readonly="1"/>
-                                        <field name="message" readonly="1"/>
-                                        <field name="notice_date" readonly="1"/>
+                                        <field name="status_id" readonly="1" string="回执状态"/>
+                                        <field name="message" readonly="1" string="回执信息"/>
+                                        <field name="notice_date" readonly="1" string="回执时间"/>
                                     </tree>
                                     <form>
                                         <group>

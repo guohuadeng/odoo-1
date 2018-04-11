@@ -10,18 +10,22 @@ from odoo.tools import config
 
 _logger = logging.getLogger(__name__)
 
-# 应用服务器 测试环境路径  新测试环境路径
+MAIN_PATH = '/home/odoo/Desktop/ParallelsSharedFolders/Home'  # 欧玉斌的本地目录
+# MAIN_PATH = '/home/odoo/odooshare' #王志强的本地目录
+
 # pre_ex_client 前置交换客户端路径
 PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path',
-                                           '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/pre_ex_client/cus_to_wly')
+                                           MAIN_PATH + '/about_wly_xml_data/pre_ex_client/cus_to_wly')
 PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path',
-                                                  '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
+                                                  MAIN_PATH + '/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
 PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path',
-                                               '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/pre_ex_client/send_error_xml_message')
+                                               MAIN_PATH + '/about_wly_xml_data/pre_ex_client/send_error_xml_message')
 BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path',
-                                          '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/pre_ex_client/send_backup_xml')  # 新光原始报文备份目录
+                                          MAIN_PATH + '/about_wly_xml_data/pre_ex_client/send_backup_xml')  # 新光原始报文备份目录
 BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path',
-                                                 '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')  # 新光原始报文备份目录
+                                                 MAIN_PATH + '/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')  # 新光原始报文备份目录
+
+DEBUG = True  # debug=true时，为了调试方便，不执行将报文移动错误或备份文件夹的操作
 
 """解析从客户发送给物流云的报文（主要是报关单报文、随附单据报文），解析入口后，备份到相应路径"""
 
@@ -224,7 +228,8 @@ def parse_customs_dec_xml(self):
             port_id = self.env['cus_args.port'].search([('code', '=', port_code)])
 
             internal_district_code = customs_dec_dic['DecHead'].get('DistrictCode', None)  # u'境内目的/货源地'
-            internal_district_id = self.env['cus_args.internal_district'].search([('code', '=', internal_district_code)])
+            internal_district_id = self.env['cus_args.internal_district'].search(
+                [('code', '=', internal_district_code)])
 
             trade_terms_code = customs_dec_dic['DecHead'].get('TransMode', None)  # u'成交方式 or 贸易条款'
             trade_terms_id = self.env['cus_args.trade_terms'].search([('code', '=', trade_terms_code)])
@@ -347,7 +352,9 @@ def parse_customs_dec_xml(self):
             customs_dec_dic = {item: customs_dec_dic[item] for item in customs_dec_dic if customs_dec_dic[item]}
         else:
             _logger.error(u'Find error format xml message: %s' % xml_message.decode('utf-8'))
-            shutil.move(xml_message, parse_error_xml_path)
+            if not DEBUG:
+                shutil.copy2(xml_message, parse_error_xml_path)
+                os.remove(xml_message)
             continue
 
         try:
@@ -491,28 +498,36 @@ def parse_customs_dec_xml(self):
                         except Exception, error_info:
                             _logger.error(
                                 u'{} {}'.format(xml_message.decode('utf-8'), str(error_info).decode('utf-8')))
-                            shutil.move(xml_message, parse_error_xml_path)
+
+                            if not DEBUG:
+                                shutil.move(xml_message, parse_error_xml_path)
                             continue
         except Exception, error_info:
             _logger.error(u'{} {}'.format(xml_message.decode('utf-8'), str(error_info).decode('utf-8')))
-            shutil.move(xml_message, parse_error_xml_path)
+            if not DEBUG:
+                shutil.copy2(xml_message, parse_error_xml_path)
+                os.remove(xml_message)
+
             continue
         else:
-            shutil.move(xml_message, backup_xml_path)
+            if not DEBUG:
+                shutil.copy2(xml_message, backup_xml_path)
+                os.remove(xml_message)
             _logger.info(u'Had parsed the xml message %s' % xml_message.decode('utf-8'))
 
 
 def parse_customs_dec_edoc_xml(self):
     pass
-    """ 从客户给物流云发送的随附单据文件夹中，解析随附单据报文（解析入库后，给相应的附件模型data赋值）"""
-    # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
-
-    # 先判断随附单据队列模型里是否有数据
-    # edoc_queue_ids = self.env['cus_center.edoc_queue'].search([])
+    # """ 从客户给物流云发送的随附单据文件夹中，解析随附单据报文（解析入库后，给相应的附件模型data赋值）"""
+    # """ 自动解析随附单据入库 从随附单据报文到报关单 反向查找"""
+    # # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
+    #
+    # # 先判断随附单据队列模型里是否有数据
+    # edoc_queue_ids = self.env['customs_center.edoc_queue'].search([])
     # if not edoc_queue_ids:
     #     return
     #
-    # customs_dec_model_dic = self.env['cus_center.customs_dec'].default_get(
+    # customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(
     #     ['dec_company_customs_code'])  # 获取报关单模型对象
     # company_xml_parse_path = customs_dec_model_dic.get(
     #     'dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
@@ -565,11 +580,12 @@ def parse_customs_dec_edoc_xml(self):
     #             attach_data_node = root.xpath('.//TcsData')
     #             for child in attach_data_node[0]:
     #                 xml_attach_message_dic[child.tag] = child.text
-    #         attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME')  # 获取随附单据报文中的文件名
+    #         attach_name_in_xml = xml_attach_message_dic.get('FILE_NAME', None)  # 获取随附单据报文中的文件名
     #         binary_data = xml_attach_message_dic.get('BINARY_DATA', None)  # 获取随附单据报文中的二进制数据
+    #         trade_file_name = xml_attach_message_dic.get('TRADE_FILE_NAME', None)  # 获取随附单据报文中的trade file name
     #
     #         # # 根据上述获取的附件名称 在附件模型中查找 对应的附件ID
-    #         # attach_id = self.env['ir.attachment'].search([('res_model', '=', 'cus_center.customs_dec'),('name', '=', attach_name_in_xml)])
+    #         # attach_id = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('name', '=', attach_name_in_xml)])
     #         # print("*******************^^6666666665555555555555666666666666**********************")
     #         # print(attach_id)
     #         # # 根据附件ID 找到对应的报关单ID
@@ -580,10 +596,10 @@ def parse_customs_dec_edoc_xml(self):
     #         # 根据队列里的内容创建附件， 并删除相应的记录
     #         if attach_name_in_xml == name:
     #             attach_file_obj = self.env['ir.attachment'].create({
-    #                 'name': name,
+    #                 'name': trade_file_name,  # 该字段 用于前端界面显示
     #                 'datas_fname': datas_fname,
     #                 'extension': 'pdf',
-    #                 'res_model': 'cus_center.customs_dec',
+    #                 'res_model': 'customs_center.customs_dec',
     #                 'res_id': cus_dec_id,
     #                 'dec_edoc_type': dec_edoc_type,
     #                 'datas': binary_data,
@@ -595,13 +611,13 @@ def parse_customs_dec_edoc_xml(self):
     #
     #             attach_ids.append(attach_file_obj.id)
     #             # 附件id用于将解析的随附单据加在 随附单据拖拽上传page页
-    #             customs_dec_model_obj = self.env['cus_center.customs_dec'].search([('id', '=', cus_dec_id)])
+    #             customs_dec_model_obj = self.env['customs_center.customs_dec'].search([('id', '=', cus_dec_id)])
     #             customs_dec_model_obj.information_attachment_ids = [(6, 0, attach_ids)]
     #
     #
     #             # # 根据上方找到的报关单ID 找到该报关单对应的附件列表
     #             # information_attachment_ids = self.env['ir.attachment'].search(
-    #             #     [('res_model', '=', 'cus_center.customs_dec'), ('res_id', '=', res_id)])  # 取得附件list
+    #             #     [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id)])  # 取得附件list
     #             # print(information_attachment_ids)
     #             # for i in information_attachment_ids:
     #             #     attach_name = i.name
@@ -609,11 +625,13 @@ def parse_customs_dec_edoc_xml(self):
     #             #
     #             #     if attach_name == attach_name_in_xml:
     #             #         new_attachment = self.env['ir.attachment'].search(
-    #             #             [('res_model', '=', 'cus_center.customs_dec'), ('res_id', '=', res_id),
+    #             #             [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id),
     #             #              ('name', '=', attach_name)]).update({'datas': binary_data})
     #
     # # 将解析成功的随附单据报文 移动到随附单据备份目录
     # for xml_attach_message in attach_name_list:  # xml_attach_message是单据名
-    #     shutil.move(xml_attach_message, backup_attach_xml_path)
+    #     if not DEBUG:
+    #         shutil.copy2(xml_attach_message, backup_attach_xml_path)
+    #         os.remove(xml_attach_message)
     #     _logger.info(
     #         u'Had parsed the attach xml message %s' % xml_attach_message.decode('utf-8'))

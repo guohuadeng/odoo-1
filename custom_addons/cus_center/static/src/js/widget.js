@@ -1,10 +1,10 @@
-odoo.define('customs_center', function (require) {
+odoo.define('cus_center', function (require) {
     var core = require('web.core');
     var FormWidget = require('web.form_widgets');
     var QWeb = core.qweb;
     var Model = require('web.Model');
 
-    QWeb.add_template('/customs_center/static/src/xml/declare_element_modal.xml');
+    QWeb.add_template('/cus_center/static/src/xml/declare_element_modal.xml');
 
     var FieldDeclareElement = FormWidget.FieldChar.extend({
 
@@ -128,7 +128,7 @@ odoo.define('customs_center', function (require) {
                 if(self.$input)
                     self.$input.val('');
                 self.element_names = [];
-                DeclareElement.query(['name', 'sequence']).filter([['cus_goods_tariff_id', '=', self.get('tariff')]])
+                DeclareElement.query(['name', 'sequence']).filter([['goods_tariff_id', '=', self.get('tariff')]])
                     .order_by('sequence')
                     .all()
                     .then(function (elements) {

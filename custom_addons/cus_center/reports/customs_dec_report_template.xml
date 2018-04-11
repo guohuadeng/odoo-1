@@ -1,1042 +1,1101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
-        <template id="cus_center.report_customs_dec_check_template">
+        <template t-name="cus_center.report_customs_dec_check_template">
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <div style="width: 100%;">
-                        <div style="margin-top: 5px;margin: auto;">
-                            <div id="Head">
-                                <table cellpadding="0" cellspacing="0" class="T">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 100%; text-align: center;">
-                                                <h2>中华人民共和国海关出口货物报关单</h2>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 100%; text-align: center;height:20px;">
-                                                <table class="T1" cellpadding="0" cellspacing="0" style="width: 100%;">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 100%; text-align: center;height:20px;">
-                                                                <table cellpadding="0" cellspacing="0"
-                                                                       style="width: 100%; ">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td style="width: 30%; text-align: left;font-size: 13px;height:20px;">
-                                                                                <span class="font-size">关检关联号：</span>
-                                                                                <span class="font-size"
-                                                                                      t-field="o.cus_ciq_No"></span>
-                                                                            </td>
-                                                                            <td style="width: 40%; font-size: 13px;height:20px;">
-                                                                                <span class="font-size">统一编号：</span>
-                                                                                <span class="font-size"
-                                                                                      t-field="o.dec_seq_no"></span>
+                    <div class="page">
 
-                                                                            </td>
-                                                                            <td style="width: 30%; font-size: 13px;height:20px;">
-                                                                                <span class="font-size">海关编号：</span>
-                                                                                (<span class="font-size"
-                                                                                       t-field="o.entry_id"></span>)
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 45%;">
-                                                                <table class="TLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="height:40px;">
-                                                                                收发货人
-                                                                                (<span t-if="o.business_company_id"
-                                                                                       t-field="o.business_company_id.register_code"></span>)
-                                                                                (<span t-if="o.business_company_id"
-                                                                                       t-field="o.business_company_id.unified_social_credit_code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.business_company_id"
-                                                                                      t-field="o.business_company_id.register_name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                进口口岸 (<span t-if="o.customs_id"
-                                                                                            t-field="o.customs_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.customs_id"
-                                                                                      t-field="o.customs_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                进口日期
-                                                                                <br/>
-                                                                                <span t-field="o.in_out_date"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 15%;">
-                                                                <table class="TRight" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                申报日期
-                                                                                <br/>
-                                                                                <span t-field="o.dec_date"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 45%;">
-                                                                <table class="TLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="height:40px;">
-                                                                                消费使用单位
-                                                                                (<span t-if="o.input_company_id"
-                                                                                       t-field="o.input_company_id.register_code"></span>)
-                                                                                (<span t-if="o.input_company_id"
-                                                                                       t-field="o.input_company_id.unified_social_credit_code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.input_company_id"
-                                                                                      t-field="o.input_company_id.register_name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 15%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                运输方式(<span t-if="o.transport_mode_id"
-                                                                                           t-field="o.transport_mode_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.transport_mode_id"
-                                                                                      t-field="o.transport_mode_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                运输工具名称
-                                                                                <br/>
-                                                                                <span t-field="o.native_ship_name"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TRight" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                提运单号
-                                                                                <br/>
-                                                                                <span t-field="o.bill_no"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 45%;">
-                                                                <table class="TLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="height:40px;">
-                                                                                申报单位
-                                                                                (<span t-if="o.declare_company_id"
-                                                                                       t-field="o.declare_company_id.register_code"></span>)
-                                                                                (<span t-if="o.declare_company_id"
-                                                                                       t-field="o.declare_company_id.unified_social_credit_code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.declare_company_id"
-                                                                                      t-field="o.declare_company_id.register_name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                监管方式(<span t-if="o.trade_mode_id"
-                                                                                           t-field="o.trade_mode_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.trade_mode_id"
-                                                                                      t-field="o.trade_mode_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 15%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                征免性质(<span t-if="o.cut_mode_id"
-                                                                                           t-field="o.cut_mode_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.cut_mode_id"
-                                                                                      t-field="o.cut_mode_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-
-                                                            <td style="width: 20%;">
-                                                                <table class="TRight" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                备案号
-                                                                                <br/>
-                                                                                <span t-field="o.manual_no"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 15%;">
-                                                                <table class="TLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="height:30px;">
-                                                                                贸易国(地区)(<span t-if="o.trade_country_id"
-                                                                                              t-field="o.trade_country_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.trade_country_id"
-                                                                                      t-field="o.trade_country_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 23%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                启运国(地区)(<span
-                                                                                    t-if="o.origin_arrival_country_id"
-                                                                                    t-field="o.origin_arrival_country_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.origin_arrival_country_id"
-                                                                                      t-field="o.origin_arrival_country_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 22%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                装货港(<span t-if="o.port_id"
-                                                                                          t-field="o.port_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.port_id"
-                                                                                      t-field="o.port_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TRight" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                境内目的地(<span t-if="o.internal_district_id"
-                                                                                            t-field="o.internal_district_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.internal_district_id"
-                                                                                      t-field="o.internal_district_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 25%;">
-                                                                <table class="TLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="height:30px;">
-                                                                                许可证号
-                                                                                <br/>
-                                                                                <span t-field="o.license_no"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 15%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                成交方式(<span t-if="o.trade_terms_id"
-                                                                                           t-field="o.trade_terms_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.trade_terms_id"
-                                                                                      t-field="o.trade_terms_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                运费(<span t-if="o.fee_mark"
-                                                                                         t-field="o.fee_mark.NameCN"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.fee_mark"
-                                                                                      t-field="o.fee_rate"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                保费(<span t-if="o.insurance_mark"
-                                                                                         t-field="o.insurance_mark.name_cn"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.insurance_mark"
-                                                                                      t-field="o.insurance_rate"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 25%;">
-                                                                <table class="TRight" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                杂费(<span t-if="o.other_mark"
-                                                                                         t-field="o.other_mark.name_cn"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.other_mark"
-                                                                                      t-field="o.other_rate"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 20%;">
-                                                                <table class="TLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="height:30px;">
-                                                                                合同协议号
-                                                                                <br/>
-                                                                                <span t-field="o.customer_contract_no"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 15%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                件数
-                                                                                <br/>
-                                                                                <span t-field="o.qty"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                包装种类(<span t-if="o.wrap_type_id"
-                                                                                           t-field="o.wrap_type_id.code"></span>)
-                                                                                <br/>
-                                                                                <span t-if="o.wrap_type_id"
-                                                                                      t-field="o.wrap_type_id.name_cn"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <table class="TCenter" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                毛重(千克)
-                                                                                <br/>
-                                                                                <span t-field="o.gross_weight"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 25%;">
-                                                                <table class="TRight" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                净重(千克)
-                                                                                <br/>
-                                                                                <span t-field="o.net_weight"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 34%;">
-                                                                <table class="TLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="height:50px;">
-                                                                                集装箱号
-                                                                                <br/>
-
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 66%;">
-                                                                <table class="TCenter TRight" cellpadding="0"
-                                                                       cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD">
-                                                                                随附单证
-                                                                                <br/>
-
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 100%;">
-                                                                <table class="TLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="width:100%;">
-                                                                                标记唛码及备注
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div id="Content">
-                                <table cellspacing="0" rules="all" border="1"
-                                       style="border-collapse: collapse; width: 750px">
-                                    <thead>
-                                        <tr>
-                                            <td class="td1 EntryBodyHead1"
-                                                style="text-align: center; height: 20px; border-right: none;">
-                                                项号
-                                            </td>
-                                            <td class="td2 EntryBodyHead2"
-                                                style="text-align: center; height: 20px;border-left:none;border-right:none;">
-                                                商品编号
-                                            </td>
-                                            <td class="td3 EntryBodyHead2"
-                                                style="text-align: center; height: 20px;border-left:none;border-right:none">
-                                                商品名称、规格型号
-                                            </td>
-                                            <td class="td4 EntryBodyHead2"
-                                                style="text-align: center; height: 20px;border-left:none;border-right:none">
-                                                数量及单位
-                                            </td>
-                                            <td class="td5 EntryBodyHead2"
-                                                style="text-align: center; height: 20px;border-left:none;border-right:none">
-                                                原产国(地区)
-                                            </td>
-                                            <td class="td6 EntryBodyHead2"
-                                                style="text-align: center; height: 20px;border-left:none;border-right:none">
-                                                单价
-                                            </td>
-                                            <td class="td7 EntryBodyHead2"
-                                                style="text-align: center; height: 20px;border-left:none;border-right:none">
-                                                总价
-                                            </td>
-                                            <td class="td8 EntryBodyHead2"
-                                                style="text-align: center; height: 20px;border-left:none;border-right:none">
-                                                币制
-                                            </td>
-                                            <td class="td9 EntryBodyHead2"
-                                                style="text-align: center; height: 20px;border-left:none">
-                                                征免
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="ss">
-                                        <t t-foreach="o.dec_goods_list" t-as="g">
+                        <div style="width: 100%;">
+                            <div style="margin-top: 5px;margin: auto;">
+                                <div id="Head">
+                                    <table cellpadding="0" cellspacing="0" class="T">
+                                        <tbody>
                                             <tr>
-                                                <td style="border-right: none;">
-                                                    <t t-esc="rec_index"></t>
-                                                </td>
-                                                <td style="border-left:none;border-right:none;">
-                                                    <nobr>
-                                                        <span t-if="g.cus_goods_tariff_id"
-                                                              t-field="g.cus_goods_tariff_id.Code_ts"></span>
-                                                    </nobr>
-                                                </td>
-                                                <td style="border-left:none;border-right:none;">
-                                                    <nobr>
-                                                        <span t-field="g.goods_name"></span>
-                                                    </nobr>
-                                                    <br/>
-                                                    <span t-field="g.goods_model"></span>
-                                                </td>
-                                                <td style="border-left:none;border-right:none;">
-                                                    <span t-field="g.deal_qty"></span>
-                                                    <span t-if="g.deal_unit_id" t-field="g.deal_unit_id.NameCN"></span>
-                                                    <br/>
-                                                    <span t-field="g.first_qty"></span>
-                                                    <span t-if="g.first_qty" t-field="g.first_qty.NameCN"></span>
-                                                    <br/>
-                                                    <span t-field="g.second_qty"></span>
-                                                    <span t-if="g.second_qty" t-field="g.second_qty.NameCN"></span>
-                                                </td>
-                                                <td style="border-left:none;border-right:none;">
-                                                    <span t-if="origin_country_id"
-                                                          t-field="g.origin_country_id.NameCN"></span>
-                                                    <br/>
-                                                    (<span t-if="g.origin_country_id"
-                                                           t-field="g.origin_country_id.Code"></span>)
-                                                </td>
-                                                <td style="border-left:none;border-right:none;">
-                                                    <span t-field="g.deal_unit_price"></span>
-                                                </td>
-                                                <td style="border-left:none;border-right:none;">
-                                                    <span t-field="g.deal_total_price"></span>
-                                                </td>
-                                                <td style="border-left:none;border-right:none;">
-                                                    (<span t-if="g.currency_id" t-field="g.currency_id.Code"></span>)
-                                                    <br/>
-                                                    <span t-if="g.currency_id" t-field="g.currency_id.NameCN"></span>
-                                                </td>
-                                                <td style="border-left:none;">
-                                                    <span t-if="g.duty_mode_id" t-field="g.duty_mode_id.NameCN"></span>
-                                                    <br/>
-                                                    (1)
+                                                <td style="width: 100%; text-align: center;">
+                                                    <h2>中华人民共和国海关出口货物报关单</h2>
                                                 </td>
                                             </tr>
-                                        </t>
+                                            <tr>
+                                                <td style="width: 100%; text-align: center;height:20px;">
+                                                    <table class="T1" cellpadding="0" cellspacing="0"
+                                                           style="width: 100%;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 100%; text-align: center;height:20px;">
+                                                                    <table cellpadding="0" cellspacing="0"
+                                                                           style="width: 100%; ">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="width: 30%; text-align: left;font-size: 13px;height:20px;">
+                                                                                    <span class="font-size">关检关联号：
+                                                                                    </span>
+                                                                                    <span class="font-size"
+                                                                                          t-field="o.cus_ciq_No"></span>
+                                                                                </td>
+                                                                                <td style="width: 40%; font-size: 13px;height:20px;">
+                                                                                    <span class="font-size">统一编号：
+                                                                                    </span>
+                                                                                    <span class="font-size"
+                                                                                          t-field="o.dec_seq_no"></span>
+
+                                                                                </td>
+                                                                                <td style="width: 30%; font-size: 13px;height:20px;">
+                                                                                    <span class="font-size">海关编号：
+                                                                                    </span>
+                                                                                    (<span class="font-size"
+                                                                                           t-field="o.entry_id"></span>)
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 45%;">
+                                                                    <table class="TLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD" style="height:40px;">
+                                                                                    收发货人
+                                                                                    (<span
+                                                                                        t-if="o.business_company_id"
+                                                                                        t-field="o.business_company_id.register_code"></span>)
+                                                                                    (<span
+                                                                                        t-if="o.business_company_id"
+                                                                                        t-field="o.business_company_id.unified_social_credit_code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.business_company_id"
+                                                                                          t-field="o.business_company_id.register_name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    进口口岸 (<span t-if="o.customs_id"
+                                                                                                t-field="o.customs_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.customs_id"
+                                                                                          t-field="o.customs_id.name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    进口日期
+                                                                                    <br/>
+                                                                                    <span t-field="o.in_out_date"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 15%;">
+                                                                    <table class="TRight" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    申报日期
+                                                                                    <br/>
+                                                                                    <span t-field="o.dec_date"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 45%;">
+                                                                    <table class="TLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD" style="height:40px;">
+                                                                                    消费使用单位
+                                                                                    (<span t-if="o.input_company_id"
+                                                                                           t-field="o.input_company_id.register_code"></span>)
+                                                                                    (<span t-if="o.input_company_id"
+                                                                                           t-field="o.input_company_id.unified_social_credit_code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.input_company_id"
+                                                                                          t-field="o.input_company_id.register_name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 15%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    运输方式(<span
+                                                                                        t-if="o.transport_mode_id"
+                                                                                        t-field="o.transport_mode_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.transport_mode_id"
+                                                                                          t-field="o.transport_mode_id.name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    运输工具名称
+                                                                                    <br/>
+                                                                                    <span t-field="o.native_ship_name"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TRight" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    提运单号
+                                                                                    <br/>
+                                                                                    <span t-field="o.bill_no"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 45%;">
+                                                                    <table class="TLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD" style="height:40px;">
+                                                                                    申报单位
+                                                                                    (<span
+                                                                                        t-if="o.declare_company_id"
+                                                                                        t-field="o.declare_company_id.register_code"></span>)
+                                                                                    (<span
+                                                                                        t-if="o.declare_company_id"
+                                                                                        t-field="o.declare_company_id.unified_social_credit_code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.declare_company_id"
+                                                                                          t-field="o.declare_company_id.register_name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    监管方式(<span
+                                                                                        t-if="o.trade_mode_id"
+                                                                                        t-field="o.trade_mode_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.trade_mode_id"
+                                                                                          t-field="o.trade_mode_id.name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 15%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    征免性质(<span t-if="o.cut_mode_id"
+                                                                                               t-field="o.cut_mode_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.cut_mode_id"
+                                                                                          t-field="o.cut_mode_id.code"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+
+                                                                <td style="width: 20%;">
+                                                                    <table class="TRight" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    备案号
+                                                                                    <br/>
+                                                                                    <span t-field="o.manual_no"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 15%;">
+                                                                    <table class="TLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD" style="height:30px;">
+                                                                                    贸易国(地区)(<span
+                                                                                        t-if="o.trade_country_id"
+                                                                                        t-field="o.trade_country_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.trade_country_id"
+                                                                                          t-field="o.trade_country_id.name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 23%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    启运国(地区)(<span
+                                                                                        t-if="o.origin_arrival_country_id"
+                                                                                        t-field="o.origin_arrival_country_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.origin_arrival_country_id"
+                                                                                          t-field="o.origin_arrival_country_id.name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 22%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    装货港(<span t-if="o.port_id"
+                                                                                              t-field="o.port_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.port_id"
+                                                                                          t-field="o.port_id.name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TRight" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    境内目的地(<span
+                                                                                        t-if="o.internal_district_id"
+                                                                                        t-field="o.internal_district_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.internal_district_id"
+                                                                                          t-field="o.internal_district_id.name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 25%;">
+                                                                    <table class="TLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD" style="height:30px;">
+                                                                                    许可证号
+                                                                                    <br/>
+                                                                                    <span t-field="o.license_no"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 15%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    成交方式(<span
+                                                                                        t-if="o.trade_terms_id"
+                                                                                        t-field="o.trade_terms_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.trade_terms_id"
+                                                                                          t-field="o.trade_terms_id.name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    运费(<span t-if="o.fee_mark"
+                                                                                             t-field="o.fee_mark.name_cn"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.fee_mark"
+                                                                                          t-field="o.fee_rate"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    保费(<span t-if="o.insurance_mark"
+                                                                                             t-field="o.insurance_mark.name_cn"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.insurance_mark"
+                                                                                          t-field="o.insurance_rate"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 25%;">
+                                                                    <table class="TRight" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    杂费(<span t-if="o.other_mark"
+                                                                                             t-field="o.other_mark.name_cn"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.other_mark"
+                                                                                          t-field="o.other_rate"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD" style="height:30px;">
+                                                                                    合同协议号
+                                                                                    <br/>
+                                                                                    <span t-field="o.customer_contract_no"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 15%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    件数
+                                                                                    <br/>
+                                                                                    <span t-field="o.qty"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    包装种类(<span t-if="o.wrap_type_id"
+                                                                                               t-field="o.wrap_type_id.code"></span>)
+                                                                                    <br/>
+                                                                                    <span t-if="o.wrap_type_id"
+                                                                                          t-field="o.wrap_type_id.name_cn"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <table class="TCenter" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    毛重(千克)
+                                                                                    <br/>
+                                                                                    <span t-field="o.gross_weight"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 25%;">
+                                                                    <table class="TRight" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    净重(千克)
+                                                                                    <br/>
+                                                                                    <span t-field="o.net_weight"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 34%;">
+                                                                    <table class="TLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD" style="height:50px;">
+                                                                                    集装箱号
+                                                                                    <br/>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 66%;">
+                                                                    <table class="TCenter TRight" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD">
+                                                                                    随附单证
+                                                                                    <br/>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 100%;">
+                                                                    <table class="TLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD" style="width:100%;">
+                                                                                    标记唛码及备注
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="Content">
+                                    <table cellspacing="0" rules="all" border="1"
+                                           style="border-collapse: collapse; width: 750px">
+                                        <thead>
+                                            <tr>
+                                                <td class="td1 EntryBodyHead1"
+                                                    style="text-align: center; height: 20px; border-right: none;">
+                                                    项号
+                                                </td>
+                                                <td class="td2 EntryBodyHead2"
+                                                    style="text-align: center; height: 20px;border-left:none;border-right:none;">
+                                                    商品编号
+                                                </td>
+                                                <td class="td3 EntryBodyHead2"
+                                                    style="text-align: center; height: 20px;border-left:none;border-right:none">
+                                                    商品名称、规格型号
+                                                </td>
+                                                <td class="td4 EntryBodyHead2"
+                                                    style="text-align: center; height: 20px;border-left:none;border-right:none">
+                                                    数量及单位
+                                                </td>
+                                                <td class="td5 EntryBodyHead2"
+                                                    style="text-align: center; height: 20px;border-left:none;border-right:none">
+                                                    原产国(地区)
+                                                </td>
+                                                <td class="td6 EntryBodyHead2"
+                                                    style="text-align: center; height: 20px;border-left:none;border-right:none">
+                                                    单价
+                                                </td>
+                                                <td class="td7 EntryBodyHead2"
+                                                    style="text-align: center; height: 20px;border-left:none;border-right:none">
+                                                    总价
+                                                </td>
+                                                <td class="td8 EntryBodyHead2"
+                                                    style="text-align: center; height: 20px;border-left:none;border-right:none">
+                                                    币制
+                                                </td>
+                                                <td class="td9 EntryBodyHead2"
+                                                    style="text-align: center; height: 20px;border-left:none">
+                                                    征免
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ss">
+                                            <t t-foreach="o.dec_goods_list" t-as="g">
+                                                <tr>
+                                                    <td style="border-right: none;">
+                                                        <t t-esc="rec_index"></t>
+                                                    </td>
+                                                    <td style="border-left:none;border-right:none;">
+                                                        <nobr>
+                                                            <span t-if="g.goods_tariff_id"
+                                                                  t-field="g.goods_tariff_id.code_ts"></span>
+                                                        </nobr>
+                                                    </td>
+                                                    <td style="border-left:none;border-right:none;">
+                                                        <nobr>
+                                                            <span t-field="g.goods_name"></span>
+                                                        </nobr>
+                                                        <br/>
+                                                        <span t-field="g.goods_model"></span>
+                                                    </td>
+                                                    <td style="border-left:none;border-right:none;">
+                                                        <span t-field="g.deal_qty"></span>
+                                                        <span t-if="g.deal_unit_id"
+                                                              t-field="g.deal_unit_id.name_cn"></span>
+                                                        <br/>
+                                                        <span t-field="g.first_qty"></span>
+                                                        <span t-if="g.first_qty"
+                                                              t-field="g.first_unit_id.name_cn"></span>
+                                                        <br/>
+                                                        <span t-field="g.second_qty"></span>
+                                                        <span t-if="g.second_qty"
+                                                              t-field="g.second_unit_id.name_cn"></span>
+                                                    </td>
+                                                    <td style="border-left:none;border-right:none;">
+                                                        <span t-if="origin_country_id"
+                                                              t-field="g.origin_country_id.name_cn"></span>
+                                                        <br/>
+                                                        (<span t-if="g.origin_country_id"
+                                                               t-field="g.origin_country_id.code"></span>)
+                                                    </td>
+                                                    <td style="border-left:none;border-right:none;">
+                                                        <span t-field="g.deal_unit_price"></span>
+                                                    </td>
+                                                    <td style="border-left:none;border-right:none;">
+                                                        <span t-field="g.deal_total_price"></span>
+                                                    </td>
+                                                    <td style="border-left:none;border-right:none;">
+                                                        (<span t-if="g.currency_id"
+                                                               t-field="g.currency_id.code"></span>)
+                                                        <br/>
+                                                        <span t-if="g.currency_id"
+                                                              t-field="g.currency_id.name_cn"></span>
+                                                    </td>
+                                                    <td style="border-left:none;">
+                                                        <span t-if="g.duty_mode_id"
+                                                              t-field="g.duty_mode_id.name_cn"></span>
+                                                        <br/>
+                                                        (1)
+                                                    </td>
+                                                </tr>
+                                            </t>
 
 
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div id="Foot">
-                                <table cellpadding="0" cellspacing="0" class="T">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 100%;">
-                                                                <table class="TLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td style="height: 18px; text-align: center;font-size:10px;">
-                                                                                特殊关系确认：
-                                                                                <span t-if="o.promise1"
-                                                                                      t-field="o.promise1.NameCN"></span>
-                                                                            </td>
-                                                                            <td style="height: 18px; text-align: center;font-size:10px;">
-                                                                                价格影响确认：
-                                                                                <span t-if="o.promise1"
-                                                                                      t-field="o.promise2.NameCN"></span>
-                                                                            </td>
-                                                                            <td class="TD"
-                                                                                style="height: 18px; text-align: center;font-size:10px;">
-                                                                                支付特许权使用费确认：
-                                                                                <span t-if="o.promise1"
-                                                                                      t-field="o.promise3.NameCN"></span>
-                                                                            </td>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="Foot">
+                                    <table cellpadding="0" cellspacing="0" class="T">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 100%;">
+                                                                    <table class="TLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="height: 18px; text-align: center;font-size:10px;">
+                                                                                    特殊关系确认：
+                                                                                    <span t-if="o.promise1"
+                                                                                          t-field="o.promise1.name_cn"></span>
+                                                                                </td>
+                                                                                <td style="height: 18px; text-align: center;font-size:10px;">
+                                                                                    价格影响确认：
+                                                                                    <span t-if="o.promise1"
+                                                                                          t-field="o.promise2.name_cn"></span>
+                                                                                </td>
+                                                                                <td class="TD"
+                                                                                    style="height: 18px; text-align: center;font-size:10px;">
+                                                                                    支付特许权使用费确认：
+                                                                                    <span t-if="o.promise1"
+                                                                                          t-field="o.promise3.name_cn"></span>
+                                                                                </td>
 
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table class="T1" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="width: 30%;">
-                                                                <table class="FLeft" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="border-right-style: solid; border-bottom-style: solid; border-right-width: 1px;
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="T1" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 30%;">
+                                                                    <table class="FLeft" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD" style="border-right-style: solid; border-bottom-style: solid; border-right-width: 1px;
                                                     border-bottom-width: 1px; height: 40px;">
-                                                                                录入员录入单位
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td class="TD" style="height: 60px;">
-                                                                                报关人员
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 35%;">
-                                                                <table cellpadding="0" cellspacing="0" class="FCenter">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD"
-                                                                                style="text-align: center; height: 40px;">
-                                                                                兹申明对以上内容承担如实申报
-                                                                                <br/>
-                                                                                、依法纳税之法律责任
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td class="TD" style="height: 30px;">
-                                                                                申报单位(签章)
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td class="TD" style="height: 30px;">
+                                                                                    录入员录入单位
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="TD"
+                                                                                    style="height: 60px;">
+                                                                                    报关人员
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 35%;">
+                                                                    <table cellpadding="0" cellspacing="0"
+                                                                           class="FCenter">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD"
+                                                                                    style="text-align: center; height: 40px;">
+                                                                                    兹申明对以上内容承担如实申报
+                                                                                    <br/>
+                                                                                    、依法纳税之法律责任
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="TD"
+                                                                                    style="height: 30px;">
+                                                                                    申报单位(签章)
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="TD"
+                                                                                    style="height: 30px;">
 
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td style="width: 35%;">
-                                                                <table class="FRight" cellpadding="0" cellspacing="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td class="TD" style="height: 100px;">
-                                                                                海关批注及签章
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="width: 35%;">
+                                                                    <table class="FRight" cellpadding="0"
+                                                                           cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="TD"
+                                                                                    style="height: 100px;">
+                                                                                    海关批注及签章
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
+                        <style type="text/css">
+                            td {
+                            height: 30px;
+                            vertical-align: top;
+                            }
+
+                            /*第一层table*/
+                            .T {
+                            font-size: 7pt;
+                            width: 750px;
+                            border: 0;
+                            border-collapse: collapse;
+                            }
+
+                            /*第二层table*/
+                            .T1 {
+                            width: 100%;
+                            border: 0;
+                            }
+
+                            /*第三层左边table*/
+                            .TLeft {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: inherit;
+                            border-left-style: solid;
+                            height: 100%;
+                            }
+
+                            /*第三层中间table*/
+                            .TCenter {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: inherit;
+                            border-left-style: inherit;
+                            height: 100%;
+                            }
+
+                            /*第三层右边table*/
+                            .TRight {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: inherit;
+                            border-left-style: inherit;
+                            height: 100%;
+                            }
+
+                            /*第三层table中的TD*/
+                            .TD {
+                            padding-left: 5px;
+                            }
+
+                            /*第三层左边table*/
+                            .FLeft {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: inherit;
+                            border-bottom-style: solid;
+                            border-left-style: solid;
+                            }
+
+                            .FCenter {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: inherit;
+                            border-bottom-style: solid;
+                            border-left-style: inherit;
+                            }
+
+                            .FRight {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: solid;
+                            border-left-style: solid;
+                            }
+
+                            /*第一层table*/
+                            .T {
+                            font-size: 7pt;
+                            width: 750px;
+                            border: 0;
+                            border-collapse: collapse;
+                            }
+
+                            /*第二层table*/
+                            .T1 {
+                            width: 100%;
+                            border: 0;
+                            }
+
+                            /*第三层左边table*/
+                            .TLeft {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: inherit;
+                            border-left-style: solid;
+                            }
+
+                            /*第三层中间table*/
+                            .TCenter {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: inherit;
+                            border-left-style: inherit;
+                            }
+
+                            /*第三层右边table*/
+                            .TRight {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: inherit;
+                            border-left-style: inherit;
+                            }
+
+                            /*第三层table中的TD*/
+                            .TD {
+                            padding-left: 5px;
+                            font-size: 10px;
+                            }
+
+                            /*第三层左边table*/
+                            .FLeft {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: inherit;
+                            border-bottom-style: solid;
+                            border-left-style: solid;
+                            }
+
+                            .FCenter {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: inherit;
+                            border-bottom-style: solid;
+                            border-left-style: inherit;
+                            }
+
+                            .FRight {
+                            width: 100%;
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: solid;
+                            border-left-style: solid;
+                            }
+
+                            table, td, th {
+                            border-collapse: collapse;
+                            font-size: 10px;
+                            }
+
+                            table {
+                            border: 0;
+                            }
+
+                            .Hid {
+                            overflow: hidden;
+                            white-space: pre;
+                            width: 96%;
+                            height: 16px;
+                            text-align: left;
+                            font-size: 9px;
+                            }
+
+                            table {
+                            table-layout: fixed;
+                            }
+
+                            .td1 {
+                            width: 4%;
+                            text-align: center;
+                            font-size: 10px;
+                            }
+
+                            .td2 {
+                            width: 10%;
+                            text-align: left;
+                            }
+
+                            .td3 {
+                            width: 20%;
+                            text-align: left;
+                            }
+
+                            .td4 {
+                            width: 12%;
+                            height: 40px;
+                            text-align: right;
+                            }
+
+                            .td5 {
+                            width: 10%;
+                            text-align: center;
+                            }
+
+                            .td6 {
+                            width: 12%;
+                            text-align: right;
+                            }
+
+                            .td7 {
+                            width: 13%;
+                            text-align: right;
+                            }
+
+                            .td8 {
+                            width: 9%;
+                            text-align: center;
+                            }
+
+                            .td9 {
+                            width: 10%; /* height: 21px*/
+                            text-align: center;
+                            }
+
+                            .EntryBody {
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: inherit;
+                            border-left-style: solid;
+                            }
+
+                            .EntryBodyHead1 {
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: solid;
+                            border-left-style: solid;
+                            }
+
+                            .EntryBodyHead2 {
+                            border-width: 1px;
+                            border-color: Black;
+                            border-top-style: solid;
+                            border-right-style: solid;
+                            border-bottom-style: solid;
+                            border-left-style: inherit;
+                            }
+
+                            .font-size {
+                            font-size: 10px;
+                            }
+                        </style>
                     </div>
-                    <style type="text/css">
-                        td {
-                        height: 30px;
-                        vertical-align: top;
-                        }
 
-                        /*第一层table*/
-                        .T {
-                        font-size: 7pt;
-                        width: 750px;
-                        border: 0;
-                        border-collapse: collapse;
-                        }
-
-                        /*第二层table*/
-                        .T1 {
-                        width: 100%;
-                        border: 0;
-                        }
-
-                        /*第三层左边table*/
-                        .TLeft {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: inherit;
-                        border-left-style: solid;
-                        height: 100%;
-                        }
-
-                        /*第三层中间table*/
-                        .TCenter {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: inherit;
-                        border-left-style: inherit;
-                        height: 100%;
-                        }
-
-                        /*第三层右边table*/
-                        .TRight {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: inherit;
-                        border-left-style: inherit;
-                        height: 100%;
-                        }
-
-                        /*第三层table中的TD*/
-                        .TD {
-                        padding-left: 5px;
-                        }
-
-                        /*第三层左边table*/
-                        .FLeft {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: inherit;
-                        border-bottom-style: solid;
-                        border-left-style: solid;
-                        }
-
-                        .FCenter {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: inherit;
-                        border-bottom-style: solid;
-                        border-left-style: inherit;
-                        }
-
-                        .FRight {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: solid;
-                        border-left-style: solid;
-                        }
-
-                        /*第一层table*/
-                        .T {
-                        font-size: 7pt;
-                        width: 750px;
-                        border: 0;
-                        border-collapse: collapse;
-                        }
-
-                        /*第二层table*/
-                        .T1 {
-                        width: 100%;
-                        border: 0;
-                        }
-
-                        /*第三层左边table*/
-                        .TLeft {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: inherit;
-                        border-left-style: solid;
-                        }
-
-                        /*第三层中间table*/
-                        .TCenter {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: inherit;
-                        border-left-style: inherit;
-                        }
-
-                        /*第三层右边table*/
-                        .TRight {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: inherit;
-                        border-left-style: inherit;
-                        }
-
-                        /*第三层table中的TD*/
-                        .TD {
-                        padding-left: 5px;
-                        font-size: 10px;
-                        }
-
-                        /*第三层左边table*/
-                        .FLeft {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: inherit;
-                        border-bottom-style: solid;
-                        border-left-style: solid;
-                        }
-
-                        .FCenter {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: inherit;
-                        border-bottom-style: solid;
-                        border-left-style: inherit;
-                        }
-
-                        .FRight {
-                        width: 100%;
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: solid;
-                        border-left-style: solid;
-                        }
-
-                        table, td, th {
-                        border-collapse: collapse;
-                        font-size: 10px;
-                        }
-
-                        table {
-                        border: 0;
-                        }
-
-                        .Hid {
-                        overflow: hidden;
-                        white-space: pre;
-                        width: 96%;
-                        height: 16px;
-                        text-align: left;
-                        font-size: 9px;
-                        }
-
-                        table {
-                        table-layout: fixed;
-                        }
-
-                        .td1 {
-                        width: 4%;
-                        text-align: center;
-                        font-size: 10px;
-                        }
-
-                        .td2 {
-                        width: 10%;
-                        text-align: left;
-                        }
-
-                        .td3 {
-                        width: 20%;
-                        text-align: left;
-                        }
-
-                        .td4 {
-                        width: 12%;
-                        height: 40px;
-                        text-align: right;
-                        }
-
-                        .td5 {
-                        width: 10%;
-                        text-align: center;
-                        }
-
-                        .td6 {
-                        width: 12%;
-                        text-align: right;
-                        }
-
-                        .td7 {
-                        width: 13%;
-                        text-align: right;
-                        }
-
-                        .td8 {
-                        width: 9%;
-                        text-align: center;
-                        }
-
-                        .td9 {
-                        width: 10%; /* height: 21px*/
-                        text-align: center;
-                        }
-
-                        .EntryBody {
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: inherit;
-                        border-left-style: solid;
-                        }
-
-                        .EntryBodyHead1 {
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: solid;
-                        border-left-style: solid;
-                        }
-
-                        .EntryBodyHead2 {
-                        border-width: 1px;
-                        border-color: Black;
-                        border-top-style: solid;
-                        border-right-style: solid;
-                        border-bottom-style: solid;
-                        border-left-style: inherit;
-                        }
-
-                        .font-size {
-                        font-size: 10px;
-                        }
-                    </style>
                 </t>
             </t>
         </template>
+
     </data>
 </odoo>

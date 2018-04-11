@@ -8,12 +8,18 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+MAIN_PATH = '/home/odoo/Desktop/ParallelsSharedFolders/Home'  # 欧玉斌的本地目录
+# MAIN_PATH = '/home/odoo/odooshare' #王志强的本地目录
+
 RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly',
-                                        '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
+                                        MAIN_PATH + '/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
 ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path',
-                                         '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/post_ex_client/error_xml_message')
+                                         MAIN_PATH + '/about_wly_xml_data/post_ex_client/error_xml_message')
 BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path',
-                                         '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/post_ex_client/backup_rec_xml')
+                                         MAIN_PATH + '/about_wly_xml_data/post_ex_client/backup_rec_xml')
+
+DEBUG = True  # debug=true时，为了调试方便，不执行将报文移动错误或备份文件夹的操作
+
 
 def check_and_mkdir(*path):
     for p in path:
@@ -63,9 +69,10 @@ def parse_receipt_xml(self):
                         business_dic['RESULT_INFO'] = result_info_node.text if result_info_node.text else ''
             else:
                 _logger.error(u'Find error format xml message: %s' % xml_message.decode('utf-8'))
-                shutil.copy2(xml_message, error_path)
-                os.remove(xml_message)
-                # shutil.move(xml_message, error_path)
+
+                if not DEBUG:
+                    shutil.copy2(xml_message, error_path)
+                    os.remove(xml_message)
                 continue
 
         # 根据报文中客户端代码找到关联的报关单
@@ -76,16 +83,15 @@ def parse_receipt_xml(self):
         dec_sheets = self.env['cus_center.customs_dec'].search(
             [('client_seq_no', '=', rep_client_no or bus_client_no)])
 
-        # 原周杨实现方式
-        # dec_sheets = self.env['cus_center.customs_dec'].search(
-        #     [('name', '=', rep_client_no or bus_client_no)])
         if not dec_sheets:
             _logger.error(
                 u'{} Can\'t find related declaration sheet according to ClientSeqNo {}'
                     .format(xml_message.decode('utf-8'), rep_client_no or bus_client_no))
-            shutil.copy2(xml_message, error_path)
-            os.remove(xml_message)
-            # shutil.move(xml_message, error_path)
+
+            if not DEBUG:
+                shutil.copy2(xml_message, error_path)
+                os.remove(xml_message)
+
             continue
         dec_sheet = dec_sheets[0]
 
@@ -113,21 +119,13 @@ def parse_receipt_xml(self):
                 dec_date = datetime.strptime(dec_date_str, '%Y%m%d')  # 将字符串日期 转换为日期格式
                 dec_sheet.dec_date = dec_date  # 回填申报日期
 
-        if not status:
-            _logger.error(
-                u'%s Can\'t find related status obj according to response code' % xml_message.decode('utf-8'))
-            shutil.copy2(xml_message, error_path)
-            os.remove(xml_message)
-            # shutil.move(xml_message, error_path)
-            continue
         receipt_dic = {
-            'status_id': status[0].id,
+            'status_id': status[0].id if status else None,
             'message': message,
             'customs_dec_id': dec_sheet.id
         }
         try:
             self.env['cus_center.dec_result'].create(receipt_dic)
-            dec_sheet.cus_dec_rec_state = status[0].name if status[0].name else None  # 更新 报关单模型的回执状态字段
 
             # 如果该票报关单 业务回执状态为：报关单放行 则将该报关单下的商品 自动归类
             # 注意，已经进行过归类的商品不需要重新归类（如果该商品有客户料号（说明选的时候就是来自于归类库），或者归类库中已有同收发货人、同商品名称、同规格型号的商品，说明已经进行过归类，不再自动归类）
@@ -137,12 +135,15 @@ def parse_receipt_xml(self):
 
         except Exception, error_info:
             _logger.error(u'{} {}'.format(xml_message.decode('utf-8'), str(error_info).decode('utf-8')))
-            shutil.copy2(xml_message, error_path)
-            os.remove(xml_message)
-            # shutil.move(xml_message, error_path)
+
+            if not DEBUG:
+                shutil.copy2(xml_message, error_path)
+                os.remove(xml_message)
+
             continue
         else:
-            shutil.copy2(xml_message, bakup_path)
-            os.remove(xml_message)
-            # shutil.move(xml_message, bakup_path)
-            _logger.info(u'Had parsed the xml message %s' % xml_message.decode('utf-8'))
+            if not DEBUG:
+                shutil.copy2(xml_message, bakup_path)
+                os.remove(xml_message)
+
+                _logger.info(u'Had parsed the xml message %s' % xml_message.decode('utf-8'))

@@ -28,6 +28,6 @@
 
     <menuitem id="settings_dec_menu" string="Settings Declaration" name="设置" parent="customs_center_portal_menu"
               sequence="15"/>
-    <menuitem id="setting_declaration" name="企业信息" parent="settings_dec_menu" sequence="40"
+    <menuitem id="setting_declaration" name="报关通道设置" parent="settings_dec_menu" sequence="40"
               action="setting_declaration_action"/>
 </odoo>

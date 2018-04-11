@@ -38,7 +38,7 @@
         'views/customs_dec_receipt_view.xml',
         'views/setting_declaration.xml',
         'views/menu.xml',
-        # 'views/template.xml',
+        'views/template.xml',
         'reports/customs_dec_report.xml',
         'reports/customs_dec_report_template.xml',
         'views/import_customs_dec_goods_list_view.xml',

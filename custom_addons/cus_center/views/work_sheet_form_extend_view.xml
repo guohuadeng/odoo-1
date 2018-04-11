@@ -7,16 +7,9 @@
             <field name="model">work_sheet</field>
             <field name="inherit_id" ref="service_center.view_work_sheet_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//div[@class='row']" position="inside">
-                    <div class="col-md-1" attrs="{'invisible': [('state', '=', 'cancel')]}">
-                        <field name="customs_declaration" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
-                        <label for="Customs Declaration" string="报关"/>
-                    </div>
-                </xpath>
-
                 <xpath expr="//button[@c_name='warehouse']" position="before">
                     <button name="cus_center_clearance" type="object" class="oe_stat_button" string="关务中心"
-                            attrs="{'invisible': ['|', ('customs_declaration','=',False), ('state', '=', 'cancel')]}"
+                            attrs="{'invisible': ['|', ('custom','=',False), ('state', '=', 'cancel')]}"
                             icon="fa-pencil-square-o">
                     </button>
                 </xpath>

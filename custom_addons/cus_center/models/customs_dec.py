@@ -1,76 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError, UserError
-import odoo.addons.decimal_precision as dp
-import odoo.addons.queue_job.job as q_job
-from odoo.tools import config
-import logging, os, shutil
-from lxml import etree
-from collections import OrderedDict
-import uuid
+import logging
 from datetime import datetime, timedelta
-from odoo.exceptions import UserError
 
+import odoo.addons.decimal_precision as dp
+
+from odoo import models, fields, api, _
+from ..utils.to_generate_customs_xml_and_send_to_ex import send_customs_dec_edoc_xml_to_ex
 from ..utils.to_generate_customs_xml_and_send_to_ex import send_customs_dec_xml_to_ex
-from ..utils.to_parse_customer_xml_from_cus import parse_customs_dec_xml
 from ..utils.to_parse_customer_xml_from_cus import parse_customs_dec_edoc_xml
+from ..utils.to_parse_customer_xml_from_cus import parse_customs_dec_xml
 from ..utils.to_parse_receipt_xml_from_ex import parse_receipt_xml
 
 _logger = logging.getLogger(__name__)
-
-# 本地测试环境路径
-# pre_ex_client 前置交换客户端路径
-# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly')
-# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odoo/odooshare/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-#
-# # post_ex_client 后置交换客户端路径
-# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odoo/odooshare/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/error_xml_message')
-# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odoo/odooshare/about_wly_xml_data/post_ex_client/backup_rec_xml')
-
-
-
-# # # 118测试环境路径
-# # pre_ex_client 前置交换客户端路径
-# PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path','/home/odootest/about_wly_xml_data/pre_ex_client/cus_to_wly')
-# PARSE_CUS_TO_WLY_ATTACH_PATH = config.options.get('parse_cus_to_wly_attach_path','/home/odootest/about_wly_xml_data/pre_ex_client/cus_to_wly_attach_send')
-# PARSE_SEND_ERROR_XML_PATH = config.options.get('parse_send_error_xml_path','/home/odootest/about_wly_xml_data/pre_ex_client/send_error_xml_message')
-# GENERATE_REC_WLY_TO_XG_PATH = config.options.get('generate_rec_wly_to_cus_path', '/home/odootest/about_wly_xml_data/pre_ex_client/rec_wly_to_cus')
-# GENERATE_REC_WLY_TO_XG_ATTACH_PATH = config.options.get('generate_rec_wly_to_cus_attach_path', '/home/odootest/about_wly_xml_data/pre_ex_client/rec_wly_to_cus_attach')
-# BACKUP_SEND_XML_PATH = config.options.get('backup_send_xml_path', '/home/odootest/about_wly_xml_data/pre_ex_client/send_backup_xml')   # 新光原始报文备份目录
-# BACKUP_SEND_ATTACH_XML_PATH = config.options.get('backup_attach_send_xml_path', '/home/odootest/about_wly_xml_data/pre_ex_client/send_backup_xml_attach')   # 新光原始报文备份目录
-#
-# # post_ex_client 后置交换客户端路径
-# RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly', '/home/odootest/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-# RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach', '/home/odootest/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-# ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path','/home/odootest/about_wly_xml_data/post_ex_client/error_xml_message')
-# BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path','/home/odootest/about_wly_xml_data/post_ex_client/backup_rec_xml')
-
-
-
-
-# post_ex_client 后置交换客户端路径
-RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly',
-                                        '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
-RECV_XML_ATTACH_BASE_PATH = config.options.get('parse_rec_ex_to_wly_attach',
-                                               '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/post_ex_client/rec_ex_to_wly_attach')
-ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path',
-                                         '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/post_ex_client/error_xml_message')
-BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path',
-                                         '/home/odoo/Desktop/ParallelsSharedFolders/Home/about_wly_xml_data/post_ex_client/backup_rec_xml')
-
-
-def check_and_mkdir(*path):
-    for p in path:
-        if not os.path.exists(p):
-            os.mkdir(p)
 
 
 class CustomsDeclaration(models.Model):
@@ -84,8 +26,7 @@ class CustomsDeclaration(models.Model):
     client_seq_no = fields.Char(string="client seq No")  # 报关单客户端编号
     synergism_seq_no = fields.Char(string="Synergism seq No")  # 客户协同单号
 
-    # 委托报关客户（与customer_id区分开,customer_id指的是委托单位，即与该笔业务进行结算的单位）
-    # customs_customer_id 指的是委托报关单位，即实际的报关单位
+    # customs_customer_id 委托报关客户（与customer_id区分开,customer_id指的是委托单位，即与该笔业务进行结算的单位(可能不是实际的报关单位，例如富士康委托中外运做运输，中外运委托运通安达做报关，则中外运是委托单位，富士康是委托报关单位)）
     customs_customer_id = fields.Many2one(comodel_name="res.partner", string="Customer")
 
     # 关联工作单
@@ -94,7 +35,7 @@ class CustomsDeclaration(models.Model):
     # 关联通关清单 多对一
     customs_order_id = fields.Many2one(comodel_name="cus_center.customs_order", string="customs Order")
 
-    cus_ciq_No = fields.Char(string="cus Ciq No")  # 关检关联号
+    cus_ciq_No = fields.Char(string="us Ciq No")  # 关检关联号
     custom_master_id = fields.Many2one(comodel_name="cus_args.customs", string="Dec Custom")  # 申报口岸 / 申报地海关
 
     entry_type_id = fields.Many2one(comodel_name="cus_args.entry_type", string="Entry Type")  # 报关单类型 关联报关单类型字典表，待新增
@@ -127,15 +68,15 @@ class CustomsDeclaration(models.Model):
     internal_district_id = fields.Many2one(comodel_name="cus_args.internal_district", string="Region")  # 境内目的/货源地
     trade_terms_id = fields.Many2one(comodel_name="cus_args.trade_terms", string="Trade Term")  # 成交方式
 
-    # 关联 纳税单位标识类型 替换 上边注释
+    # 关联 纳税单位标识类型
     payment_mark = fields.Many2one(comodel_name="cus_center.pay_mark_type", string="payment mark")  # 纳税单位
 
-    # 关联 费用标识类型 替换 上边注释
+    # 关联 费用标识类型
     fee_mark = fields.Many2one(comodel_name="cus_center.exp_mark_type", string="FeeMark")  # 运费标记
     insurance_mark = fields.Many2one(comodel_name="cus_center.exp_mark_type", string="insurance_mark")  # 保险费标记
     other_mark = fields.Many2one(comodel_name="cus_center.exp_mark_type", string="other_mark")  # 杂费标记
 
-    # 关联 是否标识类型 替换 上边注释
+    # 关联 是否标识类型
     promise1 = fields.Many2one(comodel_name="cus_center.whet_mark_type", string="promise1")  # 特殊关系确认
     promise2 = fields.Many2one(comodel_name="cus_center.whet_mark_type", string="promise2")  # 价格影响确认
     promise3 = fields.Many2one(comodel_name="cus_center.whet_mark_type", string="promise3")  # 支付特许权使用费确认
@@ -164,11 +105,11 @@ class CustomsDeclaration(models.Model):
     customs_field = fields.Char(string="CustomsField")  # 货场代码
 
     declare_company_id = fields.Many2one(comodel_name="cus_args.register_company",
-                                         string="declare company name")  # 申报单位 新建企业库表
+                                         string="declare company name")  # 申报单位
     input_company_id = fields.Many2one(comodel_name="cus_args.register_company",
-                                       string="input company id")  # 货主单位 消费使用单位 新建企业库表
+                                       string="input company id")  # 货主单位 消费使用单位
     business_company_id = fields.Many2one(comodel_name="cus_args.register_company",
-                                          string="business company name")  # 经营单位 收发货人 新建企业库表
+                                          string="business company name")  # 经营单位 收发货人
 
     @api.onchange('business_company_id')
     def _compute_input_company(self):
@@ -198,36 +139,58 @@ class CustomsDeclaration(models.Model):
     dec_goods_list = fields.One2many(comodel_name="cus_center.dec_goods_list",
                                      inverse_name="customs_dec_id", string="dec goods name")
     #
-    # # 集装箱信息 报关单 关联集装箱模型 一对多
+    # 集装箱信息 报关单 关联集装箱模型 一对多
     dec_container_ids = fields.One2many(comodel_name="cus_center.dec_container",
                                         inverse_name="customs_dec_id", string="container info")
 
+    # 随附单证，一对多
     dec_lic_doc_list = fields.One2many(comodel_name="cus_center.dec_lic_doc",
-                                       inverse_name="customs_dec_id", string="License No")  # 许可证号    一对多 关联随附单证模型
+                                       inverse_name="customs_dec_id", string="Dec Lic Doc")
 
+    # 报关单状态
     customs_declaration_state = fields.Selection(string="State", selection=[('draft', 'Draft'),
                                                                             ('succeed', 'Success'),
                                                                             ('cancel', 'Cancel'),
                                                                             ('failure', 'Failure')],
-                                                 default='draft')  # 报关单状态
+                                                 default='draft')
     # 回执状态
-    receipt_ids = fields.One2many(comodel_name="cus_center.dec_result", inverse_name="customs_dec_id",
-                                  string="Recipts", required=False, )
+    receipt_list = fields.One2many(comodel_name="cus_center.dec_result", inverse_name="customs_dec_id",
+                                   string="Recipts", required=False, )
 
+    # 报关单发送状态
     cus_dec_sent_state = fields.Selection(string="Sent State", selection=[('draft', 'Draft'),
                                                                           ('succeed', 'Success'),
                                                                           ('cancel', 'Cancel'),
                                                                           ('failure', 'Failure')],
-                                          default='draft')  # 报关单发送状态
-    cus_dec_rec_state = fields.Char(string="dec receive status")  # 报关单回执状态
+                                          default='draft')
+    # 报关单回执状态
+    cus_dec_rec_state = fields.Char(string="dec receive status", compute='_get_current_rec_state')
 
+    # 报关单发送通道选择
     cus_dec_sent_way = fields.Selection(string="Sent way",
-                                        selection=[('single', 'single windows'), ('QP', 'quick pass')])  # 报关单发送通道选择
+                                        selection=[('single', 'single windows'), ('QP', 'quick pass')])
 
     # 附件拖拽上传
     information_attachment_ids = fields.Many2many('ir.attachment')
 
     #############################################################################################
+
+    @api.multi
+    @api.depends('receipt_list')
+    def _get_current_rec_state(self):
+        # 获取最新回执状态
+
+        for record in self:
+            state_sequence = 0
+            state_name = False
+
+            for receipt in record.receipt_list:
+                if receipt.status_id:
+                    if receipt.status_id.sequence >= state_sequence:
+                        state_sequence = receipt.status_id.sequence
+                        state_name = receipt.status_id.name
+
+            record.cus_dec_rec_state = state_name
 
     # 服务器动作 复制当前报关单表头数据
     @api.multi
@@ -260,9 +223,9 @@ class CustomsDeclaration(models.Model):
 
         # cus_goods_list_ids_list = []
         for line in self:
-            if line.dec_goods_list_ids:
-                cus_goods_list_ids_list = [goods.copy().id for goods in line.dec_goods_list_ids]
-                customs_declaration_obj_copy.dec_goods_list_ids |= self.env['cus_center.cus_goods_list'].search(
+            if line.dec_goods_list:
+                cus_goods_list_ids_list = [goods.copy().id for goods in line.dec_goods_list]
+                customs_declaration_obj_copy.dec_goods_list |= self.env['cus_center.dec_goods_list'].search(
                     [('id', 'in', cus_goods_list_ids_list)])
         if customs_declaration_obj_copy:
             return {
@@ -279,12 +242,6 @@ class CustomsDeclaration(models.Model):
     # 报关单列表视图 回执状态 查看历史回执按钮
     @api.multi
     def btn_review_receipt(self):
-        """ 查看历史回执按钮 """
-        # for line in self:
-        #     cus_goods_list_ids = []
-        #     if line.cus_goods_list_ids:
-        #         cus_goods_list_ids = [goods.copy().id for goods in line.cus_goods_list_ids]
-
         return {
             'name': u"回执历史状态",
             'type': "ir.actions.act_window",
@@ -357,7 +314,7 @@ class CustomsDeclaration(models.Model):
             }))
         self.dec_goods_list = goods_list
 
-        ###################################################################
+    ###################################################################
 
     @api.model
     def create(self, vals):
@@ -374,15 +331,46 @@ class CustomsDeclaration(models.Model):
 
         return result
 
-    # auto_parse_attach_message_xml
+    @api.multi
+    def generate_single_customer_xml(self):
+        """ 生成报关单报文+随附单据报文,存放到指定目录,发送单一窗口  """
+        self.update({'cus_dec_sent_way': 'single'})  # 前端点击发送通道按钮之后 确定发送通道 隐藏另一条通道
 
-    # 生成报关单和随附单据报文，存放在指定目录，发送到单一窗口，与报关单模型有关
-    # generate_single_customer_xml
+        for line in self:
+            # 判断当前报关单的随附单据中是否有数据
+            attach_list = []
+            for attach in self.information_attachment_ids:
+                attach_data = attach.datas
+                attach_list.append(attach_data)
 
-    # 生成报关单和随附单据报文，存放在指定目录，发送到单一窗口，与报关单模型有关
-    # generate_qp_customer_xml
+            # 发送报关单xml报文到交换云（单一窗口或QP）
+            send_customs_dec_xml_to_ex(line)
 
+            if attach_list:
+                # 发送报关单随附单据xml报文到交换云（单一窗口或QP）
+                send_customs_dec_edoc_xml_to_ex(line)
 
+            self.update({'cus_dec_sent_state': 'succeed'})
+
+    @api.multi
+    def generate_qp_customer_xml(self):
+        """ 生成报文发送QP  存放到指定目录 """
+        self.update({'cus_dec_sent_way': 'QP'})  # 前端点击发送通道按钮之后 确定发送通道 隐藏另一条通道
+        for line in self:
+            # 判断当前报关单的随附单据中是否有数据
+            attach_list = []
+            for attach in self.information_attachment_ids:
+                attach_data = attach.datas
+                attach_list.append(attach_data)
+
+            # 发送报关单xml报文到交换云（单一窗口或QP）
+            send_customs_dec_xml_to_ex(line)
+
+            if attach_list:
+                # 发送报关单随附单据xml报文到交换云（单一窗口或QP）
+                send_customs_dec_edoc_xml_to_ex(line)
+
+            self.update({'cus_dec_sent_state': 'succeed'})
 
     # @api.model
     # @q_job.job
@@ -409,49 +397,6 @@ class CustomsDeclaration(models.Model):
         """报文已发送至QP"""
         pass
 
-    @api.multi
-    def generate_single_customer_xml(self):
-        """ 生成报关单报文+随附单据报文 发送单一窗口 存放到指定目录 """
-        self.update({'cus_dec_sent_way': 'single'})  # 前端点击发送通道按钮之后 确定发送通道 隐藏另一条通道
-        for line in self:
-            # 判断当前报关单是否有随附单据
-
-            # 判断当前报关单的随附单据中是否有数据
-            attach_list = []
-            for attach in self.information_attachment_ids:
-                attach_data = attach.datas
-                attach_list.append(attach_data)
-            # 如果第一个附件中有值，说明随附单据解析入库成功
-
-            send_customs_dec_xml_to_ex(line)
-            if attach_list:
-                # generate_attach_xml_to_single(line)
-                self.update({'cus_dec_sent_state': 'succeed'})
-                return True
-            else:
-                pass
-                # raise UserError(_("该报关单关联的随附单据附件无效，请检查！"))
-
-    @api.multi
-    def generate_qp_customer_xml(self):
-        """ 生成报文发送QP  存放到指定目录 """
-        self.update({'cus_dec_sent_way': 'QP'})  # 前端点击发送通道按钮之后 确定发送通道 隐藏另一条通道
-        for line in self:
-            # 判断当前报关单的随附单据中是否有数据
-            attach_list = []
-            for attach in self.information_attachment_ids:
-                attach_data = attach.datas
-                attach_list.append(attach_data)
-
-            send_customs_dec_xml_to_ex(line)
-            # 如果第一个附件中有值，说明随附单据解析入库成功
-            if attach_list:
-                # generate_attach_xml_to_single(line)
-                self.update({'cus_dec_sent_state': 'succeed'})
-                return True
-            else:
-                raise UserError(_(u"该报关单关联的随附单据附件无效，请检查！"))
-
     # @api.model
     # @q_job.job
     @api.multi
@@ -460,26 +405,59 @@ class CustomsDeclaration(models.Model):
         parse_receipt_xml(self)
 
     def create_classify_goods(self, dec_sheet):
-        print('create_classify_goods', dec_sheet)
+        print('create_classify_goods')
 
-        for goods_item in dec_sheet.dec_goods_list_ids:
-            print('goods_item.goods_classification_id', goods_item.goods_classification_id)
-            if not goods_item.goods_classification_id:
-                classify_goods_list = {
-                    'cust_goods_code': goods_item.cust_goods_code,  # 客户料号
-                    'business_company_id': dec_sheet.business_company_id,  # 收发货人
-                    'manual_no': dec_sheet.manual_no,  # 备案号
-                    'ManualSN': goods_item.ManualSN,  # 备案序号
-                    'cus_goods_tariff_id': goods_item.cus_goods_tariff_id,  # 商品编号
-                    'goods_name': goods_item.goods_name,  # 商品名称
-                    'goods_model': goods_item.goods_model,  # 规格型号
+        if not self.business_company_id:
+            return False
+
+        """ 报关单状态为放行后调用该方法 自动归类"""
+        for goods_item in self.dec_goods_list:
+            # print('goods_item.goods_classification_id', goods_item.goods_classification_id)
+            if goods_item.cust_goods_code:
+                break
+
+            business_company_id = self.business_company_id.id  # 收发貨人
+            cust_goods_code = goods_item.cust_goods_code  # 客户料号
+            goods_tariff_no = goods_item.goods_tariff_id.id  # 商品编号
+            goods_name = goods_item.goods_name  # 商品名称
+            goods_model = goods_item.goods_model  # 规格型号
+
+            # 多条件搜索:收发货人+商品编号+商品名称+规格型号
+            history_good_classify_info = self.env['cus_center.goods_classify'].search([
+                ('business_company_id', '=', business_company_id),
+                ('goods_tariff_id', '=', goods_tariff_no),
+                ('goods_name', '=', goods_name),
+                ('goods_model', '=', goods_model)
+            ])
+
+            # 为真：调用次数字段 加1, 最新调用时间为当前时间
+            if history_good_classify_info:
+                new_call_count = history_good_classify_info.call_count + 1
+                history_good_classify_info.update({'call_count': new_call_count,
+                                                   'new_call_date': fields.Datetime.now()})
+
+            # 创建一条新的归类记录
+            else:
+                classify_goods_dic = {
+                    'cust_goods_code': cust_goods_code,  # 客户料号
+                    'business_company_id': business_company_id,  # 收发货人
+                    'manual_no': self.manual_no,  # 备案号
+                    'manual_sn': goods_item.manual_sn,  # 备案序号
+                    'goods_tariff_id': goods_tariff_no,  # 商品编号
+                    'goods_name': goods_name,  # 商品名称
+                    'goods_model': goods_model,  # 规格型号
                     'deal_unit_price': goods_item.deal_unit_price,  # 申报单价
-                    'currency_id': goods_item.currency_id,  # 币制
-                    'deal_unit_id': goods_item.deal_unit_id,  # 成交单位
-                    'origin_country_id': goods_item.origin_country_id,  # 原产国
-                    'destination_country_id': goods_item.destination_country_id,  # 目的国
-                    'duty_mode_id': goods_item.duty_mode_id,  # 征免方式
+                    'currency_id': goods_item.currency_id.id,  # 币制
+                    'deal_unit_id': goods_item.deal_unit_id.id,  # 成交单位
+                    'origin_country_id': goods_item.origin_country_id.id,  # 原产国
+                    'destination_country_id': goods_item.destination_country_id.id,  # 目的国
+                    'duty_mode_id': goods_item.duty_mode_id.id,  # 征免方式
+                    'call_count': 1,
+                    'new_call_date': fields.Datetime.now(),  # 最近调用时间用当前时间，不是很严谨,需要改进（取商品行新建的时间？）
+                    'state': 'approve'
                 }
-                print('goods_item.classify_goods_list', classify_goods_list)
 
-                # cus_goods_classify_obj = self.env['cus_center.goods_classify'].create(classify_goods_list)
+                classify_goods_dic = {item: classify_goods_dic[item]
+                                      for item in classify_goods_dic if classify_goods_dic[item]}  # 清除False
+
+                cus_goods_classify_obj = self.env['cus_center.goods_classify'].create(classify_goods_dic)
