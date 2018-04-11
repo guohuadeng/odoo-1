@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <menuitem id="customs_center_portal_menu" name="关务中心"/>
-    <!--<menuitem id="sw_making_dashboard_menu" string="Dashboard Menu" name="仪表板" parent="customs_center_menu" sequence="8" action="action_dec_dashboard_menu"/>-->
+    <menuitem id="customs_center_portal_menu" name="关务中心2"/>
+
     <menuitem id="making_document_menu" string="Making Document" name="通关制单" parent="customs_center_portal_menu"
               sequence="10"/>
     <menuitem id="customs_order" string="Customs Order" name="通关清单" parent="making_document_menu"
-              sequence="20" action="cus_center_customs_order_action"/>
+              sequence="20" action="customs_order_action"/>
     <menuitem id="import_customs_declaration" string="Import Customs Declaration" name="进口报关单"
               parent="making_document_menu"
               sequence="34" action="import_customs_declaration_action"/>
@@ -18,7 +18,8 @@
               sequence="38" action="sync_customs_declaration_action"/>
 
 
-    <menuitem id="goods_classification_menu" string="goods classification menu" name="商品归类" parent="customs_center_portal_menu"
+    <menuitem id="goods_classification_menu" string="goods classification menu" name="商品归类"
+              parent="customs_center_portal_menu"
               sequence="12"/>
     <menuitem id="goods_classification" string="goods classification" name="商品归类" parent="goods_classification_menu"
               sequence="40" action="action_goods_classification"/>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="cus_center_customs_order_action" model="ir.actions.act_window">
+        <record id="customs_order_action" model="ir.actions.act_window">
             <field name="name">通关清单</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">cus_center.customs_order</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record id="cus_center_customs_order_tree" model="ir.ui.view">
+        <record id="customs_order_tree" model="ir.ui.view">
             <field name="name">Customs Customs Order tree view</field>
             <field name="model">cus_center.customs_order</field>
             <field name="arch" type="xml">
@@ -24,6 +24,7 @@
             </field>
         </record>
 
+        <!--生成报关单-->
         <record model="ir.actions.act_window" id="generate_customs_declaration">
             <field name="name">generate custom declaration</field>
             <field name="type">ir.actions.act_window</field>
@@ -32,34 +33,38 @@
             <field name="view_mode">form,tree</field>
             <field name="domain">[('customs_order_id','=',active_id)]</field>
             <field name="context">{"default_customs_order_id":active_id}</field>
-            <!--以上通过向导视图把当前的通关清单对象传给报关单模型-->
         </record>
 
-         <record id="cus_center_customs_order_search" model="ir.ui.view">
-           <field name="name">customs order search</field>
-           <field name="model">cus_center.customs_order</field>
+        <record id="cus_center_customs_order_search" model="ir.ui.view">
+            <field name="name">customs order search</field>
+            <field name="model">cus_center.customs_order</field>
             <field name="arch" type="xml">
                 <search string="customs order search">
                     <field name="name" string="通关清单号" domain="[('cus_center.customs_order.name', '=', self)]"/>
-                    <field name="work_sheet_id" string="工作单号" domain="[('cus_center.customs_order.work_sheet_id', '=', self)]"/>
-                    <field name="business_company_id" string="收发货人" domain="[('cus_center.customs_order.business_company_id', '=', self)]"/>
+                    <field name="work_sheet_id" string="工作单号"
+                           domain="[('cus_center.customs_order.work_sheet_id', '=', self)]"/>
+                    <field name="business_company_id" string="收发货人"
+                           domain="[('cus_center.customs_order.business_company_id', '=', self)]"/>
                     <separator/>
                     <filter string="进口" name="in" domain="[('inout','=','i')]"/>
                     <filter string="出口" name="export" domain="[('inout','=','e')]"/>
                     <separator/>
-                    <filter string="当天清单" name="today"  domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
-                    <filter string="本周清单" name="last_week"  domain="[('create_date','&gt;', (context_today() - datetime.timedelta(weeks=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
-                    <filter string="本月清单" name="month" domain="[('create_date','&gt;=', time.strftime('%Y-%m-01 00:00:00')),('create_date','&lt;',  (context_today() + relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
-                    <filter string="上月清单" name="month2"  domain="[('create_date','&lt;', time.strftime('%Y-%m-01 00:00:00')),('create_date','&gt;=',  (context_today() - relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
-                    <filter string="本年清单" name="year"  domain="[('create_date','&lt;=', time.strftime('%Y-12-31 23:59:59')),('create_date','&gt;=', time.strftime('%Y-01-01 00:00:00'))]"/>
+                    <filter string="当天" name="today"
+                            domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                    <filter string="本周" name="last_week"
+                            domain="[('create_date','&gt;', (context_today() - datetime.timedelta(weeks=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                    <filter string="本月" name="month"
+                            domain="[('create_date','&gt;=', time.strftime('%Y-%m-01 00:00:00')),('create_date','&lt;',  (context_today() + relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="上月" name="month2"
+                            domain="[('create_date','&lt;', time.strftime('%Y-%m-01 00:00:00')),('create_date','&gt;=',  (context_today() - relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="本年" name="year"
+                            domain="[('create_date','&lt;=', time.strftime('%Y-12-31 23:59:59')),('create_date','&gt;=', time.strftime('%Y-01-01 00:00:00'))]"/>
                 </search>
-           </field>
+            </field>
         </record>
 
 
-
-
-        <record id="cus_center_customs_order_form" model="ir.ui.view">
+        <record id="customs_order_form" model="ir.ui.view">
             <field name="name">Customs Customs Order form</field>
             <field name="model">cus_center.customs_order</field>
             <field name="arch" type="xml">
@@ -70,21 +75,30 @@
                     </header>
                     <sheet>
                         <field name="name" readonly="1" invisible="1"/>
-                        <!--<field name="customs_declaration_ids" invisible="1"/>-->
 
                         <div class="oe_button_box" name="button_box">
+                            <button name="%(cus_center.action_customs_declaration)d" type="action"
+                                    context="{'search_default_customs_order_id': active_id}"
+                                    class="oe_stat_button" icon="fa-align-justify">
+                                <field name="custom_dec_list_count" widget="statinfo" string="报关单"/>
+                            </button>
 
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="col-lg-4 col-md-4"><label for="custom_master_id" string="申报地海关"/></div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="col-lg-4 col-md-4">
+                                    <label for="custom_master_id" string="申报地海关"/>
+                                </div>
                                 <div class="col-lg-8 col-md-8">
-                                    <field name="custom_master_id" class="oe_inline" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                    <field name="custom_master_id" class="oe_inline"
+                                           options="{'no_create_edit': 1, 'no_create': 1}"/>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="col-lg-4 col-md-4"><label for="work_sheet_id" string="工作单号"/></div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="col-lg-4 col-md-4">
+                                    <label for="work_sheet_id" string="工作单号"/>
+                                </div>
                                 <div class="col-lg-8 col-md-8">
                                     <field name="work_sheet_id" options="{'no_create_edit': 1, 'no_create': 1}"/>
                                 </div>
@@ -103,10 +117,11 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="customs_id" string="进出口岸" />
+                                            <label for="customs_id" string="进出口岸"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="customs_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            <field name="customs_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4">
@@ -121,10 +136,10 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="ManualNo" string="备案号"/>
+                                            <label for="manual_no" string="备案号"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="ManualNo"/>
+                                            <field name="manual_no"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4">
@@ -137,10 +152,10 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="licenseNo" string="许可证号"/>
+                                            <label for="license_no" string="许可证号"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="licenseNo"/>
+                                            <field name="license_no"/>
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +172,7 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="input_company_id" string="生产消费单位" />
+                                            <label for="input_company_id" string="生产消费单位"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
                                             <field name="input_company_id" style="width:100%"
@@ -166,10 +181,11 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="declare_company_id" string="申报单位" />
+                                            <label for="declare_company_id" string="申报单位"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="declare_company_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                            <field name="declare_company_id" style="width:100%"
+                                                   options="{'no_create_edit': 1, 'no_create': 1}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +193,7 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="transport_mode_id" string="运输方式" />
+                                            <label for="transport_mode_id" string="运输方式"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
                                             <field name="transport_mode_id" style="width:100%"
@@ -194,10 +210,10 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="VoyageNo" string="航次号"/>
+                                            <label for="voyage_no" string="航次号"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="VoyageNo"/>
+                                            <field name="voyage_no"/>
                                         </div>
                                     </div>
                                 </div>
@@ -205,7 +221,7 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="origin_arrival_country_id" string="启运/抵达国" />
+                                            <label for="origin_arrival_country_id" string="启运/抵达国"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
                                             <field name="origin_arrival_country_id" style="width:100%"
@@ -214,7 +230,7 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="port_id" string="装货/指运港" />
+                                            <label for="port_id" string="装货/指运港"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
                                             <field name="port_id" style="width:100%"
@@ -223,10 +239,10 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="region_id" string="境内目的/货源地" />
+                                            <label for="internal_district_id" string="境内目的/货源地"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="region_id" style="width:100%"
+                                            <field name="internal_district_id" style="width:100%"
                                                    options="{'no_create_edit': 1, 'no_create': 1}"/>
                                         </div>
                                     </div>
@@ -235,7 +251,7 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="trade_country_id" string="贸易国别" />
+                                            <label for="trade_country_id" string="贸易国别"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
                                             <field name="trade_country_id" style="width:100%"
@@ -244,7 +260,7 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="trade_terms_id" string="成交方式" />
+                                            <label for="trade_terms_id" string="成交方式"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
                                             <field name="trade_terms_id" style="width:100%"
@@ -264,10 +280,10 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4">
                                         <div class="col-lg-4 col-md-4">
-                                            <label for="packing_id" string="包装方式" />
+                                            <label for="wrap_type_id" string="包装方式"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <field name="packing_id" style="width:100%"
+                                            <field name="wrap_type_id" style="width:100%"
                                                    options="{'no_create_edit': 1, 'no_create': 1}"/>
                                         </div>
                                     </div>
@@ -292,257 +308,313 @@
                                 <div class="row" style="padding-bottom:10px">
                                     <div class="col-lg-8 col-md-8">
                                         <div class="col-lg-2 col-md-2" style="width:16%">
-                                            <label for="marks" string="备注" />
+                                            <label for="marks" string="备注"/>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
                                             <field name="marks"/>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                </div>
+
                                 <field name="order_goods_list" mode="tree" string="商品信息">
-                                        <form string="Declearation Goods">
-                                            <sheet>
-                                                <div class="row" style="padding-top:20px">
-                                                    <div class="col-lg-12 col-md-12"  style="float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-1 col-md-1" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="goods_classification_id" string="合规商品" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-10 col-md-10" style="float: left;padding-left: 0px;  position: relative;">
-                                                            <field name="goods_classification_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"
-                                                            domain="[('business_company_id', '=',parent.business_company_id)]"/>
-                                                        </div>
+                                    <form string="Goods List">
+                                        <sheet>
+                                            <!--一列-->
+                                            <div class="row" style="padding-top:20px">
+                                                <div class="col-lg-12 col-md-12"
+                                                     style="float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-1 col-md-1"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="goods_classification_id" string="合规商品"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-10 col-md-10"
+                                                         style="float: left;padding-left: 0px;  position: relative;">
+                                                        <field name="goods_classification_id" style="width:100%"
+                                                               options="{'no_create_edit': 1, 'no_create': 1}"
+                                                               domain="[('business_company_id', '=',parent.business_company_id)]"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--四列-->
+                                            <div class="row" style="padding-top:20px">
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="cust_goods_code" string="客户料号"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="cust_goods_code" string="客户料号" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="manual_sn" string="备案序号" style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="manual_sn" string="备案序号"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 40%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-3 col-md-3"
+                                                         style="width:21%;padding-left: 10px; padding-right: 0px">
+                                                        <label for="goods_tariff_id" string="商品编号"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9"
+                                                         style="padding-left: 0px; padding-right: 0px">
+                                                        <field style="width:105%" name="goods_tariff_id" string="商品编号"
+                                                               options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="supervision_condition" string="监管条件"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="supervision_condition" string="监管条件" readonly="1"/>
                                                     </div>
                                                 </div>
 
-                                                <div class="row" style="padding-top:20px">
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="cust_goods_code" string="客户料号" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="cust_goods_code" string="客户料号" readonly="1"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="ManualSN" string="备案序号" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="ManualSN" string="备案序号"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 40%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-3 col-md-3" style="width:21%;padding-left: 10px; padding-right: 0px">
-                                                            <label for="goods_tariff_id" string="商品编号" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-9 col-md-9" style="padding-left: 0px; padding-right: 0px">
-                                                            <field style="width:105%" name="goods_tariff_id" string="商品编号"  options="{'no_create_edit': 1, 'no_create': 1}"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="supervision_condition" string="监管条件" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="supervision_condition" string="监管条件" readonly="1"/>
-                                                        </div>
-                                                    </div>
+                                            </div>
 
+                                            <!--两列-->
+                                            <div class="row">
+
+                                                <div style="width: 40%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-3 col-md-3"
+                                                         style="width:22%;padding-left: 10px; padding-right: 0px">
+                                                        <label for="goods_name" string="商品名称"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9"
+                                                         style="width:78%;padding-left: 0px; padding-right: 0px">
+                                                        <field name="goods_name" string="商品名称"/>
+                                                    </div>
                                                 </div>
-
-                                                <!--一行两列-->
-                                                <div class="row">
-
-                                                    <div style="width: 40%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-3 col-md-3" style="width:22%;padding-left: 10px; padding-right: 0px">
-                                                            <label for="goods_name" string="商品名称" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-9 col-md-9" style="width:78%;padding-left: 0px; padding-right: 0px">
-                                                            <field name="goods_name" string="商品名称"/>
-                                                        </div>
+                                                <div style="width: 50%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-2 col-md-2"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="goods_model" string="规格型号"
+                                                               style="font-weight:bold;"/>
                                                     </div>
-                                                    <div style="width: 50%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-2 col-md-2" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="goods_model" string="规格型号" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-8 col-md-8" style="padding-left: 0px; padding-right: 20px">
-                                                            <field name="goods_model" string="规格型号" widget="declare_element" options="{'tariff': 'cus_goods_tariff_id'}"/>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <!--一行5列-->
-                                                <div class="row" >
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="deal_qty" string="成交数量" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="deal_qty" string="成交数量"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="deal_unit_id" string="成交单位" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="deal_unit_id" string="成交单位" options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="deal_unit_price" string="成交单价" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="deal_unit_price" string="成交单价"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="deal_total_price" string="成交总价" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="deal_total_price" string="成交总价" readonly="1"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="currency_id" string="币制" style="font-weight:bold;"/></div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="currency_id" string="币制" options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
-                                                        </div>
+                                                    <div class="col-lg-8 col-md-8"
+                                                         style="padding-left: 0px; padding-right: 20px">
+                                                        <field name="goods_model" string="规格型号" widget="declare_element"
+                                                               options="{'tariff': 'cus_goods_tariff_id'}"/>
                                                     </div>
                                                 </div>
 
-                                                <div class="row">
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="first_qty" string="法定数量" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="first_qty" string="法定数量"/>
-                                                        </div>
+                                            </div>
+
+                                            <!--5列-->
+                                            <div class="row">
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="deal_qty" string="成交数量" style="font-weight:bold;"/>
                                                     </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="first_unit_id" string="法定单位" style="font-weight:bold;" />
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="first_unit_id" string="法定单位" readonly="1" options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
-                                                        </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="deal_qty" string="成交数量"/>
                                                     </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="version_num" string="版本号" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="version_num" string="版本号"/>
-                                                        </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="deal_unit_id" string="成交单位"
+                                                               style="font-weight:bold;"/>
                                                     </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="product_code" string="货号" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="product_code" string="货号"/>
-                                                        </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="deal_unit_id" string="成交单位"
+                                                               options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
                                                     </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="destination_country_id" string="目的国" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
-                                                        </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="deal_unit_price" string="成交单价"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="deal_unit_price" string="成交单价"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="deal_total_price" string="成交总价"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="deal_total_price" string="成交总价" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="currency_id" string="币制" style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="currency_id" string="币制"
+                                                               options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--5列-->
+                                            <div class="row">
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="first_qty" string="法定数量" style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="first_qty" string="法定数量"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="first_unit_id" string="法定单位"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="first_unit_id" string="法定单位" readonly="1"
+                                                               options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="second_qty" string="第二数量"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="second_qty" string="第二数量"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="second_unit_id" string="第二单位"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="second_unit_id" string="第二单位" readonly="1"
+                                                               options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
                                                     </div>
                                                 </div>
 
-                                                <!--一行5列-->
-                                                <div class="row">
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="second_qty" string="第二数量" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="second_qty" string="第二数量"/>
-                                                        </div>
+                                            </div>
+
+                                            <!--一行5列-->
+                                            <div class="row">
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="origin_country_id" string="原产国"
+                                                               style="font-weight:bold;"/>
                                                     </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="second_unit_id" string="第二单位" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="second_unit_id" string="第二单位" readonly="1" options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="origin_country_id" string="原产国" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="duty_mode_id" string="征免方式" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
-                                                        </div>
-                                                    </div>
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="product_code" string="货号" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="product_code" string="货号"/>
-                                                        </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="origin_country_id" string="原产国"
+                                                               options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
                                                     </div>
                                                 </div>
-
-                                                <div class="row">
-                                                    <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
-                                                        <div class="col-lg-5 col-md-5" style="padding-left: 10px; padding-right: 0px">
-                                                            <label for="version_num" string="版本号" style="font-weight:bold;"/>
-                                                        </div>
-                                                        <div class="col-lg-7 col-md-7" style="padding-left: 10px; padding-right: 0px">
-                                                            <field name="version_num" string="版本号"/>
-                                                        </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="destination_country_id" string="目的国"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="destination_country_id" string="目的国"
+                                                               options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
                                                     </div>
                                                 </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="duty_mode_id" string="征免方式"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="duty_mode_id" string="征免方式"
+                                                               options="{'no_create_edit': 1, 'no_create': 1, 'no_open': 1}"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="product_no" string="货号"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="product_no" string="货号"/>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 20%;float: left;padding-left: 15px; padding-right: 15px; position: relative;">
+                                                    <div class="col-lg-5 col-md-5"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <label for="version_no" string="版本号"
+                                                               style="font-weight:bold;"/>
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7"
+                                                         style="padding-left: 10px; padding-right: 0px">
+                                                        <field name="version_no" string="版本号"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </sheet>
+                                    </form>
 
-                                            </sheet>
-                                        </form>
-
-                                        <tree string="商品信息">
-                                            <field name="sequence" widget="handle"/>
-                                            <field name="cust_goods_code" string="客户料号"/>
-                                            <field name="goods_tariff_id" string="商品编码" options="{'no_create_edit': 1}"/>
-                                            <field name="goods_name" string="商品名称"/>
-                                            <field name="goods_model" string="规格型号"/>
-                                            <field name="deal_qty" string="成交数量"/>
-                                            <field name="deal_unit_price" string="成交单价"/>
-                                            <field name="deal_unit_id" string="成交单位"/>
-                                            <field name="deal_total_price" string="成交总价"/>
-                                            <field name="currency_id" string="币制" options="{'no_create_edit': 1}"/>
-                                            <field name="first_qty" string="第一数量"/>
-                                            <field name="first_unit_id" string="第一单位" options="{'no_create_edit': 1}" />
-                                            <field name="second_qty" string="第二数量"/>
-                                            <field name="second_unit_id" string="第二单位" options="{'no_create_edit': 1}" />
-                                            <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1}"/>
-                                            <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1}"/>
-                                            <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1}"/>
-                                            <field name="supervision_condition" string="监管标识" options="{'no_create_edit': 1}" />
-                                        </tree>
-                                    </field>
+                                    <tree string="商品信息">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="cust_goods_code" string="客户料号"/>
+                                        <field name="goods_tariff_id" string="商品编码" options="{'no_create_edit': 1}"/>
+                                        <field name="goods_name" string="商品名称"/>
+                                        <field name="goods_model" string="规格型号"/>
+                                        <field name="deal_qty" string="成交数量"/>
+                                        <field name="deal_unit_price" string="成交单价"/>
+                                        <field name="deal_unit_id" string="成交单位"/>
+                                        <field name="deal_total_price" string="成交总价"/>
+                                        <field name="currency_id" string="币制" options="{'no_create_edit': 1}"/>
+                                        <field name="first_qty" string="第一数量"/>
+                                        <field name="first_unit_id" string="第一单位" options="{'no_create_edit': 1}"/>
+                                        <field name="second_qty" string="第二数量"/>
+                                        <field name="second_unit_id" string="第二单位" options="{'no_create_edit': 1}"/>
+                                        <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1}"/>
+                                        <field name="destination_country_id" string="目的国"
+                                               options="{'no_create_edit': 1}"/>
+                                        <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1}"/>
+                                        <field name="supervision_condition" string="监管标识"
+                                               options="{'no_create_edit': 1}"/>
+                                    </tree>
+                                </field>
 
                             </page>
                         </notebook>
                     </sheet>
+
                     <div class="oe_chatter">
                         <field name="message_follower_ids"
                                widget="mail_followers"/>
@@ -551,33 +623,6 @@
                 </form>
             </field>
         </record>
-
-
-
-        <!--扩展工作单视图-->
-        <!-- Inherit Form View to Modify it -->
-        <!--<record id="view_customs_work_sheet_form_extend" model="ir.ui.view">-->
-            <!--<field name="name">work customs sheet form extend</field>-->
-            <!--<field name="model">work_sheet</field>-->
-            <!--<field name="inherit_id" ref="service_center.view_work_sheet_form"/>-->
-            <!--<field name="arch" type="xml">-->
-                <!--<xpath expr="//div[@class='row']" position="inside">-->
-                    <!--<div class="col-md-1" attrs="{'invisible': [('state', '=', 'cancel')]}">-->
-                        <!--<field name="custom_center" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>-->
-                        <!--<label for="custom center" string="报关"/>-->
-                    <!--</div>-->
-                <!--</xpath>-->
-
-                <!--<xpath expr="//button[@c_name='warehouse']" position="before">-->
-                    <!--<button name="cus_center_clearance" type="object" class="oe_stat_button" string="关务中心"-->
-                            <!--attrs="{'invisible': ['|', ('custom_center','=',False), ('state', '=', 'cancel')]}" icon="fa-pencil-square-o">-->
-                    <!--</button>-->
-                <!--</xpath>-->
-
-            <!--</field>-->
-        <!--</record>-->
-
-        <!--通关清单 搜索视图-->
 
 
     </data>

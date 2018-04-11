@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--扩展工作单视图，添加工作单关联的通关清单入口-->
+        <record id="view_customs_work_sheet_form_extend" model="ir.ui.view">
+            <field name="name">work customs sheet form extend</field>
+            <field name="model">work_sheet</field>
+            <field name="inherit_id" ref="service_center.view_work_sheet_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='row']" position="inside">
+                    <div class="col-md-1" attrs="{'invisible': [('state', '=', 'cancel')]}">
+                        <field name="customs_declaration" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                        <label for="Customs Declaration" string="报关"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//button[@c_name='warehouse']" position="before">
+                    <button name="cus_center_clearance" type="object" class="oe_stat_button" string="关务中心"
+                            attrs="{'invisible': ['|', ('customs_declaration','=',False), ('state', '=', 'cancel')]}"
+                            icon="fa-pencil-square-o">
+                    </button>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
