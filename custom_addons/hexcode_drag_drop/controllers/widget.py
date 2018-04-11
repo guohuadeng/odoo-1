@@ -4,8 +4,8 @@ from odoo import models,api,fields
 class widget_data(models.Model):
     _inherit = 'ir.attachment'
 
-    extension = fields.Char()
-    sortable = fields.Integer()
+    # extension = fields.Char()
+    # sortable = fields.Integer()
 
     @api.model
     def upload_dragndrop(self, name, base64, extension, sortable):
