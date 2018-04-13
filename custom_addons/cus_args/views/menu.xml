@@ -43,12 +43,14 @@
 
     <!--商品税则库-->
     <menuitem id="cus_args_goods_tariff_menu" name="Goods Tariff Table" parent="customs_args_menu"
-              action="cus_args_goods_tariff_action"/>
+              action="cus_args_goods_tariff_action" sequence="60"/>
     <menuitem id="cus_args_goods_declare_element_menu" name="Goods Declare Element" parent="customs_args_menu"
-              action="cus_args_goods_declare_element_action"/>
+              action="cus_args_goods_declare_element_action" sequence="70"/>
 
     <!--海关注册企业库-->
     <menuitem id="cus_args_register_company_menu" name="Customs Register Company" parent="customs_args_menu"
-              action="cus_args_register_company_action"/>
+              action="cus_args_register_company_action" sequence="80"/>
 
+    <menuitem id="sync_data_menu" name="Sync Data" parent="customs_args_menu" sequence="90"/>
+    <menuitem id="sync_task_menu" name="Sync Task" parent="sync_data_menu" action="sync_task_action" sequence="10"/>
 </odoo>

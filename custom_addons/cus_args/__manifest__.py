@@ -32,6 +32,7 @@
         'views/transport_mode_view.xml',
         'views/unit_view.xml',
         'views/wrap_type_view.xml',
+        'views/sync_task.xml',
         'views/menu.xml',
 
     ],
