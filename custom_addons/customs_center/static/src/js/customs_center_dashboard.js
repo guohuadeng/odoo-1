@@ -12,6 +12,7 @@ odoo.define("customs_center.customs_center_dashboard", function(require) {
         template: 'Prjects_dashboard',
         events:{
             'change #projects_selectbox': 'projects_selectbox_onchange',
+            'click #get_cus_send_count':'get_cus_send_count',
             'click #get_chart_employee_timesheet':'get_chart_employee_timesheet',
             'click #get_chart_project_timesheet':'get_chart_project_timesheet',
             'click #get_chart_employee_task' : 'get_chart_employee_task',
@@ -61,6 +62,17 @@ odoo.define("customs_center.customs_center_dashboard", function(require) {
             customs_center_dashboard.call('get_chart_project_timesheet',[project_id,]).then(function(data){
                 self.drawChart_employee_timesheet(data,'Project / Timesheet');
             });
+        },
+
+        // 仪表板 头部各按钮获取相关数据，跳转到相应列表视图
+        get_cus_send_count:function(e){
+            var self = this;
+            var current_val = $(e.currentTarget).val();
+            $(".chart-tasks-link").removeClass('active');
+            $(e.currentTarget).addClass('active');
+            var customs_center_dashboard = new Model('customs_center.dashboard');
+            var project_id = $("#projects_selectbox").val();
+            customs_center_dashboard.call('get_cus_send_count',[project_id,])
         },
         
         //Tasks charts
@@ -274,7 +286,7 @@ odoo.define("customs_center.customs_center_dashboard", function(require) {
                 },
 
                 title: {
-                    text:"当天申报记录"
+                    text:"申报记录"
                 },
 
                 //

@@ -96,6 +96,56 @@ class CustomsCenterDashboard(models.Model):
         return result
 
     @api.model
+    def get_cus_send_count(self):
+        customs_declaration_obj = self.env['customs_center.customs_dec']
+
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'tree',
+            'res_model': 'customs_center.customs_dec',
+            'target': 'new',
+        }
+        # return {
+        #     'name': u"已申报列表",
+        #     'type': "ir.actions.act_window",
+        #     'view_type': 'tree',
+        #     'view_mode': 'tree',
+        #     'res_model': 'customs_center.customs_dec',
+        #     'views': [[False, 'tree']],
+        #     'res_id': customs_declaration_obj.ids,
+        #     "domain": [['cus_dec_sent_way', 'in', ('single', 'QP')]],
+        #     'target': 'new'
+        # }
+
+        # determine domain for selecting translations
+        # record = self.env[model].with_context(lang=main_lang).browse(id)
+        # domain = ['&', ('res_id', '=', id), ('name', '=like', model + ',%')]
+        #
+        # def make_domain(fld, rec):
+        #     name = "%s,%s" % (fld.model_name, fld.name)
+        #     return ['&', ('res_id', '=', rec.id), ('name', '=', name)]
+        #
+        # # insert missing translations, and extend domain for related fields
+        # action = {
+        #     'name': 'Translate',
+        #     'res_model': 'ir.translation',
+        #     'type': 'ir.actions.act_window',
+        #     'view_mode': 'tree',
+        #     'view_id': self.env.ref('base.view_translation_dialog_tree').id,
+        #     'target': 'current',
+        #     'flags': {'search_view': True, 'action_buttons': True},
+        #     'domain': domain,
+        # }
+        # if field:
+        #     fld = record._fields[field]
+        #     if not fld.related:
+        #         action['context'] = {
+        #             'search_default_name': "%s,%s" % (fld.model_name, fld.name),
+        #         }
+        # return action
+
+
+    @api.model
     def get_total_hour_logged(self, project_id):
         project_id = int(project_id)
         domain = [] if project_id == -1 else [('project_id', '=', project_id)]

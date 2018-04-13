@@ -75,9 +75,10 @@
    
    <t t-name="Prjects_dashboard">
       <div class="projects-container">
-         <select id="projects_selectbox">
-            <option value="-1">--- All Projects ---</option>
-         </select>        
+         <a id="projects_selectbox"></a>
+         <!--<select id="projects_selectbox">-->
+            <!--<option value="-1">-&#45;&#45; All Projects -&#45;&#45;</option>-->
+         <!--</select>-->
       </div>
       <div class="clearfix"></div>
       <div class="">
@@ -89,7 +90,7 @@
                         <h3 class="box-title">已申报</h3>
                         <ul class="list-inline two-part">
                            <li><i class="fa fa-tasks text-warning"></i></li>
-                           <li class="text-right"><span class="counter total_clients">0</span></li>
+                           <li class="text-right"><span id="get_cus_send_count" class="counter total_clients">0</span></li>
                         </ul>
                      </div>
                   </div>
@@ -98,7 +99,7 @@
                         <h3 class="box-title">暂存成功</h3>
                         <ul class="list-inline two-part">
                            <li><i class="icon-layers text-inverse"></i></li>
-                           <li class="text-right"><span class="counter total_employees">0</span></li>
+                           <li class="text-right"><span id="get_cus_save_count" class="counter total_employees">0</span></li>
                         </ul>
                      </div>
                   </div>
@@ -107,7 +108,7 @@
                         <h3 class="box-title">申报成功</h3>
                         <ul class="list-inline two-part">
                            <li><i class="fa fa-check-square-o text-success"></i></li>
-                           <li class="text-right"><span class="counter total_projects">0</span></li>
+                           <li class="text-right"><span id="get_cus_dec_success" class="counter total_projects">0</span></li>
                         </ul>
                      </div>
                   </div>
@@ -116,7 +117,7 @@
                         <h3 class="box-title">状态异常</h3>
                         <ul class="list-inline two-part">
                            <li><i class="fa fa-exclamation-triangle text-danger"></i></li>
-                           <li class="text-right"><span class="counter total_paid_invoice">0</span></li>
+                           <li class="text-right"><span id="get_cus_dec_abnor" class="counter total_paid_invoice">0</span></li>
                         </ul>
                      </div>
                   </div>
