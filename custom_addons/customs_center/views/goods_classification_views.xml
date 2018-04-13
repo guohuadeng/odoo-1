@@ -65,7 +65,7 @@
                     <sheet>
                         <div class="oe_title">
                             <h1>
-                                <field name="cust_goods_code"  placeholder="请录入客户料号"/>
+                                <field name="cust_goods_code"  placeholder="请录入客户料号" attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                 <field name="customs_declaration_id"  placeholder="关联的报关单号" invisible="1"/>
                             </h1>
                         </div>
@@ -75,19 +75,20 @@
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="business_company_id" string="收发货人" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="business_company_id" string="收发货人" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        <field name="business_company_id" string="收发货人" options="{'no_create_edit': 1, 'no_create': 1}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="ManualNo" string="备案号" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="ManualNo" string="备案号"/>
+                                        <field name="ManualNo" string="备案号" attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="ManualSN" string="备案序号" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="ManualSN" string="备案序号"/>
+                                        <field name="ManualSN" string="备案序号" attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
 
@@ -97,19 +98,21 @@
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="cus_goods_tariff_id" string="商品编号" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="cus_goods_tariff_id" string="商品编号" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        <field name="cus_goods_tariff_id" string="商品编号" options="{'no_create_edit': 1, 'no_create': 1}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="goods_name" string="商品名称" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="goods_name" string="商品名称"/>
+                                        <field name="goods_name" string="商品名称" attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="goods_model" string="规格型号" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="goods_model" string="规格型号" widget="declare_element" options="{'tariff': 'cus_goods_tariff_id'}"/>
+                                        <field name="goods_model" string="规格型号" widget="declare_element" options="{'tariff': 'cus_goods_tariff_id'}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                             </div>
@@ -118,19 +121,20 @@
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="deal_unit_price" string="成交单价" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="deal_unit_price" string="成交单价"/>
+                                        <field name="deal_unit_price" string="成交单价" attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="currency_id" string="币制" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="currency_id" string="币制" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        <field name="currency_id" string="币制" options="{'no_create_edit': 1, 'no_create': 1}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="supervision_condition" string="监管条件" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="supervision_condition" readonly="1" string="监管条件"/>
+                                        <field name="supervision_condition" readonly="1" string="监管条件" attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
 
@@ -140,19 +144,22 @@
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="deal_unit_id" string="成交单位" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="deal_unit_id" string="成交单位" options="{'no_create_edit': 1, 'no_create': 1}" />
+                                        <field name="deal_unit_id" string="成交单位" options="{'no_create_edit': 1, 'no_create': 1}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="first_unit" string="法定单位" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="first_unit" readonly="1" string="第一计量单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        <field name="first_unit" readonly="1" string="第一计量单位" options="{'no_create_edit': 1, 'no_create': 1}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="second_unit" string="第二单位" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="second_unit" readonly="1" string="第二计量单位" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        <field name="second_unit" readonly="1" string="第二计量单位" options="{'no_create_edit': 1, 'no_create': 1}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                             </div>
@@ -162,19 +169,22 @@
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="origin_country_id" string="原产国" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        <field name="origin_country_id" string="原产国" options="{'no_create_edit': 1, 'no_create': 1}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="destination_country_id" string="目的国" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        <field name="destination_country_id" string="目的国" options="{'no_create_edit': 1, 'no_create': 1}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="col-lg-4 col-md-4"><label for="duty_mode_id" string="征免方式" style="font-weight:bold;"/></div>
                                     <div class="col-lg-8 col-md-8">
-                                        <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        <field name="duty_mode_id" string="征免方式" options="{'no_create_edit': 1, 'no_create': 1}"
+                                               attrs="{'readonly': [('state', '=', 'approve')]}"/>
                                     </div>
                                 </div>
                             </div>

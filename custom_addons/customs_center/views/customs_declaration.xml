@@ -33,11 +33,33 @@
         </record>
 
 
+        <!--报关单界面添加服务器动作 复制当前报关单表单表头数据-->
+        <record id="action_duplicate_dec_title_data" model="ir.actions.server">
+            <field name="name">复制表头</field>
+            <field name="model_id" ref="customs_center.model_customs_center_customs_dec"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.duplicate_current_title_data()
+            </field>
+        </record>
+
+        <!--添加服务器动作 指定上边的id-->
+        <record id="duplicate_dec_title_data" model="ir.values">
+            <field name="model_id" ref="customs_center.model_customs_center_customs_dec"/>
+            <field name="name">duplicate dec title</field>
+            <field name="key2">client_action_multi</field>
+            <!--<field name="key">action</field>-->
+            <field name="model">customs_center.customs_dec</field>
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_duplicate_dec_title_data'))" />
+        </record>
+
+
+
         <!--报关单界面添加服务器动作 复制当前报关单全部数据-->
-        <record model="ir.actions.server" id="action_duplicate_dec_all_data">
+        <record id="action_duplicate_dec_all_data" model="ir.actions.server">
             <field name="name">复制全部</field>
-            <field name="type">ir.actions.server</field>
-            <field name="model_id" ref="model_customs_center_customs_dec"/>
+            <field name="model_id" ref="customs_center.model_customs_center_customs_dec"/>
             <field name="state">code</field>
             <field name="code">
                 if records:
@@ -46,13 +68,18 @@
         </record>
 
         <!--添加服务器动作 指定上边的id-->
-        <record model="ir.values" id="duplicate_dec_all_data">
-            <field name="name">复制全部</field>
-            <field name="model_id" ref="model_customs_center_customs_dec"/>
-            <field name="model">customs_center.customs_dec</field>
+        <record id="duplicate_dec_all_data" model="ir.values">
+            <field name="model_id" ref="customs_center.model_customs_center_customs_dec"/>
+            <field name="name">duplicate dec all</field>
             <field name="key2">client_action_multi</field>
-            <field eval="'ir.actions.server,%d'%action_duplicate_dec_all_data" name="value"/>
+            <!--<field name="key">action</field>-->
+            <field name="model">customs_center.customs_dec</field>
+            <!--<field name="value" eval="'ir.actions.server,%d'%action_duplicate_dec_all_data"/>-->
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_duplicate_dec_all_data'))" />
         </record>
+
+
+
 
         <record id="customs_declaration_tree" model="ir.ui.view">
             <field name="name">Customs Declaration tree view</field>
@@ -160,9 +187,6 @@
                                     <field name="cus_ciq_No" readonly="1"/>
                                 </div>
                             </div>
-
-
-
 
                         </div>
 
@@ -383,7 +407,10 @@
                                         </div>
                                         <div class="col-lg-4 col-md-4">
                                             <div class="col-lg-4 col-md-4">
-                                                <label for="origin_arrival_country_id" string="启运国/抵达国"/>
+                                                <label for="origin_arrival_country_id" string="启运国"
+                                                        attrs="{'invisible': [('inout', '=', 'E')]}"/>
+                                                <label for="origin_arrival_country_id" string="抵达国"
+                                                        attrs="{'invisible': [('inout', '=', 'I')]}"/>
                                             </div>
                                             <div class="col-lg-8 col-md-8">
                                                 <field name="origin_arrival_country_id" style="width:100%"
@@ -394,7 +421,8 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-md-4">
                                             <div class="col-lg-4 col-md-4">
-                                                <label for="port_id" string="装货港/指运港"/>
+                                                <label for="port_id" string="装货港" attrs="{'invisible': [('inout', '=', 'E')]}"/>
+                                                <label for="port_id" string="指运港" attrs="{'invisible': [('inout', '=', 'I')]}"/>
                                             </div>
                                             <div class="col-lg-8 col-md-8">
                                                 <field name="port_id" style="width:100%"
@@ -678,7 +706,9 @@
                                                          style="float: left;padding-left: 0px;  position: relative;">
                                                         <field name="goods_classification_id" style="width:100%"
                                                                options="{'no_create_edit': 1, 'no_create': 1}"
-                                                               domain="[('business_company_id', '=',parent.business_company_id)]"/>
+                                                               domain="[('business_company_id', '=',parent.business_company_id),
+                                                                        ('state','=','approve')]"/>
+                                                               <!--搜索过滤条件：客户调用商品的时候，只是调用当前界面收发貨人下的商品，并且状态是审核通过的-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -1049,6 +1079,15 @@
                                         <field name="spec_code" string="集装箱规格"/>
                                         <field name="weight" string="自重"/>
                                     </tree>
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="containerNo" string="集装箱号" required="1"/>
+                                                <field name="spec_code" string="集装箱规格"/>
+                                                <field name="weight" string="自重"/>
+                                            </group>
+                                        </group>
+                                    </form>
                                 </field>
                             </page>
 
@@ -1058,6 +1097,14 @@
                                         <field name="dec_license_no" string="单证编号"/>
                                         <field name="dec_license_doc_type_id" string="单证类型"/>
                                     </tree>
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="dec_license_no" string="单证编号"/>
+                                                <field name="dec_license_doc_type_id" string="单证类型"/>
+                                            </group>
+                                        </group>
+                                    </form>
                                 </field>
                             </page>
 

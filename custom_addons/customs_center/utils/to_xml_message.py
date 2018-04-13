@@ -98,8 +98,8 @@ def delegate_to_xml(self):
     head_node_dic['WrapType'] = self.packing_id.Code if self.packing_id.Code else None # u'包装种类'
     head_node_dic['ChkSurety'] = None  # u'担保验放标志'
     head_node_dic['BillType'] = None  # u'备案清单类型' self.bill_type_id.Code
-    head_node_dic['AgentCodeScc'] = str(self.dec_seq_no).strip().strip("\n").strip("\t") if self.dec_seq_no else None # u'申报单位统一编码'
-    head_node_dic['CopCodeScc'] = str(self.cop_code_scc).strip().strip("\n").strip("\t") if self.cop_code_scc else None # u'录入单位统一编码'    # 设置界面
+    head_node_dic['AgentCodeScc'] = str(self.dec_seq_no).strip().strip("\n").strip("\t").strip("\r") if self.dec_seq_no else None # u'申报单位统一编码'
+    head_node_dic['CopCodeScc'] = str(self.cop_code_scc).strip().strip("\n").strip("\t").strip("\r") if self.cop_code_scc else None # u'录入单位统一编码'    # 设置界面
     head_node_dic['OwnerCodeScc'] = self.input_company_id.unified_social_credit_code if self.input_company_id.unified_social_credit_code else None    # u'货主单位/消费生产单位 社会统一编码'
     head_node_dic['TradeCodeScc'] = self.business_company_id.unified_social_credit_code if self.business_company_id.unified_social_credit_code else None  # u'经营单位社会统一编码18位'
     promise1 = self.promise1.Code if self.promise1.Code else '0'
@@ -185,7 +185,7 @@ def delegate_to_xml(self):
     # 报关单关联信息
     dec_free_test = OrderedDict()
     dec_free_test['BonNo'] = self.bonded_No if self.bonded_No else None# u'监管仓号'
-    dec_free_test['CusFie'] = self.customs_field  if self.customs_field else None#  u'货场代码'
+    dec_free_test['CusFie'] = self.customs_field if self.customs_field else None#  u'货场代码'
     dec_free_test['DecBpNo'] = None  #  u'报关员联系方式'
     dec_free_test['DecNo'] = None  # u'报关员号'
     dec_free_test['RelId'] = self.rel_dec_No if self.rel_dec_No else None  # u'关联报关单号'
@@ -315,9 +315,9 @@ def delegate_to_xml(self):
     # base_dir = config.options['xml_files_path']
 
     # 单一窗口报文发送根目录
-    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
+    base_dir_send_single = config.options.get('generate_wly_to_ex_single_path', '/mnt/xml_data/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_single')
     # QP 报文发送根目录
-    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/xml_data/xml_data/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
+    base_dir_send_qp = config.options.get('generate_wly_to_ex_qp_path', '/mnt/xml_data/odooshare/about_wly_xml_data/post_ex_client/send_wly_to_ex_qp')
 
     # 企业报关单 报文生成路径  用户配置界面自定义
     company_name = str(self.dec_company_customs_code)  # 申报单位海关编码 用作报文存放路径

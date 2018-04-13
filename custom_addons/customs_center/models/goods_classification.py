@@ -44,6 +44,8 @@ class GoodsClassification(models.Model):
     origin_country_id = fields.Many2one(comodel_name="delegate_country", string="origin country", )  # 原产国
     destination_country_id = fields.Many2one(comodel_name="delegate_country", string="destination country", )  # 目的国
 
+    call_count = fields.Integer(string='call times', help="classify goods call times", default=1)  # 归类商品调用次数
+    new_call_date = fields.Datetime(string="new call date")   # 最新调用时间
 
     @api.onchange('cus_goods_tariff_id')
     def _generate_about_name(self):
@@ -68,7 +70,6 @@ class GoodsClassification(models.Model):
 
     customs_declaration_id = fields.Many2one(comodel_name="customs_center.customs_dec",
                                          inverse_name="cus_goods_tariff_id", string="customs declaration id")  # 冗余字段 用于判断报关历史商品是否已报关
-
 
     # 合规商品
     @api.multi
@@ -95,11 +96,6 @@ class GoodsClassification(models.Model):
         return super(GoodsClassification, self)._name_search(
             name='', args=args, operator='ilike', limit=limit, name_get_uid=name_get_uid
         )
-
-
-
-
-
 
     # @api.model
     # def create(self, vals):
@@ -146,6 +142,26 @@ class GoodsClassification(models.Model):
             body = (_("商品编号：%s 归类，未审核通过！<br/>") % (goods_cls_list.cus_goods_tariff_id.Code_ts))
             goods_cls_list.message_post(body=body)
 
+    @api.multi
+    def classify_batch_check_submit(self):
+        """批量审核提交"""
+        self.update({'state': 'submitted'})
+        for goods_cls_list in self:
+            body = (_("商品归类 批量审核已提交, 请耐心等待管理员审核 ！<br/>"))
+            goods_cls_list.message_post(body=body)
+
+    @api.multi
+    def classify_batch_check_pass(self):
+        """批量审核通过"""
+        self.update({'state': 'approve'})
+        for goods_cls_list in self:
+            if goods_cls_list.customs_declaration_id:
+                classify_status = self.env['customs_center.cus_goods_list'].search(
+                    [('customs_declaration_id', '=', goods_cls_list.customs_declaration_id.id)]).update(
+                    {'classify_status': 'yes'})
+            body = (_("商品编号：%s 归类，已审核通过！<br/>") % (goods_cls_list.cus_goods_tariff_id.Code_ts))
+            goods_cls_list.message_post(body=body)
+
     @api.constrains('cust_goods_code','business_company_id')
     def _check_cus_goods_code(self):
         """ 同一收发货人，料号必须唯一 """
@@ -156,6 +172,8 @@ class GoodsClassification(models.Model):
             if len(goods) > 1:
                 raise odoo.exceptions.except_orm(u'错误',u"%s 已存在料号 %s,不允许重复录入"
                                                  %(self.business_company_id.register_name_cn,self.cust_goods_code))
+
+
 
 
 

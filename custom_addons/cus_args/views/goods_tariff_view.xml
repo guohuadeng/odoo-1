@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--海关商品税则-->
+        <record id="cus_args_goods_tariff_action" model="ir.actions.act_window">
+            <field name="name">Goods Tariff Table</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cus_args.goods_tariff</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="cus_args_goods_tariff_tree_view" model="ir.ui.view">
+            <field name="name">cus_args.goods_tariff.tree</field>
+            <field name="model">cus_args.goods_tariff</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code_ts"/>
+                    <field name="name_cn"/>
+                    <field name="first_unit_id"/>
+                    <field name="second_unit_id"/>
+                    <field name="supervision_condition"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cus_args_goods_tariff_search_view" model="ir.ui.view">
+            <field name="name">cus_args.goods_tariff.search</field>
+            <field name="model">cus_args.goods_tariff</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code_ts"/>
+                    <field name="name_cn"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="cus_args_goods_tariff_form" model="ir.ui.view">
+            <field name="name">cus_args.goods_tariff.form</field>
+            <field name="model">cus_args.goods_tariff</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code_ts"/>
+                            <field name="name_cn"/>
+                            <field name="declare_elements" readonly="1"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="first_unit_id"/>
+                                <field name="import_rate_most_favoured"/>
+                                <field name="tax_rate"/>
+                                <field name="vat_rate"/>
+                            </group>
+                            <group>
+                                <field name="second_unit_id"/>
+                                <field name="import_rate_general"/>
+                                <field name="export_rate"/>
+                                <field name="supervision_condition"/>
+                            </group>
+
+                        </group>
+                        <group>
+                            <field name="goods_description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
