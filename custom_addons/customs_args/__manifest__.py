@@ -44,6 +44,7 @@
         'views/transport_mode.xml',
         'views/unit.xml',
         'views/register_company.xml',
+        'views/sync_task.xml',
         'views/menu.xml'
     ],
 }

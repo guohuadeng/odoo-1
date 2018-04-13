@@ -25,5 +25,8 @@
         <menuitem id="other_menu" name="Other" parent="customs_args_menu" sequence="60"/>
         <menuitem id="register_company_menu" name="Register Company" parent="other_menu" action="register_company_action"/>
 
+        <menuitem id="data_sync" name="Data Sync" parent="customs_args_menu" sequence="70"/>
+        <menuitem id="sync_task_menu" name="Sync Task" parent="data_sync" action="sync_task_action" sequence="10"/>
+
     </data>
 </odoo>
