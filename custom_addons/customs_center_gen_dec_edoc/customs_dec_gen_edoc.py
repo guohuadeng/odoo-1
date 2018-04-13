@@ -3,7 +3,7 @@
 from odoo import models, fields, api
 
 class TodoTask(models.Model):
-    _inherit = 'customs_center.customs_dec'
+    _inherit = 'cus_center.customs_dec'
 
     @api.multi
     def gen_dec_edocs(self):

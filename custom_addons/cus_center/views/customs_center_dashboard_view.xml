@@ -1,13 +1,9 @@
-<openerp>
+<odoo>
     <data>
-        <record id="action_customs_center_dashboard" model="ir.actions.client">
-            <field name="name">Customs Center Dashboard</field>
+        <record id="action_cus_center_portal_dashboard" model="ir.actions.client">
+            <field name="name">关务仪表板</field>
             <field name="tag">dashboard_customs.dashboard</field>
         </record>
-        
-        <menuitem id="menu_customs_center_dashboard"
-                  parent="customs_center_menu"
-                  sequence="-1" action="action_customs_center_dashboard" groups="project.group_project_manager"/>
     </data>
     
     <!--<data noupdate="1">-->
@@ -23,4 +19,4 @@
             <!--<field name="fold" eval="True"/>-->
         <!--</record>-->
     <!--</data>-->
-</openerp>
+</odoo>

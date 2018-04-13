@@ -3,6 +3,9 @@
 
     <menuitem id="customs_center_portal_menu" name="关务中心2"/>
 
+    <menuitem id="menu_customs_center_dashboard"
+          parent="customs_center_portal_menu" action="action_cus_center_portal_dashboard" sequence="5"/>
+
     <menuitem id="making_document_menu" string="Making Document" name="通关制单" parent="customs_center_portal_menu"
               sequence="10"/>
     <menuitem id="customs_order" string="Customs Order" name="通关清单" parent="making_document_menu"

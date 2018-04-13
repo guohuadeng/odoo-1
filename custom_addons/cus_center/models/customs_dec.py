@@ -163,8 +163,9 @@ class CustomsDeclaration(models.Model):
                                                                           ('cancel', 'Cancel'),
                                                                           ('failure', 'Failure')],
                                           default='draft')
-    # 报关单回执状态
-    cus_dec_rec_state = fields.Char(string="dec receive status", compute='_get_current_rec_state')
+    # 报关单回执状态    注：这里设置store=True 否则仪表板 加载搜索展示没有回执的数据 后台会报错
+    cus_dec_rec_state = fields.Char(string="dec receive status", compute='_get_current_rec_state',
+                                    store=True)
 
     # 报关单发送通道选择
     cus_dec_sent_way = fields.Selection(string="Sent way",

@@ -118,7 +118,7 @@
 }
 .chart-timesheet-link.active,.chart-issues-link.active,.chart-tasks-link.active{
     font-weight: 800;
-    color:#000;
+    color: #7877ba !important;
 }
 
 #get_cus_send_count,

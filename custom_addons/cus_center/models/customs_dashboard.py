@@ -11,13 +11,15 @@ _logger = logging.getLogger(__name__)
 
 
 class CustomsCenterDashboard(models.Model):
+    """ 关务仪表板 注意 这里只统计申报之后的报关单 不统计清单 及报关草单"""
     _name = 'customs_center.dashboard'
 
     @api.model
     def get_all_projects(self):
-        projects = self.env['project.project'].search_read(['|', ('active', '=', False), ('active', '=', True)],
-                                                           ['id', 'name'])
-        return projects
+        # projects = self.env['project.project'].search_read(['|', ('active', '=', False), ('active', '=', True)],
+        #                                                    ['id', 'name'])
+        # return projects
+        pass
 
     @api.model
     def get_projects_dashboard_data(self, project_id,cus_or_sync):
@@ -26,42 +28,42 @@ class CustomsCenterDashboard(models.Model):
         total_employees = self.get_total_employees(project_id)
         total_projects = self.get_total_projects(project_id)
         total_paid_invoice = self.get_total_paid_invoice(project_id)
-        total_hour_logged = self.get_total_hour_logged(project_id)
-        total_pending_tasks = self.get_total_pending_tasks(project_id)
-        total_complete_tasks = self.get_total_complete_tasks(project_id)
-        total_overdue_tasks = self.get_total_overdue_tasks(project_id)
-        total_resolved_issues = self.get_total_resolved_issues(project_id)
-        total_unresolved_issues = self.get_total_unresolved_issues(project_id)
-        overdue_tasks = self.get_overdue_tasks(project_id)
-        pending_issues = self.get_pending_issues(project_id)
-        project_messages = self.get_project_messages(project_id)
-        user_activity_timeline = self.get_user_activity_timeline(project_id)
-        chart_employee_timesheet = self.get_chart_employee_timesheet(project_id)
+        #total_hour_logged = self.get_total_hour_logged(project_id)
+        #total_pending_tasks = self.get_total_pending_tasks(project_id)
+        #total_complete_tasks = self.get_total_complete_tasks(project_id)
+        #total_overdue_tasks = self.get_total_overdue_tasks(project_id)
+        #total_resolved_issues = self.get_total_resolved_issues(project_id)
+        #total_unresolved_issues = self.get_total_unresolved_issues(project_id)
+        #overdue_tasks = self.get_overdue_tasks(project_id)
+        #pending_issues = self.get_pending_issues(project_id)
+        #project_messages = self.get_project_messages(project_id)
+        #user_activity_timeline = self.get_user_activity_timeline(project_id)
+        # chart_employee_timesheet = self.get_chart_employee_timesheet(project_id)
         chart_employee_tasks = self.get_chart_employee_tasks(project_id)
         chart_employee_tasks_2 = self.get_chart_employee_tasks_2(project_id, cus_or_sync)
         chart_employee_tasks_3 = self.get_chart_employee_tasks_3(project_id, cus_or_sync)
-        chart_employee_issues = self.get_chart_employee_issues(project_id)
+        #chart_employee_issues = self.get_chart_employee_issues(project_id)
 
         return {
             'total_clients': total_clients,
             'total_employees': total_employees,
             'total_projects': total_projects,
             'total_paid_invoice': total_paid_invoice,
-            'total_hour_logged': total_hour_logged,
-            'total_pending_tasks': total_pending_tasks,
-            'total_complete_tasks': total_complete_tasks,
-            'total_overdue_tasks': total_overdue_tasks,
-            'total_resolved_issues': total_resolved_issues,
-            'total_unresolved_issues': total_unresolved_issues,
-            'overdue_tasks': overdue_tasks,
-            'pending_issues': pending_issues,
-            'project_messages': project_messages,
-            'user_activity_timeline': user_activity_timeline,
-            'chart_employee_timesheet': chart_employee_timesheet,
+           # 'total_hour_logged': total_hour_logged,
+           # 'total_pending_tasks': total_pending_tasks,
+            #'total_complete_tasks': total_complete_tasks,
+            #'total_overdue_tasks': total_overdue_tasks,
+           # 'total_resolved_issues': total_resolved_issues,
+           # 'total_unresolved_issues': total_unresolved_issues,
+           # 'overdue_tasks': overdue_tasks,
+           #  'pending_issues': pending_issues,
+           #  'project_messages': project_messages,
+           #  'user_activity_timeline': user_activity_timeline,
+           #  'chart_employee_timesheet': chart_employee_timesheet,
             'chart_employee_tasks': chart_employee_tasks,
             'chart_employee_tasks_2': chart_employee_tasks_2,
             'chart_employee_tasks_3': chart_employee_tasks_3,
-            'chart_employee_issues': chart_employee_issues,
+           # 'chart_employee_issues': chart_employee_issues,
         }
 
     @api.model
@@ -77,22 +79,22 @@ class CustomsCenterDashboard(models.Model):
     @api.model
     def get_total_employees(self, project_id):
         projects = self.env['cus_center.customs_dec'].search_count(
-            [('cus_dec_rec_state', '=', '上载成功')])
+            [('cus_dec_rec_state', '=', '上载成功'), ('cus_dec_sent_way', '=', True)])
         return projects
 
     @api.model
     def get_total_projects(self, project_id):
         """ 申报成功 """
         projects = self.env['cus_center.customs_dec'].search_count(
-            [('cus_dec_rec_state', '=', '申报成功')])
+            [('cus_dec_rec_state', '=', '申报成功'), ('cus_dec_sent_way', '=', True)])
         return projects
 
     @api.model
     def get_total_paid_invoice(self, project_id):
         """ 申报异常"""
         result = self.env['cus_center.customs_dec'].search_count(
-            [('cus_dec_rec_state', 'in', ('上载失败', '导入失败','不被受理','退回修改','申报失败'))
-             ])
+            [('cus_dec_rec_state', 'in', ('上载失败', '导入失败','不被受理','退回修改','申报失败')),
+             ('cus_dec_sent_way', '=', True)])
         return result
 
     @api.model
@@ -147,220 +149,243 @@ class CustomsCenterDashboard(models.Model):
 
     @api.model
     def get_total_hour_logged(self, project_id):
-        project_id = int(project_id)
-        domain = [] if project_id == -1 else [('project_id', '=', project_id)]
-        timesheets = sum(timesheet.unit_amount for timesheet in self.env['account.analytic.line'].search(domain))
+
+        timesheets = 10
         return timesheets
+
+        # project_id = int(project_id)
+        # domain = [] if project_id == -1 else [('project_id', '=', project_id)]
+        # timesheets = sum(timesheet.unit_amount for timesheet in self.env['account.analytic.line'].search(domain))
+        # return timesheets
 
     @api.model
     def get_total_pending_tasks(self, project_id):
-        done_stage = self.env.ref('project.project_stage_2')
-        cancelled_stage = self.env.ref('project.project_stage_3')
-
-        project_id = int(project_id)
-        domain = [('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
-            ('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
-
-        tasks = self.env['project.task'].search_count(domain)
-        return tasks
+        # done_stage = self.env.ref('project.project_stage_2')
+        # cancelled_stage = self.env.ref('project.project_stage_3')
+        #
+        # project_id = int(project_id)
+        # domain = [('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
+        #     ('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
+        #
+        # tasks = self.env['project.task'].search_count(domain)
+        # return tasks
+        pass
 
     @api.model
     def get_total_complete_tasks(self, project_id):
-        done_stage = self.env.ref('project.project_stage_2')
-
-        project_id = int(project_id)
-        domain = [('stage_id', '=', done_stage.id)] if project_id == -1 else [('stage_id', '=', done_stage.id),
-                                                                              ('project_id', '=', project_id)]
-
-        tasks = self.env['project.task'].search_count(domain)
-        return tasks
+        # done_stage = self.env.ref('project.project_stage_2')
+        #
+        # project_id = int(project_id)
+        # domain = [('stage_id', '=', done_stage.id)] if project_id == -1 else [('stage_id', '=', done_stage.id),
+        #                                                                       ('project_id', '=', project_id)]
+        #
+        # tasks = self.env['project.task'].search_count(domain)
+        # return tasks
+        pass
 
     @api.model
     def get_total_overdue_tasks(self, project_id):
-        cancelled_stage = self.env.ref('project.project_stage_3')
-        project_id = int(project_id)
-        domain = [('date_deadline', '<', fields.Datetime.now()),
-                  ('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
-            ('date_deadline', '<', fields.Datetime.now()), ('project_id', '=', project_id),
-            ('stage_id', '!=', cancelled_stage.id)]
+        pass
 
-        tasks = self.env['project.task'].search_count(domain)
-        return tasks
+        # cancelled_stage = self.env.ref('project.project_stage_3')
+        # project_id = int(project_id)
+        # domain = [('date_deadline', '<', fields.Datetime.now()),
+        #           ('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
+        #     ('date_deadline', '<', fields.Datetime.now()), ('project_id', '=', project_id),
+        #     ('stage_id', '!=', cancelled_stage.id)]
+        #
+        # tasks = self.env['project.task'].search_count(domain)
+        # return tasks
 
     @api.model
     def get_overdue_tasks(self, project_id):
+        pass
 
-        project_id = int(project_id)
-        domain = [('date_deadline', '<', fields.Datetime.now())] if project_id == -1 else [
-            ('date_deadline', '<', fields.Datetime.now()), ('project_id', '=', project_id)]
-
-        tasks = self.env['project.task'].search_read(domain, ['id', 'name', 'date_deadline', 'project_id'])
-        return tasks
+        #
+        # project_id = int(project_id)
+        # domain = [('date_deadline', '<', fields.Datetime.now())] if project_id == -1 else [
+        #     ('date_deadline', '<', fields.Datetime.now()), ('project_id', '=', project_id)]
+        #
+        # tasks = self.env['project.task'].search_read(domain, ['id', 'name', 'date_deadline', 'project_id'])
+        # return tasks
 
     @api.model
     def get_total_resolved_issues(self, project_id):
-        done_stage = self.env.ref('project.project_stage_2')
-
-        project_id = int(project_id)
-        domain = [('stage_id', '=', done_stage.id)] if project_id == -1 else [('stage_id', '=', done_stage.id),
-                                                                              ('project_id', '=', project_id)]
-
-        issues = self.env['project.issue'].search_count(domain)
-        return issues
+        pass
+        # done_stage = self.env.ref('project.project_stage_2')
+        #
+        # project_id = int(project_id)
+        # domain = [('stage_id', '=', done_stage.id)] if project_id == -1 else [('stage_id', '=', done_stage.id),
+        #                                                                       ('project_id', '=', project_id)]
+        #
+        # issues = self.env['project.issue'].search_count(domain)
+        # return issues
 
     @api.model
     def get_total_unresolved_issues(self, project_id):
-        done_stage = self.env.ref('project.project_stage_2')
-        cancelled_stage = self.env.ref('project.project_stage_3')
-
-        project_id = int(project_id)
-        domain = [('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
-            ('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
-
-        issues = self.env['project.issue'].search_count(domain)
-        return issues
+        pass
+        #
+        # done_stage = self.env.ref('project.project_stage_2')
+        # cancelled_stage = self.env.ref('project.project_stage_3')
+        #
+        # project_id = int(project_id)
+        # domain = [('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
+        #     ('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
+        #
+        # issues = self.env['project.issue'].search_count(domain)
+        # return issues
 
     @api.model
     def get_pending_issues(self, project_id):
-        done_stage = self.env.ref('project.project_stage_2')
-        cancelled_stage = self.env.ref('project.project_stage_3')
+        pass
 
-        project_id = int(project_id)
-        domain = [('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
-            ('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
-
-        issues = self.env['project.issue'].search_read(domain, ['id', 'name', 'project_id'])
-        return issues
+        # done_stage = self.env.ref('project.project_stage_2')
+        # cancelled_stage = self.env.ref('project.project_stage_3')
+        #
+        # project_id = int(project_id)
+        # domain = [('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
+        #     ('stage_id', '!=', done_stage.id), ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
+        #
+        # issues = self.env['project.issue'].search_read(domain, ['id', 'name', 'project_id'])
+        # return issues
 
     @api.model
     def get_project_messages(self, project_id):
-        project_id = int(project_id)
+        pass
 
-        messages = self.env['mail.message'].search_read(
-            [('model', 'in', ('project.issue', 'project.task')), ('body', '!=', '')],
-            ['res_id', 'model', 'body', 'date'], limit=30, order="id desc")
-        data = []
-        for message in messages:
-            now_utc = datetime.utcnow()
-            record_date_utc = datetime.strptime(message['date'], "%Y-%m-%d %H:%M:%S")
-            d = now_utc - record_date_utc
-            hours = d.seconds / 3600
-            if d.days == 0 and hours < 1:
-                date = 'from ' + str(d.seconds / 60) + ' minutes ago'
-            elif d.days == 0 and hours < 24:
-                date = 'from ' + str(hours) + ' hours ago'
-            else:
-                date = 'from ' + str(d.days) + ' days ago'
-
-            project_data = self.env[message['model']].browse(message['res_id'])
-            if project_id == -1 or project_data.project_id.id == project_id:
-                data.append({
-                    'body': message['body'],
-                    'date': str(date),
-                    'project': project_data.project_id.name if project_data.project_id else '' + ' | ' + project_data.name if project_data else '',
-                })
-        return data
+        # project_id = int(project_id)
+        #
+        # messages = self.env['mail.message'].search_read(
+        #     [('model', 'in', ('project.issue', 'project.task')), ('body', '!=', '')],
+        #     ['res_id', 'model', 'body', 'date'], limit=30, order="id desc")
+        # data = []
+        # for message in messages:
+        #     now_utc = datetime.utcnow()
+        #     record_date_utc = datetime.strptime(message['date'], "%Y-%m-%d %H:%M:%S")
+        #     d = now_utc - record_date_utc
+        #     hours = d.seconds / 3600
+        #     if d.days == 0 and hours < 1:
+        #         date = 'from ' + str(d.seconds / 60) + ' minutes ago'
+        #     elif d.days == 0 and hours < 24:
+        #         date = 'from ' + str(hours) + ' hours ago'
+        #     else:
+        #         date = 'from ' + str(d.days) + ' days ago'
+        #
+        #     project_data = self.env[message['model']].browse(message['res_id'])
+        #     if project_id == -1 or project_data.project_id.id == project_id:
+        #         data.append({
+        #             'body': message['body'],
+        #             'date': str(date),
+        #             'project': project_data.project_id.name if project_data.project_id else '' + ' | ' + project_data.name if project_data else '',
+        #         })
+        # return data
 
     @api.model
     def get_user_activity_timeline(self, project_id):
-        messages = self.env['mail.message'].search_read(
-            [('body', '!=', ''), ('model', 'in', ('project.task', 'project.issue'))],
-            ['res_id', 'model', 'create_uid', 'body', 'date'], limit=30, order="id desc")
-        data = []
-        for message in messages:
-            now_utc = datetime.utcnow()
-            record_date_utc = datetime.strptime(message['date'], "%Y-%m-%d %H:%M:%S")
-            d = now_utc - record_date_utc
-            hours = d.seconds / 3600
-            if d.days == 0 and hours < 1:
-                date = 'from ' + str(d.seconds / 60) + ' minutes ago'
-            elif d.days == 0 and hours < 24:
-                date = 'from ' + str(hours) + ' hours ago'
-            else:
-                date = 'from ' + str(d.days) + ' days ago'
+        pass
 
-            user = self.env['res.users'].browse(message['create_uid'][0])
-
-            data.append({
-                'user_name': user.name,
-                'user_image': '/web/image?model=res.users&field=image_small&id=' + str(user.id),
-                'body': message['body'],
-                'date': str(date),
-                'project': self.env[message['model']].browse(message['res_id']).name,
-            })
-        return data
+        # messages = self.env['mail.message'].search_read(
+        #     [('body', '!=', ''), ('model', 'in', ('project.task', 'project.issue'))],
+        #     ['res_id', 'model', 'create_uid', 'body', 'date'], limit=30, order="id desc")
+        # data = []
+        # for message in messages:
+        #     now_utc = datetime.utcnow()
+        #     record_date_utc = datetime.strptime(message['date'], "%Y-%m-%d %H:%M:%S")
+        #     d = now_utc - record_date_utc
+        #     hours = d.seconds / 3600
+        #     if d.days == 0 and hours < 1:
+        #         date = 'from ' + str(d.seconds / 60) + ' minutes ago'
+        #     elif d.days == 0 and hours < 24:
+        #         date = 'from ' + str(hours) + ' hours ago'
+        #     else:
+        #         date = 'from ' + str(d.days) + ' days ago'
+        #
+        #     user = self.env['res.users'].browse(message['create_uid'][0])
+        #
+        #     data.append({
+        #         'user_name': user.name,
+        #         'user_image': '/web/image?model=res.users&field=image_small&id=' + str(user.id),
+        #         'body': message['body'],
+        #         'date': str(date),
+        #         'project': self.env[message['model']].browse(message['res_id']).name,
+        #     })
+        # return data
 
     @api.model
     def get_chart_employee_issues(self, project_id):
-        done_stage = self.env.ref('project.project_stage_2')
-        cancelled_stage = self.env.ref('project.project_stage_3')
+        pass
 
-        project_id = int(project_id)
-        domain = [('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
-            ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
-
-        users = []
-        resolved = []
-        unresolved = []
-        issues = self.env['project.issue'].search_read(domain, ['user_id', 'stage_id'])
-        for issue in issues:
-            if issue['user_id'] not in users:
-                users.append(issue['user_id'])
-
-        for user in users:
-            resolved_val = 0
-            unresolved_val = 0
-            for issue in issues:
-                user_issue_id = issue['user_id'][0] if issue['user_id'] else False
-                current_user = user[0] if user else False
-                if issue['stage_id'][0] == done_stage.id and user_issue_id == current_user:
-                    resolved_val += 1
-                elif user_issue_id == current_user:
-                    unresolved_val += 1
-            resolved.append(resolved_val)
-            unresolved.append(unresolved_val)
-
-        return {
-            'employee': [user[1] if user else 'Undefined' for user in users],
-            'resolved': resolved,
-            'unresolved': unresolved
-        }
+        # done_stage = self.env.ref('project.project_stage_2')
+        # cancelled_stage = self.env.ref('project.project_stage_3')
+        #
+        # project_id = int(project_id)
+        # domain = [('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
+        #     ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
+        #
+        # users = []
+        # resolved = []
+        # unresolved = []
+        # issues = self.env['project.issue'].search_read(domain, ['user_id', 'stage_id'])
+        # for issue in issues:
+        #     if issue['user_id'] not in users:
+        #         users.append(issue['user_id'])
+        #
+        # for user in users:
+        #     resolved_val = 0
+        #     unresolved_val = 0
+        #     for issue in issues:
+        #         user_issue_id = issue['user_id'][0] if issue['user_id'] else False
+        #         current_user = user[0] if user else False
+        #         if issue['stage_id'][0] == done_stage.id and user_issue_id == current_user:
+        #             resolved_val += 1
+        #         elif user_issue_id == current_user:
+        #             unresolved_val += 1
+        #     resolved.append(resolved_val)
+        #     unresolved.append(unresolved_val)
+        #
+        # return {
+        #     'employee': [user[1] if user else 'Undefined' for user in users],
+        #     'resolved': resolved,
+        #     'unresolved': unresolved
+        # }
 
     @api.model
     def get_chart_project_issues(self, project_id):
-        done_stage = self.env.ref('project.project_stage_2')
-        cancelled_stage = self.env.ref('project.project_stage_3')
+        # done_stage = self.env.ref('project.project_stage_2')
+        # cancelled_stage = self.env.ref('project.project_stage_3')
+        #
+        # project_id = int(project_id)
+        # domain = [('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
+        #     ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
+        #
+        # projects = []
+        # resolved = []
+        # unresolved = []
+        # issues = self.env['project.issue'].search_read(domain, ['stage_id', 'project_id'])
+        # for issue in issues:
+        #     if issue['project_id'] not in projects:
+        #         projects.append(issue['project_id'])
+        #
+        # for project in projects:
+        #     resolved_val = 0
+        #     unresolved_val = 0
+        #     for issue in issues:
+        #         project_issue_id = issue['project_id'][0] if issue['project_id'] else False
+        #         current_project = project[0] if project else False
+        #         if issue['stage_id'][0] == done_stage.id and project_issue_id == current_project:
+        #             resolved_val += 1
+        #         elif project_issue_id == current_project:
+        #             unresolved_val += 1
+        #     resolved.append(resolved_val)
+        #     unresolved.append(unresolved_val)
+        #
+        # return {
+        #     'employee': [project[1] if project else 'Undefined' for project in projects],
+        #     'resolved': resolved,
+        #     'unresolved': unresolved
+        # }
+        pass
 
-        project_id = int(project_id)
-        domain = [('stage_id', '!=', cancelled_stage.id)] if project_id == -1 else [
-            ('stage_id', '!=', cancelled_stage.id), ('project_id', '=', project_id)]
-
-        projects = []
-        resolved = []
-        unresolved = []
-        issues = self.env['project.issue'].search_read(domain, ['stage_id', 'project_id'])
-        for issue in issues:
-            if issue['project_id'] not in projects:
-                projects.append(issue['project_id'])
-
-        for project in projects:
-            resolved_val = 0
-            unresolved_val = 0
-            for issue in issues:
-                project_issue_id = issue['project_id'][0] if issue['project_id'] else False
-                current_project = project[0] if project else False
-                if issue['stage_id'][0] == done_stage.id and project_issue_id == current_project:
-                    resolved_val += 1
-                elif project_issue_id == current_project:
-                    unresolved_val += 1
-            resolved.append(resolved_val)
-            unresolved.append(unresolved_val)
-
-        return {
-            'employee': [project[1] if project else 'Undefined' for project in projects],
-            'resolved': resolved,
-            'unresolved': unresolved
-        }
 
     @api.model
     def get_chart_employee_timesheet(self, project_id):
@@ -475,28 +500,28 @@ class CustomsCenterDashboard(models.Model):
 
         # 暂存成功
         cus_save_count = self.env['cus_center.customs_dec'].search_count(
-            [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '上载成功')])
+            [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '上载成功'), ('cus_dec_sent_way', '=', True)])
         sync_save_count = self.env['cus_center.customs_dec'].search_count(
-            [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '上载成功')])
+            [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '上载成功'), ('cus_dec_sent_way', '=', True)])
         cus_save_success.append(int(cus_save_count))
         cus_save_success.append(int(sync_save_count))
 
         # 报关单申报成功数
         cus_projects = self.env['cus_center.customs_dec'].search_count(
-            [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '申报成功')])
+            [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '申报成功'), ('cus_dec_sent_way', '=', True)])
         # 协同报关单申报成功数
         sync_projects = self.env['cus_center.customs_dec'].search_count(
-            [('synergism_seq_no', '!=', False),('cus_dec_rec_state', '=', '申报成功')])
+            [('synergism_seq_no', '!=', False),('cus_dec_rec_state', '=', '申报成功'), ('cus_dec_sent_way', '=', True)])
         cus_dec_success.append(int(cus_projects))
         cus_dec_success.append(int(sync_projects))
 
         # 申报异常
         cus_abnor_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败','不被受理','退回修改','申报失败'))
-             ])
+             , ('cus_dec_sent_way', '=', True)])
         sync_abnor_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败','不被受理','退回修改','申报失败'))
-             ])
+             , ('cus_dec_sent_way', '=', True)])
         cus_dec_abnor.append(int(cus_abnor_count))
         cus_dec_abnor.append(int(sync_abnor_count))
 
@@ -563,28 +588,28 @@ class CustomsCenterDashboard(models.Model):
 
         # 暂存成功
         cus_save_count = self.env['cus_center.customs_dec'].search_count(
-            [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '上载成功')])
+            [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '上载成功'), ('cus_dec_sent_way', '=', True)])
         sync_save_count = self.env['cus_center.customs_dec'].search_count(
-            [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '上载成功')])
+            [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '上载成功'), ('cus_dec_sent_way', '=', True)])
         cus_save_success.append(int(cus_save_count))
         cus_save_success.append(int(sync_save_count))
 
         # 报关单申报成功数
         cus_projects = self.env['cus_center.customs_dec'].search_count(
-            [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '申报成功')])
+            [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '申报成功'), ('cus_dec_sent_way', '=', True)])
         # 协同报关单申报成功数
         sync_projects = self.env['cus_center.customs_dec'].search_count(
-            [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '申报成功')])
+            [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '申报成功'), ('cus_dec_sent_way', '=', True)])
         cus_dec_success.append(int(cus_projects))
         cus_dec_success.append(int(sync_projects))
 
         # 申报异常
         cus_abnor_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败', '不被受理', '退回修改', '申报失败'))
-             ])
+             , ('cus_dec_sent_way', '=', True)])
         sync_abnor_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败', '不被受理', '退回修改', '申报失败'))
-             ])
+             , ('cus_dec_sent_way', '=', True)])
         cus_dec_abnor.append(int(cus_abnor_count))
         cus_dec_abnor.append(int(sync_abnor_count))
 
@@ -604,10 +629,10 @@ class CustomsCenterDashboard(models.Model):
         if cus_or_sync == '报关单':
             # 报关单 进口数量
             cus_send_import = self.env['cus_center.customs_dec'].search_count(
-                [('synergism_seq_no', '=', False), ('inout', '=', 'I')])
+                [('synergism_seq_no', '=', False), ('inout', '=', 'I'), ('cus_dec_sent_way', '=', True)])
             # 报关单 出口数量
             cus_send_export = self.env['cus_center.customs_dec'].search_count(
-                [('synergism_seq_no', '=', False), ('inout', '=', 'E')])
+                [('synergism_seq_no', '=', False), ('inout', '=', 'E'), ('cus_dec_sent_way', '=', True)])
 
             # sum_count = cus_send_import+cus_send_export
             # cus_send_import_rate = cus_send_import / sum_count
@@ -621,10 +646,10 @@ class CustomsCenterDashboard(models.Model):
         elif cus_or_sync == '协同报关单':
             # 协同单 进口数量
             sync_send_import = self.env['cus_center.customs_dec'].search_count(
-                [('synergism_seq_no', '!=', False), ('inout', '=', 'I')])
+                [('synergism_seq_no', '!=', False), ('inout', '=', 'I'), ('cus_dec_sent_way', '=', True)])
             # 协同单 出口数量
             sync_send_export = self.env['cus_center.customs_dec'].search_count(
-                [('synergism_seq_no', '!=', False), ('inout', '=', 'E')])
+                [('synergism_seq_no', '!=', False), ('inout', '=', 'E'), ('cus_dec_sent_way', '=', True)])
 
             return {
                 'employee': '',
@@ -641,12 +666,12 @@ class CustomsCenterDashboard(models.Model):
             # 报关单 异常数量
             cus_abnor_count = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败', '不被受理', '退回修改', '申报失败'))
-                 ])
+                 , ('cus_dec_sent_way', '=', True)])
             cus_dec_abnor = int(cus_abnor_count)
 
             # 报关单 申报成功数量
             cus_projects = self.env['cus_center.customs_dec'].search_count(
-                [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '申报成功')])
+                [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '申报成功'), ('cus_dec_sent_way', '=', True)])
             cus_dec_success = int(cus_projects)
 
             return {
@@ -659,11 +684,11 @@ class CustomsCenterDashboard(models.Model):
             sync_abnor_count = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '!=', False),
                  ('cus_dec_rec_state', 'in', ('上载失败', '导入失败', '不被受理', '退回修改', '申报失败'))
-                 ])
+                 , ('cus_dec_sent_way', '=', True)])
             sync_dec_abnor = int(sync_abnor_count)
             # 协同报关单申报成功数
             sync_projects = self.env['cus_center.customs_dec'].search_count(
-                [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '申报成功')])
+                [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '申报成功'), ('cus_dec_sent_way', '=', True)])
             sync_dec_success = int(sync_projects)
 
             return {
