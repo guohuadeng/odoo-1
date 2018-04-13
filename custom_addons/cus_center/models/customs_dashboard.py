@@ -70,39 +70,39 @@ class CustomsCenterDashboard(models.Model):
         # self.env.cr.execute(
         #     "select count(distinct partner_id) FROM project_project join account_analytic_account on account_analytic_account.id = analytic_account_id")
         # result = self.env.cr.fetchone()
-        result = self.env['customs_center.customs_dec'].search_count(
+        result = self.env['cus_center.customs_dec'].search_count(
             [('cus_dec_sent_way', 'in', ('single', 'QP'))])
         return result
 
     @api.model
     def get_total_employees(self, project_id):
-        projects = self.env['customs_center.customs_dec'].search_count(
+        projects = self.env['cus_center.customs_dec'].search_count(
             [('cus_dec_rec_state', '=', '上载成功')])
         return projects
 
     @api.model
     def get_total_projects(self, project_id):
         """ 申报成功 """
-        projects = self.env['customs_center.customs_dec'].search_count(
+        projects = self.env['cus_center.customs_dec'].search_count(
             [('cus_dec_rec_state', '=', '申报成功')])
         return projects
 
     @api.model
     def get_total_paid_invoice(self, project_id):
         """ 申报异常"""
-        result = self.env['customs_center.customs_dec'].search_count(
+        result = self.env['cus_center.customs_dec'].search_count(
             [('cus_dec_rec_state', 'in', ('上载失败', '导入失败','不被受理','退回修改','申报失败'))
              ])
         return result
 
     @api.model
     def get_cus_send_count(self):
-        customs_declaration_obj = self.env['customs_center.customs_dec']
+        customs_declaration_obj = self.env['cus_center.customs_dec']
 
         return {
             'type': 'ir.actions.act_window',
             'view_mode': 'tree',
-            'res_model': 'customs_center.customs_dec',
+            'res_model': 'cus_center.customs_dec',
             'target': 'new',
         }
         # return {
@@ -110,7 +110,7 @@ class CustomsCenterDashboard(models.Model):
         #     'type': "ir.actions.act_window",
         #     'view_type': 'tree',
         #     'view_mode': 'tree',
-        #     'res_model': 'customs_center.customs_dec',
+        #     'res_model': 'cus_center.customs_dec',
         #     'views': [[False, 'tree']],
         #     'res_id': customs_declaration_obj.ids,
         #     "domain": [['cus_dec_sent_way', 'in', ('single', 'QP')]],
@@ -466,35 +466,35 @@ class CustomsCenterDashboard(models.Model):
         cus_dec_abnor = []
 
         # 发送申报
-        cus_send_count = self.env['customs_center.customs_dec'].search_count(
+        cus_send_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_sent_way', 'in', ('single', 'QP'))])
-        sync_send_count = self.env['customs_center.customs_dec'].search_count(
+        sync_send_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False), ('cus_dec_sent_way', 'in', ('single', 'QP'))])
         cus_send_success.append(int(cus_send_count))
         cus_send_success.append(int(sync_send_count))
 
         # 暂存成功
-        cus_save_count = self.env['customs_center.customs_dec'].search_count(
+        cus_save_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '上载成功')])
-        sync_save_count = self.env['customs_center.customs_dec'].search_count(
+        sync_save_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '上载成功')])
         cus_save_success.append(int(cus_save_count))
         cus_save_success.append(int(sync_save_count))
 
         # 报关单申报成功数
-        cus_projects = self.env['customs_center.customs_dec'].search_count(
+        cus_projects = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '申报成功')])
         # 协同报关单申报成功数
-        sync_projects = self.env['customs_center.customs_dec'].search_count(
+        sync_projects = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False),('cus_dec_rec_state', '=', '申报成功')])
         cus_dec_success.append(int(cus_projects))
         cus_dec_success.append(int(sync_projects))
 
         # 申报异常
-        cus_abnor_count = self.env['customs_center.customs_dec'].search_count(
+        cus_abnor_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败','不被受理','退回修改','申报失败'))
              ])
-        sync_abnor_count = self.env['customs_center.customs_dec'].search_count(
+        sync_abnor_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败','不被受理','退回修改','申报失败'))
              ])
         cus_dec_abnor.append(int(cus_abnor_count))
@@ -554,35 +554,35 @@ class CustomsCenterDashboard(models.Model):
         cus_dec_abnor = []
 
         # 发送申报
-        cus_send_count = self.env['customs_center.customs_dec'].search_count(
+        cus_send_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_sent_way', 'in', ('single', 'QP'))])
-        sync_send_count = self.env['customs_center.customs_dec'].search_count(
+        sync_send_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False), ('cus_dec_sent_way', 'in', ('single', 'QP'))])
         cus_send_success.append(int(cus_send_count))
         cus_send_success.append(int(sync_send_count))
 
         # 暂存成功
-        cus_save_count = self.env['customs_center.customs_dec'].search_count(
+        cus_save_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '上载成功')])
-        sync_save_count = self.env['customs_center.customs_dec'].search_count(
+        sync_save_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '上载成功')])
         cus_save_success.append(int(cus_save_count))
         cus_save_success.append(int(sync_save_count))
 
         # 报关单申报成功数
-        cus_projects = self.env['customs_center.customs_dec'].search_count(
+        cus_projects = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '申报成功')])
         # 协同报关单申报成功数
-        sync_projects = self.env['customs_center.customs_dec'].search_count(
+        sync_projects = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '申报成功')])
         cus_dec_success.append(int(cus_projects))
         cus_dec_success.append(int(sync_projects))
 
         # 申报异常
-        cus_abnor_count = self.env['customs_center.customs_dec'].search_count(
+        cus_abnor_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败', '不被受理', '退回修改', '申报失败'))
              ])
-        sync_abnor_count = self.env['customs_center.customs_dec'].search_count(
+        sync_abnor_count = self.env['cus_center.customs_dec'].search_count(
             [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败', '不被受理', '退回修改', '申报失败'))
              ])
         cus_dec_abnor.append(int(cus_abnor_count))
@@ -603,10 +603,10 @@ class CustomsCenterDashboard(models.Model):
 
         if cus_or_sync == '报关单':
             # 报关单 进口数量
-            cus_send_import = self.env['customs_center.customs_dec'].search_count(
+            cus_send_import = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '=', False), ('inout', '=', 'I')])
             # 报关单 出口数量
-            cus_send_export = self.env['customs_center.customs_dec'].search_count(
+            cus_send_export = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '=', False), ('inout', '=', 'E')])
 
             # sum_count = cus_send_import+cus_send_export
@@ -620,10 +620,10 @@ class CustomsCenterDashboard(models.Model):
             }
         elif cus_or_sync == '协同报关单':
             # 协同单 进口数量
-            sync_send_import = self.env['customs_center.customs_dec'].search_count(
+            sync_send_import = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '!=', False), ('inout', '=', 'I')])
             # 协同单 出口数量
-            sync_send_export = self.env['customs_center.customs_dec'].search_count(
+            sync_send_export = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '!=', False), ('inout', '=', 'E')])
 
             return {
@@ -639,13 +639,13 @@ class CustomsCenterDashboard(models.Model):
 
         if cus_or_sync == '报关单':
             # 报关单 异常数量
-            cus_abnor_count = self.env['customs_center.customs_dec'].search_count(
+            cus_abnor_count = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '=', False), ('cus_dec_rec_state', 'in', ('上载失败', '导入失败', '不被受理', '退回修改', '申报失败'))
                  ])
             cus_dec_abnor = int(cus_abnor_count)
 
             # 报关单 申报成功数量
-            cus_projects = self.env['customs_center.customs_dec'].search_count(
+            cus_projects = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '=', False), ('cus_dec_rec_state', '=', '申报成功')])
             cus_dec_success = int(cus_projects)
 
@@ -656,13 +656,13 @@ class CustomsCenterDashboard(models.Model):
             }
         elif cus_or_sync == '协同报关单':
             # 协同单 异常数量
-            sync_abnor_count = self.env['customs_center.customs_dec'].search_count(
+            sync_abnor_count = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '!=', False),
                  ('cus_dec_rec_state', 'in', ('上载失败', '导入失败', '不被受理', '退回修改', '申报失败'))
                  ])
             sync_dec_abnor = int(sync_abnor_count)
             # 协同报关单申报成功数
-            sync_projects = self.env['customs_center.customs_dec'].search_count(
+            sync_projects = self.env['cus_center.customs_dec'].search_count(
                 [('synergism_seq_no', '!=', False), ('cus_dec_rec_state', '=', '申报成功')])
             sync_dec_success = int(sync_projects)
 
