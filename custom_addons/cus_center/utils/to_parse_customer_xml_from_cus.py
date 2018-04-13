@@ -10,8 +10,8 @@ from odoo.tools import config
 
 _logger = logging.getLogger(__name__)
 
-MAIN_PATH = '/home/odoo/Desktop/ParallelsSharedFolders/Home'  # 欧玉斌的本地目录
-# MAIN_PATH = '/home/odoo/odooshare' #王志强的本地目录
+# MAIN_PATH = '/home/odoo/Desktop/ParallelsSharedFolders/Home'  # 欧玉斌的本地目录
+MAIN_PATH = '/home/odoo/odooshare'  #王志强的本地目录
 
 # pre_ex_client 前置交换客户端路径
 PARSE_CUS_TO_WLY_PATH = config.options.get('parse_cus_to_wly_path',

@@ -10,8 +10,8 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-MAIN_PATH = '/home/odoo/Desktop/ParallelsSharedFolders/Home'  # 欧玉斌的本地目录
-# MAIN_PATH = '/home/odoo/odooshare' #王志强的本地目录
+# MAIN_PATH = '/home/odoo/Desktop/ParallelsSharedFolders/Home'  # 欧玉斌的本地目录
+MAIN_PATH = '/home/odoo/odooshare' #王志强的本地目录
 
 # post_ex_client 后置交换客户端路径
 

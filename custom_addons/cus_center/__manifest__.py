@@ -44,4 +44,12 @@
         'views/import_customs_dec_goods_list_view.xml',
         'views/import_customs_order_goods_list_view.xml',
     ],
+    'qweb': [
+        'static/src/xml/*.xml',
+    ],
+    'css': ['static/src/css/customs_dec.css', ],
+    # only loaded in demonstration mode
+    'demo': [
+        # 'demo/demo.xml',
+    ],
 }

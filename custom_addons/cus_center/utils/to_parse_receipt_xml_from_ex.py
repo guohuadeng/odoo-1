@@ -8,8 +8,8 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-MAIN_PATH = '/home/odoo/Desktop/ParallelsSharedFolders/Home'  # 欧玉斌的本地目录
-# MAIN_PATH = '/home/odoo/odooshare' #王志强的本地目录
+#MAIN_PATH = '/home/odoo/Desktop/ParallelsSharedFolders/Home'  # 欧玉斌的本地目录
+MAIN_PATH = '/home/odoo/odooshare'  #王志强的本地目录
 
 RECV_XML_BASE_PATH = config.options.get('parse_rec_ex_to_wly',
                                         MAIN_PATH + '/about_wly_xml_data/post_ex_client/rec_ex_to_wly')
