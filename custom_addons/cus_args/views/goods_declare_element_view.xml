@@ -14,7 +14,7 @@
             <field name="model">cus_args.goods_declare_element</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="goods_tariff_id"/>
+                    <field name="goods_tariff_hs_code"/>
                     <field name="name_cn"/>
                     <field name="sequence"/>
                 </tree>
@@ -26,9 +26,9 @@
             <field name="model">cus_args.goods_declare_element</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="goods_tariff_id"/>
-                    <field name="name_cn"/>
+                    <field name="goods_tariff_hs_code"/>
                     <field name="sequence"/>
+                    <field name="name_cn"/>
                 </search>
             </field>
         </record>
@@ -40,9 +40,9 @@
                 <form>
                     <sheet>
                         <group>
-                            <field name="goods_tariff_id"/>
-                            <field name="name_cn"/>
+                            <field name="goods_tariff_hs_code"/>
                             <field name="sequence"/>
+                            <field name="name_cn"/>
                         </group>
                     </sheet>
                 </form>

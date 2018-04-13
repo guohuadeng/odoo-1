@@ -2,18 +2,18 @@
 <odoo>
     <data>
        <record id="exp_mark_type_rate" model="cus_center.exp_mark_type">
-            <field name="Code">1</field>
-            <field name="NameCN">1-费率</field>
+            <field name="code">1</field>
+            <field name="name_cn">1-费率</field>
        </record>
 
        <record id="exp_mark_type_unit" model="cus_center.exp_mark_type">
-            <field name="Code">2</field>
-            <field name="NameCN">2-单价</field>
+            <field name="code">2</field>
+            <field name="name_cn">2-单价</field>
        </record>
 
        <record id="exp_mark_type_total" model="cus_center.exp_mark_type">
-            <field name="Code">3</field>
-            <field name="NameCN">3-总价</field>
+            <field name="code">3</field>
+            <field name="name_cn">3-总价</field>
        </record>
     </data>
 </odoo>

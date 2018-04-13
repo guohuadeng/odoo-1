@@ -4,7 +4,7 @@ from odoo import models, fields, api
 
 class CusRegisterCompany(models.Model):
     """ 海关注册企业库 """
-    _name = 'cus_args.cus_register_company'
+    _name = 'cus_args.register_company'
     _description = 'Customs Register Company'
     _rec_name = 'register_name_cn'
 

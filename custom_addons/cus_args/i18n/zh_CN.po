@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-08 02:49+0000\n"
-"PO-Revision-Date: 2018-04-08 11:23+0800\n"
+"POT-Creation-Date: 2018-04-12 03:44+0000\n"
+"PO-Revision-Date: 2018-04-12 11:47+0800\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "国家中文名称"
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_country_code
 msgid "Country Code"
-msgstr "国家地区代码"
+msgstr "国家代码"
 
 #. module: cus_args
 #: model:ir.actions.act_window,name:cus_args.cus_args_country_action
@@ -42,7 +42,6 @@ msgstr "国别地区代码"
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_country_create_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_currency_create_uid
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company_create_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_customs_create_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_cut_mode_create_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_dec_license_doc_type_create_uid
@@ -53,6 +52,7 @@ msgstr "国别地区代码"
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_create_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_internal_district_create_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_port_create_uid
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company_create_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_mode_create_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_terms_create_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_transport_mode_create_uid
@@ -64,7 +64,6 @@ msgstr "创建人"
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_country_create_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_currency_create_date
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company_create_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_customs_create_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_cut_mode_create_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_dec_license_doc_type_create_date
@@ -75,6 +74,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_create_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_internal_district_create_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_port_create_date
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company_create_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_mode_create_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_terms_create_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_transport_mode_create_date
@@ -140,19 +140,20 @@ msgid "Customs Entry Type Table"
 msgstr "报关单类型"
 
 #. module: cus_args
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company_register_code
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company_register_code
 msgid "Customs Register Code"
 msgstr "海关注册编号"
 
 #. module: cus_args
-#: model:ir.actions.act_window,name:cus_args.cus_args_cus_register_company_action
+#: model:ir.actions.act_window,name:cus_args.cus_args_register_company_action
 #: model:ir.model,name:cus_args.model_cus_args_cus_register_company
-#: model:ir.ui.menu,name:cus_args.cus_args_cus_register_company_menu
+#: model:ir.model,name:cus_args.model_cus_args_register_company
+#: model:ir.ui.menu,name:cus_args.cus_args_register_company_menu
 msgid "Customs Register Company"
 msgstr "海关注册企业"
 
 #. module: cus_args
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company_register_name_cn
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company_register_name_cn
 msgid "Customs Register Name"
 msgstr "企业名称"
 
@@ -183,7 +184,6 @@ msgstr "随附单据类型"
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_country_display_name
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_currency_display_name
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company_display_name
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_customs_display_name
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_cut_mode_display_name
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_dec_license_doc_type_display_name
@@ -194,6 +194,7 @@ msgstr "随附单据类型"
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_display_name
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_internal_district_display_name
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_port_display_name
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company_display_name
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_mode_display_name
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_terms_display_name
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_transport_mode_display_name
@@ -235,6 +236,11 @@ msgid "Entry Type Code"
 msgstr "报关单类型代码"
 
 #. module: cus_args
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_export_rate
+msgid "Export Rate"
+msgstr "出口关税率"
+
+#. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_dec_license_doc_type_name_cn
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_filing_bill_type_name_cn
 msgid "Filing Bill Type Chinese Name"
@@ -266,9 +272,15 @@ msgstr "商品名称"
 #. module: cus_args
 #: model:ir.actions.act_window,name:cus_args.cus_args_goods_declare_element_action
 #: model:ir.model,name:cus_args.model_cus_args_goods_declare_element
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_declare_elements
 #: model:ir.ui.menu,name:cus_args.cus_args_goods_declare_element_menu
 msgid "Goods Declare Element"
 msgstr "商品申报要素"
+
+#. module: cus_args
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_goods_description
+msgid "Goods Description"
+msgstr "商品描述"
 
 #. module: cus_args
 #: model:ir.actions.act_window,name:cus_args.cus_args_goods_tariff_action
@@ -278,15 +290,14 @@ msgid "Goods Tariff Table"
 msgstr "商品税则"
 
 #. module: cus_args
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_declare_element_goods_tariff_id
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_declare_element_goods_tariff_hs_code
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_code_ts
 msgid "HS Code"
-msgstr "商品编号"
+msgstr "海关编码"
 
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_country_id
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_currency_id
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company_id
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_customs_id
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_cut_mode_id
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_dec_license_doc_type_id
@@ -297,6 +308,7 @@ msgstr "商品编号"
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_id
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_internal_district_id
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_port_id
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company_id
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_mode_id
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_terms_id
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_transport_mode_id
@@ -304,6 +316,16 @@ msgstr "商品编号"
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_wrap_type_id
 msgid "ID"
 msgstr "ID"
+
+#. module: cus_args
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_import_rate_general
+msgid "Import Rate General"
+msgstr "普通进口税率"
+
+#. module: cus_args
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_import_rate_most_favoured
+msgid "Import Rate Most Favoured"
+msgstr "最惠国进口税率"
 
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_internal_district_name_cn
@@ -325,7 +347,6 @@ msgstr "国内地区代码"
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_country___last_update
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_currency___last_update
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company___last_update
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_customs___last_update
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_cut_mode___last_update
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_dec_license_doc_type___last_update
@@ -336,6 +357,7 @@ msgstr "国内地区代码"
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff___last_update
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_internal_district___last_update
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_port___last_update
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company___last_update
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_mode___last_update
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_terms___last_update
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_transport_mode___last_update
@@ -347,7 +369,6 @@ msgstr "最后修改日"
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_country_write_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_currency_write_uid
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company_write_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_customs_write_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_cut_mode_write_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_dec_license_doc_type_write_uid
@@ -358,6 +379,7 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_write_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_internal_district_write_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_port_write_uid
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company_write_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_mode_write_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_terms_write_uid
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_transport_mode_write_uid
@@ -369,7 +391,6 @@ msgstr "最后更新人"
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_country_write_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_currency_write_date
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company_write_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_customs_write_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_cut_mode_write_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_dec_license_doc_type_write_date
@@ -380,6 +401,7 @@ msgstr "最后更新人"
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_write_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_internal_district_write_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_port_write_date
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company_write_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_mode_write_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_trade_terms_write_date
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_transport_mode_write_date
@@ -411,9 +433,19 @@ msgid "Port Code Table"
 msgstr "港口代码"
 
 #. module: cus_args
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_second_unit_id
+msgid "Second Unit"
+msgstr "第二单位"
+
+#. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_supervision_condition
 msgid "Supervision Condition"
 msgstr "监管条件"
+
+#. module: cus_args
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_tax_rate
+msgid "Tax Rate"
+msgstr "消费税率"
 
 #. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_code_t
@@ -472,7 +504,7 @@ msgid "Transport Mode Table"
 msgstr "运输方式"
 
 #. module: cus_args
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_cus_register_company_unified_social_credit_code
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_register_company_unified_social_credit_code
 msgid "Unified Social Credit Code"
 msgstr "社会信用统一编码"
 
@@ -494,6 +526,11 @@ msgid "Unit Code Table"
 msgstr "计量单位"
 
 #. module: cus_args
+#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_vat_rate
+msgid "Vat Rate"
+msgstr "增值税率"
+
+#. module: cus_args
 #: model:ir.model.fields,field_description:cus_args.field_cus_args_wrap_type_name_cn
 msgid "Wrap Type Chinese Name"
 msgstr "包装种类名称"
@@ -509,8 +546,3 @@ msgstr "包装种类代码"
 #: model:ir.ui.menu,name:cus_args.cus_args_wrap_type_menu
 msgid "Wrap Type Code Table"
 msgstr "包装种类"
-
-#. module: cus_args
-#: model:ir.model.fields,field_description:cus_args.field_cus_args_goods_tariff_second_unit_id
-msgid "Second Unit"
-msgstr "第二单位"

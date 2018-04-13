@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 {
-    'name': u"关务",
-
-    'summary': u"""
-        关务模块，基础通用版
-        """,
-
+    'name': u"cus_center",
+    'summary': u"关务中心",
     'description': u"""
-        1. 创建原始清单模型、报关模型、商品列表、回执模型
-        2. 生成XML报文 通过云交换发送到单一窗口
+        1. 创建通关清单模型、报关模型、商品列表、回执模型
+        2. 生成XML报文 通过云交换发送到海关报关系统(单一窗口或QP)
         3. 安装之前需要先更新海关参数模块
     """,
 
@@ -22,7 +18,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['customs_args', 'mail', 'decimal_precision', 'web_sheet_full_width'],
+    'depends': ['cus_args', 'service_center', 'mail', 'decimal_precision', 'web_sheet_full_width'],
 
     # always loaded
     'data': [
@@ -31,21 +27,21 @@
         'data/cus_whether_mark_type.xml',
         'data/payment_mark_type.xml',
         'data/ir_sequence_data.xml',
-        'data/parse_message.xml',
+        # 'data/parse_message.xml',
         'data/result_status.xml',
-        'views/customs_center_dashboard.xml',
+        # 'views/customs_center_dashboard.xml',
         'views/pending_review_goods_views.xml',
-        'views/customs_dec_attachs.xml',
         'views/goods_classification_views.xml',
-        'views/pending_classified_goods_views.xml',
-        'views/customs_declaration.xml',
-        'views/customs_order.xml',
-        'views/result_status.xml',
-        'views/customs_receipt.xml',
+        'views/customs_declaration_view.xml',
+        'views/customs_order_view.xml',
+        'views/work_sheet_form_extend_view.xml',
+        'views/customs_dec_receipt_view.xml',
         'views/setting_declaration.xml',
         'views/menu.xml',
         'views/template.xml',
         'reports/customs_dec_report.xml',
         'reports/customs_dec_report_template.xml',
+        'views/import_customs_dec_goods_list_view.xml',
+        'views/import_customs_order_goods_list_view.xml',
     ],
 }

@@ -2,18 +2,18 @@
 <odoo>
     <data>
        <record id="cus_whether_mark_type_no" model="cus_center.whet_mark_type">
-            <field name="Code">0</field>
-            <field name="NameCN">0-否</field>
+            <field name="code">0</field>
+            <field name="name_cn">0-否</field>
        </record>
 
        <record id="cus_whether_mark_type_yes" model="cus_center.whet_mark_type">
-            <field name="Code">1</field>
-            <field name="NameCN">1-是</field>
+            <field name="code">1</field>
+            <field name="name_cn">1-是</field>
        </record>
 
        <record id="cus_whether_mark_type_null" model="cus_center.whet_mark_type">
-            <field name="Code">9</field>
-            <field name="NameCN">9-空</field>
+            <field name="code">9</field>
+            <field name="name_cn">9-空</field>
        </record>
     </data>
 </odoo>
