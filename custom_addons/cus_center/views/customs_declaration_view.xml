@@ -85,7 +85,7 @@
                       decoration-danger="cus_dec_rec_state == '导入失败'">
                     <!--<field name="synergism_seq_no" string="协同报关单号" attrs="{'invisible':[('synergism_seq_no','=',False)]}"/>-->
                     <field name="cus_dec_rec_state" string="回执状态"/>
-                    <button name="btn_review_receipt" string="历史回执信息" type="object"
+                    <button name="btn_review_receipt" string="查看回执" type="object"
                             attrs="{'invisible': [('cus_dec_rec_state', '=', False)]}"/>
                     <field name="name" string="报关单流水号"/>
                     <field name="work_sheet_id" string="工作单号"/>
@@ -685,7 +685,7 @@
                                                     <div class="col-lg-8 col-md-8"
                                                          style="padding-left: 0px; padding-right: 20px">
                                                         <field name="goods_model" string="规格型号" widget="declare_element"
-                                                               options="{'tariff': 'cus_goods_tariff_id'}"/>
+                                                               options="{'tariff': 'goods_tariff_id'}"/>
                                                     </div>
                                                 </div>
 

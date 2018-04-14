@@ -19,8 +19,6 @@ class DecGoodsList(models.Model):
 
     sequence = fields.Integer(string='Sequence')   # 商品序号
 
-    goods_tariff_id = fields.Many2one(comodel_name="cus_args.goods_tariff", string="cus goods Code TS", required=False, )  # 海关税则编码
-
     # 关联商品归类信息
     goods_classification_id = fields.Many2one(comodel_name="cus_center.goods_classify", string="Goods Classification",
                                               required=False, )  # 客户料号搜索字段

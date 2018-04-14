@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="report_customs_dec_edoc_packing_list"
+            model="cus_center.customs_dec"
+            report_type="qweb-pdf"
+            string="生成箱单"
+            name="cus_center.report_customs_dec_edoc_packing_list_template"
+            file="cus_center.report_customs_dec_edoc_packing_list_template"
+            attachment="'箱单'+'.pdf'"
+        />
+
+        <report
+            id="report_customs_dec_edoc_invoice"
+            model="cus_center.customs_dec"
+            report_type="qweb-pdf"
+            string="生成发票"
+            name="cus_center.report_customs_dec_edoc_invoice_template"
+            file="cus_center.report_customs_dec_edoc_invoice_template"
+            attachment="'发票'+'.pdf'"
+        />
+
+        <report
+            id="report_customs_dec_edoc_contract"
+            model="cus_center.customs_dec"
+            report_type="qweb-pdf"
+            string="生成合同"
+            name="cus_center.report_customs_dec_edoc_contract_template"
+            file="cus_center.report_customs_dec_edoc_contract_template"
+            attachment="'合同'+'.pdf'"
+        />
+
+        <report
+            id="report_customs_dec_edoc_attorney"
+            model="cus_center.customs_dec"
+            report_type="qweb-pdf"
+            string="生成委托书"
+            name="cus_center.report_customs_dec_edoc_attorney_template"
+            file="cus_center.report_customs_dec_edoc_attorney_template"
+            attachment="'委托书'+'.pdf'"
+        />
+    </data>
+</odoo>

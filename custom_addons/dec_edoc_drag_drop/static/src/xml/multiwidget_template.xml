@@ -182,7 +182,7 @@
                                         <option value="10000003">减免税货物税款担保延期证明</option>
                                     </t>
                                 </select>
-
+                                <button t-att-id="file.id" t-att-filename="file.name" type="button" class="o_binary_preview">预览</button>
                             </div>
                         </li>
                     </t>
@@ -263,6 +263,7 @@
                                     请选择随附单据类型
                                 </t>
                             </p>
+                            <button t-att-id="file.id" t-att-filename="file.name" type="button" class="o_binary_preview">预览</button>
                         </div>
                     </t>
                 </div>

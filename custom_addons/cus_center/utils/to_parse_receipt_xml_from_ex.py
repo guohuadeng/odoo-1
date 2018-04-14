@@ -18,7 +18,7 @@ ERROR_XML_BASE_PATH = config.options.get('parse_rec_error_xml_path',
 BAKUP_XML_BASE_PATH = config.options.get('backup_rec_xml_path',
                                          MAIN_PATH + '/about_wly_xml_data/post_ex_client/backup_rec_xml')
 
-DEBUG = True  # debug=true时，为了调试方便，不执行将报文移动错误或备份文件夹的操作
+DEBUG = False  # debug=true时，为了调试方便，不执行将报文移动错误或备份文件夹的操作
 
 
 def check_and_mkdir(*path):

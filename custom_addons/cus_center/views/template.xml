@@ -5,7 +5,7 @@
         <template id="assets_backend" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <!--加载widget.js，实现规格型号录入功能-->
-                <script src="/customs_center/static/src/js/widget.js" type="text/javascript"/>
+                <script src="/cus_center/static/src/js/widget.js" type="text/javascript"/>
                 <!--以下3条 分别加载关务仪表盘样式文件 和 js文件-->
                 <link rel="stylesheet" href="/cus_center/static/src/css/customs_center_dashboard.css"/>
                 <script type="text/javascript" src="/cus_center/static/src/lib/highcharts.js"/>
