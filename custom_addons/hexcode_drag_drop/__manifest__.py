@@ -8,7 +8,7 @@
     'website': 'www.hexcode.it',
     'support': 'federico@hexcode.it',
     'depends': [
-        'base', 'product'
+        'base', 'dec_edoc_drag_drop'
     ],
     'data': [
         'views/import_widget.xml',

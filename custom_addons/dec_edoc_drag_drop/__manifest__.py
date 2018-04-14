@@ -9,7 +9,9 @@
     'support': 'ouyubin@aeotrade.com',
     'depends': [
         'base',
-        'muk_web_preview'
+        'ir_attachment_extend',
+        'muk_web_preview',
+
     ],
     'data': [
         'views/import_widget.xml',
