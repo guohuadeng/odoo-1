@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+
+<!-- ListView.row Extended -->
+<tr t-extend="ListView.row">
+    <t t-jquery=".o_list_record_selector" t-operation="replace">
+    
+    <td t-if="options.selectable" class="o_list_record_selector">
+        <t t-set="checked" t-value="options.select_view_id == record.get('id') ? 'checked' : null"/>
+        <input t-if="options.radio" type="radio" name="radiogroup" t-att-checked="checked"/>
+        <div t-if="!options.radio" class="o_checkbox">
+            <input type="checkbox" name="radiogroup" t-att-checked="checked"/><span/>
+        </div>
+        
+        
+        <th t-if="options.new_tab"><a t-att-data-id="record.get('id')" t-att-style="view.style_for(record)" t-value="record.get(model)" class="new_tab fa fa-hand-o-up" href="#" ></a>
+         </th>
+         
+    </td>
+  
+    </t>
+</tr>
+
+<!-- ListView Extended -->
+<div t-extend="ListView" class="table-responsive">
+	<t t-jquery="thead" t-operation="replace">
+
+        <thead>
+            <tr t-if="options.header">
+                <t t-foreach="columns" t-as="column">
+                    <th t-if="column.meta">
+                        <t t-esc="column.string"/>
+                    </th>
+                </t>
+                <th t-if="options.selectable" class="o_list_record_selector" width="1">
+                    <div class="o_checkbox">
+                        <input type="checkbox"/><span/>
+                        <th t-if="options.new_tab"><span>N</span></th>
+                    </div>
+                    
+                    
+                    
+                </th>
+                
+                <t t-foreach="columns" t-as="column">
+                    <th t-if="!column.meta and column.invisible !== '1'" t-att-data-id="column.id"
+                        t-attf-class="#{((options.sortable and column.sortable and column.tag !== 'button') ? 'o_column_sortable' : '')}"
+                            t-att-width="column.width()">
+                        <t t-if="column.tag !== 'button'"><t t-raw="column.heading()"/></t>
+                    </th>
+                </t>
+                <th t-if="options.deletable" class="o_list_record_delete"/>
+            </tr>
+        </thead>
+
+	</t>
+</div>
+
+
+
+</templates>

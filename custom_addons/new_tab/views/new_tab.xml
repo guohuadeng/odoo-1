@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+	
+        <template id="new_menu_assets_backend" name="Custom JS assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+            	<script type="text/javascript" src="/new_tab/static/src/js/list_view_extend.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>
