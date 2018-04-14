@@ -4,7 +4,7 @@ from odoo import models, fields
 
 
 class EdocQueue(models.Model):
-    _name = 'customs_center.edoc_queue'
+    _name = 'cus_center.edoc_queue'
     _rec_name = 'edoc_id'
     _description = 'Edoc Queue'
 

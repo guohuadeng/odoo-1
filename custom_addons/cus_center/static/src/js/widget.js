@@ -1,4 +1,4 @@
-odoo.define('customs_center', function (require) {
+odoo.define('cus_center', function (require) {
     var core = require('web.core');
     var FormWidget = require('web.form_widgets');
     var QWeb = core.qweb;
@@ -6,7 +6,7 @@ odoo.define('customs_center', function (require) {
     var result_goods_model = '';//规格型号录入结果
     var modal_id = '';//bootstrap模态框id
     var element_names=[];
-    QWeb.add_template('/customs_center/static/src/xml/declare_element_modal.xml');
+    QWeb.add_template('/cus_center/static/src/xml/declare_element_modal.xml');
 
     var FieldDeclareElement = FormWidget.FieldChar.extend({
 

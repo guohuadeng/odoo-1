@@ -523,11 +523,11 @@ def parse_customs_dec_edoc_xml(self):
     # company_xml_parse_path = '0000016165'  # 做成前端界面可配置
 
     # 先判断随附单据队列模型里是否有数据
-    edoc_queue_ids = self.env['customs_center.edoc_queue'].search([])
+    edoc_queue_ids = self.env['cus_center.edoc_queue'].search([])
     if not edoc_queue_ids:
         return
 
-    customs_dec_model_dic = self.env['customs_center.customs_dec'].default_get(
+    customs_dec_model_dic = self.env['cus_center.customs_dec'].default_get(
         ['dec_company_customs_code'])  # 获取报关单模型对象
     company_xml_parse_path = customs_dec_model_dic.get(
         'dec_company_customs_code')  # 获取配置信息中的 申报单位海关编码 作为解析路径
@@ -585,7 +585,7 @@ def parse_customs_dec_edoc_xml(self):
             trade_file_name = xml_attach_message_dic.get('TRADE_FILE_NAME', None)  # 获取随附单据报文中的trade file name
 
             # # 根据上述获取的附件名称 在附件模型中查找 对应的附件ID
-            # attach_id = self.env['ir.attachment'].search([('res_model', '=', 'customs_center.customs_dec'),('name', '=', attach_name_in_xml)])
+            # attach_id = self.env['ir.attachment'].search([('res_model', '=', 'cus_center.customs_dec'),('name', '=', attach_name_in_xml)])
             # print("*******************^^6666666665555555555555666666666666**********************")
             # print(attach_id)
             # # 根据附件ID 找到对应的报关单ID
@@ -599,7 +599,7 @@ def parse_customs_dec_edoc_xml(self):
                     'name': trade_file_name,  # 该字段 用于前端界面显示
                     'datas_fname': datas_fname,
                     'extension': 'pdf',
-                    'res_model': 'customs_center.customs_dec',
+                    'res_model': 'cus_center.customs_dec',
                     'res_id': cus_dec_id,
                     'dec_edoc_type': dec_edoc_type,
                     'datas': binary_data,
@@ -611,13 +611,13 @@ def parse_customs_dec_edoc_xml(self):
 
                 attach_ids.append(attach_file_obj.id)
                 # 附件id用于将解析的随附单据加在 随附单据拖拽上传page页
-                customs_dec_model_obj = self.env['customs_center.customs_dec'].search([('id', '=', cus_dec_id)])
+                customs_dec_model_obj = self.env['cus_center.customs_dec'].search([('id', '=', cus_dec_id)])
                 customs_dec_model_obj.information_attachment_ids = [(6, 0, attach_ids)]
 
 
                 # # 根据上方找到的报关单ID 找到该报关单对应的附件列表
                 # information_attachment_ids = self.env['ir.attachment'].search(
-                #     [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id)])  # 取得附件list
+                #     [('res_model', '=', 'cus_center.customs_dec'), ('res_id', '=', res_id)])  # 取得附件list
                 # print(information_attachment_ids)
                 # for i in information_attachment_ids:
                 #     attach_name = i.name
@@ -625,7 +625,7 @@ def parse_customs_dec_edoc_xml(self):
                 #
                 #     if attach_name == attach_name_in_xml:
                 #         new_attachment = self.env['ir.attachment'].search(
-                #             [('res_model', '=', 'customs_center.customs_dec'), ('res_id', '=', res_id),
+                #             [('res_model', '=', 'cus_center.customs_dec'), ('res_id', '=', res_id),
                 #              ('name', '=', attach_name)]).update({'datas': binary_data})
 
     # 将解析成功的随附单据报文 移动到随附单据备份目录
