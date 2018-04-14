@@ -1,5 +1,5 @@
 {
-    'name': '随附单据拖拽上传',
+    'name': 'yubin随附单据拖拽上传 ',
     'version': '1.0',
     'category': 'all',
     'description': '随附单据拖拽上传',
