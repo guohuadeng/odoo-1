@@ -150,7 +150,7 @@ odoo.define('cus_center', function (require) {
                                 _.each(elements, function (element) {
                                     element_names.push([element.sequence, element.name_cn])
                                 });
-                                element_names.push([5, '其他']);
+                                element_names.push([elements.len, '其他']);
                                 console.log(element_names)
 
 
