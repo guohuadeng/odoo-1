@@ -408,7 +408,7 @@
                                                     <div class="col-lg-8 col-md-8"
                                                          style="padding-left: 0px; padding-right: 20px">
                                                         <field name="goods_model" string="规格型号" widget="declare_element"
-                                                               options="{'tariff': 'cus_goods_tariff_id'}"/>
+                                                               options="{'tariff': 'goods_tariff_id'}"/>
                                                     </div>
                                                 </div>
 
