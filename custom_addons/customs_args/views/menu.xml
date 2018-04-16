@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <menuitem id="customs_args_menu" name="Customs Args"/>
+        <!--海关参数-->
+        <menuitem id="args_menu" name="Custom args" parent="customs_args_menu" sequence="50" />
+        <menuitem id="traf_mode_list_menu" name="Transport Mode" parent="args_menu" action="transport_mode_action" />
+        <menuitem id="trans_mode_list_menu" name="Trade Terms" parent="args_menu" action="trade_terms_action" />
+        <menuitem id="post_list_menu" name="Port" parent="args_menu" action="customs_port_action" />
+        <menuitem id="customs_list_menu" name="Customs" parent="args_menu" action="customs_action" />
+        <menuitem id="trade_mode_list_menu" name="Trade Mode" parent="args_menu" action="trade_mode_action" />
+        <menuitem id="district_list_menu" name="Region" parent="args_menu" action="customs_region_action" />
+        <menuitem id="wrap_type_list_menu" name="Pack" parent="args_menu" action="customs_packing_action" />
+        <menuitem id="country_list_menu" name="Country District" parent="args_menu" action="customs_country_action" />
+        <menuitem id="cus_cut_mode_menu" name="Cut Mode" parent="args_menu" action="customs_cut_mode_action" />
+        <menuitem id="cus_duty_mode_menu" name="Duty Mode" parent="args_menu" action="customs_duty_mode_action" />
+        <menuitem id="cus_unit_menu" name="Unit" parent="args_menu" action="customs_unit_action" />
+        <menuitem id="cus_currency_menu" name="Currency" parent="args_menu" action="customs_currency_action" />
+        <menuitem id="cus_entry_type_menu" name="EntryType" parent="args_menu" action="customs_entry_type_action" />
+        <menuitem id="cus_filing_bill_type_menu" name="Filing Bill Type" parent="args_menu" action="customs_filing_bill_type_action" />
+        <menuitem id="cus_goods_tariff_menu" name="Goods Tariff" parent="args_menu" action="customs_cus_goods_tariff_action" />
+        <menuitem id="dec_license_doc_type_menu" name="DecLicenseDoc Type" parent="args_menu" action="dec_license_doc_type_action" />
+        <menuitem id="declare_element_menu" name="Declare Element" parent="args_menu" action="declare_element_action"/>
+        <menuitem id="other_menu" name="Other" parent="customs_args_menu" sequence="60"/>
+        <menuitem id="register_company_menu" name="Register Company" parent="other_menu" action="register_company_action"/>
+
+        <menuitem id="data_sync" name="Data Sync" parent="customs_args_menu" sequence="70"/>
+        <menuitem id="sync_task_menu" name="Sync Task" parent="data_sync" action="sync_task_action" sequence="10"/>
+
+    </data>
+</odoo>

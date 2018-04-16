@@ -1,0 +1,49 @@
+<odoo>
+  <data>
+
+    <record id="district_view_action" model="ir.actions.act_window">
+        <field name="name">District</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">paracenter.district</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="district_list" model="ir.ui.view">
+        <field name="name">district list view</field>
+        <field name="model">paracenter.district</field>
+        <field name="arch" type="xml">
+            <tree default_order="code">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="version"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="district_form" model="ir.ui.view">
+        <field name="name">district form view</field>
+        <field name="model">paracenter.district</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                          <field name="name"/>
+                          <field name="code"/>
+                        </group>
+                        <group>
+                          <field name="version"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+    <menuitem id="paracenter_root_menu" name="Paracenter"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="district_action_menu" name="District" parent="paracenter_root_menu" action="district_view_action" sequence="1"/>
+
+  </data>
+</odoo>
