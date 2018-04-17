@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--主菜单按钮-->
+        <menuitem id="compliance_lists" name="合规清单"/>
+        <!--合规标签-->
+        <menuitem id="compliance" string="compliance" name="合规" parent="compliance_lists" sequence="5"/>
+            <!--分级菜单非保税合规-->
+            <menuitem id="custom_compliance" string="goods compliance" name="合规(非保)" parent="compliance" action="action_compliance_list"/>
+
+            <menuitem id="custom_compliance_review" string="Custom Compliance Review" name="待审核" parent="compliance" action="action_custom_compliance_review"/>
+
+        <menuitem id="custom_goods_list" string="custom list" name="通关清单" parent="compliance_lists" action="action_customs_goods_list" sequence="10"/>
+        <!--清单模板-->
+        <menuitem id="custom_model" string="compliance model" name="清单模板" parent="compliance_lists" action="action_compliance_model" sequence="15"/>
+        <!--设置界面-->
+        <menuitem id="set_config" string="setting config" name="设置" parent="compliance_lists" action="action_setting" sequence="20"/>
+    </data>
+</odoo>

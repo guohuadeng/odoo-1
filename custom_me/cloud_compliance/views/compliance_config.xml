@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_setting" model="ir.actions.act_window">
+            <field name="name">Compliance Config</field>
+            <field name="res_model">setting.config</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+         <record id="setting_form" model="ir.ui.view">
+            <field name="name">setting form</field>
+            <field name="model">setting.config</field>
+            <field name="arch" type="xml">
+                <form string="Config Compliance">
+                    <header>
+                        <header>
+                            <h3>
+                                <button string="保存" type="object" name="execute" class="oe_highlight"/>
+                                or
+                                <button string="取消" type="object" name="cancel" class="oe_highlight"/>
+                            </h3>
+                        </header>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="default_user_name"/>
+                            <field name="default_user_pwd"/>
+                            <field name="default_user_dbname"/>
+                            <field name="default_url_post"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+         </record>
+    </data>
+</odoo>

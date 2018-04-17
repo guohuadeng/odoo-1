@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_compliance_list" model="ir.actions.act_window">
+            <field name="name">compliance list</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">goods.compliance</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="tree_compliance_list" model="ir.ui.view">
+            <field name="name">compliance list tree view</field>
+            <field name="model">goods.compliance</field>
+            <field name="arch" type="xml">
+                <tree string="compliance_list" decoration-muted="state=='cancel'">
+                    <field name="custom_part_number" string="企业料号"/>
+                    <field name="spec_description" string="规格描述"/>
+                    <field name="identification_goods" string="货物标识"/>
+                    <field name="goods_code" string="商品编码"/>
+                    <field name="chinese_name" string="商品名称"/>
+                    <field name="state" string="审核状态" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="search_compliance_list" model="ir.ui.view">
+            <field name="name">compliance list search view</field>
+            <field name="model">goods.compliance</field>
+            <field name="arch" type="xml">
+                <search string="compliance_list">
+                    <field name="custom_part_number" string="企业料号"/>
+                    <field name="chinese_name" string="商品名称"/>
+                    <field name="goods_code" string="商品编码"/>
+                    <filter string="草稿" domain="[('state','=','draft')]"/>
+                    <filter string="已提交" domain="[('state','=','submitted')]"/>
+                    <filter string="审核通过" domain="[('state','=','approve')]"/>
+                    <filter string="审核不通过" domain="[('state','=','refused')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_form_compliance_list" model="ir.ui.view">
+            <field name="name">compliance list form view</field>
+            <field name="model">goods.compliance</field>
+            <field name="arch" type="xml">
+                <form string="compliance_list">
+                    <header>
+                        <!--定义按钮：“提交审核”、“重新提交”、“发送Url”——暂未设计功能（根据状态显示按钮）-->
+                        <button name="submit_review_btn" string="提交审核" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'in', ['submitted','refused','approve'])]}"/>
+
+                        <button name="re_submit_review_btn" string="重新提交审核" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'in', ['draft','submitted','approve'])]}"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,succeed"/>
+                    </header>
+
+                    <sheet>
+                        <div class="row" style="padding-top:20px">
+                            <div class="col-lg-4 col-md-4">
+                                <div class="col-lg-4 col-md-4"><label for="custom_part_number" string="企业料号" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="custom_part_number"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="col-lg-4 col-md-4"><label for="spec_description" string="规格描述" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="spec_description"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="col-lg-4 col-md-4"><label for="identification_goods" string="货物标识" style="font-weight:bold;"/></div>
+                                <div class="col-lg-8 col-md-8">
+                                    <field name="identification_goods"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <notebook>
+                            <page string="合规内容">
+                                <div class="row" style="padding-top:20px">
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="goods_code" string="商品编码" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="goods_code" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="chinese_name" string="商品名称" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="chinese_name"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="goods_model" string="规格型号" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="goods_model"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="supervision_condition" string="监管标识" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="supervision_condition" style="width:100%" readonly="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="declare_unit_price" string="申报单价" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="declare_unit_price" string="申报单价"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="currency_id" string="币制" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="currency_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="first_unit" string="法定单位" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="first_unit" style="width:100%" readonly="1"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="second_unit" string="第二单位" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="second_unit" style="width:100%" readonly="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="origin_country_id" string="原产国/目的国" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="origin_country_id" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="origin_country_id_us" string="原产国/目的国英文" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="origin_country_id_us" style="width:100%" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="deal_unit_id" string="成交单位" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="deal_unit_id" style="width:100%"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="duty_paragraph_change_views" string="税号变更记录" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="duty_paragraph_change_views" options="{'no_create_edit': 1, 'no_create': 1}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" >
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="electric_type" string="3C类别" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="electric_type" string="3C类别"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="electric_term" string="3C条件" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="electric_term" string="3C条件"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="rate_first_unit" string="法定单位转换率" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="rate_first_unit" string="法定单位转换率"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="col-lg-4 col-md-4"><label for="rate_second_unit" string="法二单位转换率" style="font-weight:bold;"/></div>
+                                        <div class="col-lg-8 col-md-8">
+                                            <field name="rate_second_unit" string="法二单位转换率"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding-bottom:10px">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="col-lg-2 col-md-2"><label for="part_remarks" string="料号备注"/>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10">
+                                            <field name="part_remarks" style="width:100%"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"
+                               widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
